@@ -1,3 +1,5 @@
+import { MOCK_JOB_ORDERS, MOCK_WAREHOUSE_LOGS, MOCK_MASTER_CODES } from './mockData';
+
 export const SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL;
 
 export interface SheetRequest {
@@ -12,24 +14,27 @@ export interface SheetRequest {
 export interface SheetResponse<T = any> {
   status: 'success' | 'error';
   message: string;
-  data?: T; // เปลี่ยนจาก items ย้ายมาอยู่ภายใต้ data เพื่อความ Consistent
+  data?: T; 
   totalCount?: number;
   limit?: number;
   offset?: number;
+  isMockData?: boolean; // Flag to indicate demo mode
 }
 
 // ระบบ Cache เพื่อลดการดึงข้อมูลซ้ำ (ลดความอืดของเมนู Master Data)
 const cache = new Map<string, { data: any; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 นาที
 
-export const googleSheetsService = {
+export class GoogleSheetsService {
   /**
    * ส่ง Request พร้อมระบบ Retry อัตโนมัติ (Exponential Backoff) กรณีเกิด Concurrent สูง
    */
   async request<T = any>(payload: SheetRequest, retries = 3, delay = 1000): Promise<SheetResponse<T>> {
+    const SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL;
+
     if (!SCRIPT_URL) {
-      console.warn('VITE_APPS_SCRIPT_URL is not set in environment variables.');
-      return { status: 'error', message: 'VITE_APPS_SCRIPT_URL not configured' };
+      console.warn('VITE_APPS_SCRIPT_URL is not set. Switching to Demo Mode (Mock Data).');
+      return this.handleMockRequest(payload);
     }
 
     try {
@@ -58,7 +63,47 @@ export const googleSheetsService = {
       console.error(`Error executing Google Sheets action [${payload.action}]:`, error);
       return { status: 'error', message: error instanceof Error ? error.message : 'Unknown network error' };
     }
-  },
+  }
+
+  /**
+   * ระบบจำลองข้อมูลเพื่อใช้ในการทดสอบ UI (Demo Mode)
+   */
+  private async handleMockRequest(payload: SheetRequest): Promise<SheetResponse<any>> {
+    const { action, sheet } = payload;
+    let mockItems: any[] = [];
+
+    switch (sheet) {
+      case 'JobOrders': mockItems = MOCK_JOB_ORDERS; break;
+      case 'WarehouseIn': mockItems = MOCK_WAREHOUSE_LOGS; break;
+      case 'MasterCodes': mockItems = MOCK_MASTER_CODES; break;
+      default: mockItems = [];
+    }
+
+    if (action === 'read') {
+      return {
+        status: 'success',
+        message: 'Loaded mock data (Demo Mode)',
+        data: { items: mockItems, totalCount: mockItems.length },
+        isMockData: true
+      };
+    }
+
+    if (action === 'lookup') {
+      return {
+        status: 'success',
+        message: 'Lookup mock data (Demo Mode)',
+        data: { items: mockItems.slice(0, 1) },
+        isMockData: true
+      };
+    }
+
+    return {
+      status: 'success',
+      message: `${action} simulated successfully in Demo Mode`,
+      data: null,
+      isMockData: true
+    };
+  }
 
   /**
    * อ่านข้อมูล (มี Pagination และ Cache)
@@ -78,16 +123,17 @@ export const googleSheetsService = {
     if (limit !== undefined) payload.limit = limit;
     if (offset !== undefined) payload.offset = offset;
 
-    const result = await this.request<{items: T[]} & any>(payload);
+    const result = await this.request(payload);
     
     // โครงสร้าง Response จาก Backend ถูกห่อไว้ใน data.items ปรับให้ใช้ง่ายขึ้น
+    const resultData = result.data as any;
     const normalizedResult: SheetResponse<T[]> = {
       status: result.status,
       message: result.message,
-      data: result.data?.items || [],
-      totalCount: result.data?.totalCount || 0,
-      limit: result.data?.limit,
-      offset: result.data?.offset,
+      data: resultData?.items || [],
+      totalCount: resultData?.totalCount || 0,
+      limit: resultData?.limit,
+      offset: resultData?.offset,
     };
 
     if (useCache && normalizedResult.status === 'success') {
@@ -95,7 +141,7 @@ export const googleSheetsService = {
     }
 
     return normalizedResult;
-  },
+  }
 
   /**
    * เขียนข้อมูลลงชีตทีละหลายแถวพร้อมกัน (Batch Writing - ป้องกันตีกัน)
@@ -104,26 +150,29 @@ export const googleSheetsService = {
     // Clear cache เมื่อมีการอัปเดตข้อมูลของหน้านั้น
     clearCacheForSheet(sheetName);
     return this.request({ action: 'write', sheet: sheetName, data });
-  },
+  }
 
   /**
    * ค้นหาข้อมูลแบบ Server-Side Filtering ลดภาระ Frontend
    */
   async lookupData<T = any>(sheetName: string, searchParams: any, matchType: 'exact' | 'includes' = 'exact'): Promise<SheetResponse<T[]>> {
-    const result = await this.request<{items: T[]}>({
+    const result = await this.request({
       action: 'lookup',
       sheet: sheetName,
       data: [searchParams],
       matchType
     });
     
+    const resultData = result.data as any;
     return {
       status: result.status,
       message: result.message,
-      data: result.data?.items || []
+      data: resultData?.items || []
     };
   }
-};
+}
+
+export const googleSheetsService = new GoogleSheetsService();
 
 // Helper ล้าง Cache
 export function clearCacheForSheet(sheetName: string) {

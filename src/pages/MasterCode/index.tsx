@@ -332,6 +332,7 @@ export default function MasterCodeApp() {
           <CsvUploadModal 
             isOpen={showUploadModal}
             onClose={() => setShowUploadModal(false)}
+            title="Master Code Batch Upload"
             expectedHeaders={['Group', 'Category', 'CatCode', 'SubCategory', 'SubCode', 'Note']}
             onConfirm={processUploadData}
             instructions="อัปโหลด Master Code ด้วยไฟล์ .csv (คอลัมน์: Group, Category, CatCode, SubCategory, SubCode, Note)"

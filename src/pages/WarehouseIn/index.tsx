@@ -21,6 +21,10 @@ import InboundLogTable from './components/InboundLogTable';
 import PendingJOTable from './components/PendingJOTable';
 import PendingPOTable from './components/PendingPOTable';
 import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
+import { DraggableModal } from '../../components/shared/DraggableModal';
+import { DataTable } from '../../components/shared/DataTable';
+import { downloadCSV } from '../../utils/sharedUtils';
+import { ColumnDef } from '@tanstack/react-table';
 
 export default function WarehouseInApp() {
     // --- State Management ---
@@ -30,6 +34,7 @@ export default function WarehouseInApp() {
     const [activeWhTab, setActiveWhTab] = useState('All');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState('2026-03');
+    const [currentPage, setCurrentPage] = useState(1);
     
     // Feature Modals
     const [showModal, setShowModal] = useState(false);
@@ -119,6 +124,64 @@ export default function WarehouseInApp() {
             }
         }
     }, [showTagModal, activeTransaction]);
+
+    const historyColumns = useMemo<ColumnDef<any>[]>(() => [
+        { 
+            accessorKey: 'transId', 
+            header: 'Trans ID', 
+            cell: info => <span className="font-mono text-[#E3624A] uppercase">{info.getValue() as string}</span> 
+        },
+        { 
+            accessorKey: 'date', 
+            header: 'Date',
+            cell: info => <span className="font-mono text-[10px] opacity-70">{info.getValue() as string}</span>
+        },
+        { 
+            accessorKey: 'sku', 
+            header: 'SKU/Code',
+            cell: info => <span className="font-mono font-black">{info.getValue() as string}</span>
+        },
+        { 
+            accessorKey: 'itemName', 
+            header: 'Item Description',
+            cell: info => <span className="font-black truncate block max-w-[200px]">{info.getValue() as string}</span>
+        },
+        { 
+            accessorKey: 'qty', 
+            header: 'Qty In',
+            cell: info => <span className="text-lg font-black text-[#10b981] font-mono">+{Number(info.getValue()).toLocaleString()}</span>
+        },
+        { 
+            accessorKey: 'warehouseName', 
+            header: 'Warehouse',
+            cell: info => <span className="font-black uppercase text-[10px] bg-slate-100 px-2 py-1 rounded-md">{info.getValue() as string}</span>
+        },
+        { 
+            accessorKey: 'location', 
+            header: 'Location',
+            cell: info => <span className="font-mono text-[11px] opacity-60 italic">{info.getValue() as string}</span>
+        },
+        {
+            id: 'actions',
+            header: 'Actions',
+            cell: info => (
+                <div className="flex items-center gap-2">
+                    <button 
+                        onClick={() => openTransactionDetail(info.row.original)}
+                        className="p-2 text-[#111f42] hover:bg-slate-50 border border-transparent hover:border-slate-200 rounded-xl transition-all"
+                    >
+                        <Eye size={16} />
+                    </button>
+                    <button 
+                        onClick={() => openTagModal(info.row.original)}
+                        className="p-2 text-[#ab8a3b] hover:bg-amber-50 border border-transparent hover:border-amber-200 rounded-xl transition-all"
+                    >
+                        <Tag size={16} />
+                    </button>
+                </div>
+            )
+        }
+    ], []);
 
     // --- Logic & Filtering ---
     const filteredLogs = useMemo(() => {
@@ -251,7 +314,7 @@ export default function WarehouseInApp() {
             } else {
                 if (form.qty <= 0) return showToast('Error', 'กรุณาระบุจำนวนที่รับเข้า', 'error');
                 const newLog = {
-                    id: String(Date.now()), transId: `GR${Date.now().toString().slice(-6)}`,
+                    id: Date.now(), transId: `GR${Date.now().toString().slice(-6)}`,
                     receiveFrom: form.receiveType, refNo: form.refNo, date: timestamp,
                     sku: selectedItem.sku, itemName: selectedItem.productName || selectedItem.itemName,
                     qty: Number(form.qty), location: form.location, warehouseName: form.warehouseName,
@@ -542,14 +605,13 @@ export default function WarehouseInApp() {
                             </div>
 
                             {/* Table View */}
-                            <div className="w-full relative flex-1">
+                            <div className="w-full relative flex-1 p-4 bg-white">
                                 {activeTab === 'all' ? (
-                                    <InboundLogTable 
-                                        data={currentData}
-                                        getStatusClass={getStatusClass}
-                                        onOpenTransactionDetail={openTransactionDetail}
-                                        onOpenPrintDocModal={openPrintDocModal}
-                                        onOpenTagModal={openTagModal}
+                                    <DataTable 
+                                        data={filteredLogs}
+                                        columns={historyColumns}
+                                        title="System Inbound Ledger"
+                                        filterColumns={['warehouseName', 'location']}
                                     />
                                 ) : activeTab === 'pending_jo' ? (
                                     <PendingJOTable 

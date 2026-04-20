@@ -1,167 +1,276 @@
-import React, { useState, useRef } from 'react';
-import { UploadCloud, AlertCircle, CheckCircle, FileText, X } from 'lucide-react';
-import { DraggableModal } from './DraggableModal';
-import { parseCSV } from '../../utils/csvUtils';
+import React, { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import Papa from 'papaparse';
+import { 
+  UploadCloud, 
+  FileText, 
+  AlertCircle, 
+  CheckCircle2, 
+  X,
+  Info,
+  ChevronRight,
+  Database
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import Swal from 'sweetalert2';
 
 interface CsvUploadModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title?: string;
-  expectedHeaders: string[];
   onConfirm: (data: any[]) => void;
+  title: string;
+  expectedHeaders: string[];
   instructions?: string;
 }
 
-export const CsvUploadModal: React.FC<CsvUploadModalProps> = ({
-  isOpen, onClose, title = "Bulk CSV Upload", expectedHeaders, onConfirm, instructions
-}) => {
+export function CsvUploadModal({ 
+  isOpen, 
+  onClose, 
+  onConfirm, 
+  title, 
+  expectedHeaders,
+  instructions
+}: CsvUploadModalProps) {
   const [data, setData] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [headers, setHeaders] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [step, setStep] = useState<'upload' | 'preview'>('upload');
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const onDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
     if (!file) return;
 
-    if (!file.name.endsWith('.csv')) {
-      setError("กรุณาอัปโหลดไฟล์นามสกุล .csv เท่านั้น");
-      return;
-    }
-
-    parseCSV(file, (parsedData) => {
-      // Validate Headers
-      if (parsedData.length > 0) {
-        const fileHeaders = Object.keys(parsedData[0]);
+    setIsLoading(true);
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        const fileHeaders = results.meta.fields || [];
+        // Basic check: all expected headers should be present
         const missingHeaders = expectedHeaders.filter(h => !fileHeaders.includes(h));
         
         if (missingHeaders.length > 0) {
-          setError(`ไฟล์ CSV ขาดคอลัมน์ที่จำเป็น: ${missingHeaders.join(', ')}`);
-          setData([]);
+          Swal.fire({
+            icon: 'error',
+            title: 'Invalid CSV Structure',
+            text: `Missing columns: ${missingHeaders.join(', ')}`,
+            confirmButtonColor: '#111f42'
+          });
+          setIsLoading(false);
           return;
         }
-      }
 
-      setError(null);
-      setData(parsedData);
+        setHeaders(fileHeaders);
+        setData(results.data);
+        setStep('preview');
+        setIsLoading(false);
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Parsing Error',
+          text: err.message,
+          confirmButtonColor: '#111f42'
+        });
+        setIsLoading(false);
+      }
     });
   };
 
-  const handleConfirm = () => {
-    if (data.length > 0) {
-      onConfirm(data);
-    }
-  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'text/csv': ['.csv']
+    },
+    multiple: false
+  } as any);
 
   const reset = () => {
     setData([]);
-    setError(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
+    setHeaders([]);
+    setStep('upload');
+  };
+
+  const handleClose = () => {
+    reset();
+    onClose();
   };
 
   return (
-    <DraggableModal isOpen={isOpen} onClose={() => { reset(); onClose(); }} title={title} width="max-w-4xl">
-      <div className="space-y-6">
-        
-        {/* Instructions */}
-        <div className="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded-xl text-sm">
-          <div className="font-bold mb-1 flex items-center gap-2">
-            <AlertCircle size={16} /> คำแนะนำในการเตรียมไฟล์ CSV:
-          </div>
-          <div className="ml-6 space-y-1">
-            <p>{instructions || "อัปโหลดไฟล์ข้อมูลทีละหลายรายการเพื่อความรวดเร็ว"}</p>
-            <p className="font-bold mt-2">✨ หัวคอลัมน์ (Row 1) ต้องสะกดตามนี้ทุกตัวอักษร:</p>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {expectedHeaders.map(h => (
-                 <span key={h} className="bg-blue-200/50 px-2 py-1 rounded text-xs font-mono font-bold tracking-tight text-blue-900 border border-blue-300">
-                   {h}
-                 </span>
-              ))}
-            </div>
-          </div>
-        </div>
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleClose}
+            className="absolute inset-0 bg-[#111f42]/60 backdrop-blur-md"
+          />
 
-        {/* Upload Area */}
-        {!data.length && (
-          <div 
-             className="border-2 border-dashed border-slate-300 bg-white rounded-xl p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all"
-             onClick={() => fileInputRef.current?.click()}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative bg-white rounded-[40px] shadow-2xl border border-white/20 w-full max-w-5xl overflow-hidden flex flex-col max-h-[90vh]"
           >
-            <UploadCloud size={48} className="text-slate-400 mb-4" />
-            <h4 className="font-bold text-slate-700">คลิกเพื่อเลือกไฟล์ .csv</h4>
-            <p className="text-xs text-slate-500 mt-1">หรือลากไฟล์มาวางในพื้นที่นี้</p>
-            <input 
-              type="file" 
-              accept=".csv" 
-              className="hidden" 
-              ref={fileInputRef}
-              onChange={handleFileUpload}
-            />
-          </div>
-        )}
-
-        {error && (
-          <div className="p-4 bg-red-50 text-red-600 rounded-lg border border-red-200 flex items-start gap-2 text-sm">
-            <X size={18} className="shrink-0 mt-0.5" />
-            <div>
-              <div className="font-bold">เกิดข้อผิดพลาด</div>
-              <div>{error}</div>
+            {/* Header */}
+            <div className="px-10 py-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-[#111f42] text-[#ab8a3b] rounded-[20px] shadow-xl shadow-blue-900/10">
+                  <Database size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-[#111f42] uppercase tracking-[0.15em]">{title}</h3>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Bulk Integration Protocol / Step {step === 'upload' ? '1: Validation' : '2: Data Review'}</p>
+                </div>
+              </div>
+              <button 
+                onClick={handleClose}
+                className="p-3 bg-white text-slate-400 hover:text-[#E3624A] hover:bg-red-50 rounded-2xl transition-all border border-slate-200"
+              >
+                <X size={20} />
+              </button>
             </div>
-          </div>
-        )}
 
-        {/* Data Preview */}
-        {data.length > 0 && (
-          <div className="space-y-4">
-             <div className="flex justify-between items-center bg-green-50 text-green-700 p-3 rounded-lg border border-green-200">
-               <div className="flex items-center gap-2">
-                 <CheckCircle size={18} />
-                 <span className="font-bold text-sm">อ่านไฟล์สำเร็จ พบข้อมูลจำนวน {data.length.toLocaleString()} รายการ</span>
-               </div>
-               <button onClick={reset} className="text-xs underline hover:text-green-900">เปลี่ยนไฟล์</button>
-             </div>
-
-             <div className="border rounded-xl bg-white overflow-hidden">
-                <div className="bg-slate-100 px-4 py-2 text-xs font-bold text-slate-500 uppercase border-b">
-                  ตัวอย่างข้อมูล 5 รายการแรก (Preview)
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm">
-                    <thead className="bg-slate-50 border-b">
-                      <tr>
-                        {expectedHeaders.map(h => (
-                          <th key={h} className="p-3 font-semibold text-slate-600 whitespace-nowrap">{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                      {data.slice(0, 5).map((row, i) => (
-                        <tr key={i} className="hover:bg-slate-50">
+            {/* Content Container */}
+            <div className="flex-1 overflow-y-auto p-10 master-custom-scrollbar bg-[#F9F7F6]">
+              {step === 'upload' ? (
+                <div className="space-y-8">
+                  {/* Instructions */}
+                  <div className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm relative overflow-hidden">
+                    <div className="absolute right-0 top-0 w-32 h-32 bg-blue-50/30 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                    <div className="flex items-start gap-5 relative z-10">
+                      <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl">
+                        <Info size={24} />
+                      </div>
+                      <div className="space-y-4">
+                        <h4 className="text-sm font-black text-[#111f42] uppercase tracking-widest">CSV Data Preparation Guidelines</h4>
+                        <p className="text-xs font-medium text-slate-500 leading-relaxed max-w-2xl">
+                          Ensure your spreadsheet matches the requirements below to prevent ingestion failure. All column headers must match exactly (case-sensitive).
+                        </p>
+                        <div className="flex flex-wrap gap-2 pt-2">
                           {expectedHeaders.map(h => (
-                            <td key={h} className="p-3 text-slate-600 whitespace-nowrap">{row[h] || '-'}</td>
+                            <span key={h} className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-700 text-[10px] font-black rounded-lg border border-blue-100 uppercase tracking-wider">
+                              <FileText size={10} /> {h}
+                            </span>
                           ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                {data.length > 5 && (
-                   <div className="p-3 text-center text-xs text-slate-500 bg-slate-50 border-t">
-                     ... และอีก {(data.length - 5).toLocaleString()} รายการ
-                   </div>
-                )}
-             </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-             <div className="flex justify-end gap-3 pt-4 border-t">
-               <button onClick={() => { reset(); onClose(); }} className="px-5 py-2 rounded-lg font-bold text-sm text-slate-600 hover:bg-slate-100 transition-colors border">
-                 ยกเลิก
-               </button>
-               <button onClick={handleConfirm} className="px-6 py-2 rounded-lg font-bold text-sm text-white bg-[#111f42] hover:opacity-90 shadow-lg transition-transform hover:scale-105">
-                 ยืนยันการนำเข้าข้อมูล
-               </button>
-             </div>
-          </div>
-        )}
-      </div>
-    </DraggableModal>
+                  {/* Dropzone */}
+                  <div 
+                    {...getRootProps()} 
+                    className={`
+                      relative group cursor-pointer border-4 border-dashed rounded-[40px] p-20 flex flex-col items-center justify-center transition-all duration-300 min-h-[350px]
+                      ${isDragActive ? 'border-[#ab8a3b] bg-[#ab8a3b]/5 scale-[0.99] border-solid' : 'border-slate-200 bg-white hover:border-[#111f42]/20'}
+                    `}
+                  >
+                    <input {...getInputProps()} />
+                    <div className="relative mb-8">
+                      <div className="absolute inset-0 bg-[#111f42] rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                      <div className={`p-8 rounded-full border-4 border-white shadow-2xl transition-all duration-500 ${isDragActive ? 'bg-[#ab8a3b] text-white rotate-12' : 'bg-[#111f42] text-[#ab8a3b] group-hover:scale-110'}`}>
+                        <UploadCloud size={48} strokeWidth={1.5} />
+                      </div>
+                    </div>
+                    <div className="text-center space-y-3">
+                      <h4 className="text-lg font-black text-[#111f42] uppercase tracking-widest">
+                        {isDragActive ? 'Release to Ingest' : 'Deploy CSV Data File'}
+                      </h4>
+                      <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Drag and drop your file here or click to browse</p>
+                    </div>
+                    {isLoading && (
+                      <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-[40px] flex flex-col items-center justify-center gap-4">
+                        <div className="w-10 h-10 border-4 border-[#ab8a3b] border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-[10px] font-black text-[#111f42] uppercase tracking-[0.3em]">Parsing Matrix...</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-a">
+                  {/* Preview Stats */}
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-6">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">STATUS</span>
+                        <div className="flex items-center gap-2 text-emerald-500 font-black text-xs mt-1">
+                          <CheckCircle2 size={16} /> VALIDATED READY
+                        </div>
+                      </div>
+                      <div className="w-px h-10 bg-slate-200"></div>
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">RECORD COUNT</span>
+                        <div className="text-[#111f42] font-black text-xl font-mono mt-0.5">{data.length.toLocaleString()} <span className="text-[10px] uppercase font-sans text-slate-400 tracking-widest">ROWS</span></div>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={reset}
+                      className="px-6 py-2.5 text-[10px] font-black text-slate-500 hover:text-[#E3624A] uppercase tracking-widest transition-colors flex items-center gap-2"
+                    >
+                      <X size={14} /> Reset and Upload Again
+                    </button>
+                  </div>
+
+                  {/* Preview Table */}
+                  <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div className="max-h-[400px] overflow-auto master-custom-scrollbar">
+                      <table className="w-full text-left border-collapse">
+                        <thead className="sticky top-0 z-10 bg-[#111f42]">
+                          <tr>
+                            {headers.map(h => (
+                              <th key={h} className="px-6 py-3.5 text-[10px] font-black text-[#ab8a3b] uppercase tracking-widest border-b border-blue-900/50">
+                                {h}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {data.slice(0, 100).map((row, i) => (
+                            <tr key={i} className="hover:bg-slate-50 transition-colors">
+                              {headers.map(h => (
+                                <td key={`${i}-${h}`} className="px-6 py-2.5 text-[11px] font-bold text-[#111f42] whitespace-nowrap">
+                                  {row[h]}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    {data.length > 100 && (
+                      <div className="px-6 py-3 bg-amber-50 text-amber-700 text-[10px] font-black uppercase tracking-widest text-center border-t border-amber-100 flex items-center justify-center gap-2">
+                        <AlertCircle size={12} /> Only displaying first 100 preview entries. Full integration includes {data.length} records.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="px-10 py-8 border-t border-slate-100 flex items-center justify-end bg-slate-50/50 gap-4">
+              <button 
+                onClick={handleClose}
+                className="px-8 py-3.5 text-[11px] font-black text-slate-500 hover:text-[#111f42] uppercase tracking-[0.2em] transition-all"
+              >
+                Cancel Process
+              </button>
+              {step === 'preview' && (
+                <button 
+                  onClick={() => onConfirm(data)}
+                  className="px-10 py-4 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group"
+                >
+                  Confirm Ingestion
+                  <ChevronRight size={18} className="text-[#ab8a3b] group-hover:translate-x-1 transition-transform" />
+                </button>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
-};
+}

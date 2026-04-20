@@ -271,6 +271,7 @@ export default function ItemMasterApp() {
                 <CsvUploadModal 
                     isOpen={showUploadModal}
                     onClose={() => setShowUploadModal(false)}
+                    title="Bulk Item Import"
                     expectedHeaders={['ItemCode', 'ItemName', 'Type', 'Category', 'SubCategory', 'Unit', 'Cost', 'Price']}
                     onConfirm={confirmUpload}
                     instructions="อัปโหลดไฟล์ Master Data สินค้า/วัตถุดิบ (รูปแบบ .csv)"

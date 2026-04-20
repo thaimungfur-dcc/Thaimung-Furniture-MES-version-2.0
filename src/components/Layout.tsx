@@ -126,9 +126,30 @@ export default function Layout() {
     lightBg: '#F9F7F6'      // Neutral Bg
   };
 
+  const isDemoMode = !import.meta.env.VITE_APPS_SCRIPT_URL;
+
   return (
     <SecurityGuard>
       {isAuthenticated && <Watermark />}
+      
+      {/* Demo Mode Banner */}
+      {isDemoMode && (
+        <div className="bg-[#ab8a3b] text-white py-2 px-6 flex items-center justify-between z-[100] relative shadow-lg">
+          <div className="flex items-center gap-3">
+            <AlertTriangle size={18} className="animate-pulse" />
+            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em]">
+              Running in Demo Mode (Mock Data). Connect your Google Sheet via <code className="bg-white/20 px-2 py-0.5 rounded">DEPLOYMENT.md</code> to enable real storage.
+            </span>
+          </div>
+          <button 
+            onClick={() => navigate('/system-config')}
+            className="bg-white/20 hover:bg-white/30 text-white px-4 py-1 rounded-full text-[9px] font-black uppercase tracking-widest transition-all"
+          >
+            Configure Now
+          </button>
+        </div>
+      )}
+
       <div className="flex h-screen overflow-hidden bg-[#F9F7F6] text-[#1c213f]">
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');

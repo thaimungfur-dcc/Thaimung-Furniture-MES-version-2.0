@@ -203,7 +203,7 @@ export default function WarehouseOut() {
                 for (let i = 0; i < form.manualItems.length; i++) {
                     const item = form.manualItems[i];
                     await addLog({
-                        id: Date.now() + i,
+                        id: Number(Date.now() + i),
                         transId: generateTrxId(),
                         date: form.date.replace('T', ' '),
                         outType: form.outType,
@@ -235,7 +235,7 @@ export default function WarehouseOut() {
                     }
                 }
                 await addLog({
-                    id: Date.now(),
+                    id: Number(Date.now()),
                     transId: generateTrxId(),
                     date: form.date.replace('T', ' '),
                     outType: form.outType,
@@ -369,7 +369,7 @@ export default function WarehouseOut() {
             for (let idx = 0; idx < parsedData.length; idx++) {
                 const row = parsedData[idx];
                 const newLog = {
-                    id: Date.now().toString() + idx,
+                    id: Number(Date.now().toString() + idx),
                     transId: generateTrxId(),
                     date: new Date().toISOString().slice(0, 16).replace('T', ' '),
                     outType: row.outType || 'Adjustment',

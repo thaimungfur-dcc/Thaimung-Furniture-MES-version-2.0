@@ -5,6 +5,50 @@
  * Includes CORS support for Vercel and strict JSON responses.
  */
 
+/**
+ * ฟังก์ชันสำหรับตั้งค่า Sheet และหัวตารางเบื้องต้น (รันแค่ครั้งเดียวตอนเริ่มโปรเจกต์)
+ * ไปที่เมนู Run > setupDatabase
+ */
+function setupDatabase() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheetsConfig = {
+    'ItemMaster': ['ItemCode', 'ItemName', 'Type', 'Category', 'SubCategory', 'Unit', 'Cost', 'Price'],
+    'MasterCodes': ['Group', 'Category', 'CatCode', 'SubCategory', 'SubCode', 'Note'],
+    'JobOrders': ['id', 'joNo', 'productName', 'sku', 'qty', 'received', 'status', 'currentStage', 'startDate', 'dueDate', 'priority', 'customerName', 'soRef'],
+    'ProductionLogs': ['id', 'joId', 'joNo', 'stage', 'action', 'operator', 'timestamp', 'qtyCompleted', 'notes'],
+    'WarehouseIn': ['id', 'transId', 'date', 'joNo', 'sku', 'productName', 'qty', 'status', 'warehouseName', 'location', 'operator'],
+    'WarehouseOut': ['id', 'transId', 'date', 'outType', 'sku', 'productName', 'qty', 'operator', 'warehouseName', 'location', 'notes'],
+    'Users': ['id', 'employeeId', 'idCard', 'name', 'role', 'avatar']
+  };
+
+  for (let name in sheetsConfig) {
+    let sheet = ss.getSheetByName(name);
+    if (!sheet) {
+      sheet = ss.insertSheet(name);
+    }
+    // ตั้งค่าหัวตาราง (Headers)
+    const headers = sheetsConfig[name];
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers])
+      .setFontWeight("bold")
+      .setBackground("#111f42")
+      .setFontColor("#white");
+    
+    // Freeze แถวแรก
+    sheet.setFrozenRows(1);
+    
+    // Auto-resize คอลัมน์
+    sheet.autoResizeColumns(1, headers.length);
+  }
+
+  // สร้าง User ตัวอย่างสำหรับ Admin (ถ้ายังไม่มี)
+  const userSheet = ss.getSheetByName("Users");
+  if (userSheet.getLastRow() === 1) {
+    userSheet.appendRow(['1', 'ADMIN001', '1234', 'System Admin', 'Admin', '']);
+  }
+
+  Logger.log("Database Setup Complete!");
+}
+
 function doOptions(e) {
   var headers = {
     'Access-Control-Allow-Origin': '*',
@@ -69,6 +113,10 @@ function doPost(e) {
         return writeData(sheet, data, headers);
       case 'lookup':
         return lookupData(sheet, params, headers); // Pass full params for search type customization
+      case 'update':
+        return updateData(sheet, data, headers);
+      case 'delete':
+        return deleteData(sheet, data, headers);
       case 'login':
         return handleLogin(ss, data, headers);
       default:
@@ -144,6 +192,58 @@ function writeData(sheet, data, headersObj) {
   }
   
   return createResponse("success", "Data saved successfully", null, headersObj);
+}
+
+function updateData(sheet, data, headersObj) {
+  if (!Array.isArray(data)) data = [data];
+  if (data.length === 0) return createResponse("error", "No data provided for update", null, headersObj);
+
+  const values = sheet.getDataRange().getValues();
+  const headers = values[0];
+  const idIndex = headers.indexOf('id');
+  if (idIndex === -1) return createResponse("error", "'id' column not found for update", null, headersObj);
+
+  let updatedCount = 0;
+  data.forEach(updateItem => {
+    const targetId = String(updateItem.id);
+    for (let i = 1; i < values.length; i++) {
+      if (String(values[i][idIndex]) === targetId) {
+        // Update cells in this row
+        headers.forEach((header, colIdx) => {
+          if (updateItem.hasOwnProperty(header)) {
+            sheet.getRange(i + 1, colIdx + 1).setValue(updateItem[header]);
+          }
+        });
+        updatedCount++;
+        break;
+      }
+    }
+  });
+
+  return createResponse("success", `Updated ${updatedCount} rows`, null, headersObj);
+}
+
+function deleteData(sheet, data, headersObj) {
+  if (!Array.isArray(data)) data = [data];
+  if (data.length === 0) return createResponse("error", "No data provided for delete", null, headersObj);
+
+  const values = sheet.getDataRange().getValues();
+  const headers = values[0];
+  const idIndex = headers.indexOf('id');
+  if (idIndex === -1) return createResponse("error", "'id' column not found for delete", null, headersObj);
+
+  const idsToDelete = data.map(item => String(item.id));
+  let deletedCount = 0;
+
+  // Iterate backwards to avoid index shifting problems
+  for (let i = values.length - 1; i >= 1; i--) {
+    if (idsToDelete.includes(String(values[i][idIndex]))) {
+      sheet.deleteRow(i + 1);
+      deletedCount++;
+    }
+  }
+
+  return createResponse("success", `Deleted ${deletedCount} rows`, null, headersObj);
 }
 
 function lookupData(sheet, params, headersObj) {

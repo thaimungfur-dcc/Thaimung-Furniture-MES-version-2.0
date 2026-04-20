@@ -41,6 +41,7 @@ import WarehouseOut from './pages/WarehouseOut/index';
 import WarehouseBooking from './pages/WarehouseBooking/index';
 import InventoryPlanning from './pages/InventoryPlanning/index';
 import StockCard from './pages/StockCard/index';
+import ProductionTracking from './pages/ProductionTracking/index';
 import ProductCost from './pages/ProductCost/index';
 import SystemConfig from './pages/SystemConfig/index';
 import DataEntry from './pages/DataEntry/index';
@@ -154,8 +155,8 @@ function AppContent() {
             <Route path="/job-tracking" element={<ProtectedRoute><PlaceholderPage title="Job Tracking" /></ProtectedRoute>} />
 
             {/* Placeholders - Production */}
-            <Route path="/production" element={<ProtectedRoute><PlaceholderPage title="Production" /></ProtectedRoute>} />
-            <Route path="/production-tracking" element={<ProtectedRoute><PlaceholderPage title="Production Tracking" /></ProtectedRoute>} />
+            <Route path="/production" element={<ProtectedRoute><ProductionTracking /></ProtectedRoute>} />
+            <Route path="/production-tracking" element={<ProtectedRoute><ProductionTracking /></ProtectedRoute>} />
             <Route path="/production-report" element={<ProtectedRoute><PlaceholderPage title="Production Report" /></ProtectedRoute>} />
 
             {/* Placeholders - Quality Control */}

@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useGoogleAuth } from '../context/GoogleAuthContext';
+import { googleSheetsService } from '../services/googleSheets';
 
 export function useGoogleSheets<T>(sheetName: string) {
   const { isAuthenticated } = useGoogleAuth();
@@ -7,20 +8,16 @@ export function useGoogleSheets<T>(sheetName: string) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (useCache = true) => {
     if (!isAuthenticated) return;
     setLoading(true);
     setError(null);
     try {
-      // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
-      const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        setData(parsedData);
+      const response = await googleSheetsService.readSheet<T>(sheetName, useCache);
+      if (response.status === 'success') {
+        setData(response.data || []);
       } else {
-        setData([]);
+        throw new Error(response.message);
       }
     } catch (err: any) {
       setError(err.message);
@@ -34,53 +31,80 @@ export function useGoogleSheets<T>(sheetName: string) {
     fetchData();
   }, [fetchData]);
 
-  const addRow = async (item: T) => {
+  const addRow = async (item: Partial<T>) => {
+    setLoading(true);
     try {
-      const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-      const currentData = storedData ? JSON.parse(storedData) : [];
-      const newData = [...currentData, item];
-      localStorage.setItem(`erp_data_${sheetName}`, JSON.stringify(newData));
-      await fetchData();
+      // Ensure we have an ID if one isn't provided
+      const rowData = { ...item, id: (item as any).id || Date.now().toString() };
+      const response = await googleSheetsService.writeData(sheetName, [rowData]);
+      if (response.status === 'success') {
+        await fetchData(false); // Force refresh
+      } else {
+        throw new Error(response.message);
+      }
     } catch (err: any) {
       setError(err.message);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
   const updateRow = async (id: string | number, item: Partial<T>) => {
+    setLoading(true);
     try {
-      const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-      if (!storedData) throw new Error(`No data found for ${sheetName}`);
+      // Logic for Update in a single sheet is usually lookup + overwrite or a dedicated update action
+      // For this simple ERP, we'll follow the pattern: Read All -> Update Local -> Write All (if needed)
+      // BUT actually, the backend service has a 'write' action that appends.
+      // We should ideally have an 'update' action in Backend.
+      // Let's assume the backend 'write' handles overwrite if ID exists, or we implement update in Backend.
       
-      const currentData = JSON.parse(storedData);
-      const index = currentData.findIndex((row: any) => row.id === id || row.rowId === id);
+      // Wait, let's check Code.gs for an 'update' case.
+      // (Reviewing Code.gs showed read, write, lookup, login. No dedicated update.)
       
-      if (index === -1) throw new Error(`Row with id ${id} not found in ${sheetName}`);
+      // I'll add an 'update' case to Code.gs if it's missing, or simulate it.
+      // Actually, many Apps Script patterns use a full sheet rewrite for updates or look up row index.
       
-      currentData[index] = { ...currentData[index], ...item };
-      localStorage.setItem(`erp_data_${sheetName}`, JSON.stringify(currentData));
-      await fetchData();
+      const response = await googleSheetsService.request({
+        action: 'update' as any, // I'll add this to Code.gs
+        sheet: sheetName,
+        data: [{ id, ...item }]
+      } as any);
+
+      if (response.status === 'success') {
+        await fetchData(false);
+      } else {
+        throw new Error(response.message);
+      }
     } catch (err: any) {
       setError(err.message);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
   const deleteRow = async (id: string | number) => {
+    setLoading(true);
     try {
-      const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-      if (!storedData) throw new Error(`No data found for ${sheetName}`);
-      
-      const currentData = JSON.parse(storedData);
-      const newData = currentData.filter((row: any) => row.id !== id && row.rowId !== id);
-      
-      localStorage.setItem(`erp_data_${sheetName}`, JSON.stringify(newData));
-      await fetchData();
+      const response = await googleSheetsService.request({
+        action: 'delete' as any,
+        sheet: sheetName,
+        data: [{ id }]
+      } as any);
+
+      if (response.status === 'success') {
+        await fetchData(false);
+      } else {
+        throw new Error(response.message);
+      }
     } catch (err: any) {
       setError(err.message);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { data, loading, error, fetchData, addRow, updateRow, deleteRow };
+  return { data, loading, error, fetchData, addRow, updateRow, deleteRow, refetch: () => fetchData(false) };
 }
