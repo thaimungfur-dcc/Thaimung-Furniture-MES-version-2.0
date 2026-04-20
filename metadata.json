@@ -1,0 +1,8 @@
+{
+  "name": "THAIMUNG FURNITURE MES version 2.0",
+  "description": "ระบบบริหารจัดการการผลิตครบวงจร",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}
