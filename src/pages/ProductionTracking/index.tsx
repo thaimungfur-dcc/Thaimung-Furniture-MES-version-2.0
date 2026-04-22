@@ -317,7 +317,7 @@ export default function ProductionTracking() {
         {loading ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-white/40 backdrop-blur-sm rounded-[32px] z-30">
             <div className="relative w-16 h-16">
-              <Loader2 className="animate-spin text-[#ab8a3b]" size={64} strokeWidth={1.5} />
+              <Loader2 className="animate-spin text-[#111f42]" size={64} strokeWidth={1.5} />
               <Activity className="absolute inset-0 m-auto text-[#111f42]" size={20} />
             </div>
             <p className="font-black text-[#111f42] uppercase tracking-[0.4em] text-[10px] animate-pulse font-mono">Synchronizing Work Orders...</p>
@@ -365,7 +365,7 @@ export default function ProductionTracking() {
               {/* Add meaningful guide content here */}
               <div className="space-y-6">
                  <div>
-                    <h4 className="text-sm font-black text-[#ab8a3b] uppercase mb-2">Workflow Management</h4>
+                    <h4 className="text-sm font-black text-[#111f42] uppercase mb-2">Workflow Management</h4>
                     <p className="text-xs text-slate-500 font-medium leading-relaxed">
                       Use the Kanban board to track Job Orders through the factory floor. Drag orders or use the quick-action button to advance to the next stage.
                     </p>
@@ -378,7 +378,7 @@ export default function ProductionTracking() {
                       { label: 'Upholstery', desc: 'Padding and fabric' }
                     ].map((s, i) => (
                       <div key={i} className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                         <span className="text-[10px] font-black text-[#111f42] uppercase underline decoration-[#ab8a3b] decoration-2 underline-offset-4">{s.label}</span>
+                         <span className="text-[10px] font-black text-[#111f42] uppercase underline decoration-[#111f42] decoration-2 underline-offset-4">{s.label}</span>
                          <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-widest">{s.desc}</p>
                       </div>
                     ))}

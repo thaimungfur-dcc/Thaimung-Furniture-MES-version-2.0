@@ -121,7 +121,6 @@ export default function QcReport() {
   return (
     <div className="flex flex-col space-y-6 pt-8 pb-10">
       <style>{`
-        * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         @media print {
           @page { size: A4 landscape; margin: 10mm; }
           .no-print { display: none !important; }

@@ -27,7 +27,7 @@ export const KpiCard: React.FC<KpiCardProps> = ({
   trend,
   icon: Icon,
   color,
-  bgOpacity = "bg-opacity-20 backdrop-blur-md"
+  bgOpacity = "bg-opacity-20"
 }) => {
   const displayLabel = label || title || "Metric";
   const isTrendObject = typeof trend === 'object' && trend !== null;
@@ -37,23 +37,22 @@ export const KpiCard: React.FC<KpiCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className="bg-white p-6 rounded-2xl shadow-soft border border-slate-100 flex flex-col justify-between h-full relative overflow-hidden group hover:shadow-xl hover:shadow-slate-200/50 transition-all pt-2"
+      className="bg-white p-6 rounded-2xl shadow-soft border border-slate-100 flex flex-col justify-between h-full relative overflow-hidden group hover:shadow-xl hover:shadow-slate-200/50 transition-all"
     >
       {/* Background Icon Accent (Watermark 100px) */}
       <div 
-        className="absolute -right-4 -bottom-4 opacity-[0.05] pointer-events-none transform rotate-12 group-hover:rotate-0 group-hover:scale-110 group-hover:opacity-[0.1] transition-all duration-700 text-master-blue"
-        style={{ color: 'inherit' }}
+        className="absolute -right-4 -bottom-4 opacity-[0.05] pointer-events-none transform rotate-12 group-hover:scale-110 transition-all duration-700 text-[#111f42]"
       >
         <Icon size={100} strokeWidth={1} />
       </div>
 
-      <div className="flex justify-between items-start relative z-10 pt-2">
+      <div className="flex justify-between items-start relative z-10">
         <div className="space-y-1">
-          <h3 className="text-[12px] font-black text-[#111f42] uppercase tracking-[0.15em] leading-tight opacity-70">
+          <h3 className="text-[12px] font-black text-[#111f42] uppercase tracking-[0.15em] opacity-70">
             {displayLabel}
           </h3>
           <div className="flex items-baseline gap-2">
-            <div className="text-3xl font-black text-[#111f42] font-mono tracking-tighter leading-none group-hover:text-[#ab8a3b] transition-colors">
+            <div className="text-3xl font-black text-[#111f42] font-mono tracking-tighter leading-none group-hover:text-[#111f42]/80 transition-colors">
               {value}
             </div>
             {isTrendObject && (
@@ -80,12 +79,12 @@ export const KpiCard: React.FC<KpiCardProps> = ({
         </div>
       </div>
 
-      <div className="relative z-10 mt-4 flex flex-col gap-1">
+      <div className="relative z-10 mt-4">
         {subValue && (
-          <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">{subValue}</p>
+          <p className="text-[11px] font-medium text-slate-400 uppercase tracking-widest">{subValue}</p>
         )}
         {!isTrendObject && trend && (
-           <p className="text-[11px] font-black text-[#ab8a3b] uppercase tracking-widest leading-none mt-1">{trend as string}</p>
+           <p className="text-[11px] font-black text-[#111f42] uppercase tracking-widest leading-none mt-1">{trend as string}</p>
         )}
       </div>
     </motion.div>

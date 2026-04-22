@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { 
     LayoutGrid, List, BarChart2, Search, Plus, Armchair, ChevronLeft, ChevronRight, Filter, ChevronDown
 } from 'lucide-react';
+import { PageHeader } from '../../components/shared/PageHeader';
 import CatalogueGrid from './components/CatalogueGrid';
 import CatalogueTable from './components/CatalogueTable';
 import CatalogueDashboard from './components/CatalogueDashboard';
@@ -131,7 +132,7 @@ export default function FurnitureCatalogueApp() {
     };
 
     return (
-        <div className="flex-1 flex flex-col overflow-hidden animate-fade-in-up h-screen bg-[#F9F7F6]">
+        <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
             <style>{`
                 .wh-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
                 .wh-custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -159,29 +160,22 @@ export default function FurnitureCatalogueApp() {
             `}</style>
             
             {/* Header */}
-            <div className="px-8 pt-8 pb-2 flex flex-col md:flex-row justify-between items-center gap-6 flex-shrink-0 bg-[#F9F7F6]">
-                <div className="flex items-center gap-4 w-full md:w-auto">
-                    <div className="w-14 h-14 bg-white flex items-center justify-center rounded-2xl shadow-sm text-[#111f42] border border-slate-200 relative">
-                        <Armchair size={28} strokeWidth={2.5}/>
-                        <div className="absolute bottom-[14px] right-[14px] w-[6px] h-[6px] bg-[#ab8a3b] rounded-[1px]"></div>
+            <PageHeader
+                title="FURNITURE CATALOGUE"
+                subtitle="ฐานข้อมูลสินค้ามาตรฐาน (STD)"
+                icon={Armchair}
+                rightContent={
+                    <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl items-center flex-shrink-0 w-full md:w-auto overflow-hidden">
+                        <button onClick={() => { setViewMode('grid'); setCurrentPage(1); }} className={`px-5 py-2.5 text-[11px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'grid' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><LayoutGrid size={14} /> GRID</button>
+                        <button onClick={() => { setViewMode('list'); setCurrentPage(1); }} className={`px-5 py-2.5 text-[11px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'list' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><List size={14} /> LIST</button>
+                        <button onClick={() => setViewMode('dashboard')} className={`px-5 py-2.5 text-[11px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'dashboard' ? 'bg-[#1e293b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><BarChart2 size={14} /> DASHBOARD</button>
                     </div>
-                    <div>
-                        <h1 className="text-3xl font-black uppercase leading-none tracking-tight whitespace-nowrap">
-                            <span className="font-light text-[#111f42]">FURNITURE</span> <span className="font-black text-[#E3624A]">CATALOGUE</span>
-                        </h1>
-                        <p className="text-[11px] text-slate-500 uppercase tracking-widest mt-1.5 font-bold">ฐานข้อมูลสินค้ามาตรฐาน (STD)</p>
-                    </div>
-                </div>
-                <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl items-center flex-shrink-0 w-full md:w-auto overflow-hidden">
-                    <button onClick={() => { setViewMode('grid'); setCurrentPage(1); }} className={`px-5 py-2.5 text-[11px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'grid' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><LayoutGrid size={14} /> GRID</button>
-                    <button onClick={() => { setViewMode('list'); setCurrentPage(1); }} className={`px-5 py-2.5 text-[11px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><List size={14} /> LIST</button>
-                    <button onClick={() => setViewMode('dashboard')} className={`px-5 py-2.5 text-[11px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'dashboard' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><BarChart2 size={14} /> DASHBOARD</button>
-                </div>
-            </div>
+                }
+            />
 
             {/* Main Container */}
-            <main className="flex-1 overflow-y-auto wh-custom-scrollbar relative z-10 px-8 pt-4 pb-10 flex flex-col gap-4">
-                <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col overflow-hidden min-h-[600px]">
+            <main className="flex flex-col w-full px-0 gap-4 relative z-10">
+                <div className="bg-white shadow-sm flex flex-col min-h-[600px] w-full border border-slate-200 rounded-2xl overflow-hidden">
                     {viewMode !== 'dashboard' && (
                         <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
                             <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">

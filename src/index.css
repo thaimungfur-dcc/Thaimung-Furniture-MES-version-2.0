@@ -4,7 +4,8 @@
 @theme {
   --font-en: "JetBrains Mono", monospace;
   --font-th: "Noto Sans Thai", sans-serif;
-  --font-inter: "Inter", sans-serif;
+  --font-sans: "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
   --color-master-blue: #111f42;
   --color-master-gold: #ab8a3b;
@@ -16,70 +17,63 @@
 @layer base {
   * {
     @apply antialiased selection:bg-slate-200 selection:text-master-blue;
-    font-family: var(--font-en), var(--font-th), var(--font-inter) !important;
   }
 
   body {
-    @apply bg-[#F9F7F6] text-master-blue antialiased;
-    font-family: var(--font-en), var(--font-th), var(--font-inter) !important;
-  }
-
-  /* Force font consistency on all interactive tags as per request */
-  span, input, td, th, div, button, select, textarea, p, h1, h2, h3, h4, section, main, label, a {
-    font-family: var(--font-en), var(--font-th), var(--font-inter) !important;
+    @apply bg-[#F9F7F6] text-master-blue font-sans antialiased;
   }
 }
 
 /* Custom Scrollbar for consistent Look */
 @layer utilities {
-  /* Sidebar Specific Scrollbar (Dark Background) */
+  /* Sidebar Specific Scrollbar (Light Background for current Sidebar) */
   .sidebar-scrollbar::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
   }
   .sidebar-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
   .sidebar-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(17, 31, 66, 0.03);
     border-radius: 10px;
   }
   .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(17, 31, 66, 0.08);
   }
 
   /* Main Custom Scrollbar - for general use (Light Background) */
   .master-custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
   }
   .master-custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
   .master-custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(17, 31, 66, 0.03);
     border-radius: 10px;
     transition: all 0.3s ease;
   }
   .master-custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(17, 31, 66, 0.08);
   }
 }
 
 @layer base {
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(17, 31, 66, 0.03);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(17, 31, 66, 0.08);
   }
 }
 

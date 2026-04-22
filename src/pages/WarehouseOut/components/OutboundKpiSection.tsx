@@ -24,7 +24,7 @@ export const OutboundKpiSection: React.FC<OutboundKpiSectionProps> = ({ stats })
       <KpiCard 
         label="Pending Delivery" 
         value={stats.pendingDelivery} 
-        color="#ab8a3b" 
+        color="#111f42" 
         icon={Truck} 
         subValue="WAIT FOR SHIPPING" 
       />

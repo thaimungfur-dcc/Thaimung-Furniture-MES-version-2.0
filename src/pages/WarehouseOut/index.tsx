@@ -76,7 +76,7 @@ export default function WarehouseOut() {
     }, [historyLogs, activeWhTab, searchQuery, activeTab]);
 
     const filteredDeliveryOrders = useMemo(() => {
-        let res = deliveryOrders;
+        let res = deliveryOrders || [];
         if (statusFilter !== 'All') res = res.filter(o => o.status === statusFilter);
         if (searchQuery && activeTab === 'delivery') {
             const q = searchQuery.toLowerCase();
@@ -86,7 +86,7 @@ export default function WarehouseOut() {
     }, [deliveryOrders, statusFilter, searchQuery, activeTab]);
 
     const filteredMRPOrders = useMemo(() => {
-        let res = mrpOrders;
+        let res = mrpOrders || [];
         if (statusFilter !== 'All') res = res.filter(o => o.status === statusFilter);
         if (searchQuery && activeTab === 'mrp') {
             const q = searchQuery.toLowerCase();
@@ -96,16 +96,16 @@ export default function WarehouseOut() {
     }, [mrpOrders, statusFilter, searchQuery, activeTab]);
 
     const getCurrentData = () => {
-        if (activeTab === 'all') return filteredLogs;
-        if (activeTab === 'delivery') return filteredDeliveryOrders;
-        return filteredMRPOrders;
+        if (activeTab === 'all') return filteredLogs || [];
+        if (activeTab === 'delivery') return filteredDeliveryOrders || [];
+        return filteredMRPOrders || [];
     };
 
     const currentData = getCurrentData();
-    const totalPages = Math.ceil(currentData.length / itemsPerPage) || 1;
+    const totalPages = Math.ceil((currentData?.length || 0) / itemsPerPage) || 1;
     const paginatedData = useMemo(() => {
         const start = (currentPage - 1) * itemsPerPage;
-        return currentData.slice(start, start + itemsPerPage);
+        return (currentData || []).slice(start, start + itemsPerPage);
     }, [currentData, currentPage, itemsPerPage]);
 
     useEffect(() => {
@@ -113,11 +113,13 @@ export default function WarehouseOut() {
     }, [activeTab, activeWhTab, statusFilter, searchQuery]);
 
     const stats = useMemo(() => {
+        const dOrders = deliveryOrders || [];
+        const mOrders = mrpOrders || [];
         return {
             todayOut: 50,
-            pendingDelivery: deliveryOrders.filter(o => o.status !== 'Completed').length,
-            pendingMRP: mrpOrders.filter(o => o.status !== 'Completed').length,
-            completed: deliveryOrders.filter(o => o.status === 'Completed').length + mrpOrders.filter(o => o.status === 'Completed').length
+            pendingDelivery: dOrders.filter(o => o.status !== 'Completed').length,
+            pendingMRP: mOrders.filter(o => o.status !== 'Completed').length,
+            completed: dOrders.filter(o => o.status === 'Completed').length + mOrders.filter(o => o.status === 'Completed').length
         };
     }, [deliveryOrders, mrpOrders]);
 
@@ -397,7 +399,7 @@ export default function WarehouseOut() {
     };
 
     return (
-        <div className="flex flex-col flex-1 pb-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
+        <div className="flex flex-col flex-1 pb-10 animate-fade-in-up">
             <PageHeader
                 Icon={ArrowDownToLine}
                 title="WAREHOUSE OUT"
@@ -407,7 +409,7 @@ export default function WarehouseOut() {
             <main className="flex-1 relative z-10 pt-4 flex flex-col gap-6 no-print">
                 <OutboundKpiSection stats={stats} />
 
-                <div className="bg-white border-l-4 border-l-[#E3624A] flex flex-col min-h-[500px]">
+                <div className="bg-white rounded-2xl border border-slate-200 flex flex-col min-h-[500px] shadow-sm overflow-hidden">
                     <OutboundToolbar 
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
@@ -489,7 +491,7 @@ export default function WarehouseOut() {
                             <div key={p.sku} 
                                 onMouseDown={() => selectGlobalProduct(p)}
                                 className="px-4 py-2.5 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 group flex flex-col gap-0.5">
-                                <div className="text-[11px] font-black text-[#111f42] group-hover:text-[#ab8a3b] font-mono">{p.sku}</div>
+                                <div className="text-[11px] font-black text-[#111f42] group-hover:text-[#111f42] font-mono">{p.sku}</div>
                                 <div className="text-[10px] text-slate-500 font-medium truncate">{p.name}</div>
                             </div>
                         ))}

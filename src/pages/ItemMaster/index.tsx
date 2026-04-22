@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import Chart from 'chart.js/auto';
 import { useMasterData } from '../../context/MasterDataContext';
-import KpiCard from './components/KpiCard';
+import { KpiCard } from '../../components/shared/KpiCard';
 import ItemTable from './components/ItemTable';
 import ItemModal from './components/ItemModal';
 import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
@@ -172,7 +172,7 @@ export default function ItemMasterApp() {
                 .input-primary:focus { border-color: #ab8a3b; box-shadow: 0 0 0 2px rgba(171, 138, 59, 0.1); }
             `}</style>
 
-            <div className="flex flex-col w-full pb-10 border-l-4 border-l-[#111f42]">
+            <div className="flex flex-col w-full pb-10">
                 {/* Header Section */}
                 <PageHeader
                     title="ITEM CODE"
@@ -180,15 +180,15 @@ export default function ItemMasterApp() {
                     icon={Package}
                     rightContent={
                         <div className="flex items-center gap-3 w-full lg:w-auto">
-                            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-none overflow-hidden">
-                                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-black transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-widest rounded-none ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-xl overflow-hidden">
+                                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-black transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-widest rounded-lg ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
                                     <List size={14} /> MASTER LIST
                                 </button>
-                                <button onClick={() => setActiveTab('analytics')} className={`px-6 py-2.5 text-xs font-black transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-widest rounded-none ${activeTab === 'analytics' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                <button onClick={() => setActiveTab('analytics')} className={`px-6 py-2.5 text-xs font-black transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-widest rounded-lg ${activeTab === 'analytics' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
                                     <BarChart2 size={14} /> ANALYTICS
                                 </button>
                             </div>
-                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-none bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
+                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
                                 <HelpCircle size={20} />
                             </button>
                         </div>
@@ -200,23 +200,23 @@ export default function ItemMasterApp() {
                     
                     {/* KPI Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        <KpiCard title="Total Master Records" val={items.length} color="#111f42" IconComponent={Database} desc="All Items Registered" />
-                        <KpiCard title="Finished Goods" val={fgCount} color="#ab8a3b" IconComponent={Box} desc="Items Ready for Sale" />
-                        <KpiCard title="Raw Materials" val={rmCount} color="#10b981" IconComponent={Leaf} desc="Components & Materials" />
-                        <KpiCard title="New Registered" val={newCount} color="#E3624A" IconComponent={PlusCircle} desc="Registered This Month" />
+                        <KpiCard title="Total Master Records" value={items.length} color="#111f42" icon={Database} subValue="All Items Registered" />
+                        <KpiCard title="Finished Goods" value={fgCount} color="#ab8a3b" icon={Box} subValue="Items Ready for Sale" />
+                        <KpiCard title="Raw Materials" value={rmCount} color="#10b981" icon={Leaf} subValue="Components & Materials" />
+                        <KpiCard title="New Registered" value={newCount} color="#E3624A" icon={PlusCircle} subValue="Registered This Month" />
                     </div>
 
-                    {/* Table Section - Rounded-none */}
-                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full">
+                    {/* Table Section */}
+                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full rounded-2xl overflow-hidden shadow-sm">
                         {activeTab === 'list' && (
                             <>
                                 <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4 bg-slate-50/50">
                                     <div className="flex-1"></div>
                                     <div className="flex gap-2 shrink-0 ml-auto items-center">
-                                        <button onClick={() => setShowUploadModal(true)} className="px-5 py-2.5 rounded-none text-[12px] font-black bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-2 uppercase tracking-widest transition-all">
+                                        <button onClick={() => setShowUploadModal(true)} className="px-5 py-2.5 rounded-xl text-[12px] font-black bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-2 uppercase tracking-widest transition-all">
                                             <UploadCloud size={16} /> Upload
                                         </button>
-                                        <button onClick={() => openModal()} className="px-5 py-2.5 rounded-none text-[12px] font-black bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-[0.15em] transition-all hover:bg-[#1e346b]">
+                                        <button onClick={() => openModal()} className="px-5 py-2.5 rounded-xl text-[12px] font-black bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-[0.15em] transition-all hover:bg-[#1e346b]">
                                             <Plus size={16} className="text-[#ab8a3b]" /> NEW RECORD
                                         </button>
                                     </div>

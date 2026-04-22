@@ -3,8 +3,14 @@ import {
   Calendar,
   Kanban,
   Database,
-  HelpCircle
+  HelpCircle,
+  ShieldCheck, 
+  Receipt, 
+  ArrowUpCircle, 
+  ArrowDownCircle 
 } from 'lucide-react';
+import { PageHeader } from '../../components/shared/PageHeader';
+import { KpiCard } from '../../components/shared/KpiCard';
 import KanbanBoard from './components/KanbanBoard';
 import DataTable from './components/DataTable';
 import UserGuideDrawer from './components/UserGuideDrawer';
@@ -86,9 +92,8 @@ export default function VatManagement() {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   return (
-    <>
+    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
       <style>{`
-        * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         @keyframes fadeUp { from { opacity: 0; transform: translate(-50%, 5px); } to { opacity: 1; transform: translate(-50%, 0); } }
         .animate-fade-up { animation: fadeUp 0.2s ease-out forwards; }
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -97,96 +102,108 @@ export default function VatManagement() {
         .kanban-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
       `}</style>
       
-      <div className="min-h-screen p-4 md:p-6 transition-colors duration-500 text-[12px] bg-gradient-to-br from-[#f8fafc] via-[#f1f5f9] to-[#e2e8f0] flex flex-col">
-        <div className="w-full space-y-6 relative flex-1 flex flex-col h-full overflow-hidden">
-          
-          {/* Header */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 flex-shrink-0">
-            <div className="flex items-center gap-4 shrink-0">
-              <div className="relative w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg border-[3px] border-white/60 bg-clip-padding backdrop-blur-sm">
-                <svg width="0" height="0" className="absolute">
-                  <defs>
-                    <linearGradient id="dbTaxGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#1e293b" offset="0%" />
-                      <stop stopColor="#496ca8" offset="100%" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <Database size={24} strokeWidth={2.5} stroke="url(#dbTaxGrad)" />
+      {/* Header Section */}
+      <PageHeader
+        Icon={Receipt}
+        title="VAT & TAX MANAGEMENT"
+        subtitle="ระบบบริหารจัดการภาษีมูลค่าเพิ่มและรายงานภาษี (Tax Center)"
+        extra={
+          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+            <div className="flex items-center bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden h-10 transition-all focus-within:border-[#111f42]">
+              <div className="px-3 flex items-center text-slate-400">
+                <Calendar size={14} />
               </div>
-              <div className="flex flex-col justify-center">
-                <h1 className="text-2xl tracking-tight uppercase leading-none drop-shadow-sm">
-                  <span className="text-[#1e293b] font-light">TAX</span> <span className="text-[#496ca8] font-black">RECORDS</span>
-                </h1>
-                <p className="font-medium text-[12px] uppercase tracking-widest mt-1 text-[#475569] leading-none">
-                  ฐานข้อมูลภาษี (Read-Only Database)
-                </p>
-              </div>
+              <input 
+                type="month" 
+                value={selectedMonth} 
+                onChange={(e) => setSelectedMonth(e.target.value)} 
+                className="pr-4 py-2 text-[12px] font-bold text-[#111f42] outline-none cursor-pointer bg-transparent" 
+              />
             </div>
-            
-            <div className="flex items-center justify-end gap-2 w-full lg:w-auto overflow-x-auto custom-scrollbar pb-1">
-              <div className="flex items-center bg-white/80 backdrop-blur-md border border-white/50 rounded-lg overflow-hidden shadow-sm shrink-0">
-                <div className="px-2 py-1.5 bg-white/50 border-r border-white/50 text-[#496ca8]">
-                  <Calendar size={14} />
-                </div>
-                <input 
-                  type="month" 
-                  value={selectedMonth}
-                  onChange={(e) => setSelectedMonth(e.target.value)}
-                  className="px-2 py-1.5 text-[11px] font-bold text-[#223149] bg-transparent outline-none cursor-pointer hover:bg-white/50 transition-colors"
-                />
-              </div>
-
-              <div className="flex bg-white/80 backdrop-blur-md p-1 border border-white shadow-sm rounded-lg shrink-0">
-                <button 
-                  onClick={() => setMainTab('kanban')} 
-                  className="px-4 py-1.5 font-bold transition-all flex items-center gap-1.5 uppercase tracking-widest rounded text-[10px]"
-                  style={mainTab === 'kanban' ? { backgroundColor: '#1e293b', color: 'white' } : { color: '#64748b' }}
-                >
-                  <Kanban size={12} /> BOARD
-                </button>
-                <button 
-                  onClick={() => setMainTab('data')} 
-                  className="px-4 py-1.5 font-bold transition-all flex items-center gap-1.5 uppercase tracking-widest rounded text-[10px]"
-                  style={mainTab === 'data' ? { background: 'linear-gradient(to right, #1e293b, #496ca8)', color: 'white' } : { color: '#64748b' }}
-                >
-                  <Database size={12} /> DETAILED DATA
-                </button>
-              </div>
-
+            <div className="flex bg-white p-1 border border-slate-200 shadow-sm rounded-xl h-10">
               <button 
-                onClick={() => setIsGuideOpen(true)}
-                className="p-2 transition-all rounded-lg bg-white/80 backdrop-blur-md text-slate-500 border border-white shadow-sm hover:shadow shrink-0"
+                onClick={() => setMainTab('kanban')} 
+                className={`px-4 py-0 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] ${mainTab === 'kanban' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
               >
-                <HelpCircle size={16} />
+                <Kanban size={12} /> BOARD
+              </button>
+              <button 
+                onClick={() => setMainTab('data')} 
+                className={`px-4 py-0 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] ${mainTab === 'data' ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+              >
+                <Database size={12} /> TAX RECORDS
               </button>
             </div>
+            <button 
+              onClick={() => setIsGuideOpen(true)} 
+              className="w-10 h-10 flex items-center justify-center transition-all rounded-xl bg-white border border-slate-200 shadow-sm hover:bg-slate-100 text-slate-500"
+            >
+              <HelpCircle size={18} />
+            </button>
           </div>
+        }
+      />
 
-          {mainTab === 'kanban' && <KanbanBoard taxRecords={taxRecords} />}
-          
-          {mainTab === 'data' && (
-            <DataTable 
-              filteredData={filteredData}
-              totalBase={totalBase}
-              totalVat={totalVat}
-              subTab={subTab}
-              setSubTab={setSubTab}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              currentItems={currentItems}
-              totalPages={totalPages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              itemsPerPage={itemsPerPage}
-              setItemsPerPage={setItemsPerPage}
-            />
-          )}
-
-          <UserGuideDrawer isGuideOpen={isGuideOpen} setIsGuideOpen={setIsGuideOpen} />
-
-        </div>
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
+        <KpiCard 
+          title="Total Base Amount"
+          value={`฿${totalBase.toLocaleString()}`}
+          icon={Receipt}
+          color="#111f42"
+          subValue="Revenue excluding tax"
+        />
+        <KpiCard 
+          title="Output VAT (Sales)"
+          value={`฿${(filteredData.filter((i: any)=>i.type==='Sales').reduce((s: number,i: any)=>s+i.vatAmount,0)).toLocaleString()}`}
+          icon={ArrowUpCircle}
+          color="#ce5a43"
+          subValue="Tax on sales collection"
+        />
+        <KpiCard 
+          title="Input VAT (Purchase)"
+          value={`฿${(filteredData.filter((i: any)=>i.type==='Purchase').reduce((s: number,i: any)=>s+i.vatAmount,0)).toLocaleString()}`}
+          icon={ArrowDownCircle}
+          color="#496ca8"
+          subValue="Tax from procurement"
+        />
+        <KpiCard 
+          title="Net Tax Position"
+          value={`฿${totalVat.toLocaleString()}`}
+          icon={ShieldCheck}
+          color="#10b981"
+          subValue="Tax payable or claimable"
+        />
       </div>
-    </>
+
+      {mainTab === 'kanban' && (
+        <KanbanBoard 
+          taxRecords={taxRecords} 
+        />
+      )}
+
+      {mainTab === 'data' && (
+        <DataTable 
+          filteredData={filteredData}
+          totalBase={totalBase}
+          totalVat={totalVat}
+          subTab={subTab}
+          setSubTab={setSubTab}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          currentItems={currentItems}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+        />
+      )}
+
+      <UserGuideDrawer 
+        isGuideOpen={isGuideOpen}
+        setIsGuideOpen={setIsGuideOpen}
+      />
+    </div>
   );
 }

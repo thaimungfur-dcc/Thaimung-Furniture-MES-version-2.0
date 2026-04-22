@@ -298,6 +298,7 @@ export default function WarehouseInApp() {
     const submitReceive = async (isComplete = false) => {
         const timestamp = new Date().toLocaleString('en-GB').replace(',', '');
         try {
+            setIsSubmitting(true);
             if (modalType === 'MANUAL') {
                 if (form.manualItems.length === 0 || !form.manualItems[0].sku) return showToast('Error', 'กรุณาระบุข้อมูลสินค้า', 'error');
                 for (let i = 0; i < form.manualItems.length; i++) {
@@ -311,9 +312,10 @@ export default function WarehouseInApp() {
                     });
                 }
             } else {
+                if (!selectedItem) throw new Error("No item selected for receiving");
                 if (form.qty <= 0) return showToast('Error', 'กรุณาระบุจำนวนที่รับเข้า', 'error');
                 const newLog = {
-                    id: Date.now(), transId: `GR${Date.now().toString().slice(-6)}`,
+                    id: Date.now().toString(), transId: `GR${Date.now().toString().slice(-6)}`,
                     receiveFrom: form.receiveType, refNo: form.refNo, date: timestamp,
                     sku: selectedItem.sku, itemName: selectedItem.productName || selectedItem.itemName,
                     qty: Number(form.qty), location: form.location, warehouseName: form.warehouseName,
@@ -327,7 +329,7 @@ export default function WarehouseInApp() {
 
                 if (modalType === 'JO') {
                     await updateJO(selectedItem.id, { received: newReceived, status: newStatus });
-                } else {
+                } else if (modalType === 'PO') {
                     await updatePO(selectedItem.id, { received: newReceived, status: newStatus });
                 }
             }
@@ -336,6 +338,8 @@ export default function WarehouseInApp() {
         } catch (error) {
             console.error('Error submitting receive:', error);
             showToast('Error', 'ไม่สามารถบันทึกข้อมูลได้', 'error');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -485,13 +489,13 @@ export default function WarehouseInApp() {
 
 
     return (
-        <div className="flex flex-col w-full pb-10 animate-in fade-in slide-in-from-bottom-2 duration-500 border-l-4 border-l-[#E3624A]">
+        <div className="flex flex-col w-full pb-10 animate-fade-in-up">
             {/* Header */}
             <PageHeader
-                Icon={ArrowDownToLine}
+                icon={ArrowDownToLine}
                 title="WAREHOUSE IN"
                 subtitle="Stock Receiving System"
-                extra={
+                rightContent={
                     <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
                         <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm mr-1 h-10 px-3">
                             <Calendar size={14} className="text-slate-400 mr-2" />
@@ -503,10 +507,10 @@ export default function WarehouseInApp() {
                             />
                         </div>
                         <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl h-10 overflow-hidden font-sans">
-                            <button onClick={() => {setActiveTab('all'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest ${activeTab === 'all' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>ALL RECEIVE</button>
-                            <button onClick={() => {setActiveTab('pending_jo'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest ${activeTab === 'pending_jo' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>PENDING JO</button>
-                            <button onClick={() => {setActiveTab('pending_po'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest ${activeTab === 'pending_po' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>PENDING PO</button>
-                            <button onClick={() => {setActiveTab('report'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest flex items-center gap-2 ${activeTab === 'report' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}><FileBarChart size={14} /> REPORT</button>
+                            <button onClick={() => {setActiveTab('all'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest ${activeTab === 'all' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>ALL RECEIVE</button>
+                            <button onClick={() => {setActiveTab('pending_jo'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest ${activeTab === 'pending_jo' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>PENDING JO</button>
+                            <button onClick={() => {setActiveTab('pending_po'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest ${activeTab === 'pending_po' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>PENDING PO</button>
+                            <button onClick={() => {setActiveTab('report'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest flex items-center gap-2 ${activeTab === 'report' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><FileBarChart size={14} /> REPORT</button>
                         </div>
                         <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm"><HelpCircle size={18}/></button>
                     </div>
@@ -520,7 +524,7 @@ export default function WarehouseInApp() {
                         {/* KPI Cards */}
                         <InboundKpiSection stats={stats} />
 
-                        <div className="bg-white border-l-4 border-l-[#ab8a3b] flex flex-col min-h-[500px] relative">
+                        <div className="bg-white flex flex-col min-h-[500px] relative rounded-2xl border border-slate-200 shadow-sm overflow-hidden mt-6">
                             {/* Toolbar */}
                             <InboundToolbar 
                                 activeTab={activeTab}
@@ -713,7 +717,7 @@ export default function WarehouseInApp() {
             {/* Loading Overlay */}
             {(loading || isSubmitting) && (
                 <div className="fixed inset-0 z-[20000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
-                    <Loader2 className="animate-spin text-[#ab8a3b]" size={40} />
+                    <Loader2 className="animate-spin text-[#111f42]" size={40} />
                     <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[10px] animate-pulse font-mono">Syncing Ledger...</p>
                 </div>
             )}

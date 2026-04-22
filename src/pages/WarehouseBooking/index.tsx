@@ -6,7 +6,7 @@ import {
 
 import { PageHeader } from '../../components/shared/PageHeader';
 import NotificationModal from './components/NotificationModal';
-import KpiCard from './components/KpiCard';
+import { KpiCard } from '../../components/shared/KpiCard';
 import PaginationControls from './components/PaginationControls';
 import AllocationModal from './components/AllocationModal';
 import TagPrintModal from './components/TagPrintModal';
@@ -238,7 +238,7 @@ export default function WarehouseBooking() {
                 .minimal-th { 
                     font-size: 11px !important; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; 
                     padding: 14px 16px; font-weight: 800; background-color: #111f42 !important; 
-                    border-bottom: 2.5px solid #ab8a3b !important; white-space: nowrap; cursor: pointer; transition: background-color 0.2s;
+                    white-space: nowrap; cursor: pointer; transition: background-color 0.2s;
                 }
                 .minimal-th:hover { background-color: #1e346b !important; }
                 .minimal-td { padding: 12px 16px; vertical-align: middle; color: #111f42; font-size: 12.5px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
@@ -250,64 +250,57 @@ export default function WarehouseBooking() {
                 
                 .modal-overlay { position: fixed; inset: 0; background: rgba(17, 31, 66, 0.6); backdrop-filter: blur(4px); z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 1rem; }
                 .input-primary { width: 100%; background: white; border: 1px solid #E2E8F0; border-radius: 0.5rem; padding: 10px 14px; font-size: 13px; color: #111f42; outline: none; transition: border 0.2s; font-weight: bold; }
-                .input-primary:focus { border-color: #ab8a3b; box-shadow: 0 0 0 3px rgba(171, 138, 59, 0.08); }
+                .input-primary:focus { border-color: #111f42; box-shadow: 0 0 0 3px rgba(17,31,66,0.08); }
             `}</style>
 
-            {/* Header */}
-            <header className="px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-6 flex-shrink-0 z-10 bg-[#F9F7F6] no-print border-b border-slate-200">
-                <div className="flex items-center gap-4 w-full md:w-auto">
-                    <div className="w-12 h-12 bg-white flex items-center justify-center rounded-xl shadow-sm border border-slate-200 relative shrink-0">
-                        <PackageCheck size={24} className="text-[#111f42]" strokeWidth={2} />
-                        <div className="absolute bottom-[10px] right-[10px] w-1.5 h-1.5 bg-[#ab8a3b] rounded-full"></div>
-                    </div>
-                    <div>
-                        <h1 className="text-2xl tracking-tight whitespace-nowrap uppercase leading-none font-mono">
-                            <span className="font-light text-[#111f42]">WAREHOUSE</span> <span className="font-black text-[#E3624A]">BOOKING</span>
-                        </h1>
-                        <p className="text-slate-500 text-[10px] mt-1 font-bold uppercase tracking-widest opacity-80 font-mono">Stock Reservation Hub</p>
-                    </div>
-                </div>
+            <div className="sys-page-layout flex flex-col h-full overflow-hidden space-y-6 flex-1 bg-[#F9F7F6] pt-2">
+                {/* Header */}
+                <PageHeader 
+                    title="WAREHOUSE BOOKING" 
+                    subtitle="Stock Reservation Hub"
+                    icon={PackageCheck}
+                    rightContent={
+                        <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
+                            <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm mr-1 h-10 px-3">
+                                <Calendar size={14} className="text-slate-400 mr-2" />
+                                <input type="month" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)} className="text-[12px] font-bold text-[#111f42] outline-none cursor-pointer h-full font-mono bg-transparent" />
+                            </div>
 
-                <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
-                    <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm mr-1 h-10 px-3">
-                        <Calendar size={14} className="text-slate-400 mr-2" />
-                        <input type="month" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)} className="text-[12px] font-bold text-[#111f42] outline-none cursor-pointer h-full font-mono bg-transparent" />
-                    </div>
-
-                    <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl overflow-hidden h-10 shrink-0">
-                        <button onClick={() => {setActiveTab('pending'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg flex items-center gap-2 ${activeTab === 'pending' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><Clock size={14}/> PENDING</button>
-                        <button onClick={() => {setActiveTab('report'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg flex items-center gap-2 ${activeTab === 'report' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><FileBarChart size={14}/> REPORT</button>
-                    </div>
-                    
-                    <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm"><HelpCircle size={20}/></button>
-                </div>
-            </header>
+                            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl overflow-hidden h-10 shrink-0">
+                                <button onClick={() => {setActiveTab('pending'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg flex items-center gap-2 ${activeTab === 'pending' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><Clock size={14}/> PENDING</button>
+                                <button onClick={() => {setActiveTab('report'); setCurrentPage(1);}} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg flex items-center gap-2 ${activeTab === 'report' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><FileBarChart size={14}/> REPORT</button>
+                            </div>
+                            
+                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm"><HelpCircle size={20}/></button>
+                        </div>
+                    }
+                />
 
             <main className="flex-1 relative z-10 pt-2 pb-8 flex flex-col gap-6 no-print">
                 {activeTab === 'pending' ? (
                     <div className="flex flex-col gap-6 animate-fade-in-up flex-1">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 shrink-0 mt-4">
-                            <KpiCard title="Reserved Qty" val={stats.totalReserved} color="#111f42" Icon={BoxIcon} desc="Inventory Allocated" />
-                            <KpiCard title="New Orders" val={stats.notStarted} color="#72A09E" Icon={Calendar} desc="Waiting Process" />
-                            <KpiCard title="In Progress" val={stats.inProgress} color="#ab8a3b" Icon={Clock} desc="Partial Allocation" />
-                            <KpiCard title="Completed" val={stats.completed} color="#10b981" Icon={CheckCircle2} desc="Finished Jobs" />
+                            <KpiCard title="Reserved Qty" value={stats.totalReserved} color="#111f42" icon={BoxIcon} subValue="Inventory Allocated" />
+                            <KpiCard title="New Orders" value={stats.notStarted} color="#72A09E" icon={Calendar} subValue="Waiting Process" />
+                            <KpiCard title="In Progress" value={stats.inProgress} color="#ab8a3b" icon={Clock} subValue="Partial Allocation" />
+                            <KpiCard title="Completed" value={stats.completed} color="#10b981" icon={CheckCircle2} subValue="Finished Jobs" />
                         </div>
 
-                        <div className="bg-white border border-slate-200 flex flex-col rounded-none shadow-sm flex-1 min-h-[550px] relative overflow-visible">
+                        <div className="bg-white border border-slate-200 flex flex-col rounded-2xl shadow-sm flex-1 min-h-[550px] relative overflow-hidden">
                             {/* Toolbar */}
                             <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
                                 <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
                                     <div className="flex bg-white p-1 rounded-lg border border-slate-200 shadow-sm shrink-0">
                                         {statuses.map(s => (
                                             <button key={s} onClick={() => {setStatusFilter(s); setCurrentPage(1);}} 
-                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all uppercase ${statusFilter === s ? 'bg-[#111f42] text-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all uppercase ${statusFilter === s ? 'bg-[#111f42] text-white' : 'text-slate-500 hover:bg-slate-50'}`}>
                                                 {s}
                                             </button>
                                         ))}
                                     </div>
                                     <div className="relative w-full lg:w-72 shrink-0 h-10">
                                         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search Booking, SKU or SO..." className="w-full h-full bg-white border border-slate-200 rounded-xl pl-9 text-[12px] outline-none font-bold focus:border-[#ab8a3b] h-[40px]" />
+                                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search Booking, SKU or SO..." className="w-full h-full bg-white border border-slate-200 rounded-xl pl-9 text-[12px] outline-none font-bold focus:border-[#111f42] h-[40px]" />
                                     </div>
                                 </div>
                             </div>
@@ -329,7 +322,7 @@ export default function WarehouseBooking() {
                                     <tbody className="divide-y divide-slate-100 bg-white text-[12px]">
                                         {paginatedData.map(b => (
                                             <tr key={b.id} className="hover:bg-slate-50 transition-colors group">
-                                                <td className="minimal-td font-black text-[#ab8a3b] font-mono leading-none">{String(b.bookingId)}</td>
+                                                <td className="minimal-td font-black text-[#111f42] font-mono leading-none">{String(b.bookingId)}</td>
                                                 <td className="minimal-td">
                                                     <div className="font-bold text-[#111f42] text-[12px]">{String(b.customer)}</div>
                                                     <div className="text-[10px] text-slate-400 font-mono font-bold mt-1 uppercase leading-none">SO: {String(b.soRef)}</div>
@@ -351,10 +344,10 @@ export default function WarehouseBooking() {
                                                 <td className="minimal-td text-center">
                                                     <div className="flex justify-center items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity font-bold">
                                                         <button onClick={() => {setSelectedItem(b); setShowBookingPreview(true);}} className="p-1.5 bg-white border border-slate-200 text-slate-400 hover:text-blue-600 rounded-lg shadow-sm" title="Preview Detail"><Eye size={14} /></button>
-                                                        <button onClick={() => openTagModal(b)} className="p-1.5 bg-white border border-slate-200 text-slate-400 hover:text-[#ab8a3b] rounded-lg shadow-sm" title="Print Tag"><Tag size={14} /></button>
+                                                        <button onClick={() => openTagModal(b)} className="p-1.5 bg-white border border-slate-200 text-slate-400 hover:text-[#111f42] rounded-lg shadow-sm" title="Print Tag"><Tag size={14} /></button>
                                                         {b.status !== 'Completed' && (
                                                             <>
-                                                                <button onClick={() => openBookingModal(b)} className="p-1.5 bg-white border border-slate-200 text-[#ab8a3b] hover:text-white hover:bg-[#ab8a3b] rounded-lg shadow-sm" title="Allocate Stock"><Download size={14}/></button>
+                                                                <button onClick={() => openBookingModal(b)} className="p-1.5 bg-white border border-slate-200 text-[#111f42] hover:text-white hover:bg-[#111f42] rounded-lg shadow-sm" title="Allocate Stock"><Download size={14}/></button>
                                                                 {b.status === 'In Progress' && (
                                                                     <button onClick={() => handleForceClose(b)} className="p-1.5 bg-white border border-slate-200 text-rose-400 hover:text-white hover:bg-rose-500 rounded-lg shadow-sm" title="Force Close"><PowerOff size={14}/></button>
                                                                 )}
@@ -372,11 +365,11 @@ export default function WarehouseBooking() {
                         </div>
                     </div>
                 ) : (
-                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] animate-fade-in-up rounded-none shadow-sm relative mt-4">
+                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] animate-fade-in-up rounded-2xl shadow-sm relative mt-4 overflow-hidden">
                         <div className="px-6 py-5 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
                             <div className="flex flex-1 items-center gap-4 w-full overflow-x-auto no-scrollbar">
                                 <div className="flex items-center gap-3 mr-2 shrink-0">
-                                    <div className="w-1.5 h-5 bg-[#ab8a3b] rounded-full shadow-sm"></div>
+                                    <div className="w-1.5 h-5 bg-[#111f42] rounded-full shadow-sm"></div>
                                     <h2 className="text-sm font-black text-[#111f42] uppercase tracking-widest leading-none">Booking Report</h2>
                                 </div>
                                 <div className="flex items-center gap-2 shrink-0">
@@ -387,10 +380,10 @@ export default function WarehouseBooking() {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono">To</label>
                                     <input type="date" value={reportDateRange.end} onChange={(e) => setReportDateRange({...reportDateRange, end: e.target.value})} className="input-primary w-40 h-9 py-0 font-bold" />
                                 </div>
-                                <button onClick={generateReport} className="px-6 py-2 bg-[#111f42] text-[#ab8a3b] rounded-lg font-black text-[10px] shadow-md flex items-center gap-2 uppercase tracking-widest hover:brightness-110 transition-all font-mono shrink-0">GENERATE</button>
+                                <button onClick={generateReport} className="px-6 py-2 bg-[#111f42] text-white rounded-lg font-black text-[10px] shadow-md flex items-center gap-2 uppercase tracking-widest hover:brightness-110 transition-all font-mono shrink-0">GENERATE</button>
                             </div>
                             {reportData.length > 0 && (
-                                <button onClick={() => setShowReportPreview(true)} className="px-6 py-2 bg-[#ab8a3b] text-white text-[10px] font-black rounded-lg shadow-md uppercase transition-all flex items-center gap-2 tracking-widest font-mono shrink-0 hover:bg-[#917532]">
+                                <button onClick={() => setShowReportPreview(true)} className="px-6 py-2 bg-[#111f42] text-white text-[10px] font-black rounded-lg shadow-md uppercase transition-all flex items-center gap-2 tracking-widest font-mono shrink-0 hover:bg-[#0a1229]">
                                     <Printer size={14} /> PREVIEW & PRINT
                                 </button>
                             )}
@@ -477,10 +470,11 @@ export default function WarehouseBooking() {
             
             {loading && (
                 <div className="fixed inset-0 z-[100000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in font-mono">
-                    <Loader2 className="animate-spin text-[#ab8a3b]" size={48} />
+                    <Loader2 className="animate-spin text-[#111f42]" size={48} />
                     <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Inventory...</p>
                 </div>
             )}
         </div>
-    );
+    </div>
+);
 }

@@ -93,7 +93,6 @@ export default function SystemConfig() {
     return (
         <div className="pt-8 pb-10 flex flex-col">
             <style>{`
-                * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
             `}</style>
             
             <div className="mb-6">

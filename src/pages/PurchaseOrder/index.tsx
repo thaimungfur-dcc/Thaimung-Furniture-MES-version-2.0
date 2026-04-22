@@ -16,7 +16,8 @@ import {
   CheckCircle
 } from 'lucide-react';
 
-import PoKpiCard from './components/PoKpiCard';
+import { PageHeader } from '../../components/shared/PageHeader';
+import { KpiCard } from '../../components/shared/KpiCard';
 import PoKanbanBoard from './components/PoKanbanBoard';
 import PoPrWaitingTable from './components/PoPrWaitingTable';
 import PoTable from './components/PoTable';
@@ -238,9 +239,8 @@ export default function PurchaseOrder() {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-500 text-[12px] flex flex-col bg-[#F7F5F2]">
+    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
       <style>{`
-        * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .kanban-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
         @media print {
@@ -248,96 +248,86 @@ export default function PurchaseOrder() {
           .no-print { display: none !important; }
         }
       `}</style>
-      
-      <div className="w-full space-y-6 relative flex-1 flex flex-col pt-8 px-8 pb-10">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 no-print flex-shrink-0">
-          <div className="flex items-center gap-5">
-            <div className="w-14 h-14 bg-white text-[#111f42] flex items-center justify-center shadow-md flex-shrink-0 rounded-2xl border border-slate-200">
-              <ShoppingBag size={28} />
-            </div>
-            <div className="flex flex-col justify-center">
-              <h1 className="text-3xl tracking-tight uppercase leading-none">
-                <span className="text-[#b84530] font-black">PURCHASE</span> <span className="text-[#111f42] font-semibold">ORDER</span>
-              </h1>
-              <p className="font-medium text-[14px] uppercase tracking-widest mt-1.5 text-slate-500 leading-none">
-                ระบบสั่งซื้อสินค้าและวัสดุ (PO)
-              </p>
-            </div>
-          </div>
-          
+
+      {/* Header Section */}
+      <PageHeader 
+        Icon={ShoppingBag}
+        title="PURCHASE ORDER"
+        subtitle="ระบบสั่งซื้อสินค้าและวัสดุ (PO)"
+        extra={
           <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-            <div className="flex items-center bg-white border border-slate-200 rounded-lg shadow-sm">
-              <div className="px-3 py-2.5 bg-slate-50 border-r border-slate-200 text-slate-500">
+            <div className="flex items-center bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden h-10 transition-all focus-within:border-[#111f42]">
+              <div className="px-3 flex items-center text-slate-400">
                 <Calendar size={14} />
               </div>
               <input 
                 type="month" 
                 value={selectedMonth} 
                 onChange={(e) => setSelectedMonth(e.target.value)} 
-                className="px-3 py-2 text-[12px] font-bold text-[#111f42] outline-none hover:bg-slate-50 cursor-pointer" 
+                className="pr-4 py-2 text-[12px] font-bold text-[#111f42] outline-none cursor-pointer bg-transparent" 
               />
             </div>
-            <div className="flex bg-white p-1 border border-slate-200 shadow-sm rounded-lg">
+            <div className="flex bg-white p-1 border border-slate-200 shadow-sm rounded-xl h-10">
               <button 
                 onClick={() => setActiveTab('kanban')} 
-                className={`px-5 py-2.5 font-semibold transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${activeTab === 'kanban' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                className={`px-4 py-0 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] ${activeTab === 'kanban' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
               >
                 <Kanban size={14} /> BOARD
               </button>
               <button 
                 onClick={() => setActiveTab('pending')} 
-                className={`px-5 py-2.5 font-semibold transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${activeTab === 'pending' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                className={`px-4 py-0 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] ${activeTab === 'pending' ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
               >
                 <FileClock size={14} /> PR WAITING
               </button>
               <button 
                 onClick={() => setActiveTab('list')} 
-                className={`px-5 py-2.5 font-semibold transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${activeTab === 'list' ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                className={`px-4 py-0 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] ${activeTab === 'list' ? 'bg-[#1c213f] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
               >
                 <List size={14} /> PO LIST
               </button>
             </div>
             <button 
               onClick={() => setIsGuideOpen(true)} 
-              className="p-2.5 transition-all rounded-lg bg-white border border-slate-200 shadow-sm hover:bg-slate-100"
+              className="w-10 h-10 flex items-center justify-center transition-all rounded-xl bg-white border border-slate-200 shadow-sm hover:bg-slate-100 text-slate-500"
             >
               <HelpCircle size={18} />
             </button>
           </div>
-        </div>
+        }
+      />
 
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 no-print animate-in fade-in duration-500">
-          <PoKpiCard 
-            title="PR to Process"
-            value={filteredPendingPRs.length}
-            icon={FileClock}
-            color="#f59e0b"
-            bgColor="#fffbeb"
-          />
-          <PoKpiCard 
-            title="Open POs"
-            value={filteredPOList.filter(p=>p.status!=='Completed').length}
-            icon={Truck}
-            color="#3d97bd"
-            bgColor="#f0f9ff"
-          />
-          <PoKpiCard 
-            title="Completed"
-            value={filteredPOList.filter(p=>p.status==='Completed').length}
-            icon={CheckSquare}
-            color="#849a28"
-            bgColor="#f7fee7"
-          />
-          <PoKpiCard 
-            title="Total Spend (Mo)"
-            value={formatCurrency(filteredPOList.reduce((acc, p) => acc + p.grandTotal, 0))}
-            icon={Coins}
-            color="#E3624A"
-            bgColor="#fef2f2"
-          />
-        </div>
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
+        <KpiCard 
+          title="PR to Process"
+          value={filteredPendingPRs.length}
+          icon={FileClock}
+          color="#f59e0b"
+          subValue="Waiting for PO Generation"
+        />
+        <KpiCard 
+          title="Open POs"
+          value={filteredPOList.filter(p=>p.status!=='Completed' && p.status!=='Rejected').length}
+          icon={Truck}
+          color="#3d97bd"
+          subValue="Active Delivery Tracking"
+        />
+        <KpiCard 
+          title="Completed"
+          value={filteredPOList.filter(p=>p.status==='Completed').length}
+          icon={CheckSquare}
+          color="#849a28"
+          subValue="Finished Procurement"
+        />
+        <KpiCard 
+          title="Total Spend (Mo)"
+          value={formatCurrency(filteredPOList.reduce((acc, p) => acc + p.grandTotal, 0))}
+          icon={Coins}
+          color="#E3624A"
+          subValue="Total Monthly Expenditure"
+        />
+      </div>
 
         {/* Kanban View */}
         {activeTab === 'kanban' && (
@@ -459,6 +449,5 @@ export default function PurchaseOrder() {
           </>
         )}
       </div>
-    </div>
   );
 }

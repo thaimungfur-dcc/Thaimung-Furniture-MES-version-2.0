@@ -185,7 +185,6 @@ export default function NcControl() {
   return (
     <div className="transition-colors duration-500 text-[12px] flex flex-col bg-[#F7F5F2] pt-8 pb-10">
       <style>{`
-        * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .kanban-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
         @media print {

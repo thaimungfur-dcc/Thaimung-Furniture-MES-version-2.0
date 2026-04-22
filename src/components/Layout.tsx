@@ -14,11 +14,6 @@ import {
 } from 'lucide-react';
 
 export const menuModules = [
-  { name: 'MES_CALENDAR', label: 'MES Calendar', icon: Calendar, path: '/calendar', subItems: [
-    { label: 'Factory Schedule', path: '/factory-schedule' },
-    { label: 'Maintenance Calendar', path: '/maintenance-calendar' },
-    { label: 'Shift Planning', path: '/shift-planning' }
-  ]},
   { name: 'SALE', label: 'Sale', icon: ShoppingCart, path: '/sale', subItems: [
     { label: 'Catalogue', path: '/catalogue' },
     { label: 'Orders', path: '/sale' },
@@ -111,7 +106,7 @@ export default function Layout() {
     primary: '#111f42',     // Navy
     accent: '#E3624A',      // Terracotta
     deepRed: '#952425',     // Dark Red
-    gold: '#ab8a3b',        // Gold
+    gold: '#111f42',        // Changed from gold to navy
     success: '#10b981',     // Green
     warning: '#f59e0b',     // Amber
     danger: '#ef4444',      // Red
@@ -128,7 +123,7 @@ export default function Layout() {
       
       {/* Demo Mode Banner */}
       {isDemoMode && (
-        <div className="bg-[#ab8a3b] text-white py-2 px-6 flex items-center justify-between z-[100] relative shadow-lg no-print">
+        <div className="bg-[#111f42] text-white py-2 px-6 flex items-center justify-between z-[100] relative shadow-lg no-print">
           <div className="flex items-center gap-3">
             <AlertTriangle size={18} className="animate-pulse" />
             <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em]">
@@ -173,6 +168,16 @@ export default function Layout() {
                 {isSidebarOpen && <span className="ml-4 truncate">CONTROL CENTER</span>}
               </button>
 
+              <div className="mb-6">
+                <button 
+                  onClick={() => navigate('/calendar')}
+                  className={`w-full flex items-center h-[44px] rounded-lg transition-all text-sm uppercase tracking-wide group relative overflow-hidden ${isSidebarOpen ? 'px-4 justify-start' : 'justify-center'} ${location.pathname === '/calendar' ? 'bg-gradient-to-r from-[#952425] to-[#E3624A] text-white font-bold shadow-lg shadow-[#952425]/20' : 'text-white/70 hover:bg-white/5 font-medium hover:font-semibold'}`}
+                >
+                  <Calendar size={20} className={`shrink-0 transition-colors ${location.pathname === '/calendar' ? 'text-white' : 'text-[#E3624A]/80 group-hover:text-white'}`} />
+                  {isSidebarOpen && <span className="ml-3.5 truncate">MES Calendar</span>}
+                </button>
+              </div>
+
               <div className="pb-4">
                 <p className={`text-[9px] font-black tracking-[0.4em] text-[#E3624A]/60 mb-4 px-4 uppercase ${!isSidebarOpen && 'hidden'}`}>
                   OPERATIONAL MODULES
@@ -187,7 +192,8 @@ export default function Layout() {
                         onClick={() => {
                           if (!isSidebarOpen) setIsSidebarOpen(true);
                           setExpandedModule(isExpanded ? null : module.name);
-                          navigate(module.path);
+                          // User wants to stay on current page if only root is selected and no content exists
+                          // navigate(module.path); 
                         }}
                         className={`w-full flex items-center h-[44px] rounded-lg transition-all text-sm uppercase tracking-wide group relative overflow-hidden ${isSidebarOpen ? 'px-4 justify-between' : 'justify-center'} ${isActive ? 'bg-gradient-to-r from-[#952425] to-[#E3624A] text-white font-bold shadow-lg shadow-[#952425]/20' : 'text-white/70 hover:bg-white/5 font-medium hover:font-semibold'}`}
                       >
@@ -297,9 +303,9 @@ export default function Layout() {
               <div className="flex items-center justify-center flex-wrap gap-x-4 gap-y-1 text-[11px] font-medium text-slate-500">
                 <span>System by <span className="font-black text-master-blue">T All Intelligence</span></span>
                 <span className="text-slate-300/60 leading-none">|</span>
-                <span className="flex items-center gap-1.5"><Phone size={12} className="text-master-gold" /> 082-5695654</span>
+                <span className="flex items-center gap-1.5"><Phone size={12} className="text-master-blue" /> 082-5695654</span>
                 <span className="text-slate-300/60 leading-none">|</span>
-                <span className="flex items-center gap-1.5"><Mail size={12} className="text-master-gold" /> tallintelligence.ho@gmail.com</span>
+                <span className="flex items-center gap-1.5"><Mail size={12} className="text-master-blue" /> tallintelligence.ho@gmail.com</span>
               </div>
             </div>
           </footer>

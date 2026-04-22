@@ -36,13 +36,13 @@ export const OutboundToolbar: React.FC<OutboundToolbarProps> = ({
     <div className="flex flex-col gap-4">
       {/* Tab Switcher Area */}
       <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit rounded-xl overflow-hidden font-sans no-print">
-        <button onClick={() => setActiveTab('all')} className={`px-6 py-2 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg ${activeTab === 'all' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>
+        <button onClick={() => setActiveTab('all')} className={`px-6 py-2 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg ${activeTab === 'all' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
           <LayoutList size={14} /> ALL OUTBOUND
         </button>
-        <button onClick={() => setActiveTab('delivery')} className={`px-6 py-2 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg ${activeTab === 'delivery' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>
+        <button onClick={() => setActiveTab('delivery')} className={`px-6 py-2 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg ${activeTab === 'delivery' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
           <Truck size={14} /> DELIVERY LIST
         </button>
-        <button onClick={() => setActiveTab('mrp')} className={`px-6 py-2 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg ${activeTab === 'mrp' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>
+        <button onClick={() => setActiveTab('mrp')} className={`px-6 py-2 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg ${activeTab === 'mrp' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
           <PackageMinus size={14} /> MRP LIST (RM)
         </button>
       </div>
@@ -84,7 +84,7 @@ export const OutboundToolbar: React.FC<OutboundToolbarProps> = ({
               value={searchQuery} 
               onChange={(e) => setSearchQuery(e.target.value)} 
               placeholder="Search SKU / Item / Trx..." 
-              className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[11px] outline-none focus:border-[#ab8a3b] font-black h-10 uppercase tracking-widest"
+              className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[11px] outline-none focus:border-[#111f42] font-black h-10 uppercase tracking-widest"
             />
           </div>
         </div>
@@ -99,7 +99,7 @@ export const OutboundToolbar: React.FC<OutboundToolbarProps> = ({
             </button>
             <button 
               onClick={onOutboundClick} 
-              className="h-10 px-5 rounded-xl bg-[#111f42] text-[#ab8a3b] text-[10px] font-black uppercase tracking-widest shadow-sm hover:brightness-110 transition-all flex items-center gap-2 font-mono"
+              className="h-10 px-5 rounded-xl bg-[#111f42] text-white text-[10px] font-black uppercase tracking-widest shadow-sm hover:brightness-110 transition-all flex items-center gap-2 font-mono"
             >
               <PlusCircle size={16} /> NEW OUTBOUND
             </button>

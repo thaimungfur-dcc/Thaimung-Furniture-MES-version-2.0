@@ -145,7 +145,7 @@ export function DataTable<T>({
                 value={globalFilter ?? ''}
                 onChange={e => setGlobalFilter(e.target.value)}
                 placeholder={searchPlaceholder}
-                className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[12px] font-black outline-none focus:border-[#ab8a3b] transition-all h-10 shadow-sm uppercase tracking-widest placeholder:font-black placeholder:opacity-50"
+                className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[12px] font-black outline-none focus:border-[#111f42] transition-all h-10 shadow-sm uppercase tracking-widest placeholder:font-black placeholder:opacity-50"
               />
             </div>
             <button
@@ -168,7 +168,7 @@ export function DataTable<T>({
                   <select
                     value={selectedMonth}
                     onChange={e => setSelectedMonth(e.target.value)}
-                    className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 cursor-pointer shadow-sm min-w-[130px]"
+                    className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#111f42] transition-all h-9 cursor-pointer shadow-sm min-w-[130px]"
                   >
                     <option value="">All Months</option>
                     {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
@@ -180,7 +180,7 @@ export function DataTable<T>({
                   <select
                     value={selectedYear}
                     onChange={e => setSelectedYear(e.target.value)}
-                    className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 cursor-pointer shadow-sm min-w-[110px]"
+                    className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#111f42] transition-all h-9 cursor-pointer shadow-sm min-w-[110px]"
                   >
                     <option value="">All Years</option>
                     {years.map(y => <option key={y} value={y}>{y}</option>)}
@@ -209,19 +209,19 @@ export function DataTable<T>({
                           return [...existing, { id: colId, value: val }];
                         });
                       }}
-                      className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 cursor-pointer shadow-sm min-w-[140px]"
+                      className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#111f42] transition-all h-9 cursor-pointer shadow-sm min-w-[140px]"
                     >
                       <option value="">All {colLabel}</option>
                       {facets.map(([val, count]) => (
                         <option key={val} value={val}>{val}</option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-[#ab8a3b] transition-colors" size={14} />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-[#111f42] transition-colors" size={14} />
                   </div>
                   
                   {/* Active Count Badge */}
                   {currentFilter && (
-                    <div className="flex items-center bg-[#ab8a3b]/10 text-[#ab8a3b] px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-[#ab8a3b]/20 animate-in fade-in zoom-in duration-300">
+                    <div className="flex items-center bg-[#111f42]/10 text-[#111f42] px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-[#111f42]/20 animate-in fade-in zoom-in duration-300">
                       {facets.find(([v]) => v === currentFilter)?.[1] || 0} ITEMS
                     </div>
                   )}
@@ -242,7 +242,7 @@ export function DataTable<T>({
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden min-h-[400px] flex flex-col">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden min-h-[400px] flex flex-col">
         <div className="flex-1 overflow-x-auto master-custom-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -252,13 +252,13 @@ export function DataTable<T>({
                     return (
                       <th 
                         key={header.id}
-                        className="bg-[#111f42] text-white px-6 py-4 text-[12px] font-black uppercase tracking-widest border-b-2 border-[#ab8a3b] cursor-pointer hover:bg-[#1a2b5a] transition-colors"
+                        className="bg-[#111f42] text-white px-6 py-4 text-[12px] font-black uppercase tracking-widest border-b border-white/10 cursor-pointer hover:bg-[#1a2b5a] transition-colors"
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         <div className="flex items-center gap-2">
                           {flexRender(header.column.columnDef.header, header.getContext())}
                           {header.column.getCanSort() && (
-                            <ArrowUpDown size={12} className="text-[#ab8a3b]/60" />
+                            <ArrowUpDown size={12} className="text-[#111f42]/60" />
                           )}
                         </div>
                       </th>

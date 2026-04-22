@@ -3,10 +3,12 @@ import {
     Boxes, CheckCircle2, AlertTriangle, 
     ArrowDownToLine, HelpCircle, Package, Loader2, Calendar
 } from 'lucide-react';
-import KpiCard from './KpiCard';
+import { KpiCard } from '../../components/shared/KpiCard';
 import AnalysisCharts from './AnalysisCharts';
 import InventoryTable from './InventoryTable';
 import GuideDrawer from './GuideDrawer';
+
+import { PageHeader } from '../../components/shared/PageHeader';
 
 export default function InventoryPlanning() {
     // --- State Management ---
@@ -116,7 +118,7 @@ export default function InventoryPlanning() {
                     padding: 14px 14px; 
                     font-weight: 800; 
                     background-color: #111f42 !important; 
-                    border-bottom: 2.5px solid #ab8a3b !important; 
+                    border-bottom: 2.5px solid #111f42 !important; 
                     white-space: nowrap; 
                     user-select: none;
                 }
@@ -147,51 +149,43 @@ export default function InventoryPlanning() {
 
             <div className="w-full space-y-4 relative flex-1 flex flex-col">
                 {/* Header Section */}
-                <div className="flex flex-col lg:flex-row justify-between items-center gap-4 no-print flex-shrink-0">
-                    <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="w-10 h-10 bg-white flex items-center justify-center rounded-xl border border-slate-200 relative shrink-0">
-                            <Boxes size={22} className="text-[#111f42]" strokeWidth={2.5} />
-                            <div className="absolute bottom-[8px] right-[8px] w-1.5 h-1.5 bg-[#ab8a3b] rounded-full"></div>
-                        </div>
-                        <div>
-                            <h1 className="text-2xl tracking-tight whitespace-nowrap uppercase leading-none font-mono font-black text-[#111f42]">
-                                INVENTORY <span className="text-[#E3624A]">PLANNING</span>
-                            </h1>
-                            <p className="text-slate-500 text-[11px] mt-0.5 font-medium uppercase tracking-widest opacity-80 font-mono">Stock Projections Hub</p>
-                        </div>
-                    </div>
+                <PageHeader
+                    Icon={Boxes}
+                    title="INVENTORY PLANNING"
+                    subtitle="Stock Projections & Reorder Points"
+                    extra={
+                        <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">
+                            <div className="month-picker-container group hover:border-[#111f42] transition-all">
+                                <Calendar size={14} className="text-slate-400 group-hover:text-[#111f42] mr-3" />
+                                <input 
+                                    type="month" 
+                                    value={selectedMonth}
+                                    onChange={(e) => setSelectedMonth(e.target.value)}
+                                    className="bg-transparent border-none outline-none text-[13px] font-bold text-[#111f42] cursor-pointer font-mono"
+                                />
+                            </div>
 
-                    <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">
-                        <div className="month-picker-container group hover:border-[#ab8a3b] transition-all">
-                            <Calendar size={14} className="text-slate-400 group-hover:text-[#ab8a3b] mr-3" />
-                            <input 
-                                type="month" 
-                                value={selectedMonth}
-                                onChange={(e) => setSelectedMonth(e.target.value)}
-                                className="bg-transparent border-none outline-none text-[13px] font-bold text-[#111f42] cursor-pointer font-mono"
-                            />
+                            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl h-10 overflow-hidden shrink-0">
+                                <button onClick={() => setActiveTab('stock')} className={`px-5 py-1.5 text-[10px] font-bold transition-all rounded-lg uppercase ${activeTab === 'stock' ? 'bg-[#111f42] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>STOCK PLAN</button>
+                                <button onClick={() => setActiveTab('analysis')} className={`px-5 py-1.5 text-[10px] font-bold transition-all rounded-lg uppercase ${activeTab === 'analysis' ? 'bg-[#111f42] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>ANALYSIS</button>
+                            </div>
+                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm"><HelpCircle size={18}/></button>
                         </div>
-
-                        <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl h-10 overflow-hidden shrink-0">
-                            <button onClick={() => setActiveTab('stock')} className={`px-5 py-1.5 text-[10px] font-bold transition-all rounded-lg uppercase ${activeTab === 'stock' ? 'bg-[#ab8a3b] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>STOCK PLAN</button>
-                            <button onClick={() => setActiveTab('analysis')} className={`px-5 py-1.5 text-[10px] font-bold transition-all rounded-lg uppercase ${activeTab === 'analysis' ? 'bg-[#ab8a3b] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}>ANALYSIS</button>
-                        </div>
-                        <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm"><HelpCircle size={18}/></button>
-                    </div>
-                </div>
+                    }
+                />
 
                 <main className="flex-1 relative z-10 flex flex-col gap-6">
                     
                     {/* KPI Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-fade-in-up shrink-0">
-                        <KpiCard title="Total Onhand" val={stats.totalOnhand} color="#111f42" Icon={Package} desc="Physical Units" />
-                        <KpiCard title="Available Stock" val={stats.totalAvailable} color="#10b981" Icon={CheckCircle2} desc="Net Available" />
-                        <KpiCard title="Production Plan" val={stats.planIn} color="#ab8a3b" Icon={ArrowDownToLine} desc="Scheduled Incoming" />
-                        <KpiCard title="Alert Items" val={stats.lowStockCount} color="#E3624A" Icon={AlertTriangle} desc="Low/Out of Stock" />
+                        <KpiCard title="Total Onhand" value={stats.totalOnhand} color="#111f42" icon={Package} subValue="Physical Units" />
+                        <KpiCard title="Available Stock" value={stats.totalAvailable} color="#10b981" icon={CheckCircle2} subValue="Net Available" />
+                        <KpiCard title="Production Plan" value={stats.planIn} color="#ab8a3b" icon={ArrowDownToLine} subValue="Scheduled Incoming" />
+                        <KpiCard title="Alert Items" value={stats.lowStockCount} color="#E3624A" icon={AlertTriangle} subValue="Low/Out of Stock" />
                     </div>
 
                     {/* Unified Table Container - FLAT DESIGN */}
-                    <div className="bg-white border border-slate-100 flex flex-col min-h-[650px] animate-fade-in-up shadow-sm relative overflow-visible">
+                    <div className="bg-white border border-slate-200 flex flex-col min-h-[650px] animate-fade-in-up shadow-sm relative overflow-hidden rounded-2xl">
                         {activeTab === 'stock' ? (
                             <InventoryTable 
                                 activeFilter={activeFilter}
@@ -218,7 +212,7 @@ export default function InventoryPlanning() {
             {/* Loading Overlay */}
             {loading && (
                 <div className="fixed inset-0 z-[20000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
-                    <Loader2 className="animate-spin text-[#ab8a3b]" size={40} />
+                    <Loader2 className="animate-spin text-[#111f42]" size={40} />
                     <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[9px] animate-pulse font-mono">Syncing Planning Data...</p>
                 </div>
             )}

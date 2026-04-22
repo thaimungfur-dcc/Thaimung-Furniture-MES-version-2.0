@@ -20,11 +20,11 @@ export default function InventoryTable({
             <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 relative z-20">
                 <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
                     <div className="relative shrink-0">
-                        <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab8a3b]" size={14} />
+                        <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[#111f42]" size={14} />
                         <select 
                             value={activeFilter} 
                             onChange={(e) => {setActiveFilter(e.target.value); setCurrentPage(1);}} 
-                            className="appearance-none min-w-[220px] bg-white border border-slate-200 rounded-lg pl-9 pr-10 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer font-mono"
+                            className="appearance-none min-w-[220px] bg-white border border-slate-200 rounded-lg pl-9 pr-10 py-2.5 outline-none focus:border-[#111f42] text-[#111f42] font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer font-mono"
                         >
                             {filters.map((f: string) => (
                                 <option key={f} value={f}>
@@ -41,11 +41,11 @@ export default function InventoryTable({
 
                     <div className="relative w-full lg:w-72 shrink-0">
                         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search ID or Name..." className="input-primary pl-9 pr-4 py-2 text-[11px] outline-none focus:border-[#ab8a3b] font-bold h-[40px] w-full" />
+                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search ID or Name..." className="input-primary pl-9 pr-4 py-2 text-[11px] outline-none focus:border-[#111f42] font-bold h-[40px] w-full" />
                     </div>
                 </div>
                 <button className="h-9 px-5 rounded-xl text-[10px] font-black bg-[#111f42] text-white shadow-md hover:bg-[#1e346b] transition-all uppercase tracking-widest flex items-center gap-2 font-mono">
-                    <UploadCloud size={14} className="text-[#ab8a3b]" /> IMPORT
+                    <UploadCloud size={14} className="text-white opacity-60" /> IMPORT
                 </button>
             </div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { 
     Palette, LayoutGrid, List, BarChart2, Search, Plus, HelpCircle, X, Filter, ChevronDown
 } from 'lucide-react';
+import { PageHeader } from '../../components/shared/PageHeader';
 import FabricGrid from './components/FabricGrid';
 import FabricTable from './components/FabricTable';
 import FabricDashboard from './components/FabricDashboard';
@@ -30,6 +31,7 @@ export default function FabricDesignApp() {
 
     // Mock Data
     useEffect(() => {
+    // ... Mock data population ...
         setPatterns([
             { id: 1, code: 'PTN-2026-001', name: 'Royal Flora Gold', category: 'Jacquard', composition: '100% Polyester', width: '58"', weight: '250 gsm', colors: ['#ab8a3b', '#111f42'], tags: 'Luxury, 2026', application: 'Sofa, Armchair', status: 'Active', image: 'https://v.etsystatic.com/video/upload/q_auto/Golden_Botanica_imtio0.jpg', history: [{date: '2026-01-10 09:00', action: 'Created Design', user: 'Admin'}] },
             { id: 2, code: 'PTN-2026-002', name: 'Minimalist Grid', category: 'Printed', composition: '100% Cotton', width: '44"', weight: '180 gsm', colors: ['#FFFFFF', '#000000'], tags: 'Modern, Minimal', application: 'Ironing Board Cover', status: 'Active', image: 'https://garden.spoonflower.com/c/10129777/i/s/K3v7pj78VBXCiwxwpC4nH_ycD5VGLqTClWGNtHzNyeWukkClzotwJcKJqdidDA/10129777.png', history: [{date: '2026-01-12 11:30', action: 'Created Design', user: 'Admin'}] },
@@ -136,7 +138,7 @@ export default function FabricDesignApp() {
     };
 
     return (
-        <div className="flex-1 flex flex-col h-screen overflow-hidden bg-[#F9F7F6] animate-fade-in-up">
+        <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 text-[12px] bg-[#F9F7F6]">
             <style>{`
                 .master-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
                 .master-custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -150,7 +152,7 @@ export default function FabricDesignApp() {
                 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 31, 66, 0.6); backdrop-filter: blur(4px); z-index: 10001; display: flex; justify-content: center; align-items: center; padding: 1rem; }
                 .modal-box { background: #F9F7F6; width: 100%; max-width: 800px; max-height: 90vh; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border-top: 6px solid #ab8a3b; overflow: hidden; display: flex; flex-direction: column; }
                 
-                .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.6rem; border-radius: 6px; font-weight: 700; font-size: 10px; gap: 0.375rem; border: 1px solid transparent; font-family: "JetBrains Mono", monospace; text-transform: uppercase; }
+                .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.6rem; border-radius: 6px; font-weight: 700; font-size: 10px; gap: 0.375rem; border: 1px solid transparent; text-transform: uppercase; }
                 .badge-green { background-color: rgba(16, 185, 129, 0.1); color: #10b981; border-color: rgba(16, 185, 129, 0.2); }
                 .badge-gray { background-color: #F1F5F9; color: #64748B; border-color: #E2E8F0; }
                 
@@ -163,38 +165,28 @@ export default function FabricDesignApp() {
                 .pattern-card { background-color: white; border: 1px solid #E2E8F0; border-radius: 1rem; overflow: hidden; transition: all 0.3s ease; position: relative; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
                 .pattern-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #ab8a3b; }
             `}</style>
-
-            {/* Header Toolbar */}
-            <div className="px-8 pt-14 pb-2 flex flex-col md:flex-row justify-between items-center gap-6 flex-shrink-0 z-10 bg-[#F9F7F6]">
-                <div className="flex items-center gap-4 w-full md:w-auto">
-                    <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white shadow-sm flex-shrink-0 border border-slate-200 relative">
-                        <Palette size={28} className="text-[#111f42]" strokeWidth={2.5} />
-                        <div className="absolute bottom-[14px] right-[14px] w-[6px] h-[6px] bg-[#ab8a3b] rounded-[1px]"></div>
+            
+            <PageHeader
+                title="FABRIC DESIGN AND PATTERN"
+                subtitle="ฐานข้อมูลแบบและลายผ้ามาตรฐาน"
+                icon={Palette}
+                rightContent={
+                    <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                        <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl items-center flex-shrink-0 overflow-hidden">
+                            <button onClick={() => setViewMode('grid')} className={`px-5 py-2.5 text-[10px] font-bold transition-all flex items-center gap-2 rounded-lg uppercase tracking-wide ${viewMode === 'grid' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><LayoutGrid size={14} /> GRID</button>
+                            <button onClick={() => setViewMode('list')} className={`px-5 py-2.5 text-[10px] font-bold transition-all flex items-center gap-2 rounded-lg uppercase tracking-wide ${viewMode === 'list' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><List size={14} /> LIST</button>
+                            <button onClick={() => setViewMode('dashboard')} className={`px-5 py-2.5 text-[10px] font-bold transition-all flex items-center gap-2 rounded-lg uppercase tracking-wide ${viewMode === 'dashboard' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><BarChart2 size={14} /> DASHBOARD</button>
+                        </div>
+                        <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm" title="Help">
+                            <HelpCircle size={20} />
+                        </button>
                     </div>
-                    <div>
-                        <h1 className="text-3xl tracking-tight whitespace-nowrap uppercase leading-none font-mono">
-                            <span className="font-black text-[#E3624A]">FABRIC</span> <span className="font-light text-[#111f42]">DESIGN AND PATTERN</span>
-                        </h1>
-                        <p className="text-slate-500 text-[11px] mt-1.5 font-bold">
-                            <span className="tracking-normal ml-1">ฐานข้อมูลแบบและลายผ้ามาตรฐาน</span>
-                        </p>
-                    </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-                    <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl items-center flex-shrink-0 overflow-hidden">
-                        <button onClick={() => setViewMode('grid')} className={`px-5 py-2.5 text-xs font-bold transition-all flex items-center gap-2 rounded-lg uppercase tracking-wide ${viewMode === 'grid' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><LayoutGrid size={14} /> GRID</button>
-                        <button onClick={() => setViewMode('list')} className={`px-5 py-2.5 text-xs font-bold transition-all flex items-center gap-2 rounded-lg uppercase tracking-wide ${viewMode === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><List size={14} /> LIST</button>
-                        <button onClick={() => setViewMode('dashboard')} className={`px-5 py-2.5 text-xs font-bold transition-all flex items-center gap-2 rounded-lg uppercase tracking-wide ${viewMode === 'dashboard' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><BarChart2 size={14} /> DASHBOARD</button>
-                    </div>
-                    <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm" title="Help">
-                        <HelpCircle size={20} />
-                    </button>
-                </div>
-            </div>
+                }
+            />
 
             {/* Main Area */}
-            <main className="flex-1 overflow-y-auto master-custom-scrollbar relative z-10 px-8 pt-4 pb-10 flex flex-col gap-4">
-                <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col overflow-hidden min-h-[600px]">
+            <div className="w-full flex-1 flex flex-col h-full overflow-hidden px-0 z-10 relative gap-4">
+                <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col flex-1">
                     
                     {/* Toolbar Filter */}
                     <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
@@ -243,7 +235,7 @@ export default function FabricDesignApp() {
                         )}
                     </div>
                 </div>
-            </main>
+            </div>
 
             {/* User Guide Drawer */}
             {isGuideOpen && (

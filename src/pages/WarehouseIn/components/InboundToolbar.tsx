@@ -32,11 +32,11 @@ export const InboundToolbar: React.FC<InboundToolbarProps> = ({
     <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
       <div className="flex items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
         <div className="relative shrink-0">
-          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab8a3b]" size={14} />
+          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[#111f42]" size={14} />
           <select 
             value={activeTab === 'all' ? activeWhTab : statusFilter} 
             onChange={(e) => activeTab === 'all' ? setActiveWhTab(e.target.value) : setStatusFilter(e.target.value)} 
-            className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-xl pl-9 pr-10 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-black text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer font-mono h-10"
+            className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-xl pl-9 pr-10 py-2.5 outline-none focus:border-[#111f42] text-[#111f42] font-black text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer font-mono h-10"
           >
             {activeTab === 'all' 
               ? warehouses.map(wh => <option key={wh} value={wh}>{wh === 'All' ? 'ALL WAREHOUSES' : wh + ' WAREHOUSE'}</option>) 
@@ -53,7 +53,7 @@ export const InboundToolbar: React.FC<InboundToolbarProps> = ({
             value={searchQuery} 
             onChange={(e) => setSearchQuery(e.target.value)} 
             placeholder="Search SKU / Item / Ref..." 
-            className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[11px] outline-none focus:border-[#ab8a3b] font-black h-10 uppercase tracking-widest"
+            className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[11px] outline-none focus:border-[#111f42] font-black h-10 uppercase tracking-widest"
           />
         </div>
       </div>

@@ -27,33 +27,8 @@ export default function BillTable({
   setPreviewModal
 }: any) {
   return (
-    <div className="bg-white/90 backdrop-blur-md border border-white shadow-sm overflow-hidden rounded-none flex-1 flex flex-col no-print mt-2">
+    <div className="bg-white border border-slate-200 shadow-sm overflow-hidden rounded-xl flex-1 flex flex-col no-print transition-all">
       
-      {/* Data Insights Summary Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-b border-slate-200">
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-slate-50/50 hover:bg-slate-50 transition-colors">
-          <p className="text-[10px] font-bold text-[#7693a6] uppercase tracking-widest mb-1 flex items-center gap-1"><FileText size={12}/> Total Payable</p>
-          <p className="text-xl font-black text-[#223149] font-mono">฿{totalPayable.toLocaleString()}</p>
-        </div>
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-rose-50/30 hover:bg-rose-50/50 transition-colors">
-          <p className="text-[10px] font-bold text-[#ce5a43] uppercase tracking-widest mb-1 flex items-center gap-1"><AlertCircle size={12}/> Total Overdue</p>
-          <p className="text-xl font-black text-[#ce5a43] font-mono">฿{totalOverdueAmount.toLocaleString()}</p>
-        </div>
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#933b5b]/5 hover:bg-[#933b5b]/10 transition-colors">
-          <p className="text-[10px] font-bold text-[#933b5b] uppercase tracking-widest mb-1 flex items-center gap-1"><AlertTriangle size={12}/> Total Disputed/Exception</p>
-          <p className="text-xl font-black text-[#933b5b] font-mono">฿{totalDisputedAmount.toLocaleString()}</p>
-        </div>
-        <div className="p-4 flex flex-col justify-center bg-emerald-50/30 hover:bg-emerald-50/50 transition-colors">
-          <p className="text-[10px] font-bold text-[#7fa85a] uppercase tracking-widest mb-1 flex items-center gap-1"><CheckCircle size={12}/> Payment Progress</p>
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
-              <div className="h-full bg-[#7fa85a]" style={{ width: `${(bills.reduce((s:any,i:any)=>s+i.paid,0) / bills.reduce((s:any,i:any)=>s+i.amount,0)) * 100}%` }}></div>
-            </div>
-            <span className="text-sm font-black text-[#223149]">{((bills.reduce((s:any,i:any)=>s+i.paid,0) / bills.reduce((s:any,i:any)=>s+i.amount,0)) * 100).toFixed(1)}%</span>
-          </div>
-        </div>
-      </div>
-
       {/* Table Toolbar */}
       <div className="p-3 flex items-center justify-between gap-4 bg-white/80 border-b border-slate-200 overflow-x-auto flex-shrink-0">
         {/* Left Side: Tabs + Search Group */}

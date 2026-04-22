@@ -27,96 +27,66 @@ export default function InvoiceTable({
   setPreviewModal
 }: any) {
   return (
-    <div className="bg-white/90 backdrop-blur-md border border-white shadow-sm overflow-hidden rounded-none flex-1 flex flex-col no-print mt-2">
+    <div className="bg-white border border-slate-200 flex flex-col rounded-xl shadow-sm flex-1 min-h-[550px] relative overflow-hidden animate-fade-in-up transition-all">
       
-      {/* Data Insights Summary Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-b border-slate-200">
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-slate-50/50 hover:bg-slate-50 transition-colors">
-          <p className="text-[10px] font-bold text-[#7693a6] uppercase tracking-widest mb-1 flex items-center gap-1"><FileText size={12}/> Total Outstanding</p>
-          <p className="text-xl font-black text-[#223149] font-mono">฿{totalOutstanding.toLocaleString()}</p>
-        </div>
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-rose-50/30 hover:bg-rose-50/50 transition-colors">
-          <p className="text-[10px] font-bold text-[#ce5a43] uppercase tracking-widest mb-1 flex items-center gap-1"><AlertCircle size={12}/> Total Overdue</p>
-          <p className="text-xl font-black text-[#ce5a43] font-mono">฿{totalOverdueAmount.toLocaleString()}</p>
-        </div>
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#933b5b]/5 hover:bg-[#933b5b]/10 transition-colors">
-          <p className="text-[10px] font-bold text-[#933b5b] uppercase tracking-widest mb-1 flex items-center gap-1"><UserX size={12}/> Total Bad Debt</p>
-          <p className="text-xl font-black text-[#933b5b] font-mono">฿{totalBadDebtAmount.toLocaleString()}</p>
-        </div>
-        <div className="p-4 flex flex-col justify-center bg-emerald-50/30 hover:bg-emerald-50/50 transition-colors">
-          <p className="text-[10px] font-bold text-[#7fa85a] uppercase tracking-widest mb-1 flex items-center gap-1"><CheckCircle size={12}/> Collection Progress</p>
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
-              <div className="h-full bg-[#7fa85a]" style={{ width: `${(invoices.reduce((s:any,i:any)=>s+i.paid,0) / invoices.reduce((s:any,i:any)=>s+i.amount,0)) * 100}%` }}></div>
-            </div>
-            <span className="text-sm font-black text-[#223149]">{((invoices.reduce((s:any,i:any)=>s+i.paid,0) / invoices.reduce((s:any,i:any)=>s+i.amount,0)) * 100).toFixed(1)}%</span>
-          </div>
-        </div>
-      </div>
-
       {/* Table Toolbar */}
-      <div className="p-3 flex items-center justify-between gap-4 bg-white/80 border-b border-slate-200 overflow-x-auto flex-shrink-0">
-        {/* Left Side: Tabs + Search Group */}
-        <div className="flex items-center gap-4 flex-shrink-0">
-          <div className="flex bg-slate-100 p-1 border border-slate-200 shadow-sm rounded-lg">
-            <button onClick={() => setSubTab('all')} className={`px-4 py-1.5 whitespace-nowrap font-bold text-[10px] uppercase tracking-widest rounded transition-all ${subTab === 'all' ? 'bg-[#223149] text-white shadow-sm' : 'text-[#7693a6] hover:bg-white/80'}`}>All</button>
-            <button onClick={() => setSubTab('Unpaid')} className={`px-4 py-1.5 whitespace-nowrap font-bold text-[10px] uppercase tracking-widest rounded transition-all ${subTab === 'Unpaid' ? 'bg-[#df8a5d] text-white shadow-sm' : 'text-[#7693a6] hover:bg-white/80'}`}>Unpaid</button>
-            <button onClick={() => setSubTab('Overdue')} className={`px-4 py-1.5 whitespace-nowrap font-bold text-[10px] uppercase tracking-widest rounded transition-all ${subTab === 'Overdue' ? 'bg-[#ce5a43] text-white shadow-sm' : 'text-[#7693a6] hover:bg-white/80'}`}>Overdue</button>
-            <button onClick={() => setSubTab('BadDebt')} className={`px-4 py-1.5 whitespace-nowrap font-bold text-[10px] uppercase tracking-widest rounded transition-all ${subTab === 'BadDebt' ? 'bg-[#933b5b] text-white shadow-sm' : 'text-[#7693a6] hover:bg-white/80'}`}>Bad Debt</button>
-            <button onClick={() => setSubTab('Exception')} className={`px-4 py-1.5 whitespace-nowrap font-bold text-[10px] uppercase tracking-widest rounded transition-all ${subTab === 'Exception' ? 'bg-[#d9b343] text-white shadow-sm' : 'text-[#7693a6] hover:bg-white/80'}`}>Exception</button>
+      <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
+        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm shrink-0">
+            {['all', 'Unpaid', 'Overdue', 'BadDebt', 'Exception'].map(tab => (
+              <button 
+                key={tab}
+                onClick={() => {setSubTab(tab); setCurrentPage(1);}}
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all uppercase tracking-widest ${subTab === tab ? 'bg-[#223149] text-[#df8a5d] shadow-sm' : 'text-slate-400 hover:bg-slate-50'}`}
+              >
+                {tab === 'all' ? 'All' : tab === 'BadDebt' ? 'Bad Debt' : tab}
+              </button>
+            ))}
           </div>
-
-          <div className="relative w-64 flex items-center bg-white border border-slate-200 shadow-sm rounded-lg px-3 py-1.5">
-            <Search className="text-[#7693a6]" size={16} />
+          
+          <div className="relative w-full lg:w-72 shrink-0">
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input 
               type="text" 
               placeholder="Search invoice or customer..." 
-              className="w-full bg-transparent border-none outline-none ml-2 text-[#223149] font-medium placeholder-[#7693a6] text-[12px]"
+              className="w-full h-10 bg-white border border-slate-200 rounded-xl pl-9 pr-4 text-[12px] outline-none font-bold focus:border-[#df8a5d] transition-all"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
 
-        {/* Right Side: Action Buttons */}
-        <div className="flex items-center gap-2 justify-end flex-shrink-0 ml-auto">
+        <div className="flex items-center gap-2 justify-end flex-shrink-0 ml-auto mr-1">
           <button 
             onClick={() => setPreviewModal('print')}
-            className="p-2.5 rounded-lg border transition-all hover:shadow-sm flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest bg-white text-[#223149] border-slate-200 hover:bg-slate-50"
+            className="px-4 py-2 bg-white border border-slate-200 text-[#223149] rounded-xl font-bold text-[10px] shadow-sm flex items-center gap-2 uppercase tracking-widest hover:bg-slate-50 transition-all shrink-0"
             title="Print AR Report"
           >
-            <Printer size={16} /> PRINT AR REPORT
+            <Printer size={16} /> PRINT REPORT
           </button>
           <button 
             onClick={executeExportCSV}
-            className="p-2.5 rounded-lg border transition-all hover:shadow-sm flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest"
-            style={{ borderColor: '#496ca8', color: '#496ca8', backgroundColor: 'rgba(255,255,255,0.8)' }}
-            onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#496ca8'; e.currentTarget.style.color = 'white'; }}
-            onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.8)'; e.currentTarget.style.color = '#496ca8'; }}
+            className="px-4 py-2 bg-white border border-slate-200 text-[#df8a5d] rounded-xl font-bold text-[10px] shadow-sm flex items-center gap-2 uppercase tracking-widest hover:bg-slate-50 transition-all shrink-0"
             title="Export to CSV Database"
           >
             <Download size={16} /> EXPORT CSV
           </button>
-          <div className="h-6 w-px mx-2 bg-slate-300" />
-          <div className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-400 font-bold uppercase tracking-widest text-[10px] cursor-not-allowed" title="Data must be entered via Master Data Center">
-            <Lock size={14} /> Locked (Auto-Sync)
-          </div>
         </div>
       </div>
 
-      <div className="overflow-x-auto flex-1 kanban-scroll bg-white">
+      <div className="overflow-x-auto flex-1 master-custom-scrollbar bg-white">
         {loading ? (
           <div className="p-8 text-center font-bold text-[#7693a6]">Loading data...</div>
         ) : (
-          <table className="w-full text-left border-collapse min-w-[1200px]">
-            <thead className="bg-gradient-to-r from-[#223149] to-[#3c5d7d] text-white sticky top-0 z-10">
-              <tr className="border-b-4 border-[#df8a5d]">
-                <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap border-r border-white/20">DATES</th>
-                <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap border-r border-white/20">DOCUMENT INFO</th>
-                <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap border-r border-white/20">CUSTOMER DETAILS</th>
-                <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest text-right whitespace-nowrap border-r border-white/20">AMOUNT (฿)</th>
-                <th className="px-4 py-4 text-[10px] font-bold text-[#eee5ca] uppercase tracking-widest text-center whitespace-nowrap border-r border-white/20">STATUS & RISK</th>
-                <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest text-center whitespace-nowrap">ACTION</th>
+          <table className="w-full text-left whitespace-nowrap border-collapse min-w-[1200px]">
+            <thead className="bg-[#111f42] text-white sticky top-0 z-10 shadow-sm">
+              <tr className="border-b-[3px] border-[#df8a5d]">
+                <th className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.1em] border-r border-white/10">DATES</th>
+                <th className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.1em] border-r border-white/10">DOCUMENT INFO</th>
+                <th className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.1em] border-r border-white/10">CUSTOMER DETAILS</th>
+                <th className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.1em] text-right border-r border-white/10">AMOUNT (฿)</th>
+                <th className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.1em] text-center border-r border-white/10">STATUS & RISK</th>
+                <th className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.1em] text-center">ACTION</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -126,16 +96,16 @@ export default function InvoiceTable({
                   <td className="px-4 py-3 align-top border-r border-slate-100">
                     <div className="space-y-1">
                       <p className="flex items-center gap-1.5 text-[11px]">
-                        <span className="text-slate-400 font-semibold w-12">Issue:</span> 
+                        <span className="text-slate-400 font-semibold w-12 text-right">Issue:</span> 
                         <span className="font-mono text-[#223149] font-bold">{formatDate(inv.issueDate)}</span>
                       </p>
                       <p className="flex items-center gap-1.5 text-[11px]">
-                        <span className="text-slate-400 font-semibold w-12">Due:</span> 
+                        <span className="text-slate-400 font-semibold w-12 text-right">Due:</span> 
                         <span className={`font-mono font-bold ${isOverdue(inv) ? 'text-[#ce5a43]' : 'text-[#223149]'}`}>{formatDate(inv.dueDate)}</span>
                       </p>
                       {inv.payDate && (
                         <p className="flex items-center gap-1.5 text-[11px]">
-                          <span className="text-slate-400 font-semibold w-12">Paid:</span> 
+                          <span className="text-slate-400 font-semibold w-12 text-right">Paid:</span> 
                           <span className="font-mono text-[#7fa85a] font-bold">{formatDate(inv.payDate)}</span>
                         </p>
                       )}

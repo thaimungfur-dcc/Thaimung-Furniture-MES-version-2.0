@@ -259,41 +259,32 @@ export default function InspectionStandards() {
     };
 
     return (
-        <div className="pt-8 px-8 pb-10 min-h-screen bg-[#F9F7F6] flex flex-col">
+        <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up bg-[#F9F7F6]">
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;900&display=swap');
-                * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
-                .master-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-                .master-custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-                .master-custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-                
-                .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-                @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-                
-                .minimal-th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; padding: 12px 14px; font-weight: 800; background-color: #111f42; border-bottom: 2px solid #ab8a3b; white-space: nowrap; }
-                .minimal-td { padding: 10px 14px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
+                .minimal-th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; padding: 12px 14px; font-weight: 800; background-color: #111f42; white-space: nowrap; }
+                .minimal-td { padding: 10px 14px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid #F1F5F9; }
                 
                 .tab-btn { padding: 0.75rem 1.25rem; font-size: 0.7rem; font-weight: 800; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 0.5rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; }
-                .tab-btn.active { color: #111f42; border-color: #ab8a3b; background-color: rgba(171, 138, 59, 0.05); }
+                .tab-btn.active { color: #111f42; border-color: #111f42; background-color: rgba(17, 31, 66, 0.05); }
                 
                 .modern-category-card { background: white; border-radius: 20px; border: 1px solid #E2E8F0; transition: all 0.3s ease; cursor: pointer; display: flex; flex-direction: column; height: 190px; position: relative; overflow: hidden; padding: 1.25rem; }
-                .modern-category-card:hover { transform: translateY(-4px); border-color: #ab8a3b; box-shadow: 0 10px 20px -5px rgba(17,31,66,0.08); }
+                .modern-category-card:hover { transform: translateY(-4px); border-color: #111f42; box-shadow: 0 10px 20px -5px rgba(17,31,66,0.08); }
                 
                 .icon-circle { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 16px; transition: all 0.4s; }
-                .modern-category-card:hover .icon-circle { background: #111f42; color: #ab8a3b; transform: scale(1.1) rotate(-5deg); }
+                .modern-category-card:hover .icon-circle { background: #111f42; color: white; transform: scale(1.1) rotate(-5deg); }
                 
                 .product-card { background: white; border-radius: 14px; border: 1px solid #E2E8F0; overflow: hidden; transition: all 0.3s; cursor: pointer; }
-                .product-card:hover { transform: translateY(-4px); border-color: #ab8a3b; box-shadow: 0 8px 16px -4px rgba(0,0,0,0.08); }
+                .product-card:hover { transform: translateY(-4px); border-color: #111f42; box-shadow: 0 8px 16px -4px rgba(0,0,0,0.08); }
 
                 .input-primary { width: 100%; background: white; border: 1px solid #E2E8F0; border-radius: 0.5rem; padding: 8px 12px; font-size: 13px; color: #111f42; outline: none; transition: border 0.2s; }
-                .input-primary:focus { border-color: #ab8a3b; box-shadow: 0 0 0 2px rgba(171,138,59,0.08); }
+                .input-primary:focus { border-color: #111f42; box-shadow: 0 0 0 2px rgba(17,31,66,0.08); }
                 
                 .modal-overlay { position: fixed; inset: 0; background: rgba(17, 31, 66, 0.5); backdrop-filter: blur(4px); z-index: 10001; display: flex; justify-content: center; align-items: center; padding: 1rem; }
                 .animate-fade-in-up { animation: fadeInUp 0.3s ease-out forwards; }
                 @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
             `}</style>
 
-            <div className="flex flex-col h-full overflow-hidden space-y-6 flex-1">
+            <div className="flex flex-col w-full h-full relative z-10 px-0">
                 {/* Header */}
                 <PageHeader 
                     title="QC SPEC MASTER" 
@@ -302,8 +293,8 @@ export default function InspectionStandards() {
                     rightContent={
                         appState === 'items' && (
                             <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl items-center flex-shrink-0 overflow-hidden h-9">
-                                <button onClick={() => setViewMode('grid')} className={`px-4 py-1.5 text-[10px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'grid' ? 'bg-[#ab8a3b] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}><LayoutGrid size={13} /> GRID</button>
-                                <button onClick={() => setViewMode('list')} className={`px-4 py-1.5 text-[10px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'list' ? 'bg-[#ab8a3b] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}><List size={13} /> LIST</button>
+                                <button onClick={() => setViewMode('grid')} className={`px-4 py-1.5 text-[10px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'grid' ? 'bg-[#111f42] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}><LayoutGrid size={13} /> GRID</button>
+                                <button onClick={() => setViewMode('list')} className={`px-4 py-1.5 text-[10px] font-bold transition-all rounded-lg flex items-center gap-2 uppercase tracking-wide ${viewMode === 'list' ? 'bg-[#1e293b] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}><List size={13} /> LIST</button>
                             </div>
                         )
                     }
@@ -323,17 +314,19 @@ export default function InspectionStandards() {
                     )}
 
                     {appState === 'items' && (
-                        <ProductListView 
-                            selectedCategory={selectedCategory}
-                            filteredProducts={filteredProducts}
-                            viewMode={viewMode}
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
-                            onGoBack={goBack}
-                            onSelectProduct={selectProduct}
-                            onOpenProductModal={openProductModal}
-                            onDuplicateProduct={duplicateProduct}
-                        />
+                        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+                            <ProductListView 
+                                selectedCategory={selectedCategory}
+                                filteredProducts={filteredProducts}
+                                viewMode={viewMode}
+                                searchQuery={searchQuery}
+                                setSearchQuery={setSearchQuery}
+                                onGoBack={goBack}
+                                onSelectProduct={selectProduct}
+                                onOpenProductModal={openProductModal}
+                                onDuplicateProduct={duplicateProduct}
+                            />
+                        </div>
                     )}
 
                     {appState === 'detail' && selectedProduct && (
@@ -383,9 +376,9 @@ export default function InspectionStandards() {
                 {/* Config Modal */}
                 {showConfigModal && (
                     <div className="modal-overlay" onClick={() => setShowConfigModal(false)}>
-                        <div className="modal-box w-full max-w-md border-t-[6px] border-[#ab8a3b] rounded-2xl animate-fade-in-up" onClick={e => e.stopPropagation()}>
+                        <div className="modal-box w-full max-w-md border-t-[6px] border-[#111f42] rounded-2xl animate-fade-in-up" onClick={e => e.stopPropagation()}>
                             <div className="p-5 bg-[#111f42] flex justify-between items-center text-white">
-                                <h3 className="text-lg font-black uppercase tracking-tight flex items-center gap-2"><Settings size={20} className="text-[#ab8a3b]"/> Process Config</h3>
+                                <h3 className="text-lg font-black uppercase tracking-tight flex items-center gap-2"><Settings size={20} className="text-slate-400"/> Process Config</h3>
                                 <button onClick={() => setShowConfigModal(false)} className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"><X size={20} /></button>
                             </div>
                             <div className="p-6 bg-[#F9F7F6] space-y-4">
@@ -419,12 +412,12 @@ export default function InspectionStandards() {
                                             className="input-primary flex-1" 
                                             placeholder="Step name..." 
                                         />
-                                        <button onClick={addProcess} className="bg-[#111f42] text-[#ab8a3b] px-4 rounded-lg font-black text-[10px] uppercase shadow-sm"><Plus size={16}/></button>
+                                        <button onClick={addProcess} className="bg-[#111f42] text-white px-4 rounded-lg font-black text-[10px] uppercase shadow-sm"><Plus size={16}/></button>
                                     </div>
                                 </div>
                             </div>
                             <div className="p-4 border-t bg-white flex justify-end rounded-b-2xl">
-                                <button onClick={() => setShowConfigModal(false)} className="bg-[#111f42] text-[#ab8a3b] px-8 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-md">Close</button>
+                                <button onClick={() => setShowConfigModal(false)} className="bg-[#111f42] text-white px-8 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-md">Close</button>
                             </div>
                         </div>
                     </div>

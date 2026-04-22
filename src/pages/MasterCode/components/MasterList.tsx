@@ -90,7 +90,7 @@ export default function MasterList({ items, openModal, deleteItem }: MasterListP
   return (
     <div className="w-full">
       <DataTable 
-        data={items}
+        data={items || []}
         columns={columns}
         fileName="Master_Code_List"
         searchPlaceholder="Search Master Code, Category..."

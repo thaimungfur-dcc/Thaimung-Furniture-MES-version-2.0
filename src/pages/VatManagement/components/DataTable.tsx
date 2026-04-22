@@ -18,28 +18,8 @@ export default function DataTable({
   setItemsPerPage
 }: any) {
   return (
-    <div className="bg-white/90 backdrop-blur-md border border-white shadow-sm overflow-hidden rounded-none flex-1 flex flex-col mt-2">
+    <div className="bg-white border border-slate-200 shadow-sm overflow-hidden rounded-xl flex-1 flex flex-col transition-all">
       
-      {/* Summary Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-b border-slate-100 bg-slate-50/30">
-        <div className="p-5 border-r border-slate-100 flex flex-col justify-center">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Base Amount</p>
-          <p className="text-xl font-black text-[#1e293b] font-mono">฿{totalBase.toLocaleString()}</p>
-        </div>
-        <div className="p-5 border-r border-slate-100 flex flex-col justify-center">
-          <p className="text-[10px] font-bold text-[#ce5a43] uppercase tracking-widest mb-1">Output VAT (Sales)</p>
-          <p className="text-xl font-black text-[#ce5a43] font-mono">฿{filteredData.filter((i: any)=>i.type==='Sales').reduce((s: number,i: any)=>s+i.vatAmount,0).toLocaleString()}</p>
-        </div>
-        <div className="p-5 border-r border-slate-100 flex flex-col justify-center">
-          <p className="text-[10px] font-bold text-[#496ca8] uppercase tracking-widest mb-1">Input VAT (Purchase)</p>
-          <p className="text-xl font-black text-[#496ca8] font-mono">฿{filteredData.filter((i: any)=>i.type==='Purchase').reduce((s: number,i: any)=>s+i.vatAmount,0).toLocaleString()}</p>
-        </div>
-        <div className="p-5 flex flex-col justify-center bg-slate-900 text-white">
-          <p className="text-[10px] font-bold opacity-60 uppercase tracking-widest mb-1">Net VAT to Pay/Claim</p>
-          <p className="text-xl font-black font-mono">฿{totalVat.toLocaleString()}</p>
-        </div>
-      </div>
-
       {/* Table Toolbar */}
       <div className="p-4 flex items-center justify-between gap-4 border-b border-slate-100 bg-white">
         <div className="flex items-center gap-4">

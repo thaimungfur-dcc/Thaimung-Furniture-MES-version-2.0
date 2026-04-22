@@ -21,7 +21,8 @@ import {
 import Chart from 'chart.js/auto';
 
 import { useMasterData } from '../../context/MasterDataContext';
-import CustomerKpiCard from './components/CustomerKpiCard';
+import { PageHeader } from '../../components/shared/PageHeader';
+import { KpiCard } from '../../components/shared/KpiCard';
 import CustomerTable from './components/CustomerTable';
 import CustomerActionModal from './components/CustomerActionModal';
 import CustomerConfigModal from './components/CustomerConfigModal';
@@ -212,68 +213,57 @@ export default function CustomerManagement() {
   };
 
   return (
-    <div className="min-h-screen pt-8 px-8 pb-10 transition-colors duration-500 text-[12px] flex flex-col bg-[#F9F7F6]">
+    <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 bg-[#F9F7F6]">
       <style>{`
-        * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
       `}</style>
       
-      <div className="w-full space-y-6 relative flex-1 flex flex-col">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 no-print flex-shrink-0">
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="w-14 h-14 bg-white text-[#E3624A] flex items-center justify-center shadow-md flex-shrink-0 rounded-none border-2 border-slate-100 relative">
-              <Users size={28} className="text-[#111f42]" strokeWidth={2.5} />
-              <div className="absolute bottom-[14px] right-[14px] w-[6px] h-[6px] bg-[#ab8a3b] rounded-none"></div>
-            </div>
-            <div className="flex flex-col justify-center">
-              <h1 className="text-3xl tracking-tighter whitespace-nowrap uppercase leading-none font-black">
-                <span className="text-[#E3624A]">CUSTOMER</span> <span className="text-[#111f42] opacity-30">MANAGEMENT</span>
-              </h1>
-              <p className="text-[11px] font-black mt-2 text-slate-400 leading-none uppercase tracking-[0.2em]">
-                ฐานข้อมูลลูกค้าระบบการขาย
-              </p>
-            </div>
-          </div>
-          
+      {/* Header */}
+      <PageHeader
+        title="CUSTOMER MANAGEMENT"
+        subtitle="ฐานข้อมูลลูกค้าระบบการขาย"
+        icon={Users}
+        rightContent={
           <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-none overflow-hidden flex-shrink-0">
-              <button onClick={() => setActiveTab('dashboard')} className={`px-6 py-2.5 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-none text-[10px] whitespace-nowrap ${activeTab === 'dashboard' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl overflow-hidden flex-shrink-0">
+              <button onClick={() => setActiveTab('dashboard')} className={`px-6 py-2.5 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] whitespace-nowrap ${activeTab === 'dashboard' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
                 <LayoutDashboard size={14} /> DASHBOARD
               </button>
-              <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-none text-[10px] whitespace-nowrap ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+              <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] whitespace-nowrap ${activeTab === 'list' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
                 <List size={14} /> LIST VIEW
               </button>
             </div>
-            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-none bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
+            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
               <HelpCircle size={20} />
             </button>
           </div>
-        </div>
+        }
+      />
 
+      <div className="flex flex-col w-full gap-5 no-print animate-in fade-in duration-500 relative z-10 px-0 max-w-full">
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 no-print animate-in fade-in duration-500">
-          <CustomerKpiCard title="Total Customers" value={stats.total} icon={Users} color="#111f42" bgColor="#f8fafc" />
-          <CustomerKpiCard title="Active Clients" value={stats.active} icon={ShieldCheck} color="#10b981" bgColor="#f0fdf4" />
-          <CustomerKpiCard title="Wholesale B2B" value={stats.wholesaleCat} icon={Building2} color="#72A09E" bgColor="#f0f9f9" />
-          <CustomerKpiCard title="Avg. Rating" value={stats.avgRating} icon={Star} color="#ab8a3b" bgColor="#fefce8" />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+          <KpiCard title="Total Customers" value={stats.total} icon={Users} color="#111f42" subValue="All Clients" />
+          <KpiCard title="Active Clients" value={stats.active} icon={ShieldCheck} color="#10b981" subValue="Currently Active" />
+          <KpiCard title="Wholesale B2B" value={stats.wholesaleCat} icon={Building2} color="#72A09E" subValue="B2B Customers" />
+          <KpiCard title="Avg. Rating" value={stats.avgRating} icon={Star} color="#ab8a3b" subValue="Client Score" />
         </div>
 
         {/* DASHBOARD VIEW */}
         {activeTab === 'dashboard' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in duration-500 no-print">
-             <div className="bg-white p-6 rounded-none border-2 border-slate-100 shadow-sm flex flex-col h-[400px]">
+             <div className="bg-white p-6 rounded-none shadow-sm flex flex-col h-[400px] border border-slate-200">
                 <h3 className="text-xs font-black text-[#111f42] uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
-                  <div className="w-2 h-2 bg-[#E3624A] rounded-none"></div>
+                  <div className="w-2 h-2 bg-[#111f42] rounded-none"></div>
                   Customer Status Overview
                 </h3>
                 <div className="flex-1 relative"><canvas ref={chartStatusRef}></canvas></div>
              </div>
-             <div className="bg-white p-6 rounded-none border-2 border-slate-100 shadow-sm flex flex-col h-[400px]">
+             <div className="bg-white p-6 rounded-none shadow-sm flex flex-col h-[400px] border border-slate-200">
                 <h3 className="text-xs font-black text-[#111f42] uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
-                  <div className="w-2 h-2 bg-[#E3624A] rounded-none"></div>
+                  <div className="w-2 h-2 bg-[#111f42] rounded-none"></div>
                   Customers by Category
                 </h3>
                 <div className="flex-1 relative"><canvas ref={chartTypeRef}></canvas></div>
@@ -283,9 +273,9 @@ export default function CustomerManagement() {
 
         {/* LIST VIEW */}
         {activeTab === 'list' && (
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-col flex-1 w-full bg-white shadow-sm border border-slate-200">
             {/* Table Toolbar */}
-            <div className="p-4 flex items-center justify-between gap-4 bg-slate-50/50 border border-slate-100 border-b-0 overflow-x-auto no-scrollbar rounded-none">
+            <div className="p-4 flex items-center justify-between gap-4 bg-slate-50/50 border-b border-slate-100 overflow-x-auto no-scrollbar rounded-none">
               <div className="flex items-center gap-4 flex-shrink-0">
                 <div className="relative flex-shrink-0 group">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab8a3b] pointer-events-none group-focus-within:text-[#111f42] transition-colors">

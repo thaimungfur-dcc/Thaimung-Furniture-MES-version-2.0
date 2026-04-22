@@ -239,7 +239,7 @@ export default function SaleOrder() {
                   </div>
 
                   <div className="flex bg-white p-1 border border-slate-200 shadow-sm rounded-lg overflow-hidden flex-shrink-0">
-                    <button onClick={() => setMainTab('kanban')} className={`px-5 py-2.5 font-normal transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${mainTab === 'kanban' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><Kanban size={14} /> BOARD</button>
+                    <button onClick={() => setMainTab('kanban')} className={`px-5 py-2.5 font-normal transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${mainTab === 'kanban' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><Kanban size={14} /> BOARD</button>
                     <button onClick={() => setMainTab('orders')} className={`px-5 py-2.5 font-normal transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${mainTab === 'orders' ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><FileText size={14} /> ORDERS</button>
                   </div>
                   <button 

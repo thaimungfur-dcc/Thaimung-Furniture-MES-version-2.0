@@ -29,8 +29,9 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 flex-shrink-0 z-10 no-print pt-2 pb-2 bg-transparent border-none w-full">
             <div className="flex items-center gap-4 w-full md:w-auto">
                 {ActiveIcon && (
-                    <div className={`w-10 h-10 flex items-center justify-center rounded-xl bg-white flex-shrink-0 border border-slate-200 relative ${iconColor} shadow-sm`}>
-                        <ActiveIcon size={22} strokeWidth={2.5} />
+                    <div className={`w-10 h-10 flex items-center justify-center rounded-2xl bg-white flex-shrink-0 border border-slate-200 relative ${iconColor} shadow-sm overflow-hidden`}>
+                        <ActiveIcon size={20} strokeWidth={2.5} className="z-10" />
+                        <div className="absolute inset-0 bg-current opacity-5 z-0"></div>
                     </div>
                 )}
                 <div className="flex flex-col min-w-0">

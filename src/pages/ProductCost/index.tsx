@@ -14,7 +14,9 @@ import {
 import { useMasterData } from '../../context/MasterDataContext';
 import { useGoogleSheets } from '../../hooks/useGoogleSheets';
 import { PageHeader } from '../../components/shared/PageHeader';
+import { KpiCard } from '../../components/shared/KpiCard';
 import ProductCostTable from './components/ProductCostTable';
+import Swal from 'sweetalert2';
 
 // --- ERP Palette ---
 const palette = {
@@ -29,32 +31,6 @@ const palette = {
     slate: '#4e546a',       // Slate
     lightBg: '#F9F7F6'      // Neutral Bg
 };
-
-// --- KPI Card Component ---
-const KpiCard = ({ title, val, color, IconComponent, desc }: any) => (
-    <div className="bg-white p-6 rounded-[22px] shadow-sm hover:shadow-md transition-all duration-300 border border-black/5 relative overflow-hidden group h-full cursor-pointer">
-        <div className="absolute -right-6 -bottom-6 opacity-[0.03] transform rotate-12 group-hover:scale-110 transition-transform duration-700 pointer-events-none z-0">
-            <IconComponent size={120} />
-        </div>
-        <div className="relative z-10 flex justify-between items-start">
-            <div className="flex-1 min-w-0 flex flex-col gap-1">
-                <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] truncate">{title}</p>
-                <div className="flex items-baseline gap-2 mt-1">
-                    <h4 className="text-3xl font-black font-mono tracking-tighter leading-tight truncate text-[#111f42]">{val}</h4>
-                </div>
-                {desc && (
-                    <p className="text-[8px] text-slate-400 font-bold mt-2 flex items-center gap-1.5 truncate uppercase">
-                        <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{backgroundColor: color}}></span>
-                        {desc}
-                    </p>
-                )}
-            </div>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm border border-black/5 bg-slate-50" style={{ color: color }}>
-                <IconComponent size={24} strokeWidth={2.5} />
-            </div>
-        </div>
-    </div>
-);
 
 export default function ProductCost() {
     const { items } = useMasterData();
@@ -201,10 +177,20 @@ export default function ProductCost() {
             }
             setShowBOMModal(false); 
             setShowCreateModal(false);
-            window.alert('BOM saved successfully.');
+            Swal.fire({
+                icon: 'success',
+                title: 'BOM Saved',
+                text: 'Data has been successfully synchronized.',
+                confirmButtonColor: '#111f42'
+            });
         } catch (error) {
             console.error('Error saving BOM:', error);
-            window.alert('Error saving BOM.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Save Failed',
+                text: 'Could not write data to sheet. Please check your connection.',
+                confirmButtonColor: '#111f42'
+            });
         }
     };
 
@@ -228,137 +214,112 @@ export default function ProductCost() {
 
 
     return (
-        <div className="relative w-full flex flex-col pb-10 transition-colors duration-500 text-[12px] border-l-4 border-l-[#ab8a3b]">
-            <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;900&display=swap');
-                * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
-                .master-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-                .master-custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-                
-                .minimal-th { font-size: 11px !important; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; padding: 14px 16px; font-weight: 800; background-color: #111f42 !important; border-bottom: 2.5px solid #ab8a3b !important; white-space: nowrap; }
-                .minimal-td { padding: 10px 14px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
-                tr:hover .minimal-td { background-color: rgba(171, 138, 59, 0.05); }
-                
-                .input-table { width: 100%; background: transparent; border-bottom: 1px dashed #cbd5e1; outline: none; padding: 4px 0; font-size: 11px; transition: all 0.2s; }
-                .input-table:focus { border-bottom-color: #ab8a3b; border-bottom-style: solid; }
-                
-                .hover-card { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); min-width: 0; }
-                @media (min-width: 1024px) { .hover-card:hover { flex: 3; } }
-                
-                .animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
-                @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-            `}</style>
-
-            <div className="w-full space-y-4 relative flex-1 flex flex-col">
-                {/* Header */}
-                <PageHeader
-                    title="PRODUCT COST"
-                    subtitle="Standard Costing Engine"
-                    icon={Coins}
-                    rightContent={
-                        <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
-                            <div className="flex bg-[#e2e8f0] p-1 rounded-xl border border-slate-200 shadow-inner h-10 overflow-hidden">
-                                <button onClick={() => setViewMode('summary')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'summary' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><LayoutGrid size={14} className="mr-2 inline" /> Cards</button>
-                                <button onClick={() => setViewMode('list')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><List size={14} className="mr-2 inline" /> SKU List</button>
-                            </div>
-                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#111f42] transition-all shadow-sm h-10"><HelpCircle size={20} /></button>
+        <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 text-[12px] bg-[#F9F7F6]">
+            {/* Header */}
+            <PageHeader
+                title="PRODUCT COST"
+                subtitle="Standard Costing Engine"
+                icon={Coins}
+                rightContent={
+                    <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
+                        <div className="flex bg-[#e2e8f0] p-1 rounded-xl border border-slate-200 shadow-inner h-10 overflow-hidden">
+                            <button onClick={() => setViewMode('summary')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'summary' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><LayoutGrid size={14} className="mr-2 inline" /> Cards</button>
+                            <button onClick={() => setViewMode('list')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'list' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><List size={14} className="mr-2 inline" /> SKU List</button>
                         </div>
-                    }
-                />
+                        <button onClick={() => setIsGuideOpen(true)} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#111f42] transition-all shadow-sm h-10"><HelpCircle size={20} /></button>
+                    </div>
+                }
+            />
 
-                <main className="flex-1 relative z-10 flex flex-col gap-6">
-                    {/* KPI Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-fade-in-up shrink-0">
-                        <KpiCard title="Active SKUs" val={kpis.count} color={palette.primary} IconComponent={Box} desc="Defined Portfolio" />
-                        <KpiCard title="Avg Portfolio Cost" val={`฿${kpis.avgCost.toLocaleString(undefined, {maximumFractionDigits: 0})}`} color={palette.gold} IconComponent={Calculator} desc="System Average" />
-                        <KpiCard title="Avg Margin Target" val={`${kpis.avgMargin.toFixed(1)}%`} color={palette.success} IconComponent={TrendingUp} desc="Portfolio Markup" />
-                        <KpiCard title="Total Asset Val" val={`฿${(kpis.totalVal / 1000000).toFixed(1)}M`} color={palette.accent} IconComponent={Coins} desc="Standard Value" />
+            <div className="w-full flex-1 flex flex-col h-full overflow-hidden px-0 z-10 relative gap-4">
+                {/* KPI Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-fade-in-up shrink-0">
+                    <KpiCard title="Active SKUs" value={kpis.count} color={palette.primary} icon={Box} subValue="Defined Portfolio" />
+                    <KpiCard title="Avg Portfolio Cost" value={`฿${kpis.avgCost.toLocaleString(undefined, {maximumFractionDigits: 0})}`} color={palette.gold} icon={Calculator} subValue="System Average" />
+                    <KpiCard title="Avg Margin Target" value={`${kpis.avgMargin.toFixed(1)}%`} color={palette.success} icon={TrendingUp} subValue="Portfolio Markup" />
+                    <KpiCard title="Total Asset Val" value={`฿${(kpis.totalVal / 1000000).toFixed(1)}M`} color={palette.accent} icon={Coins} subValue="Standard Value" />
+                </div>
+
+                <div className="bg-white rounded-none shadow-sm border border-black/5 flex flex-col overflow-hidden animate-fade-in-up min-h-[600px] flex-1">
+                    <div className="px-6 py-4 border-b border-black/5 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/30">
+                        <div className="relative w-full lg:w-96">
+                            <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
+                            <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search catalogue..." className="w-full pl-10 pr-4 py-2.5 text-[11px] font-bold rounded-xl border border-black/5 focus:outline-none focus:border-[#ab8a3b] bg-white shadow-sm" />
+                        </div>
+                        <div className="flex gap-2">
+                             <button onClick={handleCreateNew} className="px-6 py-2.5 bg-[#111f42] text-white rounded-xl text-[10px] font-black tracking-widest uppercase shadow-lg shadow-blue-900/20 hover:brightness-110 transition-all flex items-center gap-2">
+                                <Plus size={16} className="text-[#ab8a3b]" strokeWidth={3} /> NEW PRODUCT COST
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="bg-white rounded-none shadow-sm border border-black/5 flex flex-col overflow-hidden animate-fade-in-up min-h-[600px] flex-1">
-                        <div className="px-6 py-4 border-b border-black/5 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/30">
-                            <div className="relative w-full lg:w-96">
-                                <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                                <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search catalogue..." className="w-full pl-10 pr-4 py-2.5 text-[11px] font-bold rounded-xl border border-black/5 focus:outline-none focus:border-[#ab8a3b] bg-white shadow-sm" />
-                            </div>
-                            <div className="flex gap-2">
-                                 <button onClick={handleCreateNew} className="px-6 py-2.5 bg-[#111f42] text-white rounded-xl text-[10px] font-black tracking-widest uppercase shadow-lg shadow-blue-900/20 hover:brightness-110 transition-all flex items-center gap-2">
-                                    <Plus size={16} className="text-[#E3624A]" strokeWidth={3} /> NEW PRODUCT COST
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="flex-1 flex flex-col p-8 overflow-y-auto master-custom-scrollbar">
-                            {viewMode === 'summary' ? (
-                                <div className="flex-1 space-y-4">
-                                    {productRows.map((row, rowIndex) => (
-                                        <div key={rowIndex} className="flex flex-col lg:flex-row gap-6 w-full h-auto lg:h-[400px]">
-                                            {row.map(product => (
-                                                <div 
-                                                    key={product.itemId} 
-                                                    className="hover-card group relative flex flex-col justify-end p-0 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200 cursor-pointer h-[350px] lg:h-full border-t-4 border-t-[#ab8a3b]"
-                                                    onClick={(e) => openBOM(product, e)}
-                                                >
-                                                    {/* Card Image Section */}
-                                                    <img src={product.imageLink} alt={product.itemName} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-[#111f42] via-[#111f42]/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="flex-1 flex flex-col p-8 overflow-y-auto master-custom-scrollbar">
+                        {viewMode === 'summary' ? (
+                            <div className="flex-1 space-y-4">
+                                {productRows.map((row, rowIndex) => (
+                                    <div key={rowIndex} className="flex flex-col lg:flex-row gap-6 w-full h-auto lg:h-[400px]">
+                                        {row.map((product: any) => (
+                                            <div 
+                                                key={product.itemId} 
+                                                className="hover-card group relative flex flex-col justify-end p-0 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md border border-slate-200 cursor-pointer flex-1 h-[350px] lg:h-full"
+                                                onClick={(e) => openBOM(product, e)}
+                                            >
+                                                {/* Card Image Section */}
+                                                <img src={product.imageLink} alt={product.itemName} className="absolute inset-0 w-full h-1/2 object-cover transition-all duration-700 group-hover:scale-105" />
+                                                
+                                                {/* Card Info Section */}
+                                                <div className="relative z-10 flex flex-col h-1/2 justify-end p-5 bg-white border-t border-slate-100">
+                                                    <span className="px-2 py-0.5 bg-slate-100 text-slate-500 text-[8px] font-black tracking-widest uppercase rounded-sm mb-2 inline-block border border-slate-200 w-fit">{product.category}</span>
+                                                    <h2 className="text-lg lg:text-xl font-black text-[#111f42] leading-tight mb-1.5 tracking-tight line-clamp-2 font-sans uppercase">{product.itemName}</h2>
                                                     
-                                                    {/* Card Info Section */}
-                                                    <div className="relative z-10 flex flex-col h-full justify-end p-5">
-                                                        <span className="px-2 py-0.5 bg-white/20 backdrop-blur-md text-white text-[8px] font-black tracking-widest uppercase rounded-sm mb-2 inline-block border border-white/10 w-fit">{product.category}</span>
-                                                        <h2 className="text-lg lg:text-xl font-black text-white leading-tight mb-1.5 tracking-tight drop-shadow-md line-clamp-2 font-thai">{product.itemName}</h2>
-                                                        
-                                                        {/* Split Pricing Box */}
-                                                        <div className="flex bg-slate-50/10 backdrop-blur-md border border-white/20 rounded-lg overflow-hidden my-3">
-                                                            <div className="flex-1 p-2 border-r border-white/10">
-                                                                <span className="text-[7px] text-white/60 block font-black uppercase mb-0.5 tracking-widest">COST</span>
-                                                                <span className="text-[13px] font-mono font-black text-white">฿{product.totalCost.toLocaleString()}</span>
-                                                            </div>
-                                                            <div className="flex-1 p-2 bg-white/10">
-                                                                <span className="text-[7px] text-[#E3624A] block font-black uppercase mb-0.5 tracking-widest">PRICE</span>
-                                                                <span className="text-[15px] font-black text-[#E3624A] font-mono leading-none">฿{product.suggestedPrice.toLocaleString()}</span>
-                                                            </div>
+                                                    {/* Split Pricing Box */}
+                                                    <div className="flex bg-slate-50 border border-slate-100 rounded-lg overflow-hidden my-3">
+                                                        <div className="flex-1 p-2 border-r border-slate-100">
+                                                            <span className="text-[7px] text-slate-400 block font-black uppercase mb-0.5 tracking-widest">COST</span>
+                                                            <span className="text-[13px] font-mono font-black text-[#111f42]">฿{product.totalCost.toLocaleString()}</span>
                                                         </div>
-
-                                                        <div className="grid transition-all duration-500 ease-in-out grid-rows-[0fr] lg:group-hover:grid-rows-[1fr] opacity-0 lg:group-hover:opacity-100 mt-0 lg:group-hover:mt-2">
-                                                            <div className="overflow-hidden flex flex-col">
-                                                                <div className="pt-3 border-t border-white/20">
-                                                                    <button className="w-full py-2.5 bg-[#111f42] text-white rounded-xl font-black text-[9px] uppercase tracking-widest shadow-lg flex items-center justify-center gap-2 border border-[#ab8a3b]/50">
-                                                                        <Calculator size={14} className="text-[#ab8a3b]" /> ANALYZE COST
-                                                                    </button>
-                                                                </div>
-                                                            </div>
+                                                        <div className="flex-1 p-2 bg-[#FEE2E2]/30">
+                                                            <span className="text-[7px] text-[#E3624A] block font-black uppercase mb-0.5 tracking-widest">PRICE</span>
+                                                            <span className="text-[15px] font-black text-[#E3624A] font-mono leading-none">฿{product.suggestedPrice.toLocaleString()}</span>
                                                         </div>
                                                     </div>
+                                                    
+                                                    <div className="flex items-center justify-between pt-2 border-t border-slate-50">
+                                                        <div className="flex items-center gap-1.5">
+                                                            <Calculator size={14} className="text-slate-300" />
+                                                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">ANALYZE</span>
+                                                        </div>
+                                                        <span className="text-[#10b981] font-black font-mono text-[10px]">ACTIVE</span>
+                                                    </div>
                                                 </div>
-                                            ))}
-                                            {row.length < 5 && [...Array(5 - row.length)].map((_, i) => (<div key={`e-${i}`} className="hidden lg:block flex-1"></div>))}
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="bg-[#F9F7F6]">
-                                    <ProductCostTable 
-                                        data={filteredItems}
-                                        onOpenBOM={openBOM}
-                                    />
-                                </div>
-                            )}
-                        </div>
+                                            </div>
+                                        ))}
+                                        {row.length < 5 && [...Array(5 - row.length)].map((_, i) => (<div key={`e-${i}`} className="hidden lg:block flex-1"></div>))}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="bg-[#F9F7F6]">
+                                <ProductCostTable 
+                                    data={filteredItems}
+                                    onOpenBOM={openBOM}
+                                />
+                            </div>
+                        )}
                     </div>
-                </main>
+                </div>
             </div>
 
             {/* MODAL: BOM EDITOR & CREATE */}
             {(showBOMModal || showCreateModal) && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#111f42]/60 backdrop-blur-sm animate-in fade-in">
-                    <div className="bg-[#F9F7F6] w-full max-w-[1200px] h-[95vh] rounded-[32px] overflow-hidden shadow-2xl border-t-[8px] border-[#ab8a3b] flex flex-col animate-in zoom-in-95">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in">
+                    <div className="bg-[#F9F7F6] w-full max-w-[1200px] h-[95vh] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 flex flex-col animate-in zoom-in-95">
                         <div className="bg-[#111f42] px-8 py-5 flex justify-between items-center text-white shrink-0">
                             <div>
-                                <h3 className="text-xl font-black uppercase tracking-widest font-thai">{form.itemName || 'New Product Costing'}</h3>
+                                <h3 className="text-xl font-black uppercase tracking-widest font-sans">{form.itemName || 'New Product Costing'}</h3>
                                 <p className="text-[9px] font-bold text-slate-400 mt-1 uppercase font-mono tracking-widest">SKU: {form.item || 'PENDING'}</p>
                             </div>
-                            <button onClick={() => {setShowBOMModal(false); setShowCreateModal(false);}} className="p-2 hover:bg-white/10 rounded-xl transition-all"><X size={24} /></button>
+                            <button onClick={() => {setShowBOMModal(false); setShowCreateModal(false);}} className="p-2 hover:bg-white/10 rounded-xl transition-all font-bold"><X size={24} /></button>
                         </div>
 
                         <div className="bg-white px-8 py-4 border-b border-slate-100 flex justify-between items-center shrink-0">

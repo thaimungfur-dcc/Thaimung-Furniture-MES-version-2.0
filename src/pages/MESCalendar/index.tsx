@@ -215,7 +215,7 @@ export default function MESCalendar() {
         .data-table th { border-bottom: 4px solid #E3624A; }
       `}</style>
 
-      <div className="flex flex-col pt-14 pb-10">
+      <div className="flex flex-col pt-8 pb-10">
         <PageHeader
           title="MES CALENDAR"
           subtitle="Factory Schedule & Maintenance Planning"
@@ -226,7 +226,7 @@ export default function MESCalendar() {
                 <button onClick={() => setActiveTab('calendar')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'calendar' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
                   <LayoutGrid size={14} /> CALENDAR
                 </button>
-                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'list' ? 'bg-[#1e293b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
                   <List size={14} /> EVENT LIST
                 </button>
               </div>
@@ -236,7 +236,7 @@ export default function MESCalendar() {
         />
 
         {/* MAIN CONTAINER */}
-        <div className="bg-white border-l-4 border-l-[#E3624A] shadow-sm flex flex-col rounded-none animate-in fade-in duration-500 overflow-visible">
+        <div className="bg-white shadow-sm flex flex-col rounded-none animate-in fade-in duration-500 overflow-visible">
           
           {/* INTEGRATED ACTION BAR */}
           <div className="p-4 flex flex-wrap items-center justify-between gap-4 bg-white border-b border-slate-100">
@@ -265,7 +265,7 @@ export default function MESCalendar() {
               
               <div className="flex items-center gap-2">
                 <button onClick={() => openEventModal('create', null, 'Event')} className="flex items-center gap-2 px-5 py-2.5 bg-[#111f42] text-white font-black uppercase tracking-widest rounded-xl shadow-md hover:opacity-90 transition-all text-[11px]">
-                  <Plus size={16} strokeWidth={3} className="text-[#ab8a3b]" /> Add Event
+                  <Plus size={16} strokeWidth={3} className="text-white" /> Add Event
                 </button>
                 <button onClick={() => openEventModal('create', null, 'Holiday')} className="flex items-center gap-2 px-5 py-2.5 bg-[#E3624A] text-white font-black uppercase tracking-widest rounded-xl shadow-md hover:opacity-90 transition-all text-[11px]">
                   <Palmtree size={16} strokeWidth={2.5} className="text-white" /> Add Holiday
@@ -337,7 +337,7 @@ export default function MESCalendar() {
                     <tr>
                       <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest">ID</th>
                       <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest">DATE & TIME</th>
-                      <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-[#ab8a3b]">TITLE</th>
+                      <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest">TITLE</th>
                       <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest">CATEGORY</th>
                       <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-center">PRIORITY</th>
                       <th className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-center">STATUS</th>
@@ -408,7 +408,7 @@ export default function MESCalendar() {
                         const pageNum = i + 1;
                         if (totalPages > 5) { if (pageNum > currentPage + 2 || pageNum < currentPage - 2) return null; }
                         return (
-                          <button key={pageNum} onClick={() => setCurrentPage(pageNum)} className={`w-8 h-8 rounded-none text-[10px] font-black transition-all font-mono ${currentPage === pageNum ? 'bg-[#111f42] text-[#ab8a3b] shadow-md scale-105 border border-[#ab8a3b]' : 'text-slate-500 hover:bg-white hover:text-[#111f42]'}`}>{pageNum}</button>
+                          <button key={pageNum} onClick={() => setCurrentPage(pageNum)} className={`w-8 h-8 rounded-none text-[10px] font-black transition-all font-mono ${currentPage === pageNum ? 'bg-[#111f42] text-white shadow-md scale-105 border border-[#111f42]' : 'text-slate-500 hover:bg-white hover:text-[#111f42]'}`}>{pageNum}</button>
                         );
                       })}
                     </div>

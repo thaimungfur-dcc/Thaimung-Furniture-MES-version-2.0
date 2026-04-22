@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Papa from 'papaparse';
+import * as XLSX from 'xlsx';
 import { 
   UploadCloud, 
   FileText, 
@@ -9,7 +10,8 @@ import {
   X,
   Info,
   ChevronRight,
-  Database
+  Database,
+  FileSpreadsheet
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Swal from 'sweetalert2';
@@ -41,46 +43,78 @@ export function CsvUploadModal({
     if (!file) return;
 
     setIsLoading(true);
-    Papa.parse(file, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        const fileHeaders = results.meta.fields || [];
-        // Basic check: all expected headers should be present
-        const missingHeaders = expectedHeaders.filter(h => !fileHeaders.includes(h));
-        
-        if (missingHeaders.length > 0) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Invalid CSV Structure',
-            text: `Missing columns: ${missingHeaders.join(', ')}`,
-            confirmButtonColor: '#111f42'
-          });
-          setIsLoading(false);
-          return;
-        }
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
-        setHeaders(fileHeaders);
-        setData(results.data);
-        setStep('preview');
-        setIsLoading(false);
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Parsing Error',
-          text: err.message,
-          confirmButtonColor: '#111f42'
-        });
-        setIsLoading(false);
-      }
+    if (fileExtension === 'csv') {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (results: any) => {
+          processData(results.data, results.meta.fields || []);
+        },
+        error: (err: any) => {
+          handleError(err.message);
+        }
+      });
+    } else if (fileExtension === 'xlsx' || fileExtension === 'xls') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+            const data = e.target?.result;
+            const workbook = XLSX.read(data, { type: 'binary' });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            const jsonRows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+            const fileHeaders = jsonRows.length > 0 ? Object.keys(jsonRows[0] as any) : [];
+            processData(jsonRows, fileHeaders);
+        } catch (err) {
+            handleError("Failed to parse Excel file. Ensure it is not corrupted.");
+        }
+      };
+      reader.onerror = (err) => handleError(err.toString());
+      reader.readAsBinaryString(file);
+    } else {
+      handleError("Unsupported file format. Please upload .csv or .xlsx");
+    }
+  };
+
+  const processData = (parsedData: any[], fileHeaders: string[]) => {
+    // Basic check: all expected headers should be present
+    const missingHeaders = expectedHeaders.filter(h => !fileHeaders.includes(h));
+    
+    if (missingHeaders.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Structure',
+        text: `Missing columns: ${missingHeaders.join(', ')}`,
+        confirmButtonColor: '#111f42'
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    setHeaders(fileHeaders);
+    setData(parsedData);
+    setStep('preview');
+    setIsLoading(false);
+  };
+
+  const handleError = (msg: string) => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Upload Error',
+      text: msg,
+      confirmButtonColor: '#111f42'
     });
+    setIsLoading(false);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'text/csv': ['.csv']
+      'text/csv': ['.csv'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+      'application/vnd.ms-excel': ['.xls']
     },
     multiple: false
   } as any);
@@ -117,7 +151,7 @@ export function CsvUploadModal({
             {/* Header */}
             <div className="px-10 py-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-[#111f42] text-[#ab8a3b] rounded-[20px] shadow-xl shadow-blue-900/10">
+                <div className="p-3 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/10">
                   <Database size={24} />
                 </div>
                 <div>
@@ -165,13 +199,13 @@ export function CsvUploadModal({
                     {...getRootProps()} 
                     className={`
                       relative group cursor-pointer border-4 border-dashed rounded-[40px] p-20 flex flex-col items-center justify-center transition-all duration-300 min-h-[350px]
-                      ${isDragActive ? 'border-[#ab8a3b] bg-[#ab8a3b]/5 scale-[0.99] border-solid' : 'border-slate-200 bg-white hover:border-[#111f42]/20'}
+                      ${isDragActive ? 'border-primary bg-primary/5 scale-[0.99] border-solid' : 'border-slate-200 bg-white hover:border-[#111f42]/20'}
                     `}
                   >
                     <input {...getInputProps()} />
                     <div className="relative mb-8">
                       <div className="absolute inset-0 bg-[#111f42] rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                      <div className={`p-8 rounded-full border-4 border-white shadow-2xl transition-all duration-500 ${isDragActive ? 'bg-[#ab8a3b] text-white rotate-12' : 'bg-[#111f42] text-[#ab8a3b] group-hover:scale-110'}`}>
+                      <div className={`p-8 rounded-full border-4 border-white shadow-2xl transition-all duration-500 ${isDragActive ? 'bg-[#111f42] text-white rotate-12' : 'bg-[#111f42] text-white group-hover:scale-110'}`}>
                         <UploadCloud size={48} strokeWidth={1.5} />
                       </div>
                     </div>
@@ -183,7 +217,7 @@ export function CsvUploadModal({
                     </div>
                     {isLoading && (
                       <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-[40px] flex flex-col items-center justify-center gap-4">
-                        <div className="w-10 h-10 border-4 border-[#ab8a3b] border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 border-4 border-[#111f42] border-t-transparent rounded-full animate-spin"></div>
                         <p className="text-[10px] font-black text-[#111f42] uppercase tracking-[0.3em]">Parsing Matrix...</p>
                       </div>
                     )}
@@ -221,14 +255,14 @@ export function CsvUploadModal({
                         <thead className="sticky top-0 z-10 bg-[#111f42]">
                           <tr>
                             {headers.map(h => (
-                              <th key={h} className="px-6 py-3.5 text-[10px] font-black text-[#ab8a3b] uppercase tracking-widest border-b border-blue-900/50">
+                              <th key={h} className="px-6 py-3.5 text-[10px] font-black text-white uppercase tracking-widest border-b border-blue-900/50">
                                 {h}
                               </th>
                             ))}
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
-                          {data.slice(0, 100).map((row, i) => (
+                          {data.slice(0, 5).map((row, i) => (
                             <tr key={i} className="hover:bg-slate-50 transition-colors">
                               {headers.map(h => (
                                 <td key={`${i}-${h}`} className="px-6 py-2.5 text-[11px] font-bold text-[#111f42] whitespace-nowrap">
@@ -240,11 +274,9 @@ export function CsvUploadModal({
                         </tbody>
                       </table>
                     </div>
-                    {data.length > 100 && (
-                      <div className="px-6 py-3 bg-amber-50 text-amber-700 text-[10px] font-black uppercase tracking-widest text-center border-t border-amber-100 flex items-center justify-center gap-2">
-                        <AlertCircle size={12} /> Only displaying first 100 preview entries. Full integration includes {data.length} records.
-                      </div>
-                    )}
+                    <div className="px-6 py-4 bg-amber-50 text-amber-700 text-[10px] font-black uppercase tracking-widest text-center border-t border-amber-100 flex items-center justify-center gap-2">
+                      <AlertCircle size={14} /> Showing 5 rows preview. Integration summary: {data.length} total records found in matrix.
+                    </div>
                   </div>
                 </div>
               )}
@@ -264,7 +296,7 @@ export function CsvUploadModal({
                   className="px-10 py-4 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group"
                 >
                   Confirm Ingestion
-                  <ChevronRight size={18} className="text-[#ab8a3b] group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight size={18} className="text-white group-hover:translate-x-1 transition-transform" />
                 </button>
               )}
             </div>

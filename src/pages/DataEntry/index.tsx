@@ -18,6 +18,8 @@ import {
   Zap
 } from 'lucide-react';
 import { useMasterData } from '../../context/MasterDataContext';
+import { clsx } from 'clsx';
+import { PageHeader } from '../../components/shared/PageHeader';
 
 // Utility function to convert HEX to RGBA for dynamic background opacity
 const hexToRgba = (hex: string, opacity: number) => {
@@ -168,12 +170,6 @@ export default function MasterDataEntry() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap');
-        
-        * { 
-          font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; 
-        }
-        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 0.3s ease-out forwards; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -182,54 +178,14 @@ export default function MasterDataEntry() {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
       `}</style>
       
-      <div className="min-h-screen p-4 md:p-6 transition-colors duration-500 text-[12px] bg-gradient-to-br from-[#f5f0e9] via-[#f0ede5] to-[#c6c2bb] flex flex-col overflow-x-hidden">
-        <div className="w-full relative z-10 flex-1 flex flex-col h-full">
-          
-          {/* Header */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-8 flex-shrink-0">
-            <div className="flex items-center gap-5 shrink-0">
-              <div className="relative w-14 h-14 bg-white flex items-center justify-center shadow-lg flex-shrink-0 rounded-none border-[3px] border-white/60 bg-clip-padding backdrop-blur-sm">
-                <svg width="0" height="0" className="absolute">
-                  <defs>
-                    <linearGradient id="mdcGradient" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#933b5b" offset="0%" />
-                      <stop stopColor="#ce5a43" offset="100%" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <Database size={28} strokeWidth={2.5} stroke="url(#mdcGradient)" />
-              </div>
-              <div className="flex flex-col justify-center">
-                <h1 className="text-3xl tracking-tight uppercase leading-none drop-shadow-sm font-black">
-                  <span className="text-[#223f59]">MASTER</span> <span className="text-[#933b5b]">DATA ENTRY</span>
-                </h1>
-                <p className="font-black text-[14px] uppercase tracking-widest mt-1.5 text-[#496ca8] leading-none">
-                  ศูนย์กลางบันทึกข้อมูล (Single Point of Entry)
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              {/* System Status Display First */}
-              <div className="bg-emerald-50 border border-emerald-200 px-4 py-2.5 rounded-none flex items-center gap-3 shadow-sm">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-none h-3 w-3 bg-emerald-500"></span>
-                </span>
-                <span className="text-[11px] font-black text-emerald-700 uppercase tracking-widest">System Synced & Online</span>
-              </div>
+      <div className="flex flex-col flex-1 pb-10 animate-fade-in-up">
+        <PageHeader 
+          Icon={Database}
+          title="MASTER DATA ENTRY"
+          subtitle="ศูนย์กลางบันทึกข้อมูล (Single Point of Entry)"
+        />
 
-              {/* Icon-only Help Button After Status */}
-              <button 
-                onClick={() => setIsGuideOpen(true)}
-                className="w-10 h-10 flex items-center justify-center rounded-none bg-white/80 backdrop-blur-md border border-white shadow-sm hover:bg-white transition-all text-[#ce5a43] shrink-0"
-                title="คู่มือการใช้งาน (Master Guide)"
-              >
-                <HelpCircle size={20} strokeWidth={2.5} />
-              </button>
-            </div>
-          </div>
-
+        <main className="flex-1 relative z-10 pt-4 flex flex-col gap-6 no-print max-w-[1600px] mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
             
             {/* LEFT COLUMN: Type Selector */}
@@ -244,14 +200,14 @@ export default function MasterDataEntry() {
                     <button
                       key={tx.id}
                       onClick={() => setEntryType(tx.id)}
-                      className={`w-full text-left p-4 rounded-none border transition-all duration-200 group flex items-center gap-4
+                      className={`w-full text-left p-4 rounded-xl border transition-all duration-200 group flex items-center gap-4
                         ${isSelected 
                           ? `${tx.bgActive} border-transparent shadow-md transform -translate-y-0.5` 
                           : `bg-white/80 backdrop-blur-md border-white shadow-sm hover:bg-white hover:-translate-y-0.5 hover:shadow-md`
                         }`}
                     >
                       <div 
-                        className={`w-12 h-12 rounded-none flex items-center justify-center transition-colors shadow-inner ${isSelected ? 'bg-white/20 text-white' : ''}`}
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors shadow-inner ${isSelected ? 'bg-white/20 text-white' : ''}`}
                         style={!isSelected ? { backgroundColor: hexToRgba(tx.hexColor, 0.1), color: tx.hexColor } : {}}
                       >
                         <Icon size={20} className={isSelected ? 'text-white' : ''} />
@@ -289,13 +245,13 @@ export default function MasterDataEntry() {
               <h2 className="text-[10px] font-black text-[#7693a6] uppercase tracking-widest px-1 mb-2">2. Enter Transaction Details</h2>
               
               <div 
-                className="backdrop-blur-xl border border-white p-6 md:p-8 rounded-none shadow-sm animate-fade relative overflow-y-auto custom-scrollbar flex-1 mb-6 transition-colors duration-500"
+                className="backdrop-blur-xl border border-white p-6 md:p-8 rounded-2xl shadow-sm animate-fade relative overflow-y-auto custom-scrollbar flex-1 mb-6 transition-colors duration-500"
                 style={{ backgroundColor: hexToRgba(activeTx.hexColor, 0.15) }}
               >
                 {/* Success Overlay */}
                 {showSuccess && (
-                  <div className="absolute inset-0 z-50 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center animate-fade rounded-none">
-                    <div className="w-24 h-24 bg-emerald-100 rounded-none flex items-center justify-center mb-6 shadow-inner border-[4px] border-white">
+                  <div className="absolute inset-0 z-50 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center animate-fade rounded-2xl">
+                    <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mb-6 shadow-inner border-[4px] border-white">
                       <CheckCircle2 size={48} className="text-emerald-500" />
                     </div>
                     <h3 className="text-3xl font-black text-[#223f59] tracking-[0.2em] uppercase mb-2">Data Saved!</h3>
@@ -471,7 +427,7 @@ export default function MasterDataEntry() {
             </div>
 
           </div>
-        </div>
+        </main>
 
         {/* User Guide Drawer */}
         {isGuideOpen && (

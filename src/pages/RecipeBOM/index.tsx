@@ -10,33 +10,8 @@ import {
 import Chart from 'chart.js/auto';
 import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
 import { PageHeader } from '../../components/shared/PageHeader';
+import { KpiCard } from '../../components/shared/KpiCard';
 import BomListTable from './components/BomListTable';
-
-// --- KPI Card Component ---
-const KpiCard = ({ title, val, color, IconComponent, desc }: any) => (
-    <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-white/60 relative overflow-hidden group h-full cursor-pointer">
-        <div className="absolute -right-6 -bottom-6 opacity-[0.06] transform rotate-12 group-hover:scale-110 transition-transform duration-700 pointer-events-none z-0" style={{color: color}}>
-            <IconComponent size={120} strokeWidth={1.5} />
-        </div>
-        <div className="relative z-10 flex justify-between items-start">
-            <div className="flex-1 min-w-0 flex flex-col gap-1">
-                <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest opacity-90 truncate">{title}</p>
-                <div className="flex items-baseline gap-2 mt-1">
-                    <h4 className="text-3xl font-black tracking-tight leading-tight truncate" style={{color: color}}>{val}</h4>
-                </div>
-                {desc && (
-                    <p className="text-[10px] text-slate-400 font-bold mt-2 flex items-center gap-1.5 truncate">
-                        <span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor: color}}></span>
-                        {desc}
-                    </p>
-                )}
-            </div>
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm backdrop-blur-md border border-white/60" style={{backgroundColor: color + '15'}}>
-                <IconComponent size={24} color={color} />
-            </div>
-        </div>
-    </div>
-);
 
 export default function BOMManagementApp() {
     // --- State Management ---
@@ -196,7 +171,7 @@ export default function BOMManagementApp() {
                 .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.6rem; border-radius: 6px; font-weight: 700; font-size: 10px; border: 1px solid transparent; text-transform: uppercase; }
             `}</style>
 
-            <div className="flex flex-col w-full pb-10 border-l-4 border-l-[#111f42]">
+            <div className="flex flex-col w-full pb-10">
                 {/* Header Section */}
                 <PageHeader
                     title="BOM MANAGEMENT"
@@ -221,10 +196,10 @@ export default function BOMManagementApp() {
 
                 <main className="relative z-10 flex flex-col gap-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        <KpiCard title="Total Products" val={products.length} color="#111f42" IconComponent={Box} desc="FG with BOM Records" />
-                        <KpiCard title="Active Formula" val={products.filter(p=>p.status==='Active').length} color="#ab8a3b" IconComponent={CheckCircle} desc="Ready for Production" />
-                        <KpiCard title="Avg Cost / Set" val="฿4,250" color="#10b981" IconComponent={DollarSign} desc="Current Production Avg" />
-                        <KpiCard title="Pending Review" val={products.filter(p=>p.status==='Draft').length} color="#E3624A" IconComponent={Clock} desc="Draft or Pending" />
+                        <KpiCard title="Total Products" value={products.length} color="#111f42" icon={Box} subValue="FG with BOM Records" />
+                        <KpiCard title="Active Formula" value={products.filter(p=>p.status==='Active').length} color="#ab8a3b" icon={CheckCircle} subValue="Ready for Production" />
+                        <KpiCard title="Avg Cost / Set" value="฿4,250" color="#10b981" icon={DollarSign} subValue="Current Production Avg" />
+                        <KpiCard title="Pending Review" value={products.filter(p=>p.status==='Draft').length} color="#E3624A" icon={Clock} subValue="Draft or Pending" />
                     </div>
 
                     <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full">

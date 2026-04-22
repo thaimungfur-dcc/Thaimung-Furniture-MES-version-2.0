@@ -16,7 +16,8 @@ import {
 import Chart from 'chart.js/auto';
 
 import { useMasterData } from '../../context/MasterDataContext';
-import SupplierKpiCard from './components/SupplierKpiCard';
+import { PageHeader } from '../../components/shared/PageHeader';
+import { KpiCard } from '../../components/shared/KpiCard';
 import SupplierTable from './components/SupplierTable';
 import SupplierActionModal from './components/SupplierActionModal';
 import SupplierConfigModal from './components/SupplierConfigModal';
@@ -135,7 +136,7 @@ export default function SupplierManagement() {
           labels: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'],
           datasets: [{
             data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'].map(status => suppliers.filter(s => s.status === status).length),
-            backgroundColor: ['#10b981', '#72A09E', '#ab8a3b', '#E3624A'],
+            backgroundColor: ['#10b981', '#72A09E', '#1c213f', '#E3624A'],
             borderWidth: 0
           }]
         },
@@ -198,7 +199,7 @@ export default function SupplierManagement() {
   };
 
   return (
-    <>
+    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -212,45 +213,68 @@ export default function SupplierManagement() {
         .print-only { display: none; }
       `}</style>
       
-      <div className="flex flex-col flex-1 animate-in fade-in slide-in-from-bottom-2 duration-500">
-        <div className="w-full space-y-6 relative">
-          
-          {/* Header */}
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 no-print">
-            <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="w-14 h-14 bg-white text-[#E3624A] flex items-center justify-center shadow-md flex-shrink-0 rounded-none border-2 border-slate-100 relative">
-                    <Truck size={28} className="text-[#111f42]" strokeWidth={2.5} />
-                    <div className="absolute bottom-[14px] right-[14px] w-[6px] h-[6px] bg-[#ab8a3b] rounded-none"></div>
-                </div>
-              <div className="flex flex-col justify-center">
-                <h1 className="text-3xl tracking-tighter whitespace-nowrap uppercase leading-none font-black">
-                  <span className="text-[#E3624A]">SUPPLIER</span> <span className="text-[#111f42] opacity-30">MANAGEMENT</span>
-                </h1>
-                <div className="flex items-center gap-3">
-                    <p className="font-black text-[11px] mt-2 text-slate-400 leading-none uppercase tracking-[0.2em]">
-                        ฐานข้อมูลและการวิเคราะห์คู่ค้า
-                    </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-              <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-none overflow-hidden flex-shrink-0">
-                <button onClick={() => setActiveTab('dashboard')} className={`px-6 py-2.5 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-none text-[10px] whitespace-nowrap ${activeTab === 'dashboard' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                  <LayoutDashboard size={14} /> DASHBOARD
-                </button>
-                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-none text-[10px] whitespace-nowrap ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                  <List size={14} /> LIST VIEW
-                </button>
-              </div>
-              <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-none bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
-                <HelpCircle size={20} />
+      {/* Header Section */}
+      <PageHeader
+        Icon={Truck}
+        title="SUPPLIER MANAGEMENT"
+        subtitle="ฐานข้อมูลและการวิเคราะห์คู่ค้า"
+        extra={
+          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+            <div className="flex bg-white p-1 border border-slate-200 shadow-sm rounded-xl h-10">
+              <button 
+                onClick={() => setActiveTab('dashboard')} 
+                className={`px-4 py-0 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] ${activeTab === 'dashboard' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+              >
+                <LayoutDashboard size={14} /> DASHBOARD
+              </button>
+              <button 
+                onClick={() => setActiveTab('list')} 
+                className={`px-4 py-0 font-black transition-all flex items-center gap-2 uppercase tracking-widest rounded-lg text-[10px] ${activeTab === 'list' ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+              >
+                <List size={14} /> LIST VIEW
               </button>
             </div>
+            <button 
+              onClick={() => setIsGuideOpen(true)} 
+              className="w-10 h-10 flex items-center justify-center transition-all rounded-xl bg-white border border-slate-200 shadow-sm hover:bg-slate-100 text-slate-500"
+            >
+              <HelpCircle size={18} />
+            </button>
           </div>
+        }
+      />
 
-          {/* KPI Cards */}
-          <SupplierKpiCard stats={stats} />
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
+        <KpiCard 
+          title="Total Suppliers"
+          value={stats.total}
+          icon={Truck}
+          color="#111f42"
+          subValue="All registered partners"
+        />
+        <KpiCard 
+          title="Active Clients"
+          value={stats.active}
+          icon={Truck}
+          color="#10b981"
+          subValue="Current active suppliers"
+        />
+        <KpiCard 
+          title="Regular Material"
+          value={stats.supplierCat}
+          icon={Truck}
+          color="#72A09E"
+          subValue="Raw material category"
+        />
+        <KpiCard 
+          title="Avg. Rating"
+          value={stats.avgRating}
+          icon={Truck}
+          color="#1c213f"
+          subValue="Performance index"
+        />
+      </div>
 
           {/* DASHBOARD VIEW */}
           {activeTab === 'dashboard' && (
@@ -276,16 +300,16 @@ export default function SupplierManagement() {
           {activeTab === 'list' && (
             <div className="flex flex-col flex-1">
               {/* Table Toolbar */}
-              <div className="p-4 flex items-center justify-between gap-4 bg-slate-50/50 border border-slate-100 border-b-0 overflow-x-auto no-scrollbar rounded-none">
-                <div className="flex items-center gap-4 flex-shrink-0">
+              <div className="p-3 flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-xl mb-4 shadow-sm overflow-x-auto no-scrollbar">
+                <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="relative flex-shrink-0 group">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab8a3b] pointer-events-none group-focus-within:text-[#111f42] transition-colors">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-focus-within:text-[#111f42] transition-colors">
                       <Filter size={14} />
                     </div>
                     <select 
                       value={catFilter} 
                       onChange={e => {setCatFilter(e.target.value); setCurrentPage(1);}} 
-                      className="bg-white border border-slate-200 rounded-none pl-9 pr-10 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-black text-[10px] uppercase tracking-widest shadow-sm cursor-pointer appearance-none transition-all hover:border-[#ab8a3b]/50 min-w-[180px]"
+                      className="bg-white border border-slate-200 rounded-lg pl-9 pr-10 py-2 outline-none focus:border-[#111f42] text-[#111f42] font-black text-[10px] uppercase tracking-widest shadow-sm cursor-pointer appearance-none transition-all hover:border-[#111f42]/50 min-w-[180px] h-10"
                     >
                       {filterCategories.map(f => (
                         <option key={f} value={f}>{f === 'All' ? 'ALL CATEGORIES' : f.toUpperCase()}</option>
@@ -301,26 +325,26 @@ export default function SupplierManagement() {
                     <input 
                       type="text" 
                       placeholder="Search Supplier Name / ID..." 
-                      className="w-full bg-white border border-slate-200 rounded-none pl-9 pr-4 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-black uppercase tracking-widest text-[10px] shadow-sm transition-all placeholder:opacity-50"
+                      className="w-full h-10 bg-white border border-slate-200 rounded-lg pl-9 pr-4 py-2 outline-none focus:border-[#111f42] text-[#111f42] font-black uppercase tracking-widest text-[10px] shadow-sm transition-all placeholder:opacity-50"
                       value={searchQuery}
                       onChange={e => setSearchQuery(e.target.value)}
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 flex-shrink-0 ml-auto">
+                <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
                   <button 
                     onClick={() => fileInputRef.current?.click()} 
-                    className="flex justify-center items-center gap-2 px-5 py-2.5 rounded-none bg-slate-100 text-slate-600 hover:text-[#111f42] hover:bg-slate-200 transition-all font-black uppercase tracking-widest text-[11px] shadow-sm"
+                    className="h-10 flex justify-center items-center gap-2 px-5 py-0 rounded-lg bg-slate-100 text-slate-600 hover:text-[#111f42] hover:bg-slate-200 transition-all font-black uppercase tracking-widest text-[10px] shadow-sm"
                   >
                     <UploadCloud size={16} className="text-slate-400" /> IMPORT
                     <input type="file" ref={fileInputRef} className="hidden" />
                   </button>
                   <button 
                     onClick={() => openModal('create')} 
-                    className="flex justify-center items-center gap-2 px-6 py-2.5 bg-[#111f42] text-white rounded-none font-black uppercase tracking-widest text-[11px] shadow-md hover:bg-[#1a2d5c] transition-all"
+                    className="h-10 flex justify-center items-center gap-2 px-6 py-0 bg-[#111f42] text-white rounded-lg font-black uppercase tracking-widest text-[10px] shadow-md hover:bg-[#1a2d5c] transition-all"
                   >
-                    <Plus size={16} className="text-[#ab8a3b]" strokeWidth={3} /> NEW SUPPLIER
+                    <Plus size={16} className="text-[#E3624A]" strokeWidth={3} /> NEW SUPPLIER
                   </button>
                 </div>
               </div>
@@ -393,8 +417,6 @@ export default function SupplierManagement() {
             </>
           )}
 
-        </div>
       </div>
-    </>
   );
 }

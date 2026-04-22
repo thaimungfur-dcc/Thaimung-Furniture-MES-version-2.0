@@ -126,7 +126,7 @@ export default function StockCardApp() {
     };
 
     return (
-        <div className="flex flex-col w-full pb-10 animate-in fade-in slide-in-from-bottom-2 duration-500 border-l-4 border-l-[#111f42]">
+        <div className="sys-page-layout flex flex-col w-full pb-10 animate-fade-in-up pt-2">
             <PageHeader
                 Icon={FileSpreadsheet}
                 title="STOCK CARD"
@@ -134,10 +134,10 @@ export default function StockCardApp() {
                 extra={
                     <div className="flex items-center gap-3 w-full lg:w-auto">
                         <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl overflow-hidden h-12">
-                            <button onClick={() => setActiveTab('card')} className={`px-6 py-1.5 text-[10px] font-black transition-all rounded-lg flex items-center gap-2 uppercase tracking-[0.2em] ${activeTab === 'card' ? 'bg-[#111f42] text-[#ab8a3b] shadow-xl border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>
+                            <button onClick={() => setActiveTab('card')} className={`px-6 py-1.5 text-[10px] font-black transition-all rounded-lg flex items-center gap-2 uppercase tracking-[0.2em] ${activeTab === 'card' ? 'bg-[#111f42] text-white shadow-xl' : 'text-slate-500 hover:bg-slate-50'}`}>
                                 <FileText size={16} /> LEDGER
                             </button>
-                            <button onClick={() => setActiveTab('dashboard')} className={`px-6 py-1.5 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-[0.2em] rounded-lg ${activeTab === 'dashboard' ? 'bg-[#111f42] text-[#ab8a3b] shadow-xl border-b-2 border-[#ab8a3b]' : 'text-slate-500 hover:bg-slate-50'}`}>
+                            <button onClick={() => setActiveTab('dashboard')} className={`px-6 py-1.5 text-[10px] font-black transition-all flex items-center gap-2 uppercase tracking-[0.2em] rounded-lg ${activeTab === 'dashboard' ? 'bg-[#111f42] text-white shadow-xl' : 'text-slate-500 hover:bg-slate-50'}`}>
                                 <LayoutDashboard size={16} /> ANALYTICS
                             </button>
                         </div>
@@ -152,7 +152,7 @@ export default function StockCardApp() {
                 
                 {/* 1. STOCK CARD TAB - COMBINED LAYOUT */}
                 {activeTab === 'card' && (
-                    <div className="flex flex-col animate-fade-in-up bg-white border border-slate-100 shadow-sm rounded-none overflow-visible min-h-[600px] w-full">
+                    <div className="flex flex-col animate-fade-in-up bg-white border border-slate-200 shadow-sm rounded-2xl overflow-hidden min-h-[600px] w-full mt-6">
                         
                         {/* COMBINED: Search Toolbar Section */}
                         <StockCardToolbar 
@@ -186,7 +186,7 @@ export default function StockCardApp() {
                                     </h2>
                                 </div>
                                 
-                                <div className="relative z-10 bg-white/5 border border-white/10 p-6 flex items-center gap-10 shrink-0 shadow-2xl backdrop-blur-sm rounded-none">
+                                <div className="relative z-10 bg-white/5 border border-white/10 p-6 flex items-center gap-10 shrink-0 shadow-2xl backdrop-blur-sm rounded-xl">
                                     <div className="text-right">
                                         <span className="text-[10px] font-black text-[#ab8a3b] uppercase tracking-widest font-mono block mb-1">Balance</span>
                                         <div className="flex items-baseline justify-end gap-2 leading-none">
@@ -218,15 +218,15 @@ export default function StockCardApp() {
                                 <table className="w-full text-left whitespace-nowrap">
                                     <thead className="sticky top-0 z-10 shadow-sm border-b border-slate-200">
                                         <tr>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#ab8a3b]">Date / Time</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-center text-white bg-[#111f42] border-b-2 border-[#ab8a3b]">Type</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#ab8a3b]">Document ID</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#ab8a3b]">Reference</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#ab8a3b]">Lot Number</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-emerald-400 bg-[#111f42] border-b-2 border-[#ab8a3b]">IN (+)</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-[#E3624A] bg-[#111f42] border-b-2 border-[#ab8a3b]">OUT (-)</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-white bg-[#111f42] border-b-2 border-[#ab8a3b] border-l-2 border-[#ab8a3b]">BALANCE</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#ab8a3b]">Location</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Date / Time</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-center text-white bg-[#111f42] border-b-2 border-[#111f42]">Type</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Document ID</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Reference</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Lot Number</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-emerald-400 bg-[#111f42] border-b-2 border-[#111f42]">IN (+)</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-[#E3624A] bg-[#111f42] border-b-2 border-[#111f42]">OUT (-)</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-white bg-[#111f42] border-b-2 border-[#111f42]">BALANCE</th>
+                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Location</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 bg-white">
@@ -241,7 +241,7 @@ export default function StockCardApp() {
                                                 <td className="px-6 py-4 font-black text-[#ab8a3b] font-mono text-[11px] tracking-wider">{m.lot}</td>
                                                 <td className="px-6 py-4 text-right font-black text-[#10b981] font-mono text-[14px]">{m.in > 0 ? `+${m.in.toLocaleString()}` : '-'}</td>
                                                 <td className="px-6 py-4 text-right font-black text-[#E3624A] font-mono text-[14px]">{m.out > 0 ? `-${m.out.toLocaleString()}` : '-'}</td>
-                                                <td className="px-6 py-4 text-right font-black text-[#111f42] font-mono text-[16px] bg-slate-50/30 border-l-2 border-[#ab8a3b] h-full">{m.balance.toLocaleString()}</td>
+                                                <td className="px-6 py-4 text-right font-black text-[#111f42] font-mono text-[16px] bg-slate-50/30 h-full">{m.balance.toLocaleString()}</td>
                                                 <td className="px-6 py-4 font-black text-slate-500 font-mono text-[10px] uppercase tracking-widest">{m.loc}</td>
                                             </tr>
                                         ))}
@@ -267,7 +267,7 @@ export default function StockCardApp() {
                                         <select 
                                             value={viewState.rows} 
                                             onChange={(e) => setViewState({...viewState, rows: Number(e.target.value), page: 1})}
-                                            className="bg-white border border-slate-200 rounded-none px-1.5 py-0.5 focus:border-[#ab8a3b] outline-none text-[#111f42] font-black"
+                                            className="bg-white border border-slate-200 rounded-lg px-1.5 py-0.5 focus:border-[#ab8a3b] outline-none text-[#111f42] font-black"
                                         >
                                             <option value={10}>10</option>
                                             <option value={20}>20</option>
@@ -275,9 +275,9 @@ export default function StockCardApp() {
                                         <span>records</span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <button onClick={() => setViewState(p => ({...p, page: Math.max(1, p.page - 1)}))} disabled={viewState.page === 1} className="p-1.5 rounded-none border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"><ChevronLeft size={14}/></button>
+                                        <button onClick={() => setViewState(p => ({...p, page: Math.max(1, p.page - 1)}))} disabled={viewState.page === 1} className="p-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"><ChevronLeft size={14}/></button>
                                         <span className="text-[10px] font-black text-[#111f42] px-3 font-mono uppercase tracking-widest">Page {viewState.page} of {totalPages}</span>
-                                        <button onClick={() => setViewState(p => ({...p, page: Math.min(totalPages, p.page + 1)}))} disabled={viewState.page === totalPages} className="p-1.5 rounded-none border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"><ChevronRight size={14}/></button>
+                                        <button onClick={() => setViewState(p => ({...p, page: Math.min(totalPages, p.page + 1)}))} disabled={viewState.page === totalPages} className="p-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"><ChevronRight size={14}/></button>
                                     </div>
                                 </div>
                             )}
@@ -295,7 +295,7 @@ export default function StockCardApp() {
                 {/* Loading Overlay */}
                 {loading && (
                     <div className="fixed inset-0 z-[20000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
-                        <Loader2 className="animate-spin text-[#ab8a3b]" size={40} />
+                        <Loader2 className="animate-spin text-[#111f42]" size={40} />
                         <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[9px] animate-pulse font-mono">Syncing Master Ledger...</p>
                     </div>
                 )}

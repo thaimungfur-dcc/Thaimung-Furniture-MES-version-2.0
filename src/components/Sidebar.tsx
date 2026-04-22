@@ -54,11 +54,11 @@ const MENU_SECTIONS: MenuSection[] = [
     ]
   },
   {
-    title: 'OPERATIONS',
+    title: 'OPERATIONAL MODULES',
     items: [
       { path: '/production', name: 'Production Tracking', icon: Activity },
-      { path: '/warehouse-in', name: 'Warehouse In', icon: Warehouse },
       { path: '/warehouse-out', name: 'Warehouse Out', icon: Truck },
+      { path: '/warehouse-in', name: 'Warehouse In', icon: Warehouse },
       { path: '/stock-card', name: 'Stock Card', icon: Package },
       { path: '/inventory-planning', name: 'Inventory Planning', icon: ClipboardList },
     ]
@@ -142,7 +142,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       {/* Logo Area */}
       <div className="flex h-24 items-center px-6 border-b border-[#111f42]/5 bg-slate-50/30">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#111f42] text-[#ab8a3b] font-black text-2xl shadow-lg border border-white/10">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#111f42] text-white font-black text-2xl shadow-lg border border-white/10">
             T
           </div>
           {!isCollapsed && (
@@ -207,7 +207,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                           className={clsx(
                             "shrink-0 transition-colors", 
                             isCollapsed ? "mr-0" : "mr-4",
-                            "group-hover:text-[#ab8a3b]"
+                            "group-hover:text-white"
                           )} 
                         />
                         
@@ -220,7 +220,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                             "flex items-center justify-center",
                             isCollapsed ? "absolute top-1 right-1" : "ml-auto"
                           )}>
-                            <Lock size={12} className="text-[#E3624A]" />
+                            <Lock size={12} className="text-slate-400" />
                           </div>
                         )}
                       </NavLink>
@@ -243,7 +243,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
             {!isCollapsed && (
               <div className="flex flex-col min-w-0">
                 <span className="truncate text-sm font-black text-[#111f42] uppercase tracking-tight">{user.name}</span>
-                <span className="truncate text-[10px] font-black text-[#ab8a3b] uppercase tracking-widest mt-0.5">{user.role}</span>
+                <span className="truncate text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">{user.role}</span>
               </div>
             )}
           </div>
