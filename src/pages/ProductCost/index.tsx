@@ -13,6 +13,7 @@ import {
 
 import { useMasterData } from '../../context/MasterDataContext';
 import { useGoogleSheets } from '../../hooks/useGoogleSheets';
+import { PageHeader } from '../../components/shared/PageHeader';
 import ProductCostTable from './components/ProductCostTable';
 
 // --- ERP Palette ---
@@ -227,7 +228,7 @@ export default function ProductCost() {
 
 
     return (
-        <div className="min-h-screen pt-8 px-8 pb-10 transition-colors duration-500 text-[12px] bg-[#F9F7F6] flex flex-col">
+        <div className="relative w-full flex flex-col pb-10 transition-colors duration-500 text-[12px] border-l-4 border-l-[#ab8a3b]">
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;900&display=swap');
                 * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
@@ -250,28 +251,20 @@ export default function ProductCost() {
 
             <div className="w-full space-y-4 relative flex-1 flex flex-col">
                 {/* Header */}
-                <header className="flex flex-col md:flex-row justify-between items-center gap-4 flex-shrink-0 z-10 bg-[#F9F7F6] no-print">
-                    <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="w-12 h-12 bg-white flex items-center justify-center rounded-xl shadow-sm border border-slate-200 relative shrink-0">
-                            <Coins size={24} className="text-[#111f42]" strokeWidth={2.5} />
-                            <div className="absolute bottom-[10px] right-[10px] w-1.5 h-1.5 bg-[#ab8a3b] rounded-full"></div>
+                <PageHeader
+                    title="PRODUCT COST"
+                    subtitle="Standard Costing Engine"
+                    icon={Coins}
+                    rightContent={
+                        <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
+                            <div className="flex bg-[#e2e8f0] p-1 rounded-xl border border-slate-200 shadow-inner h-10 overflow-hidden">
+                                <button onClick={() => setViewMode('summary')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'summary' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><LayoutGrid size={14} className="mr-2 inline" /> Cards</button>
+                                <button onClick={() => setViewMode('list')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><List size={14} className="mr-2 inline" /> SKU List</button>
+                            </div>
+                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#111f42] transition-all shadow-sm h-10"><HelpCircle size={20} /></button>
                         </div>
-                        <div>
-                            <h1 className="text-2xl tracking-tight whitespace-nowrap uppercase leading-none font-mono">
-                                <span className="font-light text-[#111f42]">PRODUCT</span> <span className="font-black text-[#E3624A]">COST</span>
-                            </h1>
-                            <p className="text-slate-500 text-[10px] mt-1 font-bold uppercase tracking-widest opacity-80 font-mono">Standard Costing Engine</p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
-                        <div className="flex bg-[#e2e8f0] p-1 rounded-xl border border-slate-200 shadow-inner h-10 overflow-hidden">
-                            <button onClick={() => setViewMode('summary')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'summary' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><LayoutGrid size={14} className="mr-2 inline" /> Cards</button>
-                            <button onClick={() => setViewMode('list')} className={`px-5 py-1.5 text-[10px] font-black uppercase transition-all rounded-lg ${viewMode === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-white/50'}`}><List size={14} className="mr-2 inline" /> SKU List</button>
-                        </div>
-                        <button onClick={() => setIsGuideOpen(true)} className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-[#111f42] transition-all shadow-sm h-10"><HelpCircle size={20} /></button>
-                    </div>
-                </header>
+                    }
+                />
 
                 <main className="flex-1 relative z-10 flex flex-col gap-6">
                     {/* KPI Cards */}

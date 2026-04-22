@@ -119,7 +119,7 @@ export default function QcReport() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F5F2] pt-8 px-8 pb-10 flex flex-col space-y-6">
+    <div className="flex flex-col space-y-6 pt-8 pb-10">
       <style>{`
         * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         @media print {

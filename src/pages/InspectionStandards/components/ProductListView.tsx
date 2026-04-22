@@ -118,7 +118,7 @@ export default function ProductListView({
     ];
 
     return (
-        <div className="animate-fade-in flex flex-col h-full max-w-7xl mx-auto">
+        <div className="animate-fade-in flex flex-col h-full w-full">
             <div className="flex items-center gap-3 mb-3 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm shrink-0">
                 <button 
                     onClick={onGoBack} 

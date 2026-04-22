@@ -26,7 +26,7 @@ export default function OutboundTable({ data, onEdit, onConfirm, onCancel }: Out
         {
             accessorKey: 'outType',
             header: 'TYPE',
-            cell: ({ row }) => <span className="text-[11px] font-bold text-[#111f42] bg-slate-100 px-2 py-1 rounded-md border border-slate-200">{row.getValue('outType') as string}</span>
+            cell: ({ row }) => <span className="text-[10px] font-black uppercase tracking-widest text-[#111f42] bg-slate-100 px-2 py-1 rounded-none border border-slate-200">{row.getValue('outType') as string}</span>
         },
         {
             accessorKey: 'refNo',
@@ -82,13 +82,13 @@ export default function OutboundTable({ data, onEdit, onConfirm, onCancel }: Out
                 const log = row.original;
                 return log.status === 'Pending' ? (
                     <div className="flex items-center justify-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
-                        <button onClick={() => onConfirm(log)} className="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 rounded-md shadow-sm hover:text-white hover:bg-orange-500 hover:border-orange-500 text-slate-400 transition-colors" title="Confirm">
+                        <button onClick={() => onConfirm(log)} className="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded-none shadow-sm hover:text-white hover:bg-orange-500 hover:border-orange-500 text-slate-400 transition-colors" title="Confirm">
                             <FolderCheck size={14} />
                         </button>
-                        <button onClick={() => onEdit(log)} className="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 rounded-md shadow-sm hover:text-[#ab8a3b] hover:border-[#ab8a3b] hover:bg-slate-50 text-slate-400 transition-colors" title="Edit">
+                        <button onClick={() => onEdit(log)} className="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded-none shadow-sm hover:text-[#ab8a3b] hover:border-[#ab8a3b] hover:bg-slate-50 text-slate-400 transition-colors" title="Edit">
                             <Pencil size={14} />
                         </button>
-                        <button onClick={() => onCancel(log)} className="w-7 h-7 flex items-center justify-center bg-white border border-slate-200 rounded-md shadow-sm hover:text-white hover:bg-red-500 hover:border-red-500 text-slate-400 transition-colors" title="Cancel">
+                        <button onClick={() => onCancel(log)} className="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded-none shadow-sm hover:text-white hover:bg-red-500 hover:border-red-500 text-slate-400 transition-colors" title="Cancel">
                             <X size={14} />
                         </button>
                     </div>

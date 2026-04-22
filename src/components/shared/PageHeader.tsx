@@ -5,37 +5,42 @@ interface PageHeaderProps {
     title: string;
     subtitle?: string;
     icon?: LucideIcon;
+    Icon?: LucideIcon; // Alternative prop name
     iconColor?: string;
     actionButton?: React.ReactNode;
     rightContent?: React.ReactNode;
+    extra?: React.ReactNode; // Alternative prop name
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({ 
     title, 
     subtitle, 
-    icon: Icon, 
+    icon, 
+    Icon: IconAlt,
     iconColor = 'text-[#111f42]',
     actionButton,
-    rightContent
+    rightContent,
+    extra
 }) => {
+    const ActiveIcon = icon || IconAlt;
+    const currentRightContent = rightContent || actionButton || extra;
+
     return (
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 flex-shrink-0 z-10 no-print">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 flex-shrink-0 z-10 no-print pt-2 pb-2 bg-transparent border-none w-full">
             <div className="flex items-center gap-4 w-full md:w-auto">
-                {Icon && (
-                    <div className={`w-12 h-12 flex items-center justify-center rounded-xl bg-white shadow-sm flex-shrink-0 border border-slate-200 relative ${iconColor}`}>
-                        <Icon size={24} strokeWidth={2.5} />
-                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#F9F7F6]"></div>
+                {ActiveIcon && (
+                    <div className={`w-10 h-10 flex items-center justify-center rounded-xl bg-white flex-shrink-0 border border-slate-200 relative ${iconColor} shadow-sm`}>
+                        <ActiveIcon size={22} strokeWidth={2.5} />
                     </div>
                 )}
                 <div className="flex flex-col min-w-0">
-                    <h1 className="text-2xl font-black text-[#111f42] tracking-tight uppercase truncate">{title}</h1>
-                    {subtitle && <p className="text-sm font-bold text-[#72A09E] tracking-widest uppercase mt-0.5 truncate">{subtitle}</p>}
+                    <h1 className="text-[24px] font-black text-[#111f42] tracking-tight uppercase leading-none">{title}</h1>
+                    {subtitle && <p className="text-[11px] font-medium text-slate-500 tracking-normal mt-0.5 truncate uppercase">{subtitle}</p>}
                 </div>
             </div>
-            {(actionButton || rightContent) && (
-                <div className="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-                    {rightContent}
-                    {actionButton}
+            {currentRightContent && (
+                <div className="flex items-center gap-3 w-full md:w-auto overflow-x-auto lg:overflow-visible pb-2 md:pb-0 hide-scrollbar mt-2 md:mt-0">
+                    {currentRightContent}
                 </div>
             )}
         </div>

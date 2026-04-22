@@ -9,6 +9,7 @@ import KpiCard from './components/KpiCard';
 import ItemTable from './components/ItemTable';
 import ItemModal from './components/ItemModal';
 import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
+import { PageHeader } from '../../components/shared/PageHeader';
 import NameRuleModal from './components/NameRuleModal';
 import GuideDrawer from './components/GuideDrawer';
 
@@ -171,39 +172,31 @@ export default function ItemMasterApp() {
                 .input-primary:focus { border-color: #ab8a3b; box-shadow: 0 0 0 2px rgba(171, 138, 59, 0.1); }
             `}</style>
 
-            <div className="flex flex-col h-full pt-14 px-8 pb-10 bg-[#F9F7F6]">
+            <div className="flex flex-col w-full pb-10 border-l-4 border-l-[#111f42]">
                 {/* Header Section */}
-                <div className="pt-0 pb-2 flex flex-col md:flex-row justify-between items-center gap-6 flex-shrink-0 z-10 bg-[#F9F7F6]">
-                    <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white shadow-sm flex-shrink-0 border border-slate-200 relative">
-                            <Package size={28} className="text-[#111f42]" strokeWidth={2.5} />
-                            <div className="absolute bottom-[14px] right-[14px] w-[6px] h-[6px] bg-[#ab8a3b] rounded-[1px]"></div>
-                        </div>
-                        <div>
-                            <h1 className="text-3xl text-[#111f42] tracking-tight whitespace-nowrap uppercase leading-none font-black">
-                                <span className="font-light opacity-50">ITEM</span> CODE
-                            </h1>
-                            <p className="text-slate-500 text-[11px] mt-1.5 font-bold">ระบบจัดการรหัสสินค้าและวัตถุดิบ</p>
-                        </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-                        <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-xl overflow-hidden">
-                            <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                                <List size={14} /> MASTER LIST
-                            </button>
-                            <button onClick={() => setActiveTab('analytics')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'analytics' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                                <BarChart2 size={14} /> ANALYTICS
+                <PageHeader
+                    title="ITEM CODE"
+                    subtitle="ระบบจัดการรหัสสินค้าและวัตถุดิบ"
+                    icon={Package}
+                    rightContent={
+                        <div className="flex items-center gap-3 w-full lg:w-auto">
+                            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-none overflow-hidden">
+                                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-black transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-widest rounded-none ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                    <List size={14} /> MASTER LIST
+                                </button>
+                                <button onClick={() => setActiveTab('analytics')} className={`px-6 py-2.5 text-xs font-black transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-widest rounded-none ${activeTab === 'analytics' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                    <BarChart2 size={14} /> ANALYTICS
+                                </button>
+                            </div>
+                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-none bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
+                                <HelpCircle size={20} />
                             </button>
                         </div>
-                        <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
-                            <HelpCircle size={20} />
-                        </button>
-                    </div>
-                </div>
+                    }
+                />
 
                 {/* Main Content Area */}
-                <main className="flex-1 relative z-10 flex flex-col gap-4">
+                <main className="relative z-10 flex flex-col gap-4">
                     
                     {/* KPI Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -214,16 +207,16 @@ export default function ItemMasterApp() {
                     </div>
 
                     {/* Table Section - Rounded-none */}
-                    <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col overflow-hidden min-h-[600px]">
+                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full">
                         {activeTab === 'list' && (
                             <>
                                 <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4 bg-slate-50/50">
                                     <div className="flex-1"></div>
                                     <div className="flex gap-2 shrink-0 ml-auto items-center">
-                                        <button onClick={() => setShowUploadModal(true)} className="px-5 py-2.5 rounded-xl text-[12px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-2 uppercase tracking-wide">
+                                        <button onClick={() => setShowUploadModal(true)} className="px-5 py-2.5 rounded-none text-[12px] font-black bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-2 uppercase tracking-widest transition-all">
                                             <UploadCloud size={16} /> Upload
                                         </button>
-                                        <button onClick={() => openModal()} className="px-5 py-2.5 rounded-xl text-[12px] font-bold bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-wide">
+                                        <button onClick={() => openModal()} className="px-5 py-2.5 rounded-none text-[12px] font-black bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-[0.15em] transition-all hover:bg-[#1e346b]">
                                             <Plus size={16} className="text-[#ab8a3b]" /> NEW RECORD
                                         </button>
                                     </div>

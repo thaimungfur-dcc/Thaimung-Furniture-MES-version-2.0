@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
-    ArrowDownToLine, LayoutList, Truck, PackageMinus, ArrowUpRight, 
-    Factory, CheckCircle, Search, UploadCloud, PlusCircle, 
-    ChevronLeft, ChevronRight
+    ArrowDownToLine, 
+    ArrowUpRight, 
+    Factory, CheckCircle, 
+    Truck, PackageMinus, LayoutList
 } from 'lucide-react';
 
 import { 
     DeliveryOrder, MrpOrder, HistoryLog, TabType, ModalType, ManualItem 
 } from './types';
 import { 
-    WAREHOUSES, STATUSES, 
-    MOCK_DELIVERY_ORDERS, MOCK_MRP_ORDERS, MOCK_HISTORY_LOGS 
+    WAREHOUSES, STATUSES 
 } from './constants';
 
 import { useMasterData } from '../../context/MasterDataContext';
 import { useGoogleSheets } from '../../hooks/useGoogleSheets';
-import KpiCard from './components/KpiCard';
 import OutboundTable from './components/OutboundTable';
 import DeliveryTable from './components/DeliveryTable';
 import MrpTable from './components/MrpTable';
 import OutboundModal from './components/OutboundModal';
 import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
+import { PageHeader } from '../../components/shared/PageHeader';
+import { OutboundKpiSection } from './components/OutboundKpiSection';
+import { OutboundToolbar } from './components/OutboundToolbar';
 
 export default function WarehouseOut() {
     // --- State Management ---
@@ -395,107 +397,34 @@ export default function WarehouseOut() {
     };
 
     return (
-        <div className="pt-8 px-8 pb-10 min-h-screen bg-[#F9F7F6]">
-            <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;900&display=swap');
-                * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
-                .master-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-                .master-custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-                .master-custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-                .no-scrollbar::-webkit-scrollbar { display: none; }
-                .minimal-th { font-size: 11px !important; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; padding: 16px 12px; font-weight: 800; background-color: #111f42; border-bottom: 2px solid #ab8a3b; white-space: nowrap; }
-                .minimal-td { padding: 12px 12px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
-                .filter-btn { border-radius: 0.5rem; font-size: 0.75rem; font-weight: 700; transition: all 0.3s; white-space: nowrap; border: 1px solid transparent; padding: 0.5rem 1rem; }
-                .filter-btn.active { background-color: #111f42; color: #FFFFFF; }
-                .filter-btn:not(.active) { color: #64748B; background-color: transparent; }
-                .filter-btn:not(.active):hover { color: #111f42; background-color: rgba(255,255,255,0.5); }
-                .filter-count { display: flex; align-items: center; justify-content: center; height: 16px; min-width: 16px; padding: 0 4px; border-radius: 9999px; font-size: 9px; font-weight: 700; margin-left: 6px; }
-                .filter-btn.active .filter-count { background-color: rgba(255, 255, 255, 0.2); color: white; }
-                .filter-btn:not(.active) .filter-count { background-color: #E2E8F0; color: #64748B; }
-                .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 31, 66, 0.6); backdrop-filter: blur(4px); z-index: 10001; display: flex; justify-content: center; align-items: center; padding: 1rem; }
-                .modal-box { background: #F9F7F6; width: 100%; max-height: 90vh; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow: hidden; display: flex; flex-direction: column; }
-                .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.6rem; border-radius: 6px; font-weight: 700; font-size: 10px; border: 1px solid transparent; text-transform: uppercase; }
-                .input-primary { width: 100%; background: white; border: 1px solid #E2E8F0; border-radius: 0.5rem; padding: 8px 12px; font-size: 13px; transition: all 0.2s; color: #111f42; outline: none;}
-                .input-primary:focus { border-color: #ab8a3b; box-shadow: 0 0 0 2px rgba(171, 138, 59, 0.1); }
-                .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
-                @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-            `}</style>
+        <div className="flex flex-col flex-1 pb-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <PageHeader
+                Icon={ArrowDownToLine}
+                title="WAREHOUSE OUT"
+                subtitle="รายการส่งมอบสินค้า & เบิกวัตถุดิบ"
+            />
 
-            <div className="flex flex-col h-full overflow-hidden">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 flex-shrink-0 z-10 animate-fade-in-up border-b border-slate-100">
-                    <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white shadow-sm flex-shrink-0 border border-slate-200 relative">
-                            <ArrowDownToLine size={28} className="text-[#111f42]" strokeWidth={2.5} />
-                            <div className="absolute bottom-[14px] right-[14px] w-[6px] h-[6px] bg-[#ab8a3b] rounded-[1px]"></div>
-                        </div>
-                        <div>
-                            <h1 className="text-3xl tracking-tight whitespace-nowrap uppercase leading-none font-mono">
-                                <span className="font-light text-[#111f42]">WAREHOUSE</span> <span className="font-black text-[#E3624A]">OUT</span>
-                            </h1>
-                            <p className="text-slate-500 text-[11px] mt-1.5 font-bold">
-                                <span className="tracking-normal ml-1">รายการส่งมอบสินค้า & เบิกวัตถุดิบ</span>
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-xl overflow-hidden">
-                        <button onClick={() => setActiveTab('all')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'all' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                            <LayoutList size={14} /> ALL OUTBOUND
-                        </button>
-                        <button onClick={() => setActiveTab('delivery')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'delivery' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                            <Truck size={14} /> DELIVERY LIST
-                        </button>
-                        <button onClick={() => setActiveTab('mrp')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'mrp' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                            <PackageMinus size={14} /> MRP LIST (RM)
-                        </button>
-                    </div>
-                </div>
+            <main className="flex-1 relative z-10 pt-4 flex flex-col gap-6 no-print">
+                <OutboundKpiSection stats={stats} />
 
-                <main className="flex-1 overflow-y-auto master-custom-scrollbar relative z-10 py-6 flex flex-col gap-6">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 animate-fade-in-up">
-                        <KpiCard title="Outbound Today" val={stats.todayOut} color="#111f42" IconComponent={ArrowUpRight} desc="Total Units Issued" />
-                        <KpiCard title="Pending Delivery" val={stats.pendingDelivery} color="#ab8a3b" IconComponent={Truck} desc="Wait for Shipping" />
-                        <KpiCard title="Pending Production" val={stats.pendingMRP} color="#E3624A" IconComponent={Factory} desc="RM to Issue" />
-                        <KpiCard title="Completed Today" val={stats.completed} color="#10b981" IconComponent={CheckCircle} desc="Docs Closed" />
-                    </div>
+                <div className="bg-white border-l-4 border-l-[#E3624A] flex flex-col min-h-[500px]">
+                    <OutboundToolbar 
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                        activeWhTab={activeWhTab}
+                        setActiveWhTab={setActiveWhTab}
+                        statusFilter={statusFilter}
+                        setStatusFilter={setStatusFilter}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                        onUploadClick={() => setShowUploadModal(true)}
+                        onOutboundClick={() => openOutboundModal(null, 'MANUAL')}
+                        warehouses={WAREHOUSES}
+                        statuses={STATUSES}
+                        getStatusCount={getStatusCount}
+                    />
 
-                    <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col overflow-hidden min-h-[500px]">
-                        <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
-                            <div className="flex flex-col md:flex-row items-center gap-4 w-full lg:w-auto mr-auto">
-                                <div className="flex items-center gap-1 p-1 bg-white rounded-lg border border-slate-200 shadow-sm shrink-0 overflow-x-auto no-scrollbar">
-                                    {activeTab === 'all' ? (
-                                        WAREHOUSES.map(wh => (
-                                            <button key={wh} onClick={() => setActiveWhTab(wh)} 
-                                                className={`filter-btn flex items-center gap-2 capitalize font-mono ${activeWhTab === wh ? 'active' : ''}`}>
-                                                <span>{wh}</span>
-                                            </button>
-                                        ))
-                                    ) : (
-                                        STATUSES.map(status => (
-                                            <button key={status} onClick={() => setStatusFilter(status)} 
-                                                className={`filter-btn flex items-center gap-2 capitalize font-mono ${statusFilter === status ? 'active' : ''}`}>
-                                                <span>{status}</span>
-                                                <span className="filter-count text-[9px] h-4 min-w-[16px]">{getStatusCount(status)}</span>
-                                            </button>
-                                        ))
-                                    )}
-                                </div>
-                            </div>
-                            
-                            {activeTab === 'all' && (
-                                <div className="flex gap-2 shrink-0 flex-nowrap items-center ml-auto">
-                                    <button onClick={() => setShowUploadModal(true)} className="px-5 py-2.5 rounded-xl text-[12px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-2 uppercase tracking-wide whitespace-nowrap transition-all">
-                                        <UploadCloud size={16} /> UPLOAD
-                                    </button>
-                                    
-                                    <button onClick={() => openOutboundModal(null, 'MANUAL')} className="px-5 py-2.5 rounded-xl text-[12px] font-bold bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-wide whitespace-nowrap hover:bg-[#1e346b] transition-all">
-                                        <PlusCircle size={16} className="text-[#ab8a3b]" /> OUTBOUND
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-
+                    <div className="flex-1 overflow-hidden">
                         {activeTab === 'all' && (
                             <OutboundTable 
                                 data={currentData as HistoryLog[]} 
@@ -525,7 +454,8 @@ export default function WarehouseOut() {
                             />
                         )}
                     </div>
-                </main>
+                </div>
+            </main>
 
                 <OutboundModal 
                     show={showModal}
@@ -565,7 +495,6 @@ export default function WarehouseOut() {
                         ))}
                     </div>
                 )}
-            </div>
         </div>
     );
 }

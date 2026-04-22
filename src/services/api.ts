@@ -3,11 +3,46 @@ import { ApiResponse } from '../types';
 
 const SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL || '';
 
+/**
+ * Cache utility for storing API responses in localStorage
+ */
+const cache = {
+  set: (key: string, data: any, ttlMinutes: number = 5) => {
+    const expiredAt = Date.now() + ttlMinutes * 60 * 1000;
+    localStorage.setItem(`api_cache_${key}`, JSON.stringify({ data, expiredAt }));
+  },
+  get: (key: string) => {
+    const cached = localStorage.getItem(`api_cache_${key}`);
+    if (!cached) return null;
+    const { data, expiredAt } = JSON.parse(cached);
+    if (Date.now() > expiredAt) {
+      localStorage.removeItem(`api_cache_${key}`);
+      return null;
+    }
+    return data;
+  },
+  clear: () => {
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('api_cache_')) localStorage.removeItem(key);
+    });
+  }
+};
+
 export const api = {
-  post: async <T = any>(action: string, sheet?: string, data?: any): Promise<ApiResponse<T>> => {
+  cache,
+  post: async <T = any>(action: string, sheet?: string, data?: any, useCache: boolean = false): Promise<ApiResponse<T>> => {
+    const cacheKey = `${action}_${sheet}_${JSON.stringify(data)}`;
+    
+    if (useCache) {
+      const cachedData = cache.get(cacheKey);
+      if (cachedData) return { status: 'success', data: cachedData };
+    }
+
     if (!SCRIPT_URL) {
       console.warn('VITE_APPS_SCRIPT_URL is not set. Using mock response.');
-      return mockResponse(action, data);
+      const response = await mockResponse(action, data);
+      if (useCache && response.status === 'success') cache.set(cacheKey, response.data);
+      return response;
     }
     
     try {
@@ -18,7 +53,9 @@ export const api = {
         },
         body: JSON.stringify({ action, sheet, data }),
       });
-      return await response.json();
+      const result = await response.json();
+      if (useCache && result.status === 'success') cache.set(cacheKey, result.data);
+      return result;
     } catch (error) {
       console.error('API Error:', error);
       throw error;

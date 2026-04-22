@@ -68,8 +68,8 @@ export default function ItemTable({ items, getTypeClass, openModal, deleteItem }
                 const item = row.original;
                 return (
                     <div className="flex justify-center items-center gap-0.5 opacity-60 hover:opacity-100 transition-opacity">
-                        <button onClick={() => openModal(item)} className="p-1.5 bg-white border border-slate-200 text-amber-500 hover:bg-amber-50 rounded" title="Edit"><Pencil size={12} /></button>
-                        <button onClick={() => deleteItem(item.id)} className="p-1.5 bg-white border border-slate-200 text-rose-500 hover:bg-rose-50 rounded" title="Delete"><Trash2 size={12} /></button>
+                        <button onClick={() => openModal(item)} className="p-1.5 bg-white border border-slate-200 text-amber-500 hover:bg-amber-50 rounded-none h-8 w-8 flex items-center justify-center transition-all hover:scale-110" title="Edit"><Pencil size={12} /></button>
+                        <button onClick={() => deleteItem(item.id)} className="p-1.5 bg-white border border-slate-200 text-rose-500 hover:bg-rose-50 rounded-none h-8 w-8 flex items-center justify-center transition-all hover:scale-110" title="Delete"><Trash2 size={12} /></button>
                     </div>
                 );
             }

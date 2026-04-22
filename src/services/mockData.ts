@@ -59,6 +59,46 @@ export const MOCK_WAREHOUSE_LOGS = [
   }
 ];
 
+export const MOCK_WAREHOUSE_OUT_LOGS = [
+  {
+    id: 1,
+    transId: 'TRX-OUT-001',
+    date: '2026-04-20 14:00',
+    joNo: 'JO-2026-001',
+    sku: 'SKU-001',
+    productName: 'Sample Product A',
+    qty: 10,
+    operator: 'Jane Smith',
+    warehouseName: 'Main Warehouse',
+    location: 'A-101',
+    notes: 'Shipping to Client X'
+  }
+];
+
+export const MOCK_HISTORY_LOGS = [
+  {
+    id: 1,
+    joNo: 'JO-2026-001',
+    stage: 'Cutting',
+    action: 'Completed',
+    operator: 'Operator A',
+    timestamp: '2026-04-20 09:00',
+    qtyCompleted: 10,
+    notes: 'Smooth process'
+  }
+];
+
+export const MOCK_DELIVERY_ORDERS = [
+  {
+    id: 1,
+    doNo: 'DO-2026-001',
+    customerName: 'Client X',
+    date: '2026-04-21',
+    status: 'Shipped',
+    items: 'Sofa x 2'
+  }
+];
+
 export const MOCK_MASTER_CODES = [
   { Group: 'FURNITURE', Category: 'Living Room', CatCode: 'LR', SubCategory: 'Sofa', SubCode: 'SF', Note: 'Standard Sofa' }
 ];

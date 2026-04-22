@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Chart from 'chart.js/auto';
 import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
+import { PageHeader } from '../../components/shared/PageHeader';
 import BomListTable from './components/BomListTable';
 
 // --- KPI Card Component ---
@@ -195,38 +196,30 @@ export default function BOMManagementApp() {
                 .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.6rem; border-radius: 6px; font-weight: 700; font-size: 10px; border: 1px solid transparent; text-transform: uppercase; }
             `}</style>
 
-            <div className="flex flex-col h-full pt-14 px-8 pb-10 overflow-hidden bg-[#F9F7F6]">
+            <div className="flex flex-col w-full pb-10 border-l-4 border-l-[#111f42]">
                 {/* Header Section */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 flex-shrink-0 z-10 bg-[#F9F7F6] mb-6">
-                    <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white shadow-sm flex-shrink-0 border border-slate-200 relative">
-                            <Layers size={28} className="text-[#111f42]" strokeWidth={2.5} />
-                            <div className="absolute bottom-[14px] right-[14px] w-[6px] h-[6px] bg-[#ab8a3b] rounded-[1px]"></div>
-                        </div>
-                        <div>
-                            <h1 className="text-3xl text-[#111f42] tracking-tight whitespace-nowrap uppercase leading-none font-black">
-                                <span className="font-light opacity-50">BOM</span> MANAGEMENT
-                            </h1>
-                            <p className="text-slate-500 text-[11px] mt-1.5 font-bold uppercase tracking-widest">ระบบจัดการสูตรการผลิตและโครงสร้างสินค้า</p>
-                        </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-                        <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-xl overflow-hidden">
-                            <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                                <List size={14} /> PRODUCT LIST
-                            </button>
-                            <button onClick={() => setActiveTab('analytics')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'analytics' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                                <BarChart2 size={14} /> ANALYTICS
+                <PageHeader
+                    title="BOM MANAGEMENT"
+                    subtitle="ระบบจัดการสูตรการผลิตและโครงสร้างสินค้า"
+                    icon={Layers}
+                    rightContent={
+                        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-xl overflow-hidden">
+                                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                    <List size={14} /> PRODUCT LIST
+                                </button>
+                                <button onClick={() => setActiveTab('analytics')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'analytics' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                                    <BarChart2 size={14} /> ANALYTICS
+                                </button>
+                            </div>
+                            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
+                                <HelpCircle size={20} />
                             </button>
                         </div>
-                        <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm">
-                            <HelpCircle size={20} />
-                        </button>
-                    </div>
-                </div>
+                    }
+                />
 
-                <main className="flex-1 overflow-y-auto master-custom-scrollbar relative z-10 flex flex-col gap-4">
+                <main className="relative z-10 flex flex-col gap-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <KpiCard title="Total Products" val={products.length} color="#111f42" IconComponent={Box} desc="FG with BOM Records" />
                         <KpiCard title="Active Formula" val={products.filter(p=>p.status==='Active').length} color="#ab8a3b" IconComponent={CheckCircle} desc="Ready for Production" />
@@ -234,7 +227,7 @@ export default function BOMManagementApp() {
                         <KpiCard title="Pending Review" val={products.filter(p=>p.status==='Draft').length} color="#E3624A" IconComponent={Clock} desc="Draft or Pending" />
                     </div>
 
-                    <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col overflow-hidden min-h-[600px]">
+                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full">
                         <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
                             <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
                                 <div className="flex items-center gap-1 p-1 bg-white rounded-lg border border-slate-200 shadow-sm shrink-0">
@@ -264,7 +257,7 @@ export default function BOMManagementApp() {
                             </div>
                         </div>
 
-                        <div className="flex-1 overflow-auto bg-[#F9F7F6]">
+                        <div className="w-full">
                             <BomListTable 
                                 data={filteredProducts} 
                                 onManageBom={openBomModal} 

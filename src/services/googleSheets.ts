@@ -1,4 +1,11 @@
-import { MOCK_JOB_ORDERS, MOCK_WAREHOUSE_LOGS, MOCK_MASTER_CODES } from './mockData';
+import { 
+  MOCK_JOB_ORDERS, 
+  MOCK_WAREHOUSE_LOGS, 
+  MOCK_MASTER_CODES,
+  MOCK_WAREHOUSE_OUT_LOGS,
+  MOCK_HISTORY_LOGS,
+  MOCK_DELIVERY_ORDERS
+} from './mockData';
 
 export const SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL;
 
@@ -75,6 +82,9 @@ export class GoogleSheetsService {
     switch (sheet) {
       case 'JobOrders': mockItems = MOCK_JOB_ORDERS; break;
       case 'WarehouseIn': mockItems = MOCK_WAREHOUSE_LOGS; break;
+      case 'WarehouseOutLogs': mockItems = MOCK_WAREHOUSE_OUT_LOGS; break;
+      case 'HistoryLogs': mockItems = MOCK_HISTORY_LOGS; break;
+      case 'DeliveryOrders': mockItems = MOCK_DELIVERY_ORDERS; break;
       case 'MasterCodes': mockItems = MOCK_MASTER_CODES; break;
       default: mockItems = [];
     }

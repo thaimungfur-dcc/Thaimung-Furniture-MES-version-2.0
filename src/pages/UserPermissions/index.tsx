@@ -3,6 +3,7 @@ import { Shield, LayoutDashboard, Users, Plus, Lock, UserCog } from 'lucide-reac
 import { AnimatePresence } from 'motion/react';
 import { User } from './types';
 import { SYSTEM_MODULES } from './constants';
+import { PageHeader } from '../../components/shared/PageHeader';
 import Step1Confidentiality from './components/Step1Confidentiality';
 import Step2Operational from './components/Step2Operational';
 import EditUserModal from './components/EditUserModal';
@@ -180,62 +181,56 @@ export default function UserPermissions() {
   const nodeRef = useRef(null);
 
   return (
-    <div className="relative flex-1 font-sans w-full flex flex-col min-h-0 pb-6 bg-[#F9F7F6]">
-      <div className="relative z-10 w-full flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700 p-8">
+    <div className="relative font-sans w-full flex flex-col pb-6">
+      <div className="relative z-10 w-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white text-[#E3624A] shadow-sm border border-slate-200">
-              <Shield size={28} />
-            </div>
-            <div>
-              <h1 className="text-3xl font-black text-[#111f42] tracking-tight uppercase leading-none">
-                <span className="font-light opacity-50">USER</span> <span className="font-black">PERMISSIONS</span>
-              </h1>
-              <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest mt-1.5">Access Control & Authorization</p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col items-end gap-3">
-            <div className="bg-[#e2e8f0] p-1 rounded-xl shadow-inner flex gap-1">
-              <button 
-                onClick={() => setActiveTab('step1')}
-                className={`px-6 py-2.5 rounded-lg text-xs font-bold uppercase transition-all flex items-center gap-2 tracking-wide ${activeTab === 'step1' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
-              >
-                <Lock size={14} /> Step 1: Confidentiality
-              </button>
-              <button 
-                onClick={() => setActiveTab('step2')}
-                className={`px-6 py-2.5 rounded-lg text-xs font-bold uppercase transition-all flex items-center gap-2 tracking-wide ${activeTab === 'step2' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
-              >
-                <UserCog size={14} /> Step 2: Operational Rights
-              </button>
-            </div>
-
-            {activeTab === 'step2' && (
-              <div className="bg-white p-1 rounded-xl border border-slate-200 shadow-sm flex gap-1">
+        <PageHeader
+          title="USER PERMISSIONS"
+          subtitle="Access Control & Authorization"
+          icon={Shield}
+          iconColor="text-[#E3624A]"
+          rightContent={
+            <div className="flex flex-col items-end gap-3">
+              <div className="bg-[#e2e8f0] p-1 rounded-xl shadow-inner flex gap-1">
                 <button 
-                  onClick={() => setViewMode('list')}
-                  className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-2 tracking-widest ${viewMode === 'list' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                  onClick={() => setActiveTab('step1')}
+                  className={`px-6 py-2.5 rounded-lg text-xs font-bold uppercase transition-all flex items-center gap-2 tracking-wide ${activeTab === 'step1' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
                 >
-                  <Users size={14} /> User List
+                  <Lock size={14} /> Step 1: Confidentiality
                 </button>
                 <button 
-                  onClick={() => setViewMode('matrix')}
-                  className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-2 tracking-widest ${viewMode === 'matrix' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                  onClick={() => setActiveTab('step2')}
+                  className={`px-6 py-2.5 rounded-lg text-xs font-bold uppercase transition-all flex items-center gap-2 tracking-wide ${activeTab === 'step2' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
                 >
-                  <LayoutDashboard size={14} /> Summary Matrix
-                </button>
-                <button 
-                  onClick={handleNewUser}
-                  className="px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-2 bg-[#111f42] text-white shadow-md hover:bg-[#1e346b] ml-2 tracking-widest"
-                >
-                  <Plus size={14} className="text-[#ab8a3b]" /> Add User
+                  <UserCog size={14} /> Step 2: Operational Rights
                 </button>
               </div>
-            )}
-          </div>
-        </div>
+
+              {activeTab === 'step2' && (
+                <div className="bg-white p-1 rounded-xl border border-slate-200 shadow-sm flex gap-1">
+                  <button 
+                    onClick={() => setViewMode('list')}
+                    className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-2 tracking-widest ${viewMode === 'list' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                  >
+                    <Users size={14} /> User List
+                  </button>
+                  <button 
+                    onClick={() => setViewMode('matrix')}
+                    className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-2 tracking-widest ${viewMode === 'matrix' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+                  >
+                    <LayoutDashboard size={14} /> Summary Matrix
+                  </button>
+                  <button 
+                    onClick={handleNewUser}
+                    className="px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all flex items-center gap-2 bg-[#111f42] text-white shadow-md hover:bg-[#1e346b] ml-2 tracking-widest"
+                  >
+                    <Plus size={14} className="text-[#ab8a3b]" /> Add User
+                  </button>
+                </div>
+              )}
+            </div>
+          }
+        />
 
         {activeTab === 'step1' && (
           <Step1Confidentiality 

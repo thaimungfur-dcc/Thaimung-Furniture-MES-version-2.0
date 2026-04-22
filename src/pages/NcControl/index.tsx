@@ -183,7 +183,7 @@ export default function NcControl() {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-500 text-[12px] flex flex-col bg-[#F7F5F2]">
+    <div className="transition-colors duration-500 text-[12px] flex flex-col bg-[#F7F5F2] pt-8 pb-10">
       <style>{`
         * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -194,7 +194,7 @@ export default function NcControl() {
         }
       `}</style>
       
-      <div className="w-full space-y-6 relative flex-1 flex flex-col pt-8 px-8 pb-10">
+      <div className="w-full space-y-6 relative flex-1 flex flex-col">
         {/* Header */}
         <PageHeader 
           title="NC CONTROL" 
@@ -248,7 +248,7 @@ export default function NcControl() {
 
         {/* Content Views */}
         {activeTab === 'dashboard' && (
-          <div className="flex flex-col gap-6 animate-in fade-in duration-500 w-full no-print overflow-y-auto pb-6">
+          <div className="flex flex-col gap-6 animate-in fade-in duration-500 w-full no-print pb-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <NcKpiCard 
                 title="TOTAL ISSUED"

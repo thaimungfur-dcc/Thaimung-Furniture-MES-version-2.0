@@ -10,7 +10,7 @@ interface CategoryViewProps {
 
 export default function CategoryView({ products, onSelectCategory }: CategoryViewProps) {
     return (
-        <div className="animate-fade-in max-w-7xl mx-auto">
+        <div className="animate-fade-in w-full">
             <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-6 bg-[#E3624A] rounded-full"></div>
                 <h2 className="text-lg font-black text-[#111f42] uppercase tracking-widest">Select Product Category</h2>

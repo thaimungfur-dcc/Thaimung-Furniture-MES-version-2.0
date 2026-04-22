@@ -4,6 +4,7 @@ import {
     Eye, Loader2, CheckCircle2, Tag, Download, PowerOff, Package as BoxIcon, Printer
 } from 'lucide-react';
 
+import { PageHeader } from '../../components/shared/PageHeader';
 import NotificationModal from './components/NotificationModal';
 import KpiCard from './components/KpiCard';
 import PaginationControls from './components/PaginationControls';
@@ -229,10 +230,8 @@ export default function WarehouseBooking() {
     };
 
     return (
-        <div className="flex flex-col h-full w-full overflow-hidden bg-[#F9F7F6] font-sans">
+        <div className="flex flex-col w-full font-sans">
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;900&display=swap');
-                * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
                 .master-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
                 .master-custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
                 
@@ -284,9 +283,9 @@ export default function WarehouseBooking() {
                 </div>
             </header>
 
-            <main className="flex-1 overflow-y-auto master-custom-scrollbar relative z-10 px-8 pt-2 pb-8 flex flex-col gap-6 no-print">
+            <main className="flex-1 relative z-10 pt-2 pb-8 flex flex-col gap-6 no-print">
                 {activeTab === 'pending' ? (
-                    <div className="flex flex-col gap-6 animate-fade-in-up flex-1 h-full">
+                    <div className="flex flex-col gap-6 animate-fade-in-up flex-1">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 shrink-0 mt-4">
                             <KpiCard title="Reserved Qty" val={stats.totalReserved} color="#111f42" Icon={BoxIcon} desc="Inventory Allocated" />
                             <KpiCard title="New Orders" val={stats.notStarted} color="#72A09E" Icon={Calendar} desc="Waiting Process" />

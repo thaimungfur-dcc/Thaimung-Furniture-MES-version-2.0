@@ -105,13 +105,8 @@ export default function InventoryPlanning() {
     };
 
     return (
-        <div className="min-h-screen pt-8 px-8 pb-10 transition-colors duration-500 text-[12px] bg-[#F9F7F6] flex flex-col">
+        <div className="flex flex-col flex-1 animate-in fade-in slide-in-from-bottom-2 duration-500">
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;900&display=swap');
-                * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
-                .master-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-                .master-custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-                
                 /* Navy Header with Gold Bottom Border */
                 .minimal-th { 
                     font-size: 11px !important; 
@@ -151,18 +146,18 @@ export default function InventoryPlanning() {
             `}</style>
 
             <div className="w-full space-y-4 relative flex-1 flex flex-col">
-                {/* Header */}
+                {/* Header Section */}
                 <div className="flex flex-col lg:flex-row justify-between items-center gap-4 no-print flex-shrink-0">
                     <div className="flex items-center gap-4 w-full md:w-auto">
-                        <div className="w-12 h-12 bg-white flex items-center justify-center rounded-xl shadow-sm border border-slate-200 relative shrink-0">
-                            <Boxes size={24} className="text-[#111f42]" strokeWidth={2.5} />
-                            <div className="absolute bottom-[10px] right-[10px] w-1.5 h-1.5 bg-[#ab8a3b] rounded-full"></div>
+                        <div className="w-10 h-10 bg-white flex items-center justify-center rounded-xl border border-slate-200 relative shrink-0">
+                            <Boxes size={22} className="text-[#111f42]" strokeWidth={2.5} />
+                            <div className="absolute bottom-[8px] right-[8px] w-1.5 h-1.5 bg-[#ab8a3b] rounded-full"></div>
                         </div>
                         <div>
-                            <h1 className="text-2xl tracking-tight whitespace-nowrap uppercase leading-none font-mono">
-                                <span className="font-light text-[#111f42]">INVENTORY</span> <span className="font-black text-[#E3624A]">PLANNING</span>
+                            <h1 className="text-2xl tracking-tight whitespace-nowrap uppercase leading-none font-mono font-black text-[#111f42]">
+                                INVENTORY <span className="text-[#E3624A]">PLANNING</span>
                             </h1>
-                            <p className="text-slate-500 text-[10px] mt-1 font-bold uppercase tracking-widest opacity-80 font-mono">Stock Projections Hub</p>
+                            <p className="text-slate-500 text-[11px] mt-0.5 font-medium uppercase tracking-widest opacity-80 font-mono">Stock Projections Hub</p>
                         </div>
                     </div>
 
@@ -195,8 +190,8 @@ export default function InventoryPlanning() {
                         <KpiCard title="Alert Items" val={stats.lowStockCount} color="#E3624A" Icon={AlertTriangle} desc="Low/Out of Stock" />
                     </div>
 
-                    {/* Unified Table Container */}
-                    <div className="bg-white border border-slate-200 flex flex-col min-h-[650px] animate-fade-in-up rounded-none shadow-sm relative overflow-visible">
+                    {/* Unified Table Container - FLAT DESIGN */}
+                    <div className="bg-white border border-slate-100 flex flex-col min-h-[650px] animate-fade-in-up shadow-sm relative overflow-visible">
                         {activeTab === 'stock' ? (
                             <InventoryTable 
                                 activeFilter={activeFilter}

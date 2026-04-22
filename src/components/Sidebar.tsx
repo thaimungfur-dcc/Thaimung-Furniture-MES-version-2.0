@@ -159,7 +159,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-8 px-4 space-y-8 master-custom-scrollbar">
+      <nav className="flex-1 overflow-y-auto py-8 px-4 space-y-8 sidebar-scrollbar">
         {MENU_SECTIONS.map((section) => (
           <div key={section.title} className="space-y-3">
             {!isCollapsed && (

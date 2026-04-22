@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useGoogleSheets } from '../../hooks/useGoogleSheets';
 import { JobOrder, ProductionStage } from './types';
+import { PageHeader } from '../../components/shared/PageHeader';
 import KanbanBoard from './components/KanbanBoard';
 import JobOrderModal from './components/JobOrderModal';
 import { KpiCard } from '../../components/shared/KpiCard';
@@ -185,59 +186,49 @@ export default function ProductionTracking() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F7F6] pt-8 px-8 pb-10 flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
-      <header className="flex flex-col md:flex-row justify-between items-center gap-6 z-10 shrink-0">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-white flex items-center justify-center rounded-2xl shadow-sm border border-slate-200 text-[#111f42]">
-            <Activity size={28} strokeWidth={2.5} />
-          </div>
-          <div>
-            <h1 className="text-2xl font-black tracking-tight uppercase leading-none">
-              <span className="text-[#ab8a3b]">PRODUCTION</span> <span className="text-[#111f42]">TRACKING</span>
-            </h1>
-            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mt-1.5 flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-              Live Manufacturing Operations Hub
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl h-11 overflow-hidden">
+      <PageHeader
+        title="PRODUCTION TRACKING"
+        subtitle="Live Manufacturing Operations Hub"
+        icon={Activity}
+        rightContent={
+          <div className="flex items-center gap-3">
+            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl h-11 overflow-hidden">
+              <button 
+                onClick={() => setActiveView('kanban')}
+                className={`px-6 py-2 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest flex items-center gap-2 ${activeView === 'kanban' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+              >
+                <LayoutGrid size={14} /> KANBAN
+              </button>
+              <button 
+                onClick={() => setActiveView('list')}
+                className={`px-6 py-2 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest flex items-center gap-2 ${activeView === 'list' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+              >
+                <List size={14} /> DETAILS
+              </button>
+            </div>
+            
             <button 
-              onClick={() => setActiveView('kanban')}
-              className={`px-6 py-2 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest flex items-center gap-2 ${activeView === 'kanban' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+              onClick={() => refetch()}
+              className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-slate-100 border border-slate-200 shadow-sm"
             >
-              <LayoutGrid size={14} /> KANBAN
+              <RefreshCcw size={18} className={loading ? 'animate-spin' : ''} />
             </button>
+            
+            <button className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-slate-100 border border-slate-200 shadow-sm">
+              <Settings2 size={18} />
+            </button>
+            
             <button 
-              onClick={() => setActiveView('list')}
-              className={`px-6 py-2 text-[10px] font-black transition-all rounded-lg uppercase tracking-widest flex items-center gap-2 ${activeView === 'list' ? 'bg-[#111f42] text-[#ab8a3b] shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}
+              onClick={() => setIsGuideOpen(true)}
+              className="p-2.5 transition-all rounded-xl bg-[#111f42] text-[#ab8a3b] border border-[#111f42] shadow-sm hover:brightness-110"
             >
-              <List size={14} /> DETAILS
+              <HelpCircle size={18} />
             </button>
           </div>
-          
-          <button 
-            onClick={() => refetch()}
-            className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-slate-100 border border-slate-200 shadow-sm"
-          >
-            <RefreshCcw size={18} className={loading ? 'animate-spin' : ''} />
-          </button>
-          
-          <button className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-slate-100 border border-slate-200 shadow-sm">
-            <Settings2 size={18} />
-          </button>
-
-          <button 
-            onClick={() => setIsGuideOpen(true)}
-            className="p-2.5 transition-all rounded-xl bg-[#111f42] text-[#ab8a3b] border border-[#111f42] shadow-sm hover:brightness-110"
-          >
-            <HelpCircle size={18} />
-          </button>
-        </div>
-      </header>
+        }
+      />
 
       {/* KPI Section */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5 shrink-0">

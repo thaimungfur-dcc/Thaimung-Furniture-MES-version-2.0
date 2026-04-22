@@ -1,1 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700;900&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-en: "JetBrains Mono", monospace;
+  --font-th: "Noto Sans Thai", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  
+  --color-master-blue: #111f42;
+  --color-master-gold: #ab8a3b;
+  --color-master-red: #E3624A;
+
+  --shadow-soft: 0 4px 20px -1px rgba(0, 0, 0, 0.05), 0 2px 10px -1px rgba(0, 0, 0, 0.03);
+}
+
+@layer base {
+  * {
+    @apply antialiased selection:bg-slate-200 selection:text-master-blue;
+    font-family: var(--font-en), var(--font-th), var(--font-inter) !important;
+  }
+
+  body {
+    @apply bg-[#F9F7F6] text-master-blue antialiased;
+    font-family: var(--font-en), var(--font-th), var(--font-inter) !important;
+  }
+
+  /* Force font consistency on all interactive tags as per request */
+  span, input, td, th, div, button, select, textarea, p, h1, h2, h3, h4, section, main, label, a {
+    font-family: var(--font-en), var(--font-th), var(--font-inter) !important;
+  }
+}
+
+/* Custom Scrollbar for consistent Look */
+@layer utilities {
+  /* Sidebar Specific Scrollbar (Dark Background) */
+  .sidebar-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  .sidebar-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+  }
+  .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Main Custom Scrollbar - for general use (Light Background) */
+  .master-custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .master-custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .master-custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  .master-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+@layer utilities {
+  .sys-page-layout {
+    @apply pt-2 px-4 sm:px-6 md:px-8 pb-4;
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+.no-print {
+  @media print {
+    display: none !important;
+  }
+}

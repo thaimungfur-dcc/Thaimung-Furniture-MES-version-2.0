@@ -3,6 +3,7 @@ import { ShoppingBag, Calendar, Kanban, FileText, HelpCircle } from 'lucide-reac
 import { MASTER_CUSTOMERS, MASTER_PRODUCTS, STATUS_LIST, THEME } from './constants';
 import { calculateTotals } from './utils';
 import { Order } from './types';
+import { PageHeader } from '../../components/shared/PageHeader';
 import KanbanBoard from './components/KanbanBoard';
 import OrdersTable from './components/OrdersTable';
 import OrderModal from './components/OrderModal';
@@ -214,51 +215,44 @@ export default function SaleOrder() {
         .print-only { display: none; }
       `}</style>
       
-      <div className="h-full pt-8 px-8 pb-10 transition-colors duration-500 text-[12px] flex flex-col font-light" style={{ backgroundColor: THEME.bg }}>
-        <div className="w-full space-y-6 relative flex-1 flex flex-col min-h-0">
+      <div className="pt-8 pb-10 transition-colors duration-500 text-[12px] flex flex-col font-light">
+        <div className="w-full space-y-6 relative flex-1 flex flex-col">
           
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 no-print flex-shrink-0">
-            <div className="flex items-center gap-5">
-              <div className="w-14 h-14 bg-white text-[#E3624A] flex items-center justify-center shadow-md flex-shrink-0 rounded-2xl border border-slate-200">
-                <ShoppingBag size={28} />
-              </div>
-              <div className="flex flex-col justify-center">
-                <h1 className="text-3xl tracking-tight uppercase leading-none">
-                  <span className="text-[#b84530] font-normal">SALES</span> <span className="text-[#111f42] font-semibold">ORDER</span>
-                </h1>
-                <p className="font-medium text-[14px] uppercase tracking-widest mt-1.5 text-slate-500 leading-none">ระบบบริหารจัดการใบสั่งขายและรอบจัดส่ง</p>
-              </div>
-            </div>
-            
-            <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-              <div className="flex items-center gap-2">
-                
-                <div className="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
-                  <div className="px-3 py-2.5 bg-slate-50 border-r border-slate-200 text-slate-500">
-                    <Calendar size={14} />
+          <PageHeader
+            title="SALES ORDER"
+            subtitle="ระบบบริหารจัดการใบสั่งขายและรอบจัดส่ง"
+            icon={ShoppingBag}
+            iconColor="text-[#E3624A]"
+            rightContent={
+              <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+                    <div className="px-3 py-2.5 bg-slate-50 border-r border-slate-200 text-slate-500">
+                      <Calendar size={14} />
+                    </div>
+                    <input 
+                      type="month" 
+                      value={selectedMonth}
+                      onChange={(e) => setSelectedMonth(e.target.value)}
+                      className="px-3 py-2 text-[12px] font-semibold text-[#111f42] outline-none cursor-pointer hover:bg-slate-50 transition-colors"
+                    />
                   </div>
-                  <input 
-                    type="month" 
-                    value={selectedMonth}
-                    onChange={(e) => setSelectedMonth(e.target.value)}
-                    className="px-3 py-2 text-[12px] font-semibold text-[#111f42] outline-none cursor-pointer hover:bg-slate-50 transition-colors"
-                  />
-                </div>
 
-                <div className="flex bg-white p-1 border border-slate-200 shadow-sm rounded-lg overflow-hidden flex-shrink-0">
-                  <button onClick={() => setMainTab('kanban')} className={`px-5 py-2.5 font-normal transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${mainTab === 'kanban' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><Kanban size={14} /> BOARD</button>
-                  <button onClick={() => setMainTab('orders')} className={`px-5 py-2.5 font-normal transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${mainTab === 'orders' ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><FileText size={14} /> ORDERS</button>
+                  <div className="flex bg-white p-1 border border-slate-200 shadow-sm rounded-lg overflow-hidden flex-shrink-0">
+                    <button onClick={() => setMainTab('kanban')} className={`px-5 py-2.5 font-normal transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${mainTab === 'kanban' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><Kanban size={14} /> BOARD</button>
+                    <button onClick={() => setMainTab('orders')} className={`px-5 py-2.5 font-normal transition-all flex items-center gap-2 uppercase tracking-widest rounded-md text-[11px] ${mainTab === 'orders' ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}><FileText size={14} /> ORDERS</button>
+                  </div>
+                  <button 
+                    onClick={() => setIsGuideOpen(true)} 
+                    className="flex items-center justify-center p-2.5 bg-white text-slate-500 hover:bg-slate-50 hover:text-[#111f42] rounded-lg transition-all border border-slate-200 shadow-sm"
+                    title="คู่มือการใช้งาน (Guide)"
+                  >
+                    <HelpCircle size={18} />
+                  </button>
                 </div>
-                <button 
-                  onClick={() => setIsGuideOpen(true)} 
-                  className="flex items-center justify-center p-2.5 bg-white text-slate-500 hover:bg-slate-50 hover:text-[#111f42] rounded-lg transition-all border border-slate-200 shadow-sm"
-                  title="คู่มือการใช้งาน (Guide)"
-                >
-                  <HelpCircle size={18} />
-                </button>
               </div>
-            </div>
-          </div>
+            }
+          />
 
           {mainTab === 'kanban' && (
             <KanbanBoard 

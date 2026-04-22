@@ -59,11 +59,11 @@ export default function Login() {
 
         {/* Top Logo Area */}
         <div className="relative z-10">
-          <div className="flex items-center gap-3 text-white">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E3624A] shadow-lg">
+          <div className="flex items-center gap-4 text-white">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E3624A] shadow-2xl border border-white/10">
               <Armchair size={24} className="text-white" />
             </div>
-            <span className="text-xl font-bold tracking-wider">ENTERPRISE</span>
+            <span className="text-xl font-black tracking-[0.3em] font-mono">SYSTEM GATEWAY</span>
           </div>
         </div>
 
@@ -74,14 +74,15 @@ export default function Login() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-7xl font-black tracking-tight text-white uppercase drop-shadow-lg">
-              <span style={{ WebkitTextStroke: '1.5px currentColor' }}>FURNITURE</span> <span className="text-[#E3624A]">MES</span>
+            <h1 className="text-7xl font-black tracking-tight text-white uppercase drop-shadow-lg font-mono">
+              <span style={{ WebkitTextStroke: '1.5px currentColor' }}>FURNITURE</span> <br />
+              <span className="text-[#E3624A]">LOGISTICS</span>
             </h1>
-            <h2 className="mt-4 text-3xl font-semibold text-white/90">
-              Manufacturing System
+            <h2 className="mt-6 text-2xl font-black text-[#ab8a3b] uppercase tracking-[0.4em] font-mono opacity-80">
+              Advanced Execution
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-white/70">
-              Streamline your inventory, optimize logistics, and take full control of your supply chain with our advanced manufacturing platform.
+            <p className="mt-8 max-w-md text-base leading-relaxed text-slate-300 font-medium">
+              Precision manufacturing control and real-time inventory synchronisation for the modern industrial workspace.
             </p>
           </motion.div>
 
@@ -122,16 +123,16 @@ export default function Login() {
           </div>
 
           {/* DEV Profile Card */}
-          <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-md shadow-xl">
+          <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl p-5 backdrop-blur-md shadow-2xl">
             <img 
               src="https://drive.google.com/thumbnail?id=1Z_fRbN9S4aA7OkHb3mlim_t60wIT4huY&sz=w400" 
               alt="Developer" 
-              className="w-12 h-12 rounded-full border-2 border-white/20 object-cover"
+              className="w-12 h-12 rounded-xl border-2 border-white/20 object-cover shadow-lg"
             />
             <div>
-              <div className="font-bold text-white text-sm">T-DCC Developer</div>
-              <div className="text-[#E3624A] text-xs font-semibold mb-0.5">Lead Developer</div>
-              <div className="text-white/50 text-[10px]">tallintelligence.dcc@gmail.com</div>
+              <div className="font-black text-white text-[11px] uppercase tracking-widest font-mono">T-DCC AUTHORIZED</div>
+              <div className="text-[#E3624A] text-[9px] font-black uppercase tracking-widest mt-0.5">Secure Node Operator</div>
+              <div className="text-white/40 text-[9px] mt-1 font-mono">tallintelligence.dcc@gmail.com</div>
             </div>
           </div>
         </div>
@@ -147,35 +148,35 @@ export default function Login() {
         >
           <div className="text-center lg:text-left">
             {/* Mobile Logo (Visible only on small screens) */}
-            <div className="mx-auto mb-8 flex h-12 w-12 items-center justify-center rounded-lg bg-[#111f42] lg:hidden">
-              <Armchair size={28} className="text-[#E3624A]" />
+            <div className="mx-auto mb-8 flex h-14 w-14 items-center justify-center rounded-xl bg-[#111f42] lg:hidden border-2 border-[#ab8a3b]">
+              <Armchair size={32} className="text-[#E3624A]" />
             </div>
             
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-              Welcome back
+            <h2 className="text-4xl font-black tracking-tighter text-[#111f42] uppercase font-mono">
+              Operational Gate
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Please enter your credentials to access the system.
+            <p className="mt-3 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] font-mono">
+              Authentication Protocol Required
             </p>
           </div>
           
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-4">
+          <form className="mt-10 space-y-8" onSubmit={handleSubmit}>
+            <div className="space-y-6">
               <div>
-                <label htmlFor="employeeId" className="block text-sm font-medium leading-6 text-gray-900">
-                  Staff Code
+                <label htmlFor="employeeId" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono mb-2">
+                  Staff Identifier
                 </label>
-                <div className="relative mt-2">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <UserIcon className="h-5 w-5 text-gray-400" />
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                    <UserIcon className="h-5 w-5 text-[#ab8a3b]" />
                   </div>
                   <input
                     id="employeeId"
                     name="employeeId"
                     type="text"
                     required
-                    className="block w-full rounded-lg border-0 py-3 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#111f42] sm:text-sm sm:leading-6 transition-all"
-                    placeholder="e.g., U001 or demo"
+                    className="block w-full rounded-xl border-2 border-slate-100 py-4 pl-12 text-gray-900 shadow-sm focus:ring-0 focus:border-[#ab8a3b] text-sm tracking-widest font-black uppercase transition-all bg-slate-50/50"
+                    placeholder="EID CODE"
                     value={employeeId}
                     onChange={(e) => setEmployeeId(e.target.value)}
                   />
@@ -183,20 +184,20 @@ export default function Login() {
               </div>
 
               <div>
-                <label htmlFor="idCard" className="block text-sm font-medium leading-6 text-gray-900">
-                  ID Card Number
+                <label htmlFor="idCard" className="block text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono mb-2">
+                  Security Passkey
                 </label>
-                <div className="relative mt-2">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Lock className="h-5 w-5 text-gray-400" />
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                    <Lock className="h-5 w-5 text-[#ab8a3b]" />
                   </div>
                   <input
                     id="idCard"
                     name="idCard"
                     type="password"
                     required
-                    className="block w-full rounded-lg border-0 py-3 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#111f42] sm:text-sm sm:leading-6 transition-all"
-                    placeholder="13 digits or demo"
+                    className="block w-full rounded-xl border-2 border-slate-100 py-4 pl-12 text-gray-900 shadow-sm focus:ring-0 focus:border-[#ab8a3b] text-sm tracking-widest font-black transition-all bg-slate-50/50"
+                    placeholder="•••••••••••••"
                     value={idCard}
                     onChange={(e) => setIdCard(e.target.value)}
                   />
@@ -208,9 +209,9 @@ export default function Login() {
               <motion.div 
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-lg bg-[#952425]/10 p-4 border border-[#952425]/20"
+                className="rounded-xl bg-rose-50 p-4 border-l-4 border-rose-500"
               >
-                <p className="text-sm font-medium text-[#952425]">{error}</p>
+                <p className="text-[11px] font-black text-rose-600 uppercase tracking-widest">{error}</p>
               </motion.div>
             )}
 
@@ -218,23 +219,31 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="group relative flex w-full items-center justify-center gap-2 rounded-lg bg-[#111f42] px-4 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-[#111f42]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111f42] disabled:opacity-70 transition-all"
+                className="group relative flex w-full items-center justify-center gap-3 rounded-xl bg-[#111f42] px-6 py-5 text-[12px] font-black text-white shadow-2xl hover:bg-[#0a1229] focus:outline-none transition-all uppercase tracking-[0.3em] font-mono border-b-4 border-[#ab8a3b]"
               >
                 {isLoading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <>
-                    Sign in to account
+                    Grant Access
                     <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                   </>
                 )}
               </button>
             </div>
             
-            <div className="mt-8 rounded-lg bg-gray-50 p-4 text-center text-sm text-gray-600 border border-gray-100">
-              <p className="font-medium text-gray-900 mb-1">Demo Credentials</p>
-              <p>User: <span className="font-mono font-medium text-[#111f42]">demo</span> / Pass: <span className="font-mono font-medium text-[#111f42]">demo</span></p>
-              <p className="mt-1">Admin: <span className="font-mono font-medium text-[#111f42]">U001</span> / Pass: <span className="font-mono font-medium text-[#111f42]">1234567890123</span></p>
+            <div className="mt-12 rounded-xl bg-slate-50 p-6 border border-slate-200 shadow-inner">
+              <p className="font-black text-[#111f42] text-[10px] uppercase tracking-widest mb-4 border-b border-slate-200 pb-2">Diagnostic Credentials</p>
+              <div className="space-y-3">
+                <p className="text-[11px] text-slate-500 flex justify-between">
+                  <span className="font-bold">SYSTEM DEBUG:</span> 
+                  <span className="font-mono font-black text-[#111f42]">demo / demo</span>
+                </p>
+                <p className="text-[11px] text-slate-500 flex justify-between">
+                  <span className="font-bold">ROOT OPERATOR:</span> 
+                  <span className="font-mono font-black text-[#111f42]">U001 / ...123</span>
+                </p>
+              </div>
             </div>
           </form>
         </motion.div>

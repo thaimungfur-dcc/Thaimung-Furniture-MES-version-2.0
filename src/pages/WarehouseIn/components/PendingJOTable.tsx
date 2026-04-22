@@ -51,10 +51,10 @@ export default function PendingJOTable({
         const percent = Math.round((received / qty) * 100);
         return (
           <div className="flex flex-col items-center gap-1.5 w-full mx-auto" style={{maxWidth: '12rem'}}>
-              <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden border border-slate-200">
-                  <div className="h-full transition-all duration-700 rounded-full" style={{ width: `${percent}%`, backgroundColor: getProgressColor(row.original) }}></div>
+              <div className="w-full bg-slate-100 rounded-none h-2.5 overflow-hidden border border-slate-200">
+                  <div className="h-full transition-all duration-700 rounded-none" style={{ width: `${percent}%`, backgroundColor: getProgressColor(row.original) }}></div>
               </div>
-              <span className="text-[10px] font-mono font-black text-slate-500">{received.toLocaleString()} / {percent}%</span>
+              <span className="text-[9px] font-mono font-black text-slate-500 uppercase tracking-widest">{received.toLocaleString()} / {percent}% COMPLETE</span>
           </div>
         );
       }
@@ -77,14 +77,14 @@ export default function PendingJOTable({
         const item = row.original;
         return (
             <div className="flex justify-center items-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
-                <button onClick={() => onOpenOrderView(item, 'pending_jo')} className="p-1.5 bg-white border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-300 rounded-lg shadow-sm" title="View Detail"><Eye size={14}/></button>
+                <button onClick={() => onOpenOrderView(item, 'pending_jo')} className="p-2 bg-white border border-slate-200 text-slate-400 hover:text-white hover:bg-[#111f42] hover:border-[#111f42] rounded-none shadow-sm transition-all" title="View Detail"><Eye size={14}/></button>
                 {item.status !== 'Completed' && (
-                    <button onClick={() => onOpenReceiveModal(item, 'JO')} className="p-1.5 bg-white border border-slate-200 text-[#ab8a3b] hover:text-white hover:bg-[#ab8a3b] hover:border-[#ab8a3b] rounded-lg shadow-sm" title="Receive">
+                    <button onClick={() => onOpenReceiveModal(item, 'JO')} className="p-2 bg-white border border-slate-200 text-[#ab8a3b] hover:text-white hover:bg-[#ab8a3b] hover:border-[#ab8a3b] rounded-none shadow-sm transition-all" title="Receive">
                         <Download size={14}/>
                     </button>
                 )}
                 {item.status === 'In Progress' && (
-                    <button onClick={() => onForceClose(item, 'pending_jo')} className="p-1.5 bg-white border border-slate-200 text-rose-400 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-lg shadow-sm" title="Force Close">
+                    <button onClick={() => onForceClose(item, 'pending_jo')} className="p-2 bg-white border border-slate-200 text-rose-400 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-none shadow-sm transition-all" title="Force Close">
                         <PowerOff size={14}/>
                     </button>
                 )}

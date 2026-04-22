@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { 
   useReactTable, 
   getCoreRowModel, 
@@ -19,7 +19,7 @@ import {
   Download,
   ChevronDown
 } from 'lucide-react';
-import { downloadCSV } from '../../utils/sharedUtils';
+import { downloadCSV } from '../../utils/csvUtils';
 
 interface DataTableProps<T> {
   data: T[];
@@ -30,7 +30,8 @@ interface DataTableProps<T> {
   pageSize?: number;
   itemsPerPage?: number;
   fileName?: string;
-  filterColumns?: string[]; // New: Columns to show as dropdown filters
+  filterColumns?: string[]; // Columns to show as dropdown filters
+  dateFilterColumn?: string; // Column ID for Month/Year filtering
 }
 
 export function DataTable<T>({ 
@@ -41,14 +42,58 @@ export function DataTable<T>({
   pageSize = 10,
   itemsPerPage,
   fileName,
-  filterColumns = []
+  filterColumns = [],
+  dateFilterColumn
 }: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [columnFilters, setColumnFilters] = React.useState<any[]>([]);
+  const [selectedMonth, setSelectedMonth] = React.useState<string>('');
+  const [selectedYear, setSelectedYear] = React.useState<string>('');
+
+  const months = [
+    { value: '01', label: 'January' }, { value: '02', label: 'February' },
+    { value: '03', label: 'March' }, { value: '04', label: 'April' },
+    { value: '05', label: 'May' }, { value: '06', label: 'June' },
+    { value: '07', label: 'July' }, { value: '08', label: 'August' },
+    { value: '09', label: 'September' }, { value: '10', label: 'October' },
+    { value: '11', label: 'November' }, { value: '12', label: 'December' }
+  ];
+
+  const years = useMemo(() => {
+    if (!dateFilterColumn) return [];
+    const uniqueYears = new Set<string>();
+    data.forEach((item: any) => {
+      const dateVal = item[dateFilterColumn];
+      if (dateVal) {
+        const year = new Date(dateVal).getFullYear().toString();
+        if (year !== 'NaN') uniqueYears.add(year);
+      }
+    });
+    return Array.from(uniqueYears).sort((a, b) => b.localeCompare(a));
+  }, [data, dateFilterColumn]);
+
+  const filteredData = useMemo(() => {
+    let result = data;
+    if (dateFilterColumn) {
+      if (selectedMonth) {
+        result = result.filter((item: any) => {
+          const date = new Date(item[dateFilterColumn]);
+          return (date.getMonth() + 1).toString().padStart(2, '0') === selectedMonth;
+        });
+      }
+      if (selectedYear) {
+        result = result.filter((item: any) => {
+          const date = new Date(item[dateFilterColumn]);
+          return date.getFullYear().toString() === selectedYear;
+        });
+      }
+    }
+    return result;
+  }, [data, selectedMonth, selectedYear, dateFilterColumn]);
 
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     state: {
       sorting,
@@ -100,7 +145,7 @@ export function DataTable<T>({
                 value={globalFilter ?? ''}
                 onChange={e => setGlobalFilter(e.target.value)}
                 placeholder={searchPlaceholder}
-                className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[12px] font-bold outline-none focus:border-[#ab8a3b] transition-all h-10 shadow-sm"
+                className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-[12px] font-black outline-none focus:border-[#ab8a3b] transition-all h-10 shadow-sm uppercase tracking-widest placeholder:font-black placeholder:opacity-50"
               />
             </div>
             <button
@@ -113,9 +158,39 @@ export function DataTable<T>({
           </div>
         </div>
 
-        {/* Facet Filters */}
-        {filterColumns.length > 0 && (
+        {/* Facet Filters & Date Filters */}
+        {(filterColumns.length > 0 || dateFilterColumn) && (
           <div className="flex flex-wrap gap-3 px-1">
+            {/* Date Filtering (Month/Year) */}
+            {dateFilterColumn && (
+              <>
+                <div className="relative group">
+                  <select
+                    value={selectedMonth}
+                    onChange={e => setSelectedMonth(e.target.value)}
+                    className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 cursor-pointer shadow-sm min-w-[130px]"
+                  >
+                    <option value="">All Months</option>
+                    {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+                </div>
+
+                <div className="relative group">
+                  <select
+                    value={selectedYear}
+                    onChange={e => setSelectedYear(e.target.value)}
+                    className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 cursor-pointer shadow-sm min-w-[110px]"
+                  >
+                    <option value="">All Years</option>
+                    {years.map(y => <option key={y} value={y}>{y}</option>)}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+                </div>
+                <div className="w-px h-6 bg-slate-200 self-center mx-1"></div>
+              </>
+            )}
+
             {filterColumns.map(colId => {
               const facets = getFacets(colId);
               const currentFilter = columnFilters.find(f => f.id === colId)?.value || '';
@@ -134,7 +209,7 @@ export function DataTable<T>({
                           return [...existing, { id: colId, value: val }];
                         });
                       }}
-                      className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-wider text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 cursor-pointer shadow-sm min-w-[140px]"
+                      className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 cursor-pointer shadow-sm min-w-[140px]"
                     >
                       <option value="">All {colLabel}</option>
                       {facets.map(([val, count]) => (
@@ -146,7 +221,7 @@ export function DataTable<T>({
                   
                   {/* Active Count Badge */}
                   {currentFilter && (
-                    <div className="flex items-center bg-[#ab8a3b]/10 text-[#ab8a3b] px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-[#ab8a3b]/20 animate-in fade-in zoom-in duration-300">
+                    <div className="flex items-center bg-[#ab8a3b]/10 text-[#ab8a3b] px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-[#ab8a3b]/20 animate-in fade-in zoom-in duration-300">
                       {facets.find(([v]) => v === currentFilter)?.[1] || 0} ITEMS
                     </div>
                   )}
@@ -167,7 +242,7 @@ export function DataTable<T>({
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-[24px] border border-slate-200 shadow-sm overflow-hidden min-h-[400px] flex flex-col">
+      <div className="bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden min-h-[400px] flex flex-col">
         <div className="flex-1 overflow-x-auto master-custom-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -177,7 +252,7 @@ export function DataTable<T>({
                     return (
                       <th 
                         key={header.id}
-                        className="bg-[#111f42] text-white px-6 py-4 text-[11px] font-black uppercase tracking-widest border-b-[2.5px] border-[#ab8a3b] cursor-pointer hover:bg-[#1a2b5a] transition-colors"
+                        className="bg-[#111f42] text-white px-6 py-4 text-[12px] font-black uppercase tracking-widest border-b-2 border-[#ab8a3b] cursor-pointer hover:bg-[#1a2b5a] transition-colors"
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         <div className="flex items-center gap-2">
@@ -197,8 +272,14 @@ export function DataTable<T>({
                 table.getRowModel().rows.map(row => (
                   <tr key={row.id} className="hover:bg-slate-50/50 transition-colors group">
                     {row.getVisibleCells().map(cell => (
-                      <td key={cell.id} className="px-6 py-3.5 text-[12px] text-[#111f42] font-bold bg-white group-hover:bg-transparent">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      <td key={cell.id} className="px-6 py-3 text-[12px] text-[#111f42] font-semibold bg-white group-hover:bg-transparent">
+                        {cell.column.id === 'actions' ? (
+                          <div className="flex items-center gap-[0.5px]">
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </div>
+                        ) : (
+                          flexRender(cell.column.columnDef.cell, cell.getContext())
+                        )}
                       </td>
                     ))}
                   </tr>
@@ -215,20 +296,20 @@ export function DataTable<T>({
         </div>
 
         {/* Pagination */}
-        <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/30 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-none">
           <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
             Showing {table.getRowModel().rows.length} of {data.length} Entries
           </div>
           <div className="flex items-center gap-2">
             <button
-              className="p-2 rounded-lg bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
+              className="p-2 rounded-xl bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
             >
               <ChevronsLeft size={16} />
             </button>
             <button
-              className="p-2 rounded-lg bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
+              className="p-2 rounded-xl bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -262,14 +343,14 @@ export function DataTable<T>({
             </div>
 
             <button
-              className="p-2 rounded-lg bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
+              className="p-2 rounded-xl bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
               <ChevronRight size={16} />
             </button>
             <button
-              className="p-2 rounded-lg bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
+              className="p-2 rounded-xl bg-white border border-slate-200 text-[#111f42] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all shadow-sm"
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
             >

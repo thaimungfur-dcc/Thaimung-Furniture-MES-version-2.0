@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { PageHeader } from '../../components/shared/PageHeader';
 import { 
   Calendar as CalendarIcon, 
   ChevronLeft, 
@@ -214,38 +215,28 @@ export default function MESCalendar() {
         .data-table th { border-bottom: 4px solid #E3624A; }
       `}</style>
 
-      <div className="flex flex-col h-full pt-14 px-8 pb-10 overflow-hidden bg-[#F9F7F6]">
-        {/* HEADER SECTION */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 flex-shrink-0 z-10 bg-[#F9F7F6] mb-6">
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="w-14 h-14 bg-white flex items-center justify-center shadow-sm flex-shrink-0 rounded-2xl border border-slate-200" style={{ color: theme.accent }}>
-              <CalendarIcon size={28} />
+      <div className="flex flex-col pt-14 pb-10">
+        <PageHeader
+          title="MES CALENDAR"
+          subtitle="Factory Schedule & Maintenance Planning"
+          icon={CalendarIcon}
+          rightContent={
+            <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+              <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-xl overflow-hidden">
+                <button onClick={() => setActiveTab('calendar')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'calendar' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                  <LayoutGrid size={14} /> CALENDAR
+                </button>
+                <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
+                  <List size={14} /> EVENT LIST
+                </button>
+              </div>
+              <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm"><HelpCircle size={20} /></button>
             </div>
-            <div>
-              <h1 className="text-3xl tracking-tight uppercase leading-none">
-                <span className="text-[#E3624A] font-black">MES</span> <span className="text-[#111f42] font-semibold">CALENDAR</span>
-              </h1>
-              <p className="text-slate-500 text-[11px] mt-1.5 font-bold uppercase tracking-widest">
-                Factory Schedule & Maintenance Planning
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-            <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner w-full md:w-fit flex-shrink-0 rounded-xl overflow-hidden">
-              <button onClick={() => setActiveTab('calendar')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'calendar' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                <LayoutGrid size={14} /> CALENDAR
-              </button>
-              <button onClick={() => setActiveTab('list')} className={`px-6 py-2.5 text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap uppercase tracking-wide rounded-lg ${activeTab === 'list' ? 'bg-[#ab8a3b] text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'}`}>
-                <List size={14} /> EVENT LIST
-              </button>
-            </div>
-            <button onClick={() => setIsGuideOpen(true)} className="p-2.5 transition-all rounded-xl bg-white text-slate-400 hover:bg-[#111f42] hover:text-white border border-slate-200 shadow-sm"><HelpCircle size={20} /></button>
-          </div>
-        </div>
+          }
+        />
 
         {/* MAIN CONTAINER */}
-        <div className="bg-white border border-slate-200 shadow-sm overflow-hidden flex flex-col rounded-none animate-in fade-in duration-500 flex-1">
+        <div className="bg-white border-l-4 border-l-[#E3624A] shadow-sm flex flex-col rounded-none animate-in fade-in duration-500 overflow-visible">
           
           {/* INTEGRATED ACTION BAR */}
           <div className="p-4 flex flex-wrap items-center justify-between gap-4 bg-white border-b border-slate-100">
@@ -257,7 +248,7 @@ export default function MESCalendar() {
                 </div>
                 <button onClick={handleNextMonth} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600"><ChevronRight size={20}/></button>
               </div>
-              <button onClick={handleSetToday} className="px-5 py-2 bg-slate-50 border border-slate-200 text-[#111f42] font-black uppercase tracking-widest rounded-md hover:bg-white transition-all text-[11px]">Today</button>
+              <button onClick={handleSetToday} className="px-5 py-2 bg-slate-50 border border-slate-200 text-[#111f42] font-black uppercase tracking-widest rounded-xl hover:bg-white transition-all text-[11px]">Today</button>
             </div>
 
             <div className="flex items-center gap-4 flex-1 justify-end max-w-4xl">
@@ -266,17 +257,17 @@ export default function MESCalendar() {
                 <input 
                   type="text" 
                   placeholder="Search Events..." 
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-9 pr-4 py-2 outline-none focus:border-[#111f42] text-slate-700 font-medium text-[12px] shadow-sm transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2 outline-none focus:border-[#111f42] text-slate-700 font-medium text-[12px] shadow-sm transition-all"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                 />
               </div>
               
               <div className="flex items-center gap-2">
-                <button onClick={() => openEventModal('create', null, 'Event')} className="flex items-center gap-2 px-5 py-2.5 bg-[#111f42] text-white font-black uppercase tracking-widest rounded-md shadow-md hover:opacity-90 transition-all text-[11px]">
+                <button onClick={() => openEventModal('create', null, 'Event')} className="flex items-center gap-2 px-5 py-2.5 bg-[#111f42] text-white font-black uppercase tracking-widest rounded-xl shadow-md hover:opacity-90 transition-all text-[11px]">
                   <Plus size={16} strokeWidth={3} className="text-[#ab8a3b]" /> Add Event
                 </button>
-                <button onClick={() => openEventModal('create', null, 'Holiday')} className="flex items-center gap-2 px-5 py-2.5 bg-[#E3624A] text-white font-black uppercase tracking-widest rounded-md shadow-md hover:opacity-90 transition-all text-[11px]">
+                <button onClick={() => openEventModal('create', null, 'Holiday')} className="flex items-center gap-2 px-5 py-2.5 bg-[#E3624A] text-white font-black uppercase tracking-widest rounded-xl shadow-md hover:opacity-90 transition-all text-[11px]">
                   <Palmtree size={16} strokeWidth={2.5} className="text-white" /> Add Holiday
                 </button>
               </div>
@@ -318,7 +309,7 @@ export default function MESCalendar() {
                               <div 
                                 key={i} 
                                 onClick={() => openEventModal('edit', ev)} 
-                                className={`px-2 py-1 rounded-sm text-[9px] font-bold border truncate shadow-sm cursor-pointer hover:brightness-95 transition-all ${ev.color}`}
+                                className={`px-2 py-1 rounded-md text-[9px] font-bold border truncate shadow-sm cursor-pointer hover:brightness-95 transition-all ${ev.color}`}
                               >
                                 {ev.title}
                               </div>
@@ -327,7 +318,7 @@ export default function MESCalendar() {
                           
                           <button 
                             onClick={() => openEventModal('create', d, 'Event')}
-                            className="absolute bottom-2 right-2 w-6 h-6 bg-white border border-slate-200 rounded-lg shadow-sm flex items-center justify-center text-slate-400 hover:text-[#111f42] hover:border-[#111f42] opacity-0 group-hover:opacity-100 transition-all duration-200"
+                            className="absolute bottom-2 right-2 w-6 h-6 bg-white border border-slate-200 rounded-full shadow-sm flex items-center justify-center text-slate-400 hover:text-[#111f42] hover:border-[#111f42] opacity-0 group-hover:opacity-100 transition-all duration-200"
                           >
                             <Plus size={14} strokeWidth={2.5} />
                           </button>
@@ -356,37 +347,37 @@ export default function MESCalendar() {
                   <tbody className="divide-y divide-slate-100 bg-white">
                     {paginatedEvents.map((ev) => (
                       <tr key={ev.id} className="hover:bg-slate-50 transition-colors group">
-                        <td className="px-6 py-4 font-bold text-slate-400 font-mono text-[12px]">{ev.id}</td>
+                        <td className="px-6 py-4 font-black text-slate-400 font-mono text-[12px]">{ev.id}</td>
                         <td className="px-6 py-4">
                           <div className="flex flex-col">
-                            <span className="font-bold text-[#111f42] uppercase text-[12px]">{new Date(ev.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                            <span className="text-[10px] text-slate-400 font-mono flex items-center gap-1"><Clock size={10}/> {ev.time}</span>
+                            <span className="font-black text-[#111f42] uppercase text-[12px]">{new Date(ev.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                            <span className="text-[10px] text-slate-400 font-mono font-black flex items-center gap-1 uppercase tracking-widest"><Clock size={10}/> {ev.time}</span>
                           </div>
                         </td>
                         <td className={`px-6 py-4 font-black text-[13px] uppercase tracking-tight ${ev.isHoliday ? 'text-[#E3624A]' : 'text-[#111f42]'}`}>{ev.title}</td>
                         <td className="px-6 py-4">
-                          <span className={`px-2.5 py-1 rounded text-[9px] font-bold border uppercase tracking-widest ${ev.color}`}>{ev.type}</span>
+                          <span className={`px-2.5 py-1 rounded-none text-[9px] font-black border uppercase tracking-widest ${ev.color}`}>{ev.type}</span>
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <span className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter ${ev.priority === 'High' || ev.priority === 'Critical' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 text-slate-500'}`}>{ev.priority}</span>
+                          <span className={`px-2 py-0.5 rounded-none text-[9px] font-black uppercase tracking-widest border ${ev.priority === 'High' || ev.priority === 'Critical' ? 'bg-rose-100 text-rose-600 border-rose-200' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>{ev.priority}</span>
                         </td>
                         <td className="px-6 py-4 text-center">
-                          <div className="flex items-center justify-center gap-1.5 text-[11px] font-bold text-slate-600">
-                             {ev.status === 'Completed' ? <CheckCircle2 size={14} className="text-emerald-500"/> : <div className="w-2 h-2 rounded-full bg-[#3b82f6] animate-pulse"/>}
+                          <div className="flex items-center justify-center gap-1.5 text-[11px] font-black text-slate-600 uppercase tracking-widest font-mono">
+                             {ev.status === 'Completed' ? <CheckCircle2 size={14} className="text-emerald-500"/> : <div className="w-2 h-2 rounded-none bg-[#3b82f6] animate-pulse"/>}
                              {ev.status}
                           </div>
                         </td>
                         <td className="px-6 py-4 text-center">
                           <div className="flex justify-center gap-1">
-                            <button onClick={() => openEventModal('view', ev)} className="p-1.5 text-[#3b82f6] hover:bg-blue-50 rounded transition-colors"><Eye size={16}/></button>
-                            <button onClick={() => openEventModal('edit', ev)} className="p-1.5 text-[#ab8a3b] hover:bg-amber-50 rounded transition-colors"><Pencil size={16}/></button>
-                            <button onClick={() => handleDeleteEvent(ev.id)} className="p-1.5 text-[#E3624A] hover:bg-red-50 rounded transition-colors"><Trash2 size={16}/></button>
+                            <button onClick={() => openEventModal('view', ev)} className="p-1.5 text-[#3b82f6] hover:bg-blue-50 rounded-none transition-colors border border-transparent hover:border-blue-100"><Eye size={16}/></button>
+                            <button onClick={() => openEventModal('edit', ev)} className="p-1.5 text-[#ab8a3b] hover:bg-amber-50 rounded-none transition-colors border border-transparent hover:border-amber-100"><Pencil size={16}/></button>
+                            <button onClick={() => handleDeleteEvent(ev.id)} className="p-1.5 text-[#E3624A] hover:bg-red-50 rounded-none transition-colors border border-transparent hover:border-red-100"><Trash2 size={16}/></button>
                           </div>
                         </td>
                       </tr>
                     ))}
                     {paginatedEvents.length === 0 && (
-                      <tr><td colSpan={7} className="px-6 py-12 text-center text-slate-400 italic font-bold text-[12px]">No matching events found.</td></tr>
+                      <tr><td colSpan={7} className="px-6 py-12 text-center text-slate-400 italic font-black uppercase tracking-widest text-[11px] bg-slate-50/10">No matching events found.</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -409,7 +400,7 @@ export default function MESCalendar() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+                  <div className="flex items-center bg-white border border-slate-200 rounded-none shadow-sm overflow-hidden">
                     <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className="p-2.5 hover:bg-slate-50 disabled:opacity-30 text-slate-600 border-r border-slate-100 transition-colors"><ChevronsLeft size={16} /></button>
                     <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1} className="p-2.5 hover:bg-slate-50 disabled:opacity-30 text-slate-600 border-r border-slate-100 transition-colors"><ChevronLeft size={16} /></button>
                     <div className="flex px-1 items-center gap-1 bg-slate-50/30">
@@ -417,7 +408,7 @@ export default function MESCalendar() {
                         const pageNum = i + 1;
                         if (totalPages > 5) { if (pageNum > currentPage + 2 || pageNum < currentPage - 2) return null; }
                         return (
-                          <button key={pageNum} onClick={() => setCurrentPage(pageNum)} className={`w-8 h-8 rounded-md text-[10px] font-bold transition-all ${currentPage === pageNum ? 'bg-[#111f42] text-white shadow-md scale-105' : 'text-slate-500 hover:bg-white hover:text-[#111f42]'}`}>{pageNum}</button>
+                          <button key={pageNum} onClick={() => setCurrentPage(pageNum)} className={`w-8 h-8 rounded-none text-[10px] font-black transition-all font-mono ${currentPage === pageNum ? 'bg-[#111f42] text-[#ab8a3b] shadow-md scale-105 border border-[#ab8a3b]' : 'text-slate-500 hover:bg-white hover:text-[#111f42]'}`}>{pageNum}</button>
                         );
                       })}
                     </div>

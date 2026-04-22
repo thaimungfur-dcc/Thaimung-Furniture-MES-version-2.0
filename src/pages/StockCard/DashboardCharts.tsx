@@ -49,43 +49,43 @@ export default function DashboardCharts() {
     return (
         <div className="space-y-6 animate-fade-in-up pb-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 shrink-0">
-                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
-                    <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 shadow-inner"><ArrowDownLeft size={32}/></div>
+                <div className="bg-white p-6 rounded-none border-2 border-slate-100 shadow-sm flex items-center gap-5">
+                    <div className="w-14 h-14 bg-white border-2 border-emerald-100 rounded-none flex items-center justify-center text-emerald-600 shadow-sm"><ArrowDownLeft size={32}/></div>
                     <div>
-                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 font-mono font-bold">Inbound (MTD)</p>
-                        <h3 className="text-2xl font-black text-[#111f42] font-mono leading-none tracking-tighter">1,250 <span className="text-[10px] text-slate-400 font-sans ml-1 uppercase font-bold">Units</span></h3>
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2 font-mono">Inbound (MTD)</p>
+                        <h3 className="text-2xl font-black text-[#111f42] font-mono leading-none tracking-tighter uppercase">1,250 <span className="text-[10px] text-slate-400 font-sans ml-1 uppercase">Units</span></h3>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
-                    <div className="w-14 h-14 bg-rose-50 rounded-2xl flex items-center justify-center text-[#E3624A] shadow-inner"><ArrowUpRight size={32}/></div>
+                <div className="bg-white p-6 rounded-none border-2 border-slate-100 shadow-sm flex items-center gap-5">
+                    <div className="w-14 h-14 bg-white border-2 border-rose-100 rounded-none flex items-center justify-center text-[#E3624A] shadow-sm"><ArrowUpRight size={32}/></div>
                     <div>
-                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 font-mono font-bold">Outbound (MTD)</p>
-                        <h3 className="text-2xl font-black text-[#111f42] font-mono leading-none tracking-tighter">840 <span className="text-[10px] text-slate-400 font-sans ml-1 uppercase font-bold">Units</span></h3>
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2 font-mono">Outbound (MTD)</p>
+                        <h3 className="text-2xl font-black text-[#111f42] font-mono leading-none tracking-tighter uppercase">840 <span className="text-[10px] text-slate-400 font-sans ml-1 uppercase">Units</span></h3>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5">
-                    <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center text-[#ab8a3b] shadow-inner"><RefreshCw size={32}/></div>
+                <div className="bg-white p-6 rounded-none border-2 border-slate-100 shadow-sm flex items-center gap-5">
+                    <div className="w-14 h-14 bg-white border-2 border-amber-100 rounded-none flex items-center justify-center text-[#ab8a3b] shadow-sm"><RefreshCw size={32}/></div>
                     <div>
-                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 font-mono font-bold">Inventory Turn</p>
-                        <h3 className="text-2xl font-black text-[#111f42] font-mono leading-none tracking-tighter">4.2x <span className="text-[10px] text-slate-400 font-sans ml-1 uppercase font-bold">Annual</span></h3>
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2 font-mono">Inventory Turn</p>
+                        <h3 className="text-2xl font-black text-[#111f42] font-mono leading-none tracking-tighter uppercase">4.2x <span className="text-[10px] text-slate-400 font-sans ml-1 uppercase">Annual</span></h3>
                     </div>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-[32px] border border-slate-200 shadow-sm h-[400px] flex flex-col">
-                    <div className="flex items-center gap-2.5 mb-6 px-2">
-                        <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-[#ab8a3b] shadow-inner"><TrendingUp size={16}/></div>
-                        <h3 className="text-[11px] font-black text-[#111f42] uppercase tracking-widest font-mono">Monthly Stock Movement</h3>
+                <div className="bg-white p-10 rounded-none border-2 border-slate-200 shadow-sm h-[400px] flex flex-col">
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="w-1.5 h-6 bg-[#ab8a3b] rounded-none"></div>
+                        <h3 className="text-[12px] font-black text-[#111f42] uppercase tracking-[0.3em] font-mono">Monthly Stock Movement</h3>
                     </div>
                     <div className="flex-1 min-h-0 relative">
                         <canvas ref={movementTrendChartRef}></canvas>
                     </div>
                 </div>
-                <div className="bg-white p-6 rounded-[32px] border border-slate-200 shadow-sm h-[400px] flex flex-col">
-                    <div className="flex items-center gap-2.5 mb-6 px-2">
-                        <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-[#111f42] shadow-inner"><BarChart3 size={16}/></div>
-                        <h3 className="text-[11px] font-black text-[#111f42] uppercase tracking-widest font-mono">Stock Activity Index</h3>
+                <div className="bg-white p-10 rounded-none border-2 border-slate-200 shadow-sm h-[400px] flex flex-col">
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="w-1.5 h-6 bg-[#111f42] rounded-none"></div>
+                        <h3 className="text-[12px] font-black text-[#111f42] uppercase tracking-[0.3em] font-mono">Stock Activity Index</h3>
                     </div>
                     <div className="flex-1 min-h-0 relative">
                         <canvas ref={itemPopularityChartRef}></canvas>
