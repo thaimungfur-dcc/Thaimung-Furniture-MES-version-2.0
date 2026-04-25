@@ -49,7 +49,7 @@ export default function MrpTable({ data, onIssue, onComplete, getProgressColor, 
         {
             accessorKey: 'qty',
             header: 'REQUIRED',
-            cell: ({ row }) => <div className="text-right font-black text-[#111f42] text-xs font-mono">{(Number(row.getValue('qty')) || 0).toLocaleString()}</div>
+            cell: ({ row }) => <div className="text-right font-black text-[#111f42] text-xs font-mono">{(Number(row.getValue('qty')) || 0)?.toLocaleString()}</div>
         },
         {
             accessorKey: 'issued',
@@ -63,7 +63,7 @@ export default function MrpTable({ data, onIssue, onComplete, getProgressColor, 
                                 style={{width: Math.min((order.issued / order.qty) * 100, 100) + '%', backgroundColor: getProgressColor(order)}}></div>
                         </div>
                         <span className={`text-[10px] font-mono font-bold ${order.issued >= order.qty ? 'text-emerald-600' : 'text-slate-500'}`}>
-                            {order.issued.toLocaleString()}
+                            {order.issued?.toLocaleString()}
                         </span>
                     </div>
                 );
@@ -78,7 +78,7 @@ export default function MrpTable({ data, onIssue, onComplete, getProgressColor, 
                 const balance = order.qty - order.issued;
                 return (
                     <div className={`text-right text-xs font-mono font-black ${balance <= 0 ? 'text-emerald-500' : 'text-[#E3624A]'}`}>
-                        {balance.toLocaleString()}
+                        {balance?.toLocaleString()}
                     </div>
                 );
             }

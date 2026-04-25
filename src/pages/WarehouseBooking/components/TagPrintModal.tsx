@@ -1,5 +1,6 @@
 import React from 'react';
 import { Printer, X, QrCode as QrIcon } from 'lucide-react';
+import { DraggableWrapper } from "../../../components/shared/DraggableWrapper";
 
 interface TagPrintModalProps {
     isOpen: boolean;
@@ -81,26 +82,30 @@ export default function TagPrintModal({ isOpen, selectedItem, printFormat, setPr
 
     return (
         <div className="modal-overlay z-[80000]" onClick={closeModal}>
-            <div className="bg-white rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col animate-in zoom-in duration-200 max-h-[90vh]" onClick={e => e.stopPropagation()}>
-                <div className="px-6 py-4 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#ab8a3b]">
-                    <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 font-mono"><Printer size={16} className="text-[#ab8a3b]"/> TAG PRINT PREVIEW</h2>
-                    <div className="flex bg-white/10 p-0.5 rounded-lg overflow-hidden shrink-0">
-                        <button onClick={() => setPrintFormat('A5')} className={`px-3 py-1.5 text-[9px] font-black uppercase transition-all ${printFormat === 'A5' ? 'bg-[#111f42] text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>A5 (Split)</button>
-                        <button onClick={() => setPrintFormat('A4')} className={`px-3 py-1.5 text-[9px] font-black uppercase transition-all ${printFormat === 'A4' ? 'bg-[#111f42] text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>A4 (2-Up)</button>
-                    </div>
-                    <button onClick={closeModal} className="hover:bg-white/20 p-1.5 rounded-lg transition-colors ml-4"><X size={20} /></button>
-                </div>
-                <div className="flex-1 overflow-y-auto p-8 bg-slate-200 flex justify-center print:p-0 print:bg-white master-custom-scrollbar">
-                    <div id="tag-print-area" className="bg-white shadow-md font-sans relative" style={{ width: '210mm', minHeight: printFormat === 'A5' ? '148.5mm' : '297mm', padding: printFormat === 'A5' ? '10mm' : '15mm', border: '1px dashed #ccc', margin: '0 auto' }}>
-                        {renderTagLayout()}
-                        {printFormat === 'A4' && renderTagLayout(true)}
-                    </div>
-                </div>
-                <div className="p-4 bg-white border-t flex justify-end gap-3 shrink-0 no-print rounded-b-2xl font-mono">
-                    <button onClick={closeModal} className="px-6 py-2.5 text-[11px] font-black uppercase text-slate-500 hover:bg-slate-50 transition-colors tracking-widest border border-transparent leading-none">Cancel</button>
-                    <button onClick={executePrintTag} className="px-8 py-2.5 bg-[#ab8a3b] text-[#111f42] rounded-xl font-black text-[11px] shadow-md uppercase flex items-center gap-2 hover:brightness-110 transition-all tracking-widest leading-none"><Printer size={16}/> PRINT TAG</button>
-                </div>
-            </div>
+            
+            <DraggableWrapper>
+                  <div className="bg-white rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden flex flex-col animate-in zoom-in duration-200 max-h-[90vh]" onClick={e => e.stopPropagation()}>
+                            <div className="px-6 py-2.5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#ab8a3b]">
+                                <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 font-mono"><Printer size={16} className="text-[#ab8a3b]"/> TAG PRINT PREVIEW</h2>
+                                <div className="flex bg-white/10 p-0.5 rounded-lg overflow-hidden shrink-0">
+                                    <button onClick={() => setPrintFormat('A5')} className={`px-3 py-1.5 text-[9px] font-black uppercase transition-all ${printFormat === 'A5' ? 'bg-[#111f42] text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>A5 (Split)</button>
+                                    <button onClick={() => setPrintFormat('A4')} className={`px-3 py-1.5 text-[9px] font-black uppercase transition-all ${printFormat === 'A4' ? 'bg-[#111f42] text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>A4 (2-Up)</button>
+                                </div>
+                                <button onClick={closeModal} className="hover:bg-white/20 p-1.5 rounded-lg transition-colors ml-4"><X size={20} /></button>
+                            </div>
+                            <div className="flex-1 overflow-y-auto p-5 bg-slate-200 flex justify-center print:p-0 print:bg-white master-custom-scrollbar">
+                                <div id="tag-print-area" className="bg-white shadow-md font-sans relative" style={{ width: '210mm', minHeight: printFormat === 'A5' ? '148.5mm' : '297mm', padding: printFormat === 'A5' ? '10mm' : '15mm', border: '1px dashed #ccc', margin: '0 auto' }}>
+                                    {renderTagLayout()}
+                                    {printFormat === 'A4' && renderTagLayout(true)}
+                                </div>
+                            </div>
+                            <div className="p-4 bg-white border-t flex justify-end gap-3 shrink-0 no-print rounded-b-2xl font-mono">
+                                <button onClick={closeModal} className="px-6 py-2.5 text-[11px] font-black uppercase text-slate-500 hover:bg-slate-50 transition-colors tracking-widest border border-transparent leading-none">Cancel</button>
+                                <button onClick={executePrintTag} className="px-5 py-2.5 bg-[#ab8a3b] text-[#111f42] rounded-xl font-black text-[11px] shadow-md uppercase flex items-center gap-2 hover:brightness-110 transition-all tracking-widest leading-none"><Printer size={16}/> PRINT TAG</button>
+                            </div>
+                        </div>
+                </DraggableWrapper>
+
         </div>
     );
 }

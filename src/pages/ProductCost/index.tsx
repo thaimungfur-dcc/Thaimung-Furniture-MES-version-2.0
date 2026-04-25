@@ -17,6 +17,7 @@ import { PageHeader } from '../../components/shared/PageHeader';
 import { KpiCard } from '../../components/shared/KpiCard';
 import ProductCostTable from './components/ProductCostTable';
 import Swal from 'sweetalert2';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 // --- ERP Palette ---
 const palette = {
@@ -214,7 +215,7 @@ export default function ProductCost() {
 
 
     return (
-        <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 text-[12px] bg-[#F9F7F6]">
+        <div className="flex flex-col space-y-4 w-full relative flex-1 transition-colors duration-500 text-[12px]">
             {/* Header */}
             <PageHeader
                 title="PRODUCT COST"
@@ -235,19 +236,19 @@ export default function ProductCost() {
                 {/* KPI Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-fade-in-up shrink-0">
                     <KpiCard title="Active SKUs" value={kpis.count} color={palette.primary} icon={Box} subValue="Defined Portfolio" />
-                    <KpiCard title="Avg Portfolio Cost" value={`฿${kpis.avgCost.toLocaleString(undefined, {maximumFractionDigits: 0})}`} color={palette.gold} icon={Calculator} subValue="System Average" />
+                    <KpiCard title="Avg Portfolio Cost" value={`฿${kpis.avgCost?.toLocaleString(undefined, {maximumFractionDigits: 0})}`} color={palette.gold} icon={Calculator} subValue="System Average" />
                     <KpiCard title="Avg Margin Target" value={`${kpis.avgMargin.toFixed(1)}%`} color={palette.success} icon={TrendingUp} subValue="Portfolio Markup" />
                     <KpiCard title="Total Asset Val" value={`฿${(kpis.totalVal / 1000000).toFixed(1)}M`} color={palette.accent} icon={Coins} subValue="Standard Value" />
                 </div>
 
                 <div className="bg-white rounded-none shadow-sm border border-black/5 flex flex-col overflow-hidden animate-fade-in-up min-h-[600px] flex-1">
-                    <div className="px-6 py-4 border-b border-black/5 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/30">
+                    <div className="border-b border-black/5 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/30">
                         <div className="relative w-full lg:w-96">
                             <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
                             <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search catalogue..." className="w-full pl-10 pr-4 py-2.5 text-[11px] font-bold rounded-xl border border-black/5 focus:outline-none focus:border-[#ab8a3b] bg-white shadow-sm" />
                         </div>
                         <div className="flex gap-2">
-                             <button onClick={handleCreateNew} className="px-6 py-2.5 bg-[#111f42] text-white rounded-xl text-[10px] font-black tracking-widest uppercase shadow-lg shadow-blue-900/20 hover:brightness-110 transition-all flex items-center gap-2">
+                             <button onClick={handleCreateNew} className="py-2.5 bg-[#111f42] text-white rounded-xl text-[10px] font-black tracking-widest uppercase shadow-lg shadow-blue-900/20 hover:brightness-110 transition-all flex items-center gap-2">
                                 <Plus size={16} className="text-[#ab8a3b]" strokeWidth={3} /> NEW PRODUCT COST
                             </button>
                         </div>
@@ -276,15 +277,15 @@ export default function ProductCost() {
                                                     <div className="flex bg-slate-50 border border-slate-100 rounded-lg overflow-hidden my-3">
                                                         <div className="flex-1 p-2 border-r border-slate-100">
                                                             <span className="text-[7px] text-slate-400 block font-black uppercase mb-0.5 tracking-widest">COST</span>
-                                                            <span className="text-[13px] font-mono font-black text-[#111f42]">฿{product.totalCost.toLocaleString()}</span>
+                                                            <span className="text-[13px] font-mono font-black text-[#111f42]">฿{product.totalCost?.toLocaleString()}</span>
                                                         </div>
                                                         <div className="flex-1 p-2 bg-[#FEE2E2]/30">
                                                             <span className="text-[7px] text-[#E3624A] block font-black uppercase mb-0.5 tracking-widest">PRICE</span>
-                                                            <span className="text-[15px] font-black text-[#E3624A] font-mono leading-none">฿{product.suggestedPrice.toLocaleString()}</span>
+                                                            <span className="text-[15px] font-black text-[#E3624A] font-mono leading-none">฿{product.suggestedPrice?.toLocaleString()}</span>
                                                         </div>
                                                     </div>
                                                     
-                                                    <div className="flex items-center justify-between pt-2 border-t border-slate-50">
+                                                    <div className="flex items-center justify-between border-t border-slate-50">
                                                         <div className="flex items-center gap-1.5">
                                                             <Calculator size={14} className="text-slate-300" />
                                                             <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">ANALYZE</span>
@@ -299,7 +300,7 @@ export default function ProductCost() {
                                 ))}
                             </div>
                         ) : (
-                            <div className="bg-[#F9F7F6]">
+                            <div className="">
                                 <ProductCostTable 
                                     data={filteredItems}
                                     onOpenBOM={openBOM}
@@ -313,210 +314,214 @@ export default function ProductCost() {
             {/* MODAL: BOM EDITOR & CREATE */}
             {(showBOMModal || showCreateModal) && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in">
-                    <div className="bg-[#F9F7F6] w-full max-w-[1200px] h-[95vh] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 flex flex-col animate-in zoom-in-95">
-                        <div className="bg-[#111f42] px-8 py-5 flex justify-between items-center text-white shrink-0">
-                            <div>
-                                <h3 className="text-xl font-black uppercase tracking-widest font-sans">{form.itemName || 'New Product Costing'}</h3>
-                                <p className="text-[9px] font-bold text-slate-400 mt-1 uppercase font-mono tracking-widest">SKU: {form.item || 'PENDING'}</p>
-                            </div>
-                            <button onClick={() => {setShowBOMModal(false); setShowCreateModal(false);}} className="p-2 hover:bg-white/10 rounded-xl transition-all font-bold"><X size={24} /></button>
-                        </div>
-
-                        <div className="bg-white px-8 py-4 border-b border-slate-100 flex justify-between items-center shrink-0">
-                            <div className="flex gap-4 font-mono">
-                                <button onClick={() => setBomTab('productCost')} className={`px-5 py-2 rounded-lg text-xs font-black uppercase transition-all ${bomTab==='productCost'?'bg-slate-100 text-[#111f42] border border-slate-200 shadow-sm':'text-slate-400 hover:bg-slate-50'}`}>A. Product Cost</button>
-                                <button onClick={() => setBomTab('periodCost')} className={`px-5 py-2 rounded-lg text-xs font-black uppercase transition-all ${bomTab==='periodCost'?'bg-slate-100 text-[#111f42] border border-slate-200 shadow-sm':'text-slate-400 hover:bg-slate-50'}`}>B. Period Cost</button>
-                                <button onClick={() => setBomTab('summary')} className={`px-5 py-2 rounded-lg text-xs font-black uppercase transition-all ${bomTab==='summary'?'bg-slate-100 text-[#111f42] border border-slate-200 shadow-sm':'text-slate-400 hover:bg-slate-50'}`}>Summary</button>
-                            </div>
-                            <div className="text-right">
-                                <label className="text-[9px] font-black text-slate-400 uppercase font-mono tracking-widest leading-none block mb-1">Total Unit Cost</label>
-                                <div className="text-3xl font-black text-[#10b981] font-mono leading-none">฿{totals.total.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
-                            </div>
-                        </div>
-
-                        <div className="flex-1 overflow-y-auto master-custom-scrollbar p-8 bg-[#F9F7F6]">
-                            {bomTab === 'productCost' && (
-                                <div className="space-y-8 animate-fade-in-up">
-                                    <div className="bg-amber-50 rounded-2xl p-6 border border-amber-100 flex items-center justify-between">
-                                        <div>
-                                            <h4 className="font-black text-[#111f42] uppercase text-xs tracking-widest flex items-center gap-2"><Zap size={16} className="text-amber-500" /> Manufacturing Amortization</h4>
-                                            <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Batch Size applies to Section 3.1 - 3.4 (OH & Capital Assets)</p>
-                                        </div>
-                                        <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-sm border border-amber-200">
-                                            <label className="text-[10px] font-black uppercase text-slate-400">Standard Batch Size</label>
-                                            <input type="number" value={form.batchSize} onChange={e=>setForm({...form, batchSize: e.target.value})} className="w-24 text-right font-black text-[#111f42] outline-none" />
-                                        </div>
-                                    </div>
-
-                                    {showCreateModal && (
-                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6 grid grid-cols-2 gap-6 font-mono">
-                                            <div className="col-span-2"><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Product Name</label><input value={form.itemName} onChange={e=>setForm({...form, itemName: e.target.value})} className="input-table text-base font-bold" placeholder="Product Title" /></div>
-                                            <div>
-                                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">SKU / ID</label>
-                                                <select 
-                                                    value={form.item} 
-                                                    onChange={e => {
-                                                        const selectedItem = items.find(i => i.itemCode === e.target.value);
-                                                        setForm({...form, item: e.target.value, itemName: selectedItem?.itemName || '', category: selectedItem?.category || ''});
-                                                    }} 
-                                                    className="input-table font-mono w-full"
-                                                >
-                                                    <option value="">Select Item...</option>
-                                                    {items.filter(i => i.itemType === 'FG').map(item => (
-                                                        <option key={item.id} value={item.itemCode}>{item.itemCode} - {item.itemName}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                            <div><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Category</label><input value={form.category} onChange={e=>setForm({...form, category: e.target.value})} className="input-table" placeholder="Category" readOnly /></div>
-                                        </div>
-                                    )}
-
-                                    {/* 1. DM, 2. DL */}
-                                    <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                        <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Box size={16} className="text-[#10b981]"/> 1. Direct Material (วัตถุดิบทางตรง)</h4>
-                                        <table className="w-full text-left font-mono text-[11px] mb-4">
-                                            <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Material</th><th className="minimal-th w-20 text-center">Unit</th><th className="minimal-th w-24 text-right">Qty</th><th className="minimal-th w-28 text-right">Price</th><th className="minimal-th w-32 text-right">Total</th><th className="minimal-th w-10"></th></tr></thead>
-                                            <tbody>{form.dm.map((r: any, i: number) => (
-                                                <tr key={i}><td className="minimal-td text-slate-400">11-01-00-DM</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('dm', i, 'name', e.target.value)} className="input-table font-thai" /></td><td className="minimal-td"><input value={r.unit} onChange={e=>updateRow('dm', i, 'unit', e.target.value)} className="input-table text-center" /></td><td className="minimal-td"><input type="number" value={r.qty} onChange={e=>updateRow('dm', i, 'qty', e.target.value)} className="input-table text-right font-bold"/></td><td className="minimal-td"><input type="number" value={r.pricePerUnit} onChange={e=>updateRow('dm', i, 'pricePerUnit', e.target.value)} className="input-table text-right text-emerald-600 font-bold"/></td><td className="minimal-td text-right font-black">฿{(r.cost||0).toLocaleString()}</td><td className="minimal-td text-center"><button onClick={()=>removeRow('dm', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
-                                            ))}</tbody>
-                                        </table>
-                                        <button onClick={()=>addRow('dm')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Row</button>
-                                    </div>
-
-                                    <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                        <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Users size={16} className="text-[#3981BF]"/> 2. Direct Labor (ค่าแรงทางตรง)</h4>
-                                        <table className="w-full text-left font-mono text-[11px] mb-4">
-                                            <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Activity</th><th className="minimal-th w-32 text-right">Rate / Hr</th><th className="minimal-th w-32 text-right">Time (Hrs)</th><th className="minimal-th w-32 text-right">Unit Total</th><th className="minimal-th w-10"></th></tr></thead>
-                                            <tbody>{form.dl.map((r: any, i: number) => (
-                                                <tr key={i}><td className="minimal-td text-slate-400">20-01-00-DL</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('dl', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td"><input type="number" value={r.rate} onChange={e=>updateRow('dl', i, 'rate', e.target.value)} className="input-table text-right"/></td><td className="minimal-td"><input type="number" value={r.timeHrs} onChange={e=>updateRow('dl', i, 'timeHrs', e.target.value)} className="input-table text-right font-bold"/></td><td className="minimal-td text-right font-black">฿{(r.cost||0).toLocaleString()}</td><td className="minimal-td text-center"><button onClick={()=>removeRow('dl', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
-                                            ))}</tbody>
-                                        </table>
-                                        <button onClick={()=>addRow('dl')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Activity</button>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Factory size={16} className="text-slate-400"/> 3.1 Manufacturing OH</h4>
-                                            <table className="w-full text-left font-mono text-[11px] mb-4">
-                                                <thead><tr><th className="minimal-th w-auto">Item Name</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
-                                                <tbody>{form.factory_oh.map((r: any, i: number) => (
-                                                    <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('factory_oh', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('factory_oh', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('factory_oh', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
-                                                ))}</tbody>
-                                            </table>
-                                            <button onClick={()=>addRow('factory_oh')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add OH</button>
-                                        </div>
-                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Building size={16} className="text-slate-400"/> 3.2 Office OH (Prod. Support)</h4>
-                                            <table className="w-full text-left font-mono text-[11px] mb-4">
-                                                <thead><tr><th className="minimal-th w-auto">Item Name</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
-                                                <tbody>{form.office_oh.map((r: any, i: number) => (
-                                                    <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('office_oh', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('office_oh', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('office_oh', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
-                                                ))}</tbody>
-                                            </table>
-                                            <button onClick={()=>addRow('office_oh')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add Support Cost</button>
-                                        </div>
-                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Droplets size={16} className="text-blue-500"/> 3.3 Utilities & Power (Direct)</h4>
-                                            <table className="w-full text-left font-mono text-[11px] mb-4">
-                                                <thead><tr><th className="minimal-th w-auto">Resource</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
-                                                <tbody>{form.utilities.map((r: any, i: number) => (
-                                                    <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('utilities', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('utilities', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('utilities', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
-                                                ))}</tbody>
-                                            </table>
-                                            <button onClick={()=>addRow('utilities')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add Utility</button>
-                                        </div>
-                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Gauge size={16} className="text-slate-500"/> 3.4 Machine Depreciation</h4>
-                                            <table className="w-full text-left font-mono text-[11px] mb-4">
-                                                <thead><tr><th className="minimal-th w-auto">Asset Name</th><th className="minimal-th w-32 text-right">Batch Amort.</th><th className="minimal-th w-10"></th></tr></thead>
-                                                <tbody>{form.depreciation.map((r: any, i: number) => (
-                                                    <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('depreciation', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('depreciation', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('depreciation', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
-                                                ))}</tbody>
-                                            </table>
-                                            <button onClick={()=>addRow('depreciation')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add Asset</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {bomTab === 'periodCost' && (
-                                <div className="space-y-8 animate-fade-in-up">
-                                    <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                        <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><ShoppingBag size={16} className="text-[#E3624A]"/> 4. Selling Expenses (ค่าใช้จ่ายการขาย)</h4>
-                                        <table className="w-full text-left font-mono text-[11px] mb-4">
-                                            <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-48">Type</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
-                                            <tbody>{form.selling.map((r: any, i: number) => (
-                                                <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('selling', r)}</td><td className="minimal-td"><select value={r.subType} onChange={e=>updateRow('selling', i, 'subType', e.target.value)} className="input-table text-[10px] font-bold"><option value="">-- เลือก --</option><option value="4.1 ก่อนขาย">4.1 ก่อนขาย</option><option value="4.2 ระหว่างขาย">4.2 ระหว่างขาย</option></select></td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('selling', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('selling', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('selling', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
-                                            ))}</tbody>
-                                        </table>
-                                        <button onClick={()=>addRow('selling')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Row</button>
-                                    </div>
-                                    <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                        <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Briefcase size={16} className="text-[#3981BF]"/> 5. Admin Expenses (ค่าใช้จ่ายบริหาร)</h4>
-                                        <table className="w-full text-left font-mono text-[11px] mb-4">
-                                            <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-48">Type</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
-                                            <tbody>{form.admin.map((r: any, i: number) => (
-                                                <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('admin', r)}</td><td className="minimal-td"><select value={r.subType} onChange={e=>updateRow('admin', i, 'subType', e.target.value)} className="input-table text-[10px] font-bold"><option value="">-- เลือก --</option><option value="5.1 บุคลากร">5.1 บุคลากร</option><option value="5.2 สำนักงาน">5.2 สำนักงาน</option></select></td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('admin', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('admin', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('admin', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
-                                            ))}</tbody>
-                                        </table>
-                                        <button onClick={()=>addRow('admin')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Row</button>
-                                    </div>
-                                    <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
-                                        <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Settings2 size={16} className="text-slate-400"/> 6. อื่นๆ (Extra Costs)</h4>
-                                        <table className="w-full text-left font-mono text-[11px] mb-4">
-                                            <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Batch Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
-                                            <tbody>{form.others.map((r: any, i: number) => (
-                                                <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('others', r)}</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('others', i, 'name', e.target.value)} className="input-table font-thai" placeholder="เช่น ค่าจ้างผลิตภายนอก, ค่าวิจัย"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('others', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('others', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
-                                            ))}</tbody>
-                                        </table>
-                                        <button onClick={()=>addRow('others')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Extra Cost</button>
-                                    </div>
-                                </div>
-                            )}
-
-                            {bomTab === 'summary' && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in-up font-mono">
-                                    <div className="space-y-6">
-                                        <div className="bg-white p-8 rounded-3xl border border-black/5 shadow-sm space-y-6">
-                                            <h4 className="font-black text-xs uppercase tracking-widest text-slate-400 border-b pb-3">Profitability Analysis</h4>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                                    <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Profit / Unit</span>
-                                                    <span className="text-xl font-black text-[#111f42]">฿{totals.profitPerUnit.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                    
+                    <DraggableWrapper>
+                          <div className="w-full max-w-[1200px] h-[95vh] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 flex flex-col animate-in zoom-in-95">
+                                            <div className="bg-[#111f42] py-5 flex justify-between items-center text-white shrink-0">
+                                                <div>
+                                                    <h3 className="text-xl font-black uppercase tracking-widest font-sans">{form.itemName || 'New Product Costing'}</h3>
+                                                    <p className="text-[9px] font-bold text-slate-400 mt-1 uppercase font-mono tracking-widest">SKU: {form.item || 'PENDING'}</p>
                                                 </div>
-                                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                                    <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Net Margin %</span>
-                                                    <span className="text-xl font-black text-[#10b981]">{totals.marginPct.toFixed(2)}%</span>
+                                                <button onClick={() => {setShowBOMModal(false); setShowCreateModal(false);}} className="p-2 hover:bg-white/10 rounded-xl transition-all font-bold"><X size={24} /></button>
+                                            </div>
+
+                                            <div className="bg-white border-b border-slate-100 flex justify-between items-center shrink-0">
+                                                <div className="flex gap-4 font-mono">
+                                                    <button onClick={() => setBomTab('productCost')} className={`px-5 py-2 rounded-lg text-xs font-black uppercase transition-all ${bomTab==='productCost'?'bg-slate-100 text-[#111f42] border border-slate-200 shadow-sm':'text-slate-400 hover:bg-slate-50'}`}>A. Product Cost</button>
+                                                    <button onClick={() => setBomTab('periodCost')} className={`px-5 py-2 rounded-lg text-xs font-black uppercase transition-all ${bomTab==='periodCost'?'bg-slate-100 text-[#111f42] border border-slate-200 shadow-sm':'text-slate-400 hover:bg-slate-50'}`}>B. Period Cost</button>
+                                                    <button onClick={() => setBomTab('summary')} className={`px-5 py-2 rounded-lg text-xs font-black uppercase transition-all ${bomTab==='summary'?'bg-slate-100 text-[#111f42] border border-slate-200 shadow-sm':'text-slate-400 hover:bg-slate-50'}`}>Summary</button>
+                                                </div>
+                                                <div className="text-right">
+                                                    <label className="text-[9px] font-black text-slate-400 uppercase font-mono tracking-widest leading-none block mb-1">Total Unit Cost</label>
+                                                    <div className="text-3xl font-black text-[#10b981] font-mono leading-none">฿{totals.total?.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="bg-white p-8 rounded-3xl border border-black/5 shadow-sm space-y-6">
-                                            <h4 className="font-black text-xs uppercase tracking-widest text-slate-400 border-b pb-3">BOM Structure Summary</h4>
-                                            <div className="space-y-3 text-sm">
-                                                <div className="flex justify-between"><span>Product Cost (A)</span><span className="font-black">฿{totals.productA.toLocaleString(undefined, {minimumFractionDigits: 2})}</span></div>
-                                                <div className="flex justify-between"><span>Period Cost (B)</span><span className="font-black">฿{totals.periodB.toLocaleString(undefined, {minimumFractionDigits: 2})}</span></div>
-                                                <div className="pt-2 border-t flex justify-between font-black text-[#111f42]"><span>Grand Total Unit Cost</span><span>฿{totals.total.toLocaleString(undefined, {minimumFractionDigits: 2})}</span></div>
+
+                                            <div className="flex-1 overflow-y-auto master-custom-scrollbar p-8">
+                                                {bomTab === 'productCost' && (
+                                                    <div className="space-y-8 animate-fade-in-up">
+                                                        <div className="bg-amber-50 rounded-2xl p-6 border border-amber-100 flex items-center justify-between">
+                                                            <div>
+                                                                <h4 className="font-black text-[#111f42] uppercase text-xs tracking-widest flex items-center gap-2"><Zap size={16} className="text-amber-500" /> Manufacturing Amortization</h4>
+                                                                <p className="text-[10px] text-slate-500 font-bold uppercase mt-1">Batch Size applies to Section 3.1 - 3.4 (OH & Capital Assets)</p>
+                                                            </div>
+                                                            <div className="flex items-center gap-3 bg-white py-2 rounded-xl shadow-sm border border-amber-200">
+                                                                <label className="text-[10px] font-black uppercase text-slate-400">Standard Batch Size</label>
+                                                                <input type="number" value={form.batchSize} onChange={e=>setForm({...form, batchSize: e.target.value})} className="w-24 text-right font-black text-[#111f42] outline-none" />
+                                                            </div>
+                                                        </div>
+
+                                                        {showCreateModal && (
+                                                            <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6 grid grid-cols-2 gap-6 font-mono">
+                                                                <div className="col-span-2"><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Product Name</label><input value={form.itemName} onChange={e=>setForm({...form, itemName: e.target.value})} className="input-table text-base font-bold" placeholder="Product Title" /></div>
+                                                                <div>
+                                                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">SKU / ID</label>
+                                                                    <select 
+                                                                        value={form.item} 
+                                                                        onChange={e => {
+                                                                            const selectedItem = items.find(i => i.itemCode === e.target.value);
+                                                                            setForm({...form, item: e.target.value, itemName: selectedItem?.itemName || '', category: selectedItem?.category || ''});
+                                                                        }} 
+                                                                        className="input-table font-mono w-full"
+                                                                    >
+                                                                        <option value="">Select Item...</option>
+                                                                        {items.filter(i => i.itemType === 'FG').map(item => (
+                                                                            <option key={item.id} value={item.itemCode}>{item.itemCode} - {item.itemName}</option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                                <div><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Category</label><input value={form.category} onChange={e=>setForm({...form, category: e.target.value})} className="input-table" placeholder="Category" readOnly /></div>
+                                                            </div>
+                                                        )}
+
+                                                        {/* 1. DM, 2. DL */}
+                                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Box size={16} className="text-[#10b981]"/> 1. Direct Material (วัตถุดิบทางตรง)</h4>
+                                                            <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Material</th><th className="minimal-th w-20 text-center">Unit</th><th className="minimal-th w-24 text-right">Qty</th><th className="minimal-th w-28 text-right">Price</th><th className="minimal-th w-32 text-right">Total</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                <tbody>{form.dm.map((r: any, i: number) => (
+                                                                    <tr key={i}><td className="minimal-td text-slate-400">11-01-00-DM</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('dm', i, 'name', e.target.value)} className="input-table font-thai" /></td><td className="minimal-td"><input value={r.unit} onChange={e=>updateRow('dm', i, 'unit', e.target.value)} className="input-table text-center" /></td><td className="minimal-td"><input type="number" value={r.qty} onChange={e=>updateRow('dm', i, 'qty', e.target.value)} className="input-table text-right font-bold"/></td><td className="minimal-td"><input type="number" value={r.pricePerUnit} onChange={e=>updateRow('dm', i, 'pricePerUnit', e.target.value)} className="input-table text-right text-emerald-600 font-bold"/></td><td className="minimal-td text-right font-black">฿{(r.cost||0)?.toLocaleString()}</td><td className="minimal-td text-center"><button onClick={()=>removeRow('dm', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
+                                                                ))}</tbody>
+                                                            </table>
+                                                            <button onClick={()=>addRow('dm')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Row</button>
+                                                        </div>
+
+                                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Users size={16} className="text-[#3981BF]"/> 2. Direct Labor (ค่าแรงทางตรง)</h4>
+                                                            <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Activity</th><th className="minimal-th w-32 text-right">Rate / Hr</th><th className="minimal-th w-32 text-right">Time (Hrs)</th><th className="minimal-th w-32 text-right">Unit Total</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                <tbody>{form.dl.map((r: any, i: number) => (
+                                                                    <tr key={i}><td className="minimal-td text-slate-400">20-01-00-DL</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('dl', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td"><input type="number" value={r.rate} onChange={e=>updateRow('dl', i, 'rate', e.target.value)} className="input-table text-right"/></td><td className="minimal-td"><input type="number" value={r.timeHrs} onChange={e=>updateRow('dl', i, 'timeHrs', e.target.value)} className="input-table text-right font-bold"/></td><td className="minimal-td text-right font-black">฿{(r.cost||0)?.toLocaleString()}</td><td className="minimal-td text-center"><button onClick={()=>removeRow('dl', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
+                                                                ))}</tbody>
+                                                            </table>
+                                                            <button onClick={()=>addRow('dl')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Activity</button>
+                                                        </div>
+
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                            <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                                <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Factory size={16} className="text-slate-400"/> 3.1 Manufacturing OH</h4>
+                                                                <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                    <thead><tr><th className="minimal-th w-auto">Item Name</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                    <tbody>{form.factory_oh.map((r: any, i: number) => (
+                                                                        <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('factory_oh', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('factory_oh', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('factory_oh', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
+                                                                    ))}</tbody>
+                                                                </table>
+                                                                <button onClick={()=>addRow('factory_oh')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add OH</button>
+                                                            </div>
+                                                            <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                                <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Building size={16} className="text-slate-400"/> 3.2 Office OH (Prod. Support)</h4>
+                                                                <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                    <thead><tr><th className="minimal-th w-auto">Item Name</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                    <tbody>{form.office_oh.map((r: any, i: number) => (
+                                                                        <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('office_oh', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('office_oh', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('office_oh', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
+                                                                    ))}</tbody>
+                                                                </table>
+                                                                <button onClick={()=>addRow('office_oh')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add Support Cost</button>
+                                                            </div>
+                                                            <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                                <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Droplets size={16} className="text-blue-500"/> 3.3 Utilities & Power (Direct)</h4>
+                                                                <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                    <thead><tr><th className="minimal-th w-auto">Resource</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                    <tbody>{form.utilities.map((r: any, i: number) => (
+                                                                        <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('utilities', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('utilities', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('utilities', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
+                                                                    ))}</tbody>
+                                                                </table>
+                                                                <button onClick={()=>addRow('utilities')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add Utility</button>
+                                                            </div>
+                                                            <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                                <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Gauge size={16} className="text-slate-500"/> 3.4 Machine Depreciation</h4>
+                                                                <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                    <thead><tr><th className="minimal-th w-auto">Asset Name</th><th className="minimal-th w-32 text-right">Batch Amort.</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                    <tbody>{form.depreciation.map((r: any, i: number) => (
+                                                                        <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('depreciation', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('depreciation', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('depreciation', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
+                                                                    ))}</tbody>
+                                                                </table>
+                                                                <button onClick={()=>addRow('depreciation')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1"><Plus size={14}/> Add Asset</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {bomTab === 'periodCost' && (
+                                                    <div className="space-y-8 animate-fade-in-up">
+                                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><ShoppingBag size={16} className="text-[#E3624A]"/> 4. Selling Expenses (ค่าใช้จ่ายการขาย)</h4>
+                                                            <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-48">Type</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                <tbody>{form.selling.map((r: any, i: number) => (
+                                                                    <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('selling', r)}</td><td className="minimal-td"><select value={r.subType} onChange={e=>updateRow('selling', i, 'subType', e.target.value)} className="input-table text-[10px] font-bold"><option value="">-- เลือก --</option><option value="4.1 ก่อนขาย">4.1 ก่อนขาย</option><option value="4.2 ระหว่างขาย">4.2 ระหว่างขาย</option></select></td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('selling', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('selling', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('selling', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
+                                                                ))}</tbody>
+                                                            </table>
+                                                            <button onClick={()=>addRow('selling')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Row</button>
+                                                        </div>
+                                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Briefcase size={16} className="text-[#3981BF]"/> 5. Admin Expenses (ค่าใช้จ่ายบริหาร)</h4>
+                                                            <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-48">Type</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                <tbody>{form.admin.map((r: any, i: number) => (
+                                                                    <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('admin', r)}</td><td className="minimal-td"><select value={r.subType} onChange={e=>updateRow('admin', i, 'subType', e.target.value)} className="input-table text-[10px] font-bold"><option value="">-- เลือก --</option><option value="5.1 บุคลากร">5.1 บุคลากร</option><option value="5.2 สำนักงาน">5.2 สำนักงาน</option></select></td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('admin', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('admin', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('admin', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
+                                                                ))}</tbody>
+                                                            </table>
+                                                            <button onClick={()=>addRow('admin')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Row</button>
+                                                        </div>
+                                                        <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                                                            <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Settings2 size={16} className="text-slate-400"/> 6. อื่นๆ (Extra Costs)</h4>
+                                                            <table className="w-full text-left font-mono text-[11px] mb-4">
+                                                                <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Batch Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
+                                                                <tbody>{form.others.map((r: any, i: number) => (
+                                                                    <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('others', r)}</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('others', i, 'name', e.target.value)} className="input-table font-thai" placeholder="เช่น ค่าจ้างผลิตภายนอก, ค่าวิจัย"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('others', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('others', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
+                                                                ))}</tbody>
+                                                            </table>
+                                                            <button onClick={()=>addRow('others')} className="text-[10px] font-black uppercase text-[#ab8a3b] flex items-center gap-1 hover:brightness-110 transition-all"><Plus size={14}/> Add Extra Cost</button>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {bomTab === 'summary' && (
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in-up font-mono">
+                                                        <div className="space-y-6">
+                                                            <div className="bg-white p-8 rounded-3xl border border-black/5 shadow-sm space-y-6">
+                                                                <h4 className="font-black text-xs uppercase tracking-widest text-slate-400 border-b pb-3">Profitability Analysis</h4>
+                                                                <div className="grid grid-cols-2 gap-4">
+                                                                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Profit / Unit</span>
+                                                                        <span className="text-xl font-black text-[#111f42]">฿{totals.profitPerUnit?.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                                                                    </div>
+                                                                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                                        <span className="text-[8px] font-black text-slate-400 uppercase block mb-1">Net Margin %</span>
+                                                                        <span className="text-xl font-black text-[#10b981]">{totals.marginPct.toFixed(2)}%</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="bg-white p-8 rounded-3xl border border-black/5 shadow-sm space-y-6">
+                                                                <h4 className="font-black text-xs uppercase tracking-widest text-slate-400 border-b pb-3">BOM Structure Summary</h4>
+                                                                <div className="space-y-3 text-sm">
+                                                                    <div className="flex justify-between"><span>Product Cost (A)</span><span className="font-black">฿{totals.productA?.toLocaleString(undefined, {minimumFractionDigits: 2})}</span></div>
+                                                                    <div className="flex justify-between"><span>Period Cost (B)</span><span className="font-black">฿{totals.periodB?.toLocaleString(undefined, {minimumFractionDigits: 2})}</span></div>
+                                                                    <div className="border-t flex justify-between font-black text-[#111f42]"><span>Grand Total Unit Cost</span><span>฿{totals.total?.toLocaleString(undefined, {minimumFractionDigits: 2})}</span></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="bg-[#111f42] p-8 rounded-[32px] text-white relative overflow-hidden shadow-xl flex flex-col justify-center">
+                                                            <div className="absolute right-[-20px] top-[-20px] opacity-10 transform rotate-12"><Coins size={150}/></div>
+                                                            <label className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ab8a3b]">Suggested Selling Price</label>
+                                                            <div className="text-6xl font-black font-mono tracking-tighter my-6 leading-none">฿{totals.suggested?.toLocaleString()}</div>
+                                                            <div className="mt-4 flex items-center gap-4 bg-white/10 p-4 rounded-2xl border border-white/10">
+                                                                <label className="text-[10px] font-black uppercase text-white/50 whitespace-nowrap"><Target size={14} className="inline mr-1" /> Target Margin %</label>
+                                                                <input type="number" value={form.targetMargin} onChange={e=>setForm({...form, targetMargin: Number(e.target.value)})} className="bg-transparent font-black text-2xl outline-none w-full text-right"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="p-8 border-t bg-white flex justify-end gap-3 shrink-0 font-mono">
+                                                <button onClick={() => {setShowBOMModal(false); setShowCreateModal(false);}} className="py-3 text-slate-400 font-black uppercase text-[10px] hover:text-[#111f42] transition-colors">Discard</button>
+                                                <button onClick={saveBOM} className="px-12 py-3 bg-[#111f42] text-[#ab8a3b] rounded-2xl font-black uppercase text-[11px] shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2"><Save size={16}/> Finalize & Save BOM</button>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="bg-[#111f42] p-8 rounded-[32px] text-white relative overflow-hidden shadow-xl flex flex-col justify-center">
-                                        <div className="absolute right-[-20px] top-[-20px] opacity-10 transform rotate-12"><Coins size={150}/></div>
-                                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ab8a3b]">Suggested Selling Price</label>
-                                        <div className="text-6xl font-black font-mono tracking-tighter my-6 leading-none">฿{totals.suggested.toLocaleString()}</div>
-                                        <div className="mt-4 flex items-center gap-4 bg-white/10 p-4 rounded-2xl border border-white/10">
-                                            <label className="text-[10px] font-black uppercase text-white/50 whitespace-nowrap"><Target size={14} className="inline mr-1" /> Target Margin %</label>
-                                            <input type="number" value={form.targetMargin} onChange={e=>setForm({...form, targetMargin: Number(e.target.value)})} className="bg-transparent font-black text-2xl outline-none w-full text-right"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        </DraggableWrapper>
 
-                        <div className="p-8 border-t bg-white flex justify-end gap-3 shrink-0 font-mono">
-                            <button onClick={() => {setShowBOMModal(false); setShowCreateModal(false);}} className="px-8 py-3 text-slate-400 font-black uppercase text-[10px] hover:text-[#111f42] transition-colors">Discard</button>
-                            <button onClick={saveBOM} className="px-12 py-3 bg-[#111f42] text-[#ab8a3b] rounded-2xl font-black uppercase text-[11px] shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2"><Save size={16}/> Finalize & Save BOM</button>
-                        </div>
-                    </div>
                 </div>
             )}
 
@@ -525,7 +530,7 @@ export default function ProductCost() {
                 <div className="fixed inset-0 z-[500] flex justify-end animate-in fade-in duration-300 font-thai">
                     <div className="absolute inset-0 bg-[#111f42]/40 backdrop-blur-sm" onClick={() => setIsGuideOpen(false)} />
                     <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500">
-                        <div className="bg-[#111f42] px-8 py-6 flex justify-between items-center text-white border-b-4 border-[#ab8a3b]">
+                        <div className="bg-[#111f42] flex justify-between items-center text-white border-b-4 border-[#ab8a3b]">
                             <div className="flex items-center gap-3"><HelpCircle size={22} className="text-[#ab8a3b]" /><h3 className="text-lg font-black uppercase tracking-widest">คู่มือการใช้งานระบบต้นทุน</h3></div>
                             <button onClick={() => setIsGuideOpen(false)} className="p-2 hover:bg-white/10 rounded-xl transition-all"><X size={20} /></button>
                         </div>
@@ -573,7 +578,7 @@ export default function ProductCost() {
                             </div>
                         </div>
                         <div className="p-6 border-t bg-white flex justify-end">
-                            <button onClick={() => setIsGuideOpen(false)} className="px-8 py-3 bg-[#111f42] text-white rounded-xl font-black text-[10px] uppercase shadow-lg hover:brightness-110 transition-all">ปิดคู่มือ</button>
+                            <button onClick={() => setIsGuideOpen(false)} className="py-3 bg-[#111f42] text-white rounded-xl font-black text-[10px] uppercase shadow-lg hover:brightness-110 transition-all">ปิดคู่มือ</button>
                         </div>
                     </div>
                 </div>

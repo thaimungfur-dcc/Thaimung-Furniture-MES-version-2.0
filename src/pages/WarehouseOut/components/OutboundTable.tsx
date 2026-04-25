@@ -47,7 +47,7 @@ export default function OutboundTable({ data, onEdit, onConfirm, onCancel }: Out
         {
             accessorKey: 'qty',
             header: 'QTY',
-            cell: ({ row }) => <div className="text-right font-black text-[#E3624A] text-[12px] font-mono">-{(Number(row.getValue('qty')) || 0).toLocaleString()}</div>
+            cell: ({ row }) => <div className="text-right font-black text-[#E3624A] text-[12px] font-mono">-{(Number(row.getValue('qty')) || 0)?.toLocaleString()}</div>
         },
         {
             id: 'warehouse',

@@ -115,7 +115,7 @@ export default function PurchaseNC() {
     if (!dateString) return '-';
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = date.toLocaleString('en-US', { month: 'short' });
+    const month = date?.toLocaleString('en-US', { month: 'short' });
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
@@ -200,7 +200,7 @@ export default function PurchaseNC() {
   };
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
       <style>{`
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .kanban-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
@@ -295,7 +295,7 @@ export default function PurchaseNC() {
               </div>
               <div className="space-y-4">
                 {scarData.slice(0, 5).map((item, i) => (
-                  <div key={i} className="flex justify-between items-center border-b border-slate-100 pb-4 last:border-0 last:pb-0">
+                  <div key={i} className="flex justify-between items-center border-b border-slate-100 last:border-0 last:pb-0">
                     <div className="flex flex-col">
                       <span className="font-bold text-[#111f42] text-xs">{item.id} - {item.vendor}</span>
                       <span className="text-slate-400 text-[10px]">{formatDate(item.date)}</span>
@@ -356,7 +356,7 @@ export default function PurchaseNC() {
               </div>
               <button 
                 onClick={() => openModal('create')} 
-                className="flex-shrink-0 bg-[#111f42] text-white text-[11px] font-bold px-6 py-2.5 rounded-lg uppercase tracking-widest flex items-center gap-2 shadow-md hover:opacity-90 transition-all"
+                className="flex-shrink-0 bg-[#111f42] text-white text-[11px] font-bold py-2.5 rounded-lg uppercase tracking-widest flex items-center gap-2 shadow-md hover:opacity-90 transition-all"
               >
                 <Plus size={16} strokeWidth={3} className="text-[#E3624A]" /> ISSUE SCAR
               </button>
@@ -398,7 +398,7 @@ export default function PurchaseNC() {
           <>
             <div className="fixed inset-0 bg-[#111f42]/40 backdrop-blur-sm z-[60] animate-in fade-in duration-200 no-print" onClick={() => setIsGuideOpen(false)} />
             <div className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[70] flex flex-col animate-in slide-in-from-right duration-300 no-print">
-              <div className="px-6 py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
+              <div className="py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
                 <h2 className="text-base font-semibold uppercase tracking-widest flex items-center gap-2">
                   <HelpCircle size={20} className="text-[#E3624A]" /> คู่มือระบบ SCAR
                 </h2>
@@ -427,7 +427,7 @@ export default function PurchaseNC() {
                  </div>
               </div>
               <div className="p-4 border-t flex justify-end bg-slate-50">
-                <button onClick={() => setIsGuideOpen(false)} className="bg-[#111f42] text-white px-8 py-2.5 rounded-xl font-bold text-[12px] uppercase tracking-wider shadow-md">
+                <button onClick={() => setIsGuideOpen(false)} className="bg-[#111f42] text-white py-2.5 rounded-xl font-bold text-[12px] uppercase tracking-wider shadow-md">
                   เข้าใจแล้ว
                 </button>
               </div>

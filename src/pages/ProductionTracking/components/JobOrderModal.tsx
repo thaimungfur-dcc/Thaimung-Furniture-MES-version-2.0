@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Save, Hash, Package, User, Calendar, AlertCircle, Activity } from 'lucide-react';
 import { JobOrder, ProductionStage } from '../types';
+import { DraggableWrapper } from "../../../components/shared/DraggableWrapper";
 
 interface JobOrderModalProps {
   isOpen: boolean;
@@ -30,10 +31,14 @@ export default function JobOrderModal({ isOpen, onClose, onSave, editingOrder }:
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#111f42]/60 backdrop-blur-md" onClick={onClose} />
+      
+          <DraggableWrapper>
+                <div className="absolute inset-0 bg-[#111f42]/60 backdrop-blur-md" onClick={onClose} />
+              </DraggableWrapper>
+
       
       <div className="relative w-full max-w-2xl bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
-        <div className="bg-[#111f42] p-8 flex items-center justify-between">
+        <div className="bg-[#111f42] p-5 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-[#ab8a3b] rounded-2xl flex items-center justify-center text-white shadow-lg">
               {editingOrder ? <Package size={24} /> : <Hash size={24} />}
@@ -50,7 +55,7 @@ export default function JobOrderModal({ isOpen, onClose, onSave, editingOrder }:
           </button>
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); onSave(formData); }} className="p-8 space-y-6 overflow-y-auto max-h-[70vh] custom-scrollbar">
+        <form onSubmit={(e) => { e.preventDefault(); onSave(formData); }} className="p-5 space-y-4 overflow-y-auto max-h-[70vh] custom-scrollbar">
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
@@ -170,14 +175,14 @@ export default function JobOrderModal({ isOpen, onClose, onSave, editingOrder }:
           </div>
         </form>
 
-        <div className="p-8 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-4">
-          <button onClick={onClose} className="px-8 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-[#111f42] transition-colors">
+        <div className="p-5 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-4">
+          <button onClick={onClose} className="px-5 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-[#111f42] transition-colors">
             Cancel
           </button>
           <button 
             type="submit"
             onClick={(e) => { e.preventDefault(); onSave(formData); }}
-            className="px-10 py-3 bg-[#111f42] text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-blue-900/10 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+            className="px-6 py-3 bg-[#111f42] text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-blue-900/10 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
           >
             <Save size={16} className="text-[#ab8a3b]" />
             Save Job Order

@@ -60,7 +60,7 @@ export default function Watermark() {
   // Define who has permission to take clear screenshots (e.g., admin)
   // If role is not admin, they don't have permission
   const hasPermission = user.role?.toLowerCase() === 'admin';
-  const watermarkText = `${user.name} (${user.employeeId}) - ${new Date().toLocaleString('en-GB')}`;
+  const watermarkText = `${user.name} (${user.employeeId}) - ${new Date()?.toLocaleString('en-GB')}`;
 
   return (
     <>

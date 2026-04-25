@@ -83,11 +83,11 @@ export default function DataTable({
                 <td className="px-6 py-4">
                    <span className="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-[9px] font-black uppercase">{rec.taxMethod}</span>
                 </td>
-                <td className="px-6 py-4 font-mono font-bold text-right text-slate-600">฿{rec.baseAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                <td className="px-6 py-4 font-mono font-bold text-right text-slate-600">฿{rec.baseAmount?.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                 <td className={`px-6 py-4 font-mono font-black text-right ${rec.type === 'Sales' ? 'text-rose-500' : 'text-blue-500'}`}>
-                   {rec.vatAmount > 0 ? `฿${rec.vatAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}` : '-'}
+                   {rec.vatAmount > 0 ? `฿${rec.vatAmount?.toLocaleString(undefined, {minimumFractionDigits: 2})}` : '-'}
                 </td>
-                <td className="px-6 py-4 font-mono font-black text-right text-[#1e293b]">฿{rec.totalAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                <td className="px-6 py-4 font-mono font-black text-right text-[#1e293b]">฿{rec.totalAmount?.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
                 <td className="px-6 py-4 text-center">
                   <span className={`px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider border
                     ${rec.status === 'Filed' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 

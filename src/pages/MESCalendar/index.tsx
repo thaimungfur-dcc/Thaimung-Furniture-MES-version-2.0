@@ -244,7 +244,7 @@ export default function MESCalendar() {
               <div className="flex items-center gap-1">
                 <button onClick={handlePrevMonth} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600"><ChevronLeft size={20}/></button>
                 <div className="px-4 text-[18px] font-black text-[#111f42] uppercase tracking-widest min-w-[180px] text-center">
-                  {currentDate.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+                  {currentDate?.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
                 </div>
                 <button onClick={handleNextMonth} className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-600"><ChevronRight size={20}/></button>
               </div>

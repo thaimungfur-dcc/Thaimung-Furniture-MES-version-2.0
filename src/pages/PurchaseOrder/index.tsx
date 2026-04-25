@@ -33,7 +33,7 @@ const formatDate = (dateString: string) => {
 
 // Helper: Format Currency
 const formatCurrency = (val: number) => {
-  return '฿' + (Number(val) || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return '฿' + (Number(val) || 0)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
 // Helper: Get consistent status badge styles for List View
@@ -239,7 +239,7 @@ export default function PurchaseOrder() {
   };
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
       <style>{`
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .kanban-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
@@ -412,7 +412,7 @@ export default function PurchaseOrder() {
           <>
             <div className="fixed inset-0 bg-[#111f42]/40 backdrop-blur-sm z-[60] animate-in fade-in duration-200 no-print" onClick={() => setIsGuideOpen(false)} />
             <div className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[70] flex flex-col animate-in slide-in-from-right duration-300 no-print">
-              <div className="px-6 py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
+              <div className="py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
                 <h2 className="text-base font-semibold uppercase tracking-widest flex items-center gap-2">
                   <HelpCircle size={20} className="text-[#E3624A]" /> คู่มือการใช้งาน (PO)
                 </h2>
@@ -441,7 +441,7 @@ export default function PurchaseOrder() {
                  </div>
               </div>
               <div className="p-4 border-t flex justify-end bg-slate-50">
-                <button onClick={() => setIsGuideOpen(false)} className="bg-[#111f42] text-white px-8 py-2.5 rounded-xl font-bold text-[12px] uppercase tracking-wider shadow-md">
+                <button onClick={() => setIsGuideOpen(false)} className="bg-[#111f42] text-white py-2.5 rounded-xl font-bold text-[12px] uppercase tracking-wider shadow-md">
                   เข้าใจแล้ว
                 </button>
               </div>

@@ -153,7 +153,7 @@ export default function AccountPayable() {
   };
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translate(-50%, 5px); } to { opacity: 1; transform: translate(-50%, 0); } }
         .animate-fade-up { animation: fadeUp 0.2s ease-out forwards; }
@@ -225,21 +225,21 @@ export default function AccountPayable() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
         <KpiCard 
           title="Total Payable"
-          value={`฿${totalPayable.toLocaleString()}`}
+          value={`฿${totalPayable?.toLocaleString()}`}
           icon={Database}
           color="#111f42"
           subValue="Current outstanding balance"
         />
         <KpiCard 
           title="Total Overdue"
-          value={`฿${totalOverdueAmount.toLocaleString()}`}
+          value={`฿${totalOverdueAmount?.toLocaleString()}`}
           icon={AlertCircle}
           color="#ce5a43"
           subValue="Past due payment amount"
         />
         <KpiCard 
           title="Disputed/Exception"
-          value={`฿${totalDisputedAmount.toLocaleString()}`}
+          value={`฿${totalDisputedAmount?.toLocaleString()}`}
           icon={AlertCircle}
           color="#933b5b"
           subValue="Bills with active issues"

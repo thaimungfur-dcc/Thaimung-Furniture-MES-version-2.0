@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { DraggableWrapper } from "./shared/DraggableWrapper";
 
 export default function SecurityGuard({ children }: { children: React.ReactNode }) {
   const [isBlurred, setIsBlurred] = useState(false);
@@ -39,9 +40,13 @@ export default function SecurityGuard({ children }: { children: React.ReactNode 
     >
       {isBlurred && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/50">
-          <p className="text-2xl font-bold text-red-600 drop-shadow-md">
-            Screen capture is disabled for security reasons.
-          </p>
+          
+                  <DraggableWrapper>
+                        <p className="text-2xl font-bold text-red-600 drop-shadow-md">
+                              Screen capture is disabled for security reasons.
+                            </p>
+                      </DraggableWrapper>
+
         </div>
       )}
       {children}

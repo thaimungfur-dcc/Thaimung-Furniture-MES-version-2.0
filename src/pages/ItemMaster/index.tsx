@@ -154,12 +154,12 @@ export default function ItemMasterApp() {
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
                 .minimal-th {
-                    font-size: 12px !important; text-transform: uppercase; letter-spacing: 0.05em; color: #FFFFFF; 
+                    font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #FFFFFF; 
                     padding: 16px 16px; font-weight: 800; background-color: #111f42; border-bottom: 2px solid #ab8a3b;
                     white-space: nowrap; cursor: pointer; transition: background-color 0.2s;
                 }
                 .minimal-th:hover { background-color: #1e346b; }
-                .minimal-td { padding: 8px 16px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
+                .minimal-td { padding: 8px 16px; vertical-align: middle; color: #111f42; font-size: 12px; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
                 tr:hover .minimal-td { background-color: rgba(171, 138, 59, 0.05); }
 
                 .filter-btn { border-radius: 0.5rem; font-size: 0.75rem; font-weight: 700; transition: all 0.3s; white-space: nowrap; border: 1px solid transparent; }

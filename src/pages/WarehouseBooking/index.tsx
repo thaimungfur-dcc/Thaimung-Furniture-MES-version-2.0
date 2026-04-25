@@ -13,9 +13,10 @@ import TagPrintModal from './components/TagPrintModal';
 import ReportPreviewModal from './components/ReportPreviewModal';
 import DetailPreviewModal from './components/DetailPreviewModal';
 import GuideDrawer from './components/GuideDrawer';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 // --- Helper Functions ---
-const formatNum = (v: any) => (Number(v) || 0).toLocaleString();
+const formatNum = (v: any) => (Number(v) || 0)?.toLocaleString();
 
 export default function WarehouseBooking() {
     // --- Constants ---
@@ -236,12 +237,12 @@ export default function WarehouseBooking() {
                 .master-custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
                 
                 .minimal-th { 
-                    font-size: 11px !important; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; 
-                    padding: 14px 16px; font-weight: 800; background-color: #111f42 !important; 
+                    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; 
+                    padding: 14px 16px; font-weight: 800; background-color: #111f42; 
                     white-space: nowrap; cursor: pointer; transition: background-color 0.2s;
                 }
-                .minimal-th:hover { background-color: #1e346b !important; }
-                .minimal-td { padding: 12px 16px; vertical-align: middle; color: #111f42; font-size: 12.5px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
+                .minimal-th:hover { background-color: #1e346b; }
+                .minimal-td { padding: 12px 16px; vertical-align: middle; color: #111f42; font-size: 12.5px; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
                 tr:hover .minimal-td { background-color: rgba(171, 138, 59, 0.05); }
                 
                 .badge { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 700; font-size: 10px; border: 1px solid transparent; text-transform: uppercase; }
@@ -253,7 +254,7 @@ export default function WarehouseBooking() {
                 .input-primary:focus { border-color: #111f42; box-shadow: 0 0 0 3px rgba(17,31,66,0.08); }
             `}</style>
 
-            <div className="sys-page-layout flex flex-col h-full overflow-hidden space-y-6 flex-1 bg-[#F9F7F6] pt-2">
+            <div className="flex flex-col h-full overflow-hidden space-y-6 flex-1">
                 {/* Header */}
                 <PageHeader 
                     title="WAREHOUSE BOOKING" 
@@ -276,7 +277,7 @@ export default function WarehouseBooking() {
                     }
                 />
 
-            <main className="flex-1 relative z-10 pt-2 pb-8 flex flex-col gap-6 no-print">
+            <main className="flex-1 relative z-10 pb-8 flex flex-col gap-6 no-print">
                 {activeTab === 'pending' ? (
                     <div className="flex flex-col gap-6 animate-fade-in-up flex-1">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 shrink-0 mt-4">
@@ -288,7 +289,7 @@ export default function WarehouseBooking() {
 
                         <div className="bg-white border border-slate-200 flex flex-col rounded-2xl shadow-sm flex-1 min-h-[550px] relative overflow-hidden">
                             {/* Toolbar */}
-                            <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
+                            <div className="border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
                                 <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
                                     <div className="flex bg-white p-1 rounded-lg border border-slate-200 shadow-sm shrink-0">
                                         {statuses.map(s => (
@@ -366,7 +367,7 @@ export default function WarehouseBooking() {
                     </div>
                 ) : (
                     <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] animate-fade-in-up rounded-2xl shadow-sm relative mt-4 overflow-hidden">
-                        <div className="px-6 py-5 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
+                        <div className="py-5 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
                             <div className="flex flex-1 items-center gap-4 w-full overflow-x-auto no-scrollbar">
                                 <div className="flex items-center gap-3 mr-2 shrink-0">
                                     <div className="w-1.5 h-5 bg-[#111f42] rounded-full shadow-sm"></div>
@@ -380,10 +381,10 @@ export default function WarehouseBooking() {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono">To</label>
                                     <input type="date" value={reportDateRange.end} onChange={(e) => setReportDateRange({...reportDateRange, end: e.target.value})} className="input-primary w-40 h-9 py-0 font-bold" />
                                 </div>
-                                <button onClick={generateReport} className="px-6 py-2 bg-[#111f42] text-white rounded-lg font-black text-[10px] shadow-md flex items-center gap-2 uppercase tracking-widest hover:brightness-110 transition-all font-mono shrink-0">GENERATE</button>
+                                <button onClick={generateReport} className="py-2 bg-[#111f42] text-white rounded-lg font-black text-[10px] shadow-md flex items-center gap-2 uppercase tracking-widest hover:brightness-110 transition-all font-mono shrink-0">GENERATE</button>
                             </div>
                             {reportData.length > 0 && (
-                                <button onClick={() => setShowReportPreview(true)} className="px-6 py-2 bg-[#111f42] text-white text-[10px] font-black rounded-lg shadow-md uppercase transition-all flex items-center gap-2 tracking-widest font-mono shrink-0 hover:bg-[#0a1229]">
+                                <button onClick={() => setShowReportPreview(true)} className="py-2 bg-[#111f42] text-white text-[10px] font-black rounded-lg shadow-md uppercase transition-all flex items-center gap-2 tracking-widest font-mono shrink-0 hover:bg-[#0a1229]">
                                     <Printer size={14} /> PREVIEW & PRINT
                                 </button>
                             )}
@@ -470,7 +471,11 @@ export default function WarehouseBooking() {
             
             {loading && (
                 <div className="fixed inset-0 z-[100000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in font-mono">
-                    <Loader2 className="animate-spin text-[#111f42]" size={48} />
+                    
+                        <DraggableWrapper>
+                              <Loader2 className="animate-spin text-[#111f42]" size={48} />
+                            </DraggableWrapper>
+
                     <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Inventory...</p>
                 </div>
             )}

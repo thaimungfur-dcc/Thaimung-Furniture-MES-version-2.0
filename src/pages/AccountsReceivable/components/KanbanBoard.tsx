@@ -50,7 +50,7 @@ export default function KanbanBoard({ invoices, updateStatus, setPaymentModal }:
                     )}
 
                     <div className="border-t border-black/5 pt-3 flex justify-between items-center mt-3">
-                      <span className="text-xs font-black text-[#223149]">฿{inv.balance.toLocaleString()}</span>
+                      <span className="text-xs font-black text-[#223149]">฿{inv.balance?.toLocaleString()}</span>
                       
                       {col.id === 'Pending Billing' && (
                         <button onClick={(e) => { e.stopPropagation(); updateStatus(inv.id, 'Billed'); }} className="bg-white/80 hover:bg-white text-[#496ca8] text-[9px] px-3 py-1.5 rounded-lg font-bold uppercase tracking-widest transition-colors border border-[#496ca8]/20">Place Bill</button>

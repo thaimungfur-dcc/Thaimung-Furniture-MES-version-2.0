@@ -62,7 +62,7 @@ export default function PettyCash() {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 text-[12px] bg-[#F9F7F6]">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 transition-colors duration-500 text-[12px]">
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translate(-50%, 5px); } to { opacity: 1; transform: translate(-50%, 0); } }
         .animate-fade-up { animation: fadeUp 0.2s ease-out forwards; }

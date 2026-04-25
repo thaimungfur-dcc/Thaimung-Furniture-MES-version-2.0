@@ -31,24 +31,24 @@ export default function InventoryListTable({ data, getStatusClass }: InventoryLi
     {
       accessorKey: 'onhand',
       header: 'ONHAND',
-      cell: ({ row }) => <div className="text-right font-mono font-black text-slate-500">{Number(row.getValue('onhand')).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-mono font-black text-slate-500">{Number(row.getValue('onhand'))?.toLocaleString()}</div>
     },
     {
       accessorKey: 'booking',
       header: 'BOOKING (-)',
-      cell: ({ row }) => <div className="text-right font-mono font-bold text-[#E3624A]">{Number(row.getValue('booking')).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-mono font-bold text-[#E3624A]">{Number(row.getValue('booking'))?.toLocaleString()}</div>
     },
     {
       accessorKey: 'available',
       header: 'AVAILABLE',
-      cell: ({ row }) => <div className="text-right font-mono font-semibold text-[#2e4756]">{Number(row.getValue('available')).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-mono font-semibold text-[#2e4756]">{Number(row.getValue('available'))?.toLocaleString()}</div>
     },
     {
       accessorKey: 'planIn',
       header: 'PLAN IN (+)',
       cell: ({ row }) => {
         const planIn = Number(row.getValue('planIn'));
-        return <div className="text-right font-mono font-black text-[#10b981]">{planIn > 0 ? `+${planIn.toLocaleString()}` : '-'}</div>;
+        return <div className="text-right font-mono font-black text-[#10b981]">{planIn > 0 ? `+${planIn?.toLocaleString()}` : '-'}</div>;
       }
     },
     {
@@ -56,13 +56,13 @@ export default function InventoryListTable({ data, getStatusClass }: InventoryLi
       header: 'PLAN OUT (-)',
       cell: ({ row }) => {
         const planOut = Number(row.getValue('planOut'));
-        return <div className="text-right font-mono font-black text-[#E3624A]">{planOut > 0 ? `-${planOut.toLocaleString()}` : '-'}</div>;
+        return <div className="text-right font-mono font-black text-[#E3624A]">{planOut > 0 ? `-${planOut?.toLocaleString()}` : '-'}</div>;
       }
     },
     {
       accessorKey: 'estQty',
       header: 'EST. BALANCE',
-      cell: ({ row }) => <div className="text-right font-mono font-black text-[#ab8a3b] text-[14px]">{Number(row.getValue('estQty')).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-mono font-black text-[#ab8a3b] text-[14px]">{Number(row.getValue('estQty'))?.toLocaleString()}</div>
     },
     {
       accessorKey: 'avgUsage',
@@ -72,7 +72,7 @@ export default function InventoryListTable({ data, getStatusClass }: InventoryLi
     {
       accessorKey: 'minPoint',
       header: 'MIN POINT',
-      cell: ({ row }) => <div className="text-center font-mono font-black text-[#111f42]">{Number(row.getValue('minPoint')).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-center font-mono font-black text-[#111f42]">{Number(row.getValue('minPoint'))?.toLocaleString()}</div>
     },
     {
       accessorKey: 'status',

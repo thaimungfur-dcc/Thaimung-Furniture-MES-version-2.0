@@ -244,7 +244,7 @@ export default function UserPermissions() {
         {activeTab === 'step2' && (
           <Step2Operational 
             viewMode={viewMode}
-            users={users}
+            users={users || []}
             handleEditUser={handleEditUser}
             expandedModules={expandedModules}
             toggleExpand={toggleExpand}

@@ -25,7 +25,7 @@ const VatCompositionChart: React.FC<VatCompositionChartProps> = ({ totalSalesVat
         >
           <div className="w-36 h-36 bg-white rounded-full flex flex-col items-center justify-center shadow-inner z-10">
             <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Total Volume</p>
-            <p className="text-xl font-bold text-[#111f42]">฿{totalVatVolume.toLocaleString()}</p>
+            <p className="text-xl font-bold text-[#111f42]">฿{totalVatVolume?.toLocaleString()}</p>
           </div>
         </div>
 

@@ -1,12 +1,17 @@
 import React from 'react';
 import { HelpCircle, X, RefreshCw, Lock, Kanban } from 'lucide-react';
+import { DraggableWrapper } from "../../../components/shared/DraggableWrapper";
 
 export default function UserGuideDrawer({ isGuideOpen, setIsGuideOpen }: any) {
   if (!isGuideOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[60] flex justify-end no-print">
-      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsGuideOpen(false)}></div>
+      
+          <DraggableWrapper>
+                <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsGuideOpen(false)}></div>
+              </DraggableWrapper>
+
       <div className="relative w-full max-w-md h-full bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 border-l border-white/20">
         <div className="px-6 py-5 flex justify-between items-center bg-[#1e293b] text-white shrink-0 shadow-md">
           <h2 className="text-base font-bold uppercase tracking-widest flex items-center gap-2"><HelpCircle size={20} className="text-[#df8a5d]" /> คู่มือการใช้งาน (TAX USER GUIDE)</h2>

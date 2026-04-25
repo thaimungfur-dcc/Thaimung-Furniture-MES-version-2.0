@@ -2,10 +2,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-en: "JetBrains Mono", monospace;
-  --font-th: "Noto Sans Thai", sans-serif;
-  --font-sans: "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Inter", "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Noto Sans Thai", ui-monospace, SFMono-Regular, monospace;
   
   --color-master-blue: #111f42;
   --color-master-gold: #ab8a3b;
@@ -20,7 +18,7 @@
   }
 
   body {
-    @apply bg-[#F9F7F6] text-master-blue font-sans antialiased;
+    @apply bg-[#F9F7F6] text-master-blue font-mono antialiased;
   }
 }
 

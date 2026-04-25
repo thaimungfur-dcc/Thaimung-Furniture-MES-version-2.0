@@ -9,6 +9,7 @@ import InventoryTable from './InventoryTable';
 import GuideDrawer from './GuideDrawer';
 
 import { PageHeader } from '../../components/shared/PageHeader';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 export default function InventoryPlanning() {
     // --- State Management ---
@@ -84,9 +85,9 @@ export default function InventoryPlanning() {
 
     const stats = useMemo(() => {
         return {
-            totalOnhand: inventoryItems.reduce((s, i) => s + i.onhand, 0).toLocaleString(),
-            totalAvailable: inventoryItems.reduce((s, i) => s + i.available, 0).toLocaleString(),
-            planIn: inventoryItems.reduce((s, i) => s + i.planIn, 0).toLocaleString(),
+            totalOnhand: inventoryItems.reduce((s, i) => s + i.onhand, 0)?.toLocaleString(),
+            totalAvailable: inventoryItems.reduce((s, i) => s + i.available, 0)?.toLocaleString(),
+            planIn: inventoryItems.reduce((s, i) => s + i.planIn, 0)?.toLocaleString(),
             lowStockCount: inventoryItems.filter(i => ['Low Stock', 'Critical', 'Out of Stock'].includes(i.status)).length
         };
     }, [inventoryItems]);
@@ -111,19 +112,19 @@ export default function InventoryPlanning() {
             <style>{`
                 /* Navy Header with Gold Bottom Border */
                 .minimal-th { 
-                    font-size: 11px !important; 
+                    font-size: 11px; 
                     text-transform: uppercase; 
                     letter-spacing: 0.1em; 
                     color: #FFFFFF; 
                     padding: 14px 14px; 
                     font-weight: 800; 
-                    background-color: #111f42 !important; 
-                    border-bottom: 2.5px solid #111f42 !important; 
+                    background-color: #111f42; 
+                    border-bottom: 2.5px solid #111f42; 
                     white-space: nowrap; 
                     user-select: none;
                 }
                 
-                .minimal-td { padding: 10px 14px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
+                .minimal-td { padding: 10px 14px; vertical-align: middle; color: #111f42; font-size: 12px; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
                 tr:hover .minimal-td { background-color: rgba(171, 138, 59, 0.05); }
                 
                 .badge { display: inline-flex; align-items: center; padding: 0.15rem 0.6rem; border-radius: 6px; font-weight: 700; font-size: 10px; border: 1px solid transparent; text-transform: uppercase; }
@@ -142,12 +143,12 @@ export default function InventoryPlanning() {
                 }
 
                 /* Highlight Column Styles for Body Cells */
-                .cell-available { background-color: rgba(46, 71, 86, 0.06) !important; }
-                .cell-plan-in { background-color: rgba(137, 136, 97, 0.06) !important; }
-                .cell-plan-out { background-color: rgba(217, 144, 54, 0.06) !important; }
+                .cell-available { background-color: rgba(46, 71, 86, 0.06); }
+                .cell-plan-in { background-color: rgba(137, 136, 97, 0.06); }
+                .cell-plan-out { background-color: rgba(217, 144, 54, 0.06); }
             `}</style>
 
-            <div className="w-full space-y-4 relative flex-1 flex flex-col">
+            <div className="flex flex-col space-y-4 w-full relative flex-1">
                 {/* Header Section */}
                 <PageHeader
                     Icon={Boxes}
@@ -212,7 +213,11 @@ export default function InventoryPlanning() {
             {/* Loading Overlay */}
             {loading && (
                 <div className="fixed inset-0 z-[20000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
-                    <Loader2 className="animate-spin text-[#111f42]" size={40} />
+                    
+                    <DraggableWrapper>
+                          <Loader2 className="animate-spin text-[#111f42]" size={40} />
+                        </DraggableWrapper>
+
                     <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[9px] animate-pulse font-mono">Syncing Planning Data...</p>
                 </div>
             )}

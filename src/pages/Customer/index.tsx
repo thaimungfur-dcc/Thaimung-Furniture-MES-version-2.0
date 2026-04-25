@@ -213,7 +213,7 @@ export default function CustomerManagement() {
   };
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 bg-[#F9F7F6]">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 transition-colors duration-500">
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -316,7 +316,7 @@ export default function CustomerManagement() {
                 </button>
                 <button 
                   onClick={() => openModal('create')} 
-                  className="flex justify-center items-center gap-2 px-6 py-2.5 bg-[#111f42] text-white rounded-none font-black uppercase tracking-widest text-[11px] shadow-md hover:bg-[#1a2d5c] transition-all"
+                  className="flex justify-center items-center gap-2 py-2.5 bg-[#111f42] text-white rounded-none font-black uppercase tracking-widest text-[11px] shadow-md hover:bg-[#1a2d5c] transition-all"
                 >
                   <Plus size={16} className="text-[#ab8a3b]" strokeWidth={3} /> NEW CUSTOMER
                 </button>
@@ -374,7 +374,7 @@ export default function CustomerManagement() {
           <>
             <div className="fixed inset-0 bg-[#111f42]/40 backdrop-blur-sm z-[60] animate-in fade-in duration-200 no-print" onClick={() => setIsGuideOpen(false)} />
             <div className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[70] flex flex-col animate-in slide-in-from-right duration-300 no-print">
-              <div className="px-6 py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
+              <div className="py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
                 <h2 className="text-base font-black uppercase tracking-[0.2em] flex items-center gap-3"><HelpCircle size={20} className="text-[#E3624A]" /> CUSTOMER GUIDE</h2>
                 <button onClick={() => setIsGuideOpen(false)} className="hover:bg-white/20 p-2 rounded-none border border-white/10 transition-colors"><X size={20} /></button>
               </div>

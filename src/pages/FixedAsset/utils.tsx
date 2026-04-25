@@ -6,7 +6,7 @@ export const formatDate = (dateString: string) => {
 
 export const formatAmount = (amount: number) => {
   if (amount === 0 || !amount) return '-';
-  return amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return amount?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
 export const getStatusColor = (status: string) => {

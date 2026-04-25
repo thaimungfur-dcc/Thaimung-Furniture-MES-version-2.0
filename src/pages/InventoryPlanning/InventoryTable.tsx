@@ -80,25 +80,25 @@ export default function InventoryTable({
                                         </div>
                                     </div>
                                 </td>
-                                <td className="minimal-td text-right font-mono font-black text-slate-500">{item.onhand.toLocaleString()}</td>
-                                <td className="minimal-td text-right font-mono font-bold text-[#E3624A]">{item.booking.toLocaleString()}</td>
+                                <td className="minimal-td text-right font-mono font-black text-slate-500">{item.onhand?.toLocaleString()}</td>
+                                <td className="minimal-td text-right font-mono font-bold text-[#E3624A]">{item.booking?.toLocaleString()}</td>
                                 
                                 <td className="minimal-td text-right font-mono font-semibold text-[#2e4756] cell-available">
-                                    {item.available.toLocaleString()}
+                                    {item.available?.toLocaleString()}
                                 </td>
                                 
                                 <td className="minimal-td text-right font-mono font-black text-[#10b981] cell-plan-in">
-                                    {item.planIn > 0 ? `+${item.planIn.toLocaleString()}` : '-'}
+                                    {item.planIn > 0 ? `+${item.planIn?.toLocaleString()}` : '-'}
                                 </td>
                                 
                                 <td className="minimal-td text-right font-mono font-black text-[#E3624A] cell-plan-out">
-                                    {item.planOut > 0 ? `-${item.planOut.toLocaleString()}` : '-'}
+                                    {item.planOut > 0 ? `-${item.planOut?.toLocaleString()}` : '-'}
                                 </td>
                                 
-                                <td className="minimal-td text-right font-mono font-black text-[#ab8a3b] bg-amber-50/10 text-[14px]">{item.estQty.toLocaleString()}</td>
+                                <td className="minimal-td text-right font-mono font-black text-[#ab8a3b] bg-amber-50/10 text-[14px]">{item.estQty?.toLocaleString()}</td>
                                 <td className="minimal-td text-center font-mono font-bold text-slate-400">{item.avgUsage}</td>
                                 <td className="minimal-td text-center font-mono font-black text-[#111f42]">
-                                    {item.minPoint.toLocaleString()}
+                                    {item.minPoint?.toLocaleString()}
                                 </td>
                                 <td className="minimal-td text-center">
                                     <span className={`badge ${getStatusClass(item.status)}`}>{item.status}</span>

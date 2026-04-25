@@ -15,6 +15,7 @@ import ProductListView from './components/ProductListView';
 import ProductDetailView from './components/ProductDetailView';
 import ActionModal from './components/ActionModal';
 import GuideDrawer from './components/GuideDrawer';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 export default function InspectionStandards() {
     // --- State ---
@@ -259,10 +260,10 @@ export default function InspectionStandards() {
     };
 
     return (
-        <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up bg-[#F9F7F6]">
+        <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
             <style>{`
                 .minimal-th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; padding: 12px 14px; font-weight: 800; background-color: #111f42; white-space: nowrap; }
-                .minimal-td { padding: 10px 14px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid #F1F5F9; }
+                .minimal-td { padding: 10px 14px; vertical-align: middle; color: #111f42; font-size: 12px; font-weight: 500; border-bottom: 1px solid #F1F5F9; }
                 
                 .tab-btn { padding: 0.75rem 1.25rem; font-size: 0.7rem; font-weight: 800; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 0.5rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; }
                 .tab-btn.active { color: #111f42; border-color: #111f42; background-color: rgba(17, 31, 66, 0.05); }
@@ -376,50 +377,54 @@ export default function InspectionStandards() {
                 {/* Config Modal */}
                 {showConfigModal && (
                     <div className="modal-overlay" onClick={() => setShowConfigModal(false)}>
-                        <div className="modal-box w-full max-w-md border-t-[6px] border-[#111f42] rounded-2xl animate-fade-in-up" onClick={e => e.stopPropagation()}>
-                            <div className="p-5 bg-[#111f42] flex justify-between items-center text-white">
-                                <h3 className="text-lg font-black uppercase tracking-tight flex items-center gap-2"><Settings size={20} className="text-slate-400"/> Process Config</h3>
-                                <button onClick={() => setShowConfigModal(false)} className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"><X size={20} /></button>
-                            </div>
-                            <div className="p-6 bg-[#F9F7F6] space-y-4">
-                                <div>
-                                    <label className="block text-[10px] font-black text-slate-400 uppercase mb-1 font-mono">Category Type</label>
-                                    <select 
-                                        value={configCategory} 
-                                        onChange={(e) => setConfigCategory(e.target.value as any)} 
-                                        className="input-primary font-bold bg-white"
-                                    >
-                                        {Object.keys(categorySteps).map(k => <option key={k} value={k}>{k}</option>)}
-                                    </select>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="block text-[10px] font-black text-slate-400 uppercase mb-1 font-mono">Current Steps</label>
-                                    <div className="flex flex-wrap gap-2">
-                                        {categorySteps[configCategory].map(proc => (
-                                            <div key={proc} className="bg-white border border-slate-200 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
-                                                <span className="text-[11px] font-bold text-[#111f42]">{proc}</span>
-                                                <button onClick={() => removeProcess(proc)} className="text-slate-300 hover:text-rose-500 transition"><X size={12} /></button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="pt-2">
-                                    <label className="block text-[10px] font-black text-slate-400 uppercase mb-1 font-mono">Add New Step</label>
-                                    <div className="flex gap-2">
-                                        <input 
-                                            value={newProcessName} 
-                                            onChange={(e) => setNewProcessName(e.target.value)} 
-                                            className="input-primary flex-1" 
-                                            placeholder="Step name..." 
-                                        />
-                                        <button onClick={addProcess} className="bg-[#111f42] text-white px-4 rounded-lg font-black text-[10px] uppercase shadow-sm"><Plus size={16}/></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-4 border-t bg-white flex justify-end rounded-b-2xl">
-                                <button onClick={() => setShowConfigModal(false)} className="bg-[#111f42] text-white px-8 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-md">Close</button>
-                            </div>
-                        </div>
+                        
+                        <DraggableWrapper>
+                              <div className="modal-box w-full max-w-md border-t-[6px] border-[#111f42] rounded-2xl animate-fade-in-up" onClick={e => e.stopPropagation()}>
+                                                    <div className="p-5 bg-[#111f42] flex justify-between items-center text-white">
+                                                        <h3 className="text-lg font-black uppercase tracking-tight flex items-center gap-2"><Settings size={20} className="text-slate-400"/> Process Config</h3>
+                                                        <button onClick={() => setShowConfigModal(false)} className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"><X size={20} /></button>
+                                                    </div>
+                                                    <div className="p-6 space-y-4">
+                                                        <div>
+                                                            <label className="block text-[10px] font-black text-slate-400 uppercase mb-1 font-mono">Category Type</label>
+                                                            <select 
+                                                                value={configCategory} 
+                                                                onChange={(e) => setConfigCategory(e.target.value as any)} 
+                                                                className="input-primary font-bold bg-white"
+                                                            >
+                                                                {Object.keys(categorySteps).map(k => <option key={k} value={k}>{k}</option>)}
+                                                            </select>
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            <label className="block text-[10px] font-black text-slate-400 uppercase mb-1 font-mono">Current Steps</label>
+                                                            <div className="flex flex-wrap gap-2">
+                                                                {categorySteps[configCategory].map(proc => (
+                                                                    <div key={proc} className="bg-white border border-slate-200 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
+                                                                        <span className="text-[11px] font-bold text-[#111f42]">{proc}</span>
+                                                                        <button onClick={() => removeProcess(proc)} className="text-slate-300 hover:text-rose-500 transition"><X size={12} /></button>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                        <div className="">
+                                                            <label className="block text-[10px] font-black text-slate-400 uppercase mb-1 font-mono">Add New Step</label>
+                                                            <div className="flex gap-2">
+                                                                <input 
+                                                                    value={newProcessName} 
+                                                                    onChange={(e) => setNewProcessName(e.target.value)} 
+                                                                    className="input-primary flex-1" 
+                                                                    placeholder="Step name..." 
+                                                                />
+                                                                <button onClick={addProcess} className="bg-[#111f42] text-white rounded-lg font-black text-[10px] uppercase shadow-sm"><Plus size={16}/></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="p-4 border-t bg-white flex justify-end rounded-b-2xl">
+                                                        <button onClick={() => setShowConfigModal(false)} className="bg-[#111f42] text-white py-2 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-md">Close</button>
+                                                    </div>
+                                                </div>
+                            </DraggableWrapper>
+
                     </div>
                 )}
 

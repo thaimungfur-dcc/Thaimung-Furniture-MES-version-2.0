@@ -38,7 +38,7 @@ export default function DraggableModal({ isOpen, onClose, title, children }: Dra
               </div>
               
               {/* Content */}
-              <div className="p-6">
+              <div className="p-4 sm:p-5">
                 {children}
               </div>
             </motion.div>

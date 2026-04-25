@@ -16,7 +16,7 @@ export const InboundKpiSection: React.FC<InboundKpiSectionProps> = ({ stats }) =
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 shrink-0">
       <KpiCard 
         label="Received Month" 
-        value={stats.todayIn.toLocaleString()} 
+        value={stats.todayIn?.toLocaleString()} 
         color="#111f42" 
         icon={Calendar} 
         subValue="TOTAL UNITS" 
@@ -37,7 +37,7 @@ export const InboundKpiSection: React.FC<InboundKpiSectionProps> = ({ stats }) =
       />
       <KpiCard 
         label="Total Records" 
-        value={stats.completed.toLocaleString()} 
+        value={stats.completed?.toLocaleString()} 
         color="#10b981" 
         icon={CheckCircle} 
         subValue="LEDGER ENTRIES" 

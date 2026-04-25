@@ -41,7 +41,7 @@ export default function WarehouseOut() {
 
     // Data State
     const { items } = useMasterData();
-    const productMaster = items.map(item => ({ sku: item.itemCode, name: item.itemName }));
+    const productMaster = useMemo(() => (items || []).map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
     const { data: deliveryOrders, updateRow: updateDO, loading: doLoading } = useGoogleSheets<DeliveryOrder>('DeliveryOrders');
     const { data: mrpOrders, updateRow: updateMRP, loading: mrpLoading } = useGoogleSheets<MrpOrder>('MrpOrders');
     const { data: historyLogs, addRow: addLog, updateRow: updateLog, loading: logLoading } = useGoogleSheets<HistoryLog>('WarehouseOutLogs');
@@ -399,7 +399,7 @@ export default function WarehouseOut() {
     };
 
     return (
-        <div className="flex flex-col flex-1 pb-10 animate-fade-in-up">
+        <div className="flex flex-col w-full relative flex-1 animate-fade-in-up">
             <PageHeader
                 Icon={ArrowDownToLine}
                 title="WAREHOUSE OUT"
@@ -409,22 +409,24 @@ export default function WarehouseOut() {
             <main className="flex-1 relative z-10 pt-4 flex flex-col gap-6 no-print">
                 <OutboundKpiSection stats={stats} />
 
-                <div className="bg-white rounded-2xl border border-slate-200 flex flex-col min-h-[500px] shadow-sm overflow-hidden">
-                    <OutboundToolbar 
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                        activeWhTab={activeWhTab}
-                        setActiveWhTab={setActiveWhTab}
-                        statusFilter={statusFilter}
-                        setStatusFilter={setStatusFilter}
-                        searchQuery={searchQuery}
-                        setSearchQuery={setSearchQuery}
-                        onUploadClick={() => setShowUploadModal(true)}
-                        onOutboundClick={() => openOutboundModal(null, 'MANUAL')}
-                        warehouses={WAREHOUSES}
-                        statuses={STATUSES}
-                        getStatusCount={getStatusCount}
-                    />
+                <div className="flex flex-col relative gap-4 min-h-[500px]">
+                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden z-20">
+                        <OutboundToolbar 
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                            activeWhTab={activeWhTab}
+                            setActiveWhTab={setActiveWhTab}
+                            statusFilter={statusFilter}
+                            setStatusFilter={setStatusFilter}
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                            onUploadClick={() => setShowUploadModal(true)}
+                            onOutboundClick={() => openOutboundModal(null, 'MANUAL')}
+                            warehouses={WAREHOUSES}
+                            statuses={STATUSES}
+                            getStatusCount={getStatusCount}
+                        />
+                    </div>
 
                     <div className="flex-1 overflow-hidden">
                         {activeTab === 'all' && (
@@ -490,7 +492,7 @@ export default function WarehouseOut() {
                         {dropdownState.items.map(p => (
                             <div key={p.sku} 
                                 onMouseDown={() => selectGlobalProduct(p)}
-                                className="px-4 py-2.5 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 group flex flex-col gap-0.5">
+                                className="py-2.5 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 group flex flex-col gap-0.5">
                                 <div className="text-[11px] font-black text-[#111f42] group-hover:text-[#111f42] font-mono">{p.sku}</div>
                                 <div className="text-[10px] text-slate-500 font-medium truncate">{p.name}</div>
                             </div>

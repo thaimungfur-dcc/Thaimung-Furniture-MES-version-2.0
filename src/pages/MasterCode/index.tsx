@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { MasterItem } from './types';
 import { KpiCard } from '../../components/shared/KpiCard';
+import { PageHeader } from '../../components/shared/PageHeader';
 import MasterList from './components/MasterList';
 import Analytics from './components/Analytics';
 import MasterModal from './components/MasterModal';
@@ -38,8 +39,8 @@ export default function MasterCodeApp() {
     note: ''
   });
 
-  const fgCount = (items || []).filter(i => i.groups.includes('FG')).length;
-  const rmCount = (items || []).filter(i => i.groups.includes('RM') || i.groups.includes('HW') || i.groups.includes('FB')).length;
+  const fgCount = (items || []).filter(i => i.groups && i.groups.includes('FG')).length;
+  const rmCount = (items || []).filter(i => i.groups && (i.groups.includes('RM') || i.groups.includes('HW') || i.groups.includes('FB'))).length;
   const newCount = (items || []).filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
 
   const generatedMastCode = ((form.catCode || '') + (form.subCatCode || '')).toUpperCase();
@@ -50,7 +51,7 @@ export default function MasterCodeApp() {
 
   const openModal = (item: MasterItem | null = null) => {
     if (item) {
-      setForm({ ...item });
+      setForm({ ...item, groups: item.groups || [] });
     } else {
       setForm({ id: null, groups: [], category: '', catCode: '', subCategory: '', subCatCode: '', note: '' });
     }
@@ -62,8 +63,8 @@ export default function MasterCodeApp() {
 
   const toggleGroupInForm = (g: string) => {
     setForm((prev: any) => {
-      if (prev.groups.includes(g)) return { ...prev, groups: prev.groups.filter((x: string) => x !== g) };
-      return { ...prev, groups: [...prev.groups, g] };
+      if (prev.groups && prev.groups.includes(g)) return { ...prev, groups: prev.groups.filter((x: string) => x !== g) };
+      return { ...prev, groups: [...(prev.groups || []), g] };
     });
   };
 
@@ -116,8 +117,8 @@ export default function MasterCodeApp() {
       
       setGroups(prev => prev.map(g => g === oldGroup ? newName : g));
       (items || []).forEach(item => {
-        if (item.groups.includes(oldGroup!)) {
-          updateItem(item.id, { groups: item.groups.map(g => g === oldGroup ? newName : g) });
+        if (item.groups && item.groups.includes(oldGroup!)) {
+          updateItem(item.id, { groups: item.groups.map((g: string) => g === oldGroup ? newName : g) });
         }
       });
       cancelEditGroup();
@@ -171,7 +172,7 @@ export default function MasterCodeApp() {
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .minimal-th {
-          font-size: 12px !important; 
+          font-size: 11px; 
           text-transform: uppercase;
           letter-spacing: 0.05em;
           color: #FFFFFF; 
@@ -190,7 +191,7 @@ export default function MasterCodeApp() {
           padding: 8px 16px;
           vertical-align: middle;
           color: #111f42;
-          font-size: 12px !important; 
+          font-size: 12px; 
           font-weight: 500;
           border-bottom: 1px solid rgba(226, 232, 240, 0.6);
         }

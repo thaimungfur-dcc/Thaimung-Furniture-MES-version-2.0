@@ -40,7 +40,7 @@ export default function PendingJOTable({
     {
       accessorKey: 'qty',
       header: 'TARGET',
-      cell: ({ row }) => <div className="text-right font-mono font-black text-[#111f42]">{Number(row.getValue('qty')).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-mono font-black text-[#111f42]">{Number(row.getValue('qty'))?.toLocaleString()}</div>
     },
     {
       accessorKey: 'received',
@@ -54,7 +54,7 @@ export default function PendingJOTable({
               <div className="w-full bg-slate-100 rounded-none h-2.5 overflow-hidden border border-slate-200">
                   <div className="h-full transition-all duration-700 rounded-none" style={{ width: `${percent}%`, backgroundColor: getProgressColor(row.original) }}></div>
               </div>
-              <span className="text-[9px] font-mono font-black text-slate-500 uppercase tracking-widest">{received.toLocaleString()} / {percent}% COMPLETE</span>
+              <span className="text-[9px] font-mono font-black text-slate-500 uppercase tracking-widest">{received?.toLocaleString()} / {percent}% COMPLETE</span>
           </div>
         );
       }
@@ -63,7 +63,7 @@ export default function PendingJOTable({
       id: 'balance',
       header: 'BALANCE',
       accessorFn: row => Math.max(0, Number(row.qty) - Number(row.received)),
-      cell: ({ row }) => <div className="text-right font-mono font-black text-rose-500">{Math.max(0, Number(row.original.qty) - Number(row.original.received)).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-mono font-black text-rose-500">{Math.max(0, Number(row.original.qty) - Number(row.original.received))?.toLocaleString()}</div>
     },
     {
       accessorKey: 'status',

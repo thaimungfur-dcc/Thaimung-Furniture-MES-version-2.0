@@ -144,16 +144,16 @@ export default function InvoiceTable({
                     <div className="space-y-1">
                       <p className="flex items-center justify-between text-[11px]">
                         <span className="text-slate-400 font-semibold">Total:</span> 
-                        <span className="font-mono text-[#7693a6] font-bold">{inv.amount.toLocaleString()}</span>
+                        <span className="font-mono text-[#7693a6] font-bold">{inv.amount?.toLocaleString()}</span>
                       </p>
                       <p className="flex items-center justify-between text-[11px]">
                         <span className="text-slate-400 font-semibold">Paid:</span> 
-                        <span className="font-mono text-[#7fa85a] font-bold">{inv.paid > 0 ? inv.paid.toLocaleString() : '-'}</span>
+                        <span className="font-mono text-[#7fa85a] font-bold">{inv.paid > 0 ? inv.paid?.toLocaleString() : '-'}</span>
                       </p>
                       <p className="flex items-center justify-between text-[12px] pt-1 border-t border-slate-100 mt-1">
                         <span className="text-[#223149] font-black">Bal:</span> 
                         <span className={`font-mono font-black ${inv.isBadDebt ? 'text-[#933b5b]' : inv.balance > 0 ? 'text-[#ce5a43]' : 'text-slate-300'}`}>
-                          {inv.balance.toLocaleString()}
+                          {inv.balance?.toLocaleString()}
                         </span>
                       </p>
                     </div>

@@ -47,7 +47,7 @@ export default function ItemTable({ items, getTypeClass, openModal, deleteItem }
         {
             accessorKey: 'stdCost',
             header: 'STD. COST',
-            cell: info => <div className="text-right font-black">฿{(info.getValue() as number).toLocaleString()}</div>,
+            cell: info => <div className="text-right font-black">฿{(info.getValue() as number)?.toLocaleString()}</div>,
         },
         {
             accessorKey: 'status',

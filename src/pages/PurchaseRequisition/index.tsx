@@ -33,7 +33,7 @@ const formatDate = (dateString: string) => {
 
 // Helper: Format Currency
 const formatCurrency = (amount: number) => {
-  return '฿' + Number(amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return '฿' + Number(amount || 0)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
 // --- Mock Data for PR ---
@@ -196,7 +196,7 @@ export default function PurchaseRequisition() {
   };
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
       <style>{`
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .kanban-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
@@ -328,7 +328,7 @@ export default function PurchaseRequisition() {
               </div>
               <button 
                 onClick={() => openModal('create')} 
-                className="flex-shrink-0 bg-[#1f8764] text-white text-[11px] font-bold px-6 py-2.5 rounded-lg uppercase tracking-widest flex items-center gap-2 shadow-md hover:opacity-90 transition-all"
+                className="flex-shrink-0 bg-[#1f8764] text-white text-[11px] font-bold py-2.5 rounded-lg uppercase tracking-widest flex items-center gap-2 shadow-md hover:opacity-90 transition-all"
               >
                 <Plus size={16} strokeWidth={3} /> NEW PR
               </button>
@@ -344,7 +344,7 @@ export default function PurchaseRequisition() {
             />
 
             {/* Pagination */}
-            <div className="px-6 py-4 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 flex-shrink-0">
+            <div className="border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 flex-shrink-0">
               <div className="flex items-center gap-3 text-[12px] text-slate-500 font-medium">
                 <p>Showing <span className="font-bold text-[#111f42]">{filteredPRs.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</span> to <span className="font-bold text-[#111f42]">{Math.min(currentPage * itemsPerPage, filteredPRs.length)}</span> of <span className="font-bold text-[#111f42]">{filteredPRs.length}</span> entries</p>
               </div>
@@ -392,7 +392,7 @@ export default function PurchaseRequisition() {
           <>
             <div className="fixed inset-0 bg-[#111f42]/40 backdrop-blur-sm z-[60] animate-in fade-in duration-200 no-print" onClick={() => setIsGuideOpen(false)} />
             <div className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[70] flex flex-col animate-in slide-in-from-right duration-300 no-print">
-              <div className="px-6 py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
+              <div className="py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#E3624A]">
                 <h2 className="text-base font-semibold uppercase tracking-widest flex items-center gap-2">
                   <HelpCircle size={20} className="text-[#E3624A]" /> คู่มือการใช้งาน (PR)
                 </h2>
@@ -421,7 +421,7 @@ export default function PurchaseRequisition() {
                  </div>
               </div>
               <div className="p-4 border-t flex justify-end bg-slate-50">
-                <button onClick={() => setIsGuideOpen(false)} className="bg-[#111f42] text-white px-8 py-2.5 rounded-xl font-bold text-[12px] uppercase tracking-wider shadow-md">
+                <button onClick={() => setIsGuideOpen(false)} className="bg-[#111f42] text-white py-2.5 rounded-xl font-bold text-[12px] uppercase tracking-wider shadow-md">
                   เข้าใจแล้ว
                 </button>
               </div>

@@ -30,6 +30,7 @@ import { KpiCard } from '../../components/shared/KpiCard';
 import { DataTable } from '../../components/shared/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
 import Swal from 'sweetalert2';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 const STAGES: ProductionStage[] = [
   'Pending', 
@@ -353,7 +354,11 @@ export default function ProductionTracking() {
       {/* Guide Drawer Placeholder */}
       {isGuideOpen && (
         <div className="fixed inset-0 z-[100] flex justify-end">
-          <div className="absolute inset-0 bg-[#111f42]/40 backdrop-blur-sm" onClick={() => setIsGuideOpen(false)} />
+          
+                  <DraggableWrapper>
+                        <div className="absolute inset-0 bg-[#111f42]/40 backdrop-blur-sm" onClick={() => setIsGuideOpen(false)} />
+                      </DraggableWrapper>
+
           <div className="relative w-full max-w-lg bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-500">
             <div className="p-8 border-b border-slate-100 flex items-center justify-between">
               <h2 className="text-xl font-black text-[#111f42] uppercase tracking-tighter">Production Guide</h2>

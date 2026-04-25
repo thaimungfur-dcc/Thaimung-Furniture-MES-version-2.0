@@ -90,7 +90,7 @@ export default function TrendChart({ data }: TrendChartProps) {
             }}
           >
             <p className="font-bold text-slate-300 mb-1">{data[hoveredTrend].month} 2026</p>
-            <p className="flex justify-between gap-4"><span>Balance:</span> <span className="font-bold text-[#D4AF37]">฿{data[hoveredTrend].balance.toLocaleString()}</span></p>
+            <p className="flex justify-between gap-4"><span>Balance:</span> <span className="font-bold text-[#D4AF37]">฿{data[hoveredTrend].balance?.toLocaleString()}</span></p>
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 border-l-8 border-r-8 border-t-8 border-transparent border-t-[#111f42]"></div>
           </div>
         )}

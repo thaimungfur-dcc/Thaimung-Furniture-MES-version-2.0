@@ -63,17 +63,17 @@ export default function TransactionTable({ data, onApprove }: TransactionTablePr
               </td>
               <td className="px-6 py-2.5 text-right">
                 <span className="font-bold text-[12px] text-[#6b7556] whitespace-nowrap">
-                  {item.type === 'In' ? `฿${item.amount.toLocaleString()}` : '-'}
+                  {item.type === 'In' ? `฿${item.amount?.toLocaleString()}` : '-'}
                 </span>
               </td>
               <td className="px-6 py-2.5 text-right">
                 <span className="font-bold text-[12px] text-[#E3624A] whitespace-nowrap">
-                  {item.type === 'Out' ? `฿${item.amount.toLocaleString()}` : '-'}
+                  {item.type === 'Out' ? `฿${item.amount?.toLocaleString()}` : '-'}
                 </span>
               </td>
               <td className="px-6 py-2.5 text-right bg-blue-50/30">
                 <span className="font-bold text-[12px] text-[#111f42] whitespace-nowrap">
-                  {item.status === 'Completed' ? `฿${(item.balance || 0).toLocaleString()}` : '-'}
+                  {item.status === 'Completed' ? `฿${(item.balance || 0)?.toLocaleString()}` : '-'}
                 </span>
               </td>
               <td className="px-6 py-2.5 text-center">

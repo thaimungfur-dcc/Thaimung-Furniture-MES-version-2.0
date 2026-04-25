@@ -11,6 +11,7 @@ import GuideDrawer from './GuideDrawer';
 import DashboardCharts from './DashboardCharts';
 import { PageHeader } from '../../components/shared/PageHeader';
 import { StockCardToolbar } from './components/StockCardToolbar';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 export default function StockCardApp() {
     // --- State Management ---
@@ -24,7 +25,7 @@ export default function StockCardApp() {
 
     // --- Item Master: Source of Truth ---
     const { items } = useMasterData();
-    const itemsMaster = useMemo(() => items.map(item => ({
+    const itemsMaster = useMemo(() => (items || []).map(item => ({
         id: item.itemCode,
         name: item.itemName,
         unit: item.baseUnit,
@@ -38,7 +39,7 @@ export default function StockCardApp() {
     
     // Combine logs into movements
     const movementsRaw = useMemo(() => {
-        const inMoves = historyLogs.map(l => ({
+        const inMoves = historyLogs.filter(l => l.sku === viewState.itemId).map(l => ({
             date: l.date,
             type: 'IN',
             docId: l.transId,
@@ -50,7 +51,7 @@ export default function StockCardApp() {
             sku: l.sku
         }));
 
-        const outMoves = warehouseOutLogs.map(l => ({
+        const outMoves = warehouseOutLogs.filter(l => l.sku === viewState.itemId).map(l => ({
             date: l.date,
             type: 'OUT',
             docId: l.transId,
@@ -62,9 +63,8 @@ export default function StockCardApp() {
             sku: l.sku
         }));
 
-        // Combine and filter for selected item
+        // Combine and sort
         const combined = [...inMoves, ...outMoves]
-            .filter(m => m.sku === viewState.itemId)
             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
         // Calculate running balance (chronological sum)
@@ -126,7 +126,7 @@ export default function StockCardApp() {
     };
 
     return (
-        <div className="sys-page-layout flex flex-col w-full pb-10 animate-fade-in-up pt-2">
+        <div className="flex flex-col w-full pb-10 animate-fade-in-up">
             <PageHeader
                 Icon={FileSpreadsheet}
                 title="STOCK CARD"
@@ -190,7 +190,7 @@ export default function StockCardApp() {
                                     <div className="text-right">
                                         <span className="text-[10px] font-black text-[#ab8a3b] uppercase tracking-widest font-mono block mb-1">Balance</span>
                                         <div className="flex items-baseline justify-end gap-2 leading-none">
-                                            <span className="text-5xl font-black text-white font-mono tracking-tighter">{currentBalance.toLocaleString()}</span>
+                                            <span className="text-5xl font-black text-white font-mono tracking-tighter">{currentBalance?.toLocaleString()}</span>
                                             <span className="text-[12px] font-black text-slate-400 uppercase font-mono">{selectedItemDetails.unit}</span>
                                         </div>
                                     </div>
@@ -218,31 +218,31 @@ export default function StockCardApp() {
                                 <table className="w-full text-left whitespace-nowrap">
                                     <thead className="sticky top-0 z-10 shadow-sm border-b border-slate-200">
                                         <tr>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Date / Time</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-center text-white bg-[#111f42] border-b-2 border-[#111f42]">Type</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Document ID</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Reference</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Lot Number</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-emerald-400 bg-[#111f42] border-b-2 border-[#111f42]">IN (+)</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-[#E3624A] bg-[#111f42] border-b-2 border-[#111f42]">OUT (-)</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right text-white bg-[#111f42] border-b-2 border-[#111f42]">BALANCE</th>
-                                            <th className="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Location</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Date / Time</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-center text-white bg-[#111f42] border-b-2 border-[#111f42]">Type</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Document ID</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Reference</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Lot Number</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-right text-emerald-400 bg-[#111f42] border-b-2 border-[#111f42]">IN (+)</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-right text-[#E3624A] bg-[#111f42] border-b-2 border-[#111f42]">OUT (-)</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-right text-white bg-[#111f42] border-b-2 border-[#111f42]">BALANCE</th>
+                                            <th className="text-[11px] font-black uppercase tracking-widest text-white bg-[#111f42] border-b-2 border-[#111f42]">Location</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 bg-white">
                                         {paginatedMovements.map((m, idx) => (
                                             <tr key={idx} className="hover:bg-slate-50 transition-colors">
-                                                <td className="px-6 py-4 font-mono text-[11px] text-slate-400 font-black uppercase tracking-widest">{m.date}</td>
-                                                <td className="px-6 py-4 text-center">
+                                                <td className="font-mono text-[11px] text-slate-400 font-black uppercase tracking-widest">{m.date}</td>
+                                                <td className="text-center">
                                                     <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest border ${m.type === 'IN' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 'bg-rose-50 text-rose-600 border-rose-100'} font-mono`}>{m.type}</span>
                                                 </td>
-                                                <td className="px-6 py-4 font-black text-[#111f42] font-mono tracking-wider text-[11px]">{m.docId}</td>
-                                                <td className="px-6 py-4 text-[10px] font-black text-slate-400 font-mono italic uppercase tracking-widest">{m.ref}</td>
-                                                <td className="px-6 py-4 font-black text-[#ab8a3b] font-mono text-[11px] tracking-wider">{m.lot}</td>
-                                                <td className="px-6 py-4 text-right font-black text-[#10b981] font-mono text-[14px]">{m.in > 0 ? `+${m.in.toLocaleString()}` : '-'}</td>
-                                                <td className="px-6 py-4 text-right font-black text-[#E3624A] font-mono text-[14px]">{m.out > 0 ? `-${m.out.toLocaleString()}` : '-'}</td>
-                                                <td className="px-6 py-4 text-right font-black text-[#111f42] font-mono text-[16px] bg-slate-50/30 h-full">{m.balance.toLocaleString()}</td>
-                                                <td className="px-6 py-4 font-black text-slate-500 font-mono text-[10px] uppercase tracking-widest">{m.loc}</td>
+                                                <td className="font-black text-[#111f42] font-mono tracking-wider text-[11px]">{m.docId}</td>
+                                                <td className="text-[10px] font-black text-slate-400 font-mono italic uppercase tracking-widest">{m.ref}</td>
+                                                <td className="font-black text-[#ab8a3b] font-mono text-[11px] tracking-wider">{m.lot}</td>
+                                                <td className="text-right font-black text-[#10b981] font-mono text-[14px]">{m.in > 0 ? `+${m.in?.toLocaleString()}` : '-'}</td>
+                                                <td className="text-right font-black text-[#E3624A] font-mono text-[14px]">{m.out > 0 ? `-${m.out?.toLocaleString()}` : '-'}</td>
+                                                <td className="text-right font-black text-[#111f42] font-mono text-[16px] bg-slate-50/30 h-full">{m.balance?.toLocaleString()}</td>
+                                                <td className="font-black text-slate-500 font-mono text-[10px] uppercase tracking-widest">{m.loc}</td>
                                             </tr>
                                         ))}
                                         {paginatedMovements.length === 0 && (
@@ -261,7 +261,7 @@ export default function StockCardApp() {
 
                             {/* Pagination Footer */}
                             {viewState.itemId && (
-                                <div className="px-6 py-3 border-t border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0 mt-auto">
+                                <div className="py-3 border-t border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0 mt-auto">
                                     <div className="flex items-center gap-2 text-[10px] text-slate-400 font-black uppercase font-mono tracking-widest">
                                         <span>Show</span>
                                         <select 
@@ -295,7 +295,11 @@ export default function StockCardApp() {
                 {/* Loading Overlay */}
                 {loading && (
                     <div className="fixed inset-0 z-[20000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
-                        <Loader2 className="animate-spin text-[#111f42]" size={40} />
+                        
+                    <DraggableWrapper>
+                          <Loader2 className="animate-spin text-[#111f42]" size={40} />
+                        </DraggableWrapper>
+
                         <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[9px] animate-pulse font-mono">Syncing Master Ledger...</p>
                     </div>
                 )}

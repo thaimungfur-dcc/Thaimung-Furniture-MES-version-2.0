@@ -31,12 +31,12 @@ export default function ProductCostTable({ data, onOpenBOM }: ProductCostTablePr
     {
       accessorKey: 'totalCost',
       header: 'STANDARD COST',
-      cell: ({ row }) => <div className="text-right font-black">฿{(Number(row.getValue('totalCost')) || 0).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-black">฿{(Number(row.getValue('totalCost')) || 0)?.toLocaleString()}</div>
     },
     {
       accessorKey: 'suggestedPrice',
       header: 'SUGGESTED PRICE',
-      cell: ({ row }) => <div className="text-right font-black text-[#E3624A]">฿{(Number(row.getValue('suggestedPrice')) || 0).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-black text-[#E3624A]">฿{(Number(row.getValue('suggestedPrice')) || 0)?.toLocaleString()}</div>
     },
     {
       id: 'action',

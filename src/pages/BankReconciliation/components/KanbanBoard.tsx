@@ -37,7 +37,7 @@ export default function KanbanBoard({ records }: any) {
                     </div>
                     <div className="border-t border-black/5 pt-3 flex justify-between items-center">
                       {rec.diff > 0 ? (
-                        <span className="text-xs font-black text-[#ce5a43] flex items-center gap-1"><AlertTriangle size={12}/> Diff: ฿{rec.diff.toLocaleString()}</span>
+                        <span className="text-xs font-black text-[#ce5a43] flex items-center gap-1"><AlertTriangle size={12}/> Diff: ฿{rec.diff?.toLocaleString()}</span>
                       ) : (
                         <span className="text-xs font-black text-[#0ea5e9]">Matched</span>
                       )}

@@ -132,7 +132,7 @@ export default function FurnitureCatalogueApp() {
     };
 
     return (
-        <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
+        <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
             <style>{`
                 .wh-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
                 .wh-custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -174,69 +174,69 @@ export default function FurnitureCatalogueApp() {
             />
 
             {/* Main Container */}
-            <main className="flex flex-col w-full px-0 gap-4 relative z-10">
-                <div className="bg-white shadow-sm flex flex-col min-h-[600px] w-full border border-slate-200 rounded-2xl overflow-hidden">
-                    {viewMode !== 'dashboard' && (
-                        <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
-                            <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
-                                <div className="relative flex-shrink-0">
-                                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab8a3b]" size={14} />
-                                    <select 
-                                        value={categoryFilter} 
-                                        onChange={(e) => {setCategoryFilter(e.target.value); setCurrentPage(1);}} 
-                                        className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-lg pl-9 pr-8 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer"
-                                    >
-                                        <option value="All">ALL CATEGORIES ({products.length})</option>
-                                        {productCategories.map(cat => (
-                                            <option key={cat} value={cat}>
-                                                {cat.toUpperCase()} ({products.filter(p => p.category === cat).length})
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                                        <ChevronDown size={14} />
-                                    </div>
-                                </div>
-                                
-                                <div className="h-6 w-px bg-slate-200 mx-1 hidden lg:block shrink-0"></div>
-
-                                <div className="relative w-full lg:w-64 shrink-0">
-                                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                                    <input type="text" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }} placeholder="Search Catalogue..." className="input-primary pl-9 pr-4 py-2.5 text-[12px] bg-white transition-colors border-slate-200" />
-                                </div>
-                            </div>
-                            <div className="flex gap-3 shrink-0 flex-nowrap items-center ml-auto">
-                                <button onClick={() => openModal()} className="px-6 py-2.5 rounded-xl text-[12px] font-bold bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-wide whitespace-nowrap hover:bg-[#1e346b] transition-all"><Plus size={16} className="text-[#ab8a3b]" /> ADD FURNITURE</button>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Scrollable Content */}
-                    <div className="flex-1 overflow-y-auto wh-custom-scrollbar p-6 bg-[#F9F7F6]">
-                        {viewMode === 'dashboard' ? (
-                            <CatalogueDashboard products={products} />
-                        ) : viewMode === 'grid' ? (
-                            <CatalogueGrid products={paginatedProducts} onEdit={openModal} />
-                        ) : (
-                            <CatalogueTable products={filteredProducts} onEdit={openModal} />
-                        )}
-                    </div>
-
-                    {/* Footer Pagination */}
-                    {(viewMode === 'grid') && (
-                        <div className="px-6 py-4 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 flex-shrink-0">
-                            <div className="flex items-center gap-2 text-[11px] text-slate-500 font-bold uppercase tracking-wider">
-                                <span>Rows:</span>
-                                <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrentPage(1); }} className="bg-white border border-slate-200 rounded-md px-2 py-1 outline-none text-[#111f42]">
-                                    <option value={8}>8</option><option value={12}>12</option><option value={24}>24</option>
+            <main className="flex flex-col w-full relative z-10 flex-1">
+                {viewMode !== 'dashboard' && (
+                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-4 p-4 mt-2">
+                        <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
+                            <div className="relative flex-shrink-0">
+                                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab8a3b]" size={14} />
+                                <select 
+                                    value={categoryFilter} 
+                                    onChange={(e) => {setCategoryFilter(e.target.value); setCurrentPage(1);}} 
+                                    className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-lg pl-9 pr-8 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer"
+                                >
+                                    <option value="All">ALL CATEGORIES ({products.length})</option>
+                                    {productCategories.map(cat => (
+                                        <option key={cat} value={cat}>
+                                            {cat.toUpperCase()} ({products.filter(p => p.category === cat).length})
+                                        </option>
+                                    ))}
                                 </select>
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                    <ChevronDown size={14} />
+                                </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <button onClick={prevPage} disabled={currentPage === 1} className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-slate-500 transition-all"><ChevronLeft size={16} /></button>
-                                <span className="text-[11px] font-bold text-[#111f42] px-4 bg-white border border-slate-200 py-2.5 rounded-lg shadow-sm uppercase tracking-widest">PAGE {currentPage} / {totalPages}</span>
-                                <button onClick={nextPage} disabled={currentPage === totalPages} className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-slate-500 transition-all"><ChevronRight size={16} /></button>
+                            
+                            <div className="h-6 w-px bg-slate-200 mx-1 hidden lg:block shrink-0"></div>
+
+                            <div className="relative w-full lg:w-64 shrink-0">
+                                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="text" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }} placeholder="Search Catalogue..." className="input-primary pl-9 pr-4 py-2.5 text-[12px] bg-white transition-colors border-slate-200" />
                             </div>
                         </div>
+                        <div className="flex gap-3 shrink-0 flex-nowrap items-center ml-auto">
+                            <button onClick={() => openModal()} className="py-2.5 rounded-xl text-[12px] font-bold bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-wide whitespace-nowrap hover:bg-[#1e346b] transition-all"><Plus size={16} className="text-[#ab8a3b]" /> ADD FURNITURE</button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Scrollable Content */}
+                <div className="flex-1 w-full mt-4">
+                    {viewMode === 'dashboard' ? (
+                        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mt-2">
+                           <CatalogueDashboard products={products} />
+                        </div>
+                    ) : viewMode === 'grid' ? (
+                        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col min-h-[400px]">
+                            <CatalogueGrid products={paginatedProducts} onEdit={openModal} />
+                            
+                            {/* Footer Pagination */}
+                            <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 flex-shrink-0">
+                                <div className="flex items-center gap-2 text-[11px] text-slate-500 font-bold uppercase tracking-wider">
+                                    <span>Rows:</span>
+                                    <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrentPage(1); }} className="bg-white border border-slate-200 rounded-md px-2 py-1 outline-none text-[#111f42]">
+                                        <option value={8}>8</option><option value={12}>12</option><option value={24}>24</option>
+                                    </select>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <button onClick={prevPage} disabled={currentPage === 1} className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-slate-500 transition-all"><ChevronLeft size={16} /></button>
+                                    <span className="text-[11px] font-bold text-[#111f42] bg-white border border-slate-200 py-2.5 rounded-lg shadow-sm uppercase tracking-widest">PAGE {currentPage} / {totalPages}</span>
+                                    <button onClick={nextPage} disabled={currentPage === totalPages} className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-slate-500 transition-all"><ChevronRight size={16} /></button>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <CatalogueTable products={filteredProducts} onEdit={openModal} />
                     )}
                 </div>
             </main>

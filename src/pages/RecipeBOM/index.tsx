@@ -12,6 +12,7 @@ import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
 import { PageHeader } from '../../components/shared/PageHeader';
 import { KpiCard } from '../../components/shared/KpiCard';
 import BomListTable from './components/BomListTable';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 export default function BOMManagementApp() {
     // --- State Management ---
@@ -153,11 +154,11 @@ export default function BOMManagementApp() {
                 .master-custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
                 
                 .minimal-th {
-                    font-size: 11px !important; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; 
+                    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #FFFFFF; 
                     padding: 16px 12px; font-weight: 800; background-color: #111f42; border-bottom: 2px solid #ab8a3b;
                     white-space: nowrap;
                 }
-                .minimal-td { padding: 12px 12px; vertical-align: middle; color: #111f42; font-size: 12px !important; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
+                .minimal-td { padding: 12px 12px; vertical-align: middle; color: #111f42; font-size: 12px; font-weight: 500; border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
                 tr:hover .minimal-td { background-color: rgba(171, 138, 59, 0.05); }
 
                 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 31, 66, 0.6); backdrop-filter: blur(4px); z-index: 10001; display: flex; justify-content: center; align-items: center; padding: 1rem; }
@@ -245,176 +246,180 @@ export default function BOMManagementApp() {
                 {/* MODAL: BOM EDITOR */}
                 {showModal && (
                     <div className="modal-overlay" onClick={closeModal}>
-                        <div className="modal-box max-w-[1200px] border-t-[6px] border-[#ab8a3b] rounded-2xl animate-fade-in-up" onClick={e => e.stopPropagation()}>
-                            <div className="bg-[#111f42] px-8 py-5 flex justify-between items-center text-white shrink-0">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#ab8a3b] shadow-inner"><Layers size={24} /></div>
-                                    <div>
-                                        <h3 className="text-xl font-black uppercase tracking-widest">{selectedProduct?.id ? selectedProduct.name : 'Create New BOM'}</h3>
-                                        <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest font-mono">Bill of Materials Configuration</p>
-                                    </div>
-                                </div>
-                                <button onClick={closeModal} className="p-1.5 bg-white/10 rounded-lg hover:bg-white/20 transition-all"><X size={24} /></button>
-                            </div>
-
-                            {/* Header Info Bar */}
-                            <div className="px-8 py-5 bg-white border-b border-slate-100 flex justify-between items-end gap-8 relative overflow-hidden shrink-0">
-                                <div className="absolute right-[-20px] bottom-[-20px] opacity-[0.03] transform -rotate-12 pointer-events-none"><Layers size={200}/></div>
-                                <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
-                                    <div className="space-y-1.5">
-                                        <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest font-mono">Product SKU</label>
-                                        {selectedProduct.id === '' ? (
-                                            <select onChange={handleProductSelect} className="input-primary py-1.5 font-bold border-[#ab8a3b]/30">
-                                                <option value="">-- Choose FG Item --</option>
-                                                {itemMasterFG.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
-                                            </select>
-                                        ) : (
-                                            <div className="h-9 flex items-center font-mono font-black text-[#ab8a3b] text-[15px]">{selectedProduct.id}</div>
-                                        )}
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest font-mono">Category</label>
-                                        <div className="h-9 flex items-center font-bold text-[#111f42] text-[13px] uppercase">{selectedProduct.category}</div>
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest font-mono">BOM Version</label>
-                                        <div className="h-9 flex items-center font-mono font-black text-[#111f42] text-[13px]">{selectedProduct.version}</div>
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="block text-[9px] font-black text-[#E3624A] uppercase tracking-widest flex items-center gap-1.5 font-mono"><DollarSign size={10}/> Selling Price (฿)</label>
-                                        <input type="number" disabled={!isEditing} value={selectedProduct.stdPrice || 0} onChange={e=>setSelectedProduct({...selectedProduct, stdPrice: Number(e.target.value)})} className="input-primary py-1.5 font-black border-[#ab8a3b]/30 h-9" />
-                                    </div>
-                                </div>
-                                <div className="text-right shrink-0 border-l border-slate-100 pl-8 relative z-10">
-                                    <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 font-mono text-emerald-600">Total FG Cost</label>
-                                    <div className="text-3xl font-black text-[#10b981] font-mono tracking-tighter">฿{totalBomCost.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
-                                </div>
-                            </div>
-
-                            {/* BOM Data Table */}
-                            <div className="flex-1 overflow-y-auto master-custom-scrollbar bg-[#F9F7F6] p-8">
-                                <div className="bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden mb-6">
-                                    <table className="w-full text-left table-fixed">
-                                        <thead>
-                                            <tr className="bg-[#111f42]">
-                                                <th className="minimal-th w-12 text-center text-[10px]">#</th>
-                                                <th className="minimal-th w-auto text-[10px]">Component / Material</th>
-                                                <th className="minimal-th w-24 text-center text-[10px]">Type</th>
-                                                <th className="minimal-th w-28 text-right text-[10px]">Quantity</th>
-                                                <th className="minimal-th w-20 text-center text-[10px]">Unit</th>
-                                                <th className="minimal-th w-32 text-right text-[10px]">Std Cost</th>
-                                                <th className="minimal-th w-20 text-center text-[10px]">Scrap%</th>
-                                                <th className="minimal-th w-36 text-right text-[10px]">Total Cost</th>
-                                                {isEditing && <th className="minimal-th w-16 text-center text-[10px]"></th>}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {bomItems.map((item, idx) => {
-                                                const lineTotal = Number(item.qty) * Number(item.cost) * (1 + (Number(item.scrap) || 0) / 100);
-                                                return (
-                                                    <tr key={idx} className="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 font-mono">
-                                                        <td className="minimal-td text-center text-[10px] text-slate-300">{idx+1}</td>
-                                                        <td className="minimal-td truncate">
-                                                            <div className="flex flex-col min-w-0">
-                                                                <span className="font-black text-[11px] text-[#ab8a3b] truncate">{item.code}</span>
-                                                                <span className="text-[11px] font-bold text-slate-600 truncate">{item.name}</span>
+                        
+                        <DraggableWrapper>
+                              <div className="modal-box max-w-[1200px] border-t-[6px] border-[#ab8a3b] rounded-2xl animate-fade-in-up" onClick={e => e.stopPropagation()}>
+                                                    <div className="bg-[#111f42] px-8 py-5 flex justify-between items-center text-white shrink-0">
+                                                        <div className="flex items-center gap-4">
+                                                            <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-[#ab8a3b] shadow-inner"><Layers size={24} /></div>
+                                                            <div>
+                                                                <h3 className="text-xl font-black uppercase tracking-widest">{selectedProduct?.id ? selectedProduct.name : 'Create New BOM'}</h3>
+                                                                <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest font-mono">Bill of Materials Configuration</p>
                                                             </div>
-                                                        </td>
-                                                        <td className="minimal-td text-center">
-                                                            <span className={`text-[9px] font-black px-1.5 py-0.5 rounded ${item.type==='WIP'?'bg-blue-50 text-blue-500 border-blue-100':'bg-slate-100 text-slate-400'}`}>
-                                                                {item.type}
-                                                            </span>
-                                                        </td>
-                                                        <td className="minimal-td text-right">
-                                                            {isEditing ? (
-                                                                <input type="number" value={item.qty} onChange={e => {
-                                                                    const ni = [...bomItems];
-                                                                    ni[idx] = { ...ni[idx], qty: Number(e.target.value) || 0 };
-                                                                    setBomItems(ni);
-                                                                }} className="input-primary text-right py-1 w-full font-black border-[#ab8a3b]/20" />
-                                                            ) : (
-                                                                <span className="font-black text-[#111f42]">{item.qty}</span>
-                                                            )}
-                                                        </td>
-                                                        <td className="minimal-td text-center font-bold text-slate-400 uppercase">{item.unit}</td>
-                                                        <td className="minimal-td text-right">
-                                                            {isEditing ? (
-                                                                <input type="number" value={item.cost} onChange={e => {
-                                                                    const ni = [...bomItems];
-                                                                    ni[idx] = { ...ni[idx], cost: Number(e.target.value) || 0 };
-                                                                    setBomItems(ni);
-                                                                }} className="input-primary text-right py-1 w-full font-bold text-emerald-600 border-[#ab8a3b]/20" />
-                                                            ) : (
-                                                                <span className="text-emerald-600 font-bold">฿{Number(item.cost).toLocaleString()}</span>
-                                                            )}
-                                                        </td>
-                                                        <td className="minimal-td text-center">
-                                                            {isEditing ? (
-                                                                <input type="number" value={item.scrap} onChange={e => {
-                                                                    const ni = [...bomItems];
-                                                                    ni[idx] = { ...ni[idx], scrap: Number(e.target.value) || 0 };
-                                                                    setBomItems(ni);
-                                                                }} className="input-primary text-center py-1 w-full text-amber-500 font-bold border-[#ab8a3b]/20" />
-                                                            ) : (
-                                                                <span className="font-bold text-amber-500">{item.scrap}%</span>
-                                                            )}
-                                                        </td>
-                                                        <td className="minimal-td text-right font-black text-[#111f42] bg-slate-50/20">
-                                                            ฿{lineTotal.toLocaleString(undefined, {minimumFractionDigits: 2})}
-                                                        </td>
-                                                        {isEditing && (
-                                                            <td className="minimal-td text-center">
-                                                                <button onClick={() => removeBomItem(idx)} className="text-slate-300 hover:text-rose-500 transition-colors p-1"><Trash2 size={14}/></button>
-                                                            </td>
-                                                        )}
-                                                    </tr>
-                                                );
-                                            })}
+                                                        </div>
+                                                        <button onClick={closeModal} className="p-1.5 bg-white/10 rounded-lg hover:bg-white/20 transition-all"><X size={24} /></button>
+                                                    </div>
 
-                                            {/* ADD ITEM ROW INTEGRATED IN TABLE */}
-                                            {isEditing && (
-                                                <tr className="bg-amber-50/40 border-t-2 border-[#ab8a3b]/30">
-                                                    <td className="minimal-td text-center text-amber-600"><Plus size={14}/></td>
-                                                    <td className="minimal-td">
-                                                        <select value={newItem.code} onChange={onMaterialSelect} className="input-primary py-1.5 font-bold border-[#ab8a3b]/40 h-10">
-                                                            <option value="">-- Select Component --</option>
-                                                            {materialDb.map(m => <option key={m.code} value={m.code}>{m.code} - {m.name}</option>)}
-                                                        </select>
-                                                    </td>
-                                                    <td className="minimal-td text-center text-[10px] font-mono text-slate-400 uppercase">{newItem.type || '-'}</td>
-                                                    <td className="minimal-td"><input type="number" value={newItem.qty} onChange={e=>setNewItem({...newItem, qty: Number(e.target.value)})} className="input-primary text-right font-black h-10 border-[#ab8a3b]/40" placeholder="0" /></td>
-                                                    <td className="minimal-td text-center text-[10px] font-mono text-slate-400 uppercase font-bold">{newItem.unit || '-'}</td>
-                                                    <td className="minimal-td"><input type="number" value={newItem.cost} onChange={e=>setNewItem({...newItem, cost: Number(e.target.value)})} className="input-primary text-right font-bold text-emerald-600 h-10 border-[#ab8a3b]/40" placeholder="0.00" /></td>
-                                                    <td className="minimal-td"><input type="number" value={newItem.scrap} onChange={e=>setNewItem({...newItem, scrap: Number(e.target.value)})} className="input-primary text-center font-bold text-amber-500 h-10 border-[#ab8a3b]/40" placeholder="0" /></td>
-                                                    <td className="minimal-td text-right">
-                                                        <button 
-                                                            onClick={addBomItem} 
-                                                            disabled={!newItem.code}
-                                                            className="w-full h-10 bg-[#111f42] text-[#ab8a3b] rounded-xl font-black text-[11px] uppercase tracking-widest shadow-md hover:brightness-110 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
-                                                        >
-                                                            <Plus size={14} strokeWidth={3}/> Add Item
+                                                    {/* Header Info Bar */}
+                                                    <div className="px-8 py-5 bg-white border-b border-slate-100 flex justify-between items-end gap-8 relative overflow-hidden shrink-0">
+                                                        <div className="absolute right-[-20px] bottom-[-20px] opacity-[0.03] transform -rotate-12 pointer-events-none"><Layers size={200}/></div>
+                                                        <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
+                                                            <div className="space-y-1.5">
+                                                                <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest font-mono">Product SKU</label>
+                                                                {selectedProduct.id === '' ? (
+                                                                    <select onChange={handleProductSelect} className="input-primary py-1.5 font-bold border-[#ab8a3b]/30">
+                                                                        <option value="">-- Choose FG Item --</option>
+                                                                        {itemMasterFG.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
+                                                                    </select>
+                                                                ) : (
+                                                                    <div className="h-9 flex items-center font-mono font-black text-[#ab8a3b] text-[15px]">{selectedProduct.id}</div>
+                                                                )}
+                                                            </div>
+                                                            <div className="space-y-1.5">
+                                                                <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest font-mono">Category</label>
+                                                                <div className="h-9 flex items-center font-bold text-[#111f42] text-[13px] uppercase">{selectedProduct.category}</div>
+                                                            </div>
+                                                            <div className="space-y-1.5">
+                                                                <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest font-mono">BOM Version</label>
+                                                                <div className="h-9 flex items-center font-mono font-black text-[#111f42] text-[13px]">{selectedProduct.version}</div>
+                                                            </div>
+                                                            <div className="space-y-1.5">
+                                                                <label className="block text-[9px] font-black text-[#E3624A] uppercase tracking-widest flex items-center gap-1.5 font-mono"><DollarSign size={10}/> Selling Price (฿)</label>
+                                                                <input type="number" disabled={!isEditing} value={selectedProduct.stdPrice || 0} onChange={e=>setSelectedProduct({...selectedProduct, stdPrice: Number(e.target.value)})} className="input-primary py-1.5 font-black border-[#ab8a3b]/30 h-9" />
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-right shrink-0 border-l border-slate-100 pl-8 relative z-10">
+                                                            <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 font-mono text-emerald-600">Total FG Cost</label>
+                                                            <div className="text-3xl font-black text-[#10b981] font-mono tracking-tighter">฿{totalBomCost?.toLocaleString(undefined, {minimumFractionDigits: 2})}</div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* BOM Data Table */}
+                                                    <div className="flex-1 overflow-y-auto master-custom-scrollbar bg-[#F9F7F6] p-8">
+                                                        <div className="bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden mb-6">
+                                                            <table className="w-full text-left table-fixed">
+                                                                <thead>
+                                                                    <tr className="bg-[#111f42]">
+                                                                        <th className="minimal-th w-12 text-center text-[10px]">#</th>
+                                                                        <th className="minimal-th w-auto text-[10px]">Component / Material</th>
+                                                                        <th className="minimal-th w-24 text-center text-[10px]">Type</th>
+                                                                        <th className="minimal-th w-28 text-right text-[10px]">Quantity</th>
+                                                                        <th className="minimal-th w-20 text-center text-[10px]">Unit</th>
+                                                                        <th className="minimal-th w-32 text-right text-[10px]">Std Cost</th>
+                                                                        <th className="minimal-th w-20 text-center text-[10px]">Scrap%</th>
+                                                                        <th className="minimal-th w-36 text-right text-[10px]">Total Cost</th>
+                                                                        {isEditing && <th className="minimal-th w-16 text-center text-[10px]"></th>}
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {bomItems.map((item, idx) => {
+                                                                        const lineTotal = Number(item.qty) * Number(item.cost) * (1 + (Number(item.scrap) || 0) / 100);
+                                                                        return (
+                                                                            <tr key={idx} className="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 font-mono">
+                                                                                <td className="minimal-td text-center text-[10px] text-slate-300">{idx+1}</td>
+                                                                                <td className="minimal-td truncate">
+                                                                                    <div className="flex flex-col min-w-0">
+                                                                                        <span className="font-black text-[11px] text-[#ab8a3b] truncate">{item.code}</span>
+                                                                                        <span className="text-[11px] font-bold text-slate-600 truncate">{item.name}</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td className="minimal-td text-center">
+                                                                                    <span className={`text-[9px] font-black px-1.5 py-0.5 rounded ${item.type==='WIP'?'bg-blue-50 text-blue-500 border-blue-100':'bg-slate-100 text-slate-400'}`}>
+                                                                                        {item.type}
+                                                                                    </span>
+                                                                                </td>
+                                                                                <td className="minimal-td text-right">
+                                                                                    {isEditing ? (
+                                                                                        <input type="number" value={item.qty} onChange={e => {
+                                                                                            const ni = [...bomItems];
+                                                                                            ni[idx] = { ...ni[idx], qty: Number(e.target.value) || 0 };
+                                                                                            setBomItems(ni);
+                                                                                        }} className="input-primary text-right py-1 w-full font-black border-[#ab8a3b]/20" />
+                                                                                    ) : (
+                                                                                        <span className="font-black text-[#111f42]">{item.qty}</span>
+                                                                                    )}
+                                                                                </td>
+                                                                                <td className="minimal-td text-center font-bold text-slate-400 uppercase">{item.unit}</td>
+                                                                                <td className="minimal-td text-right">
+                                                                                    {isEditing ? (
+                                                                                        <input type="number" value={item.cost} onChange={e => {
+                                                                                            const ni = [...bomItems];
+                                                                                            ni[idx] = { ...ni[idx], cost: Number(e.target.value) || 0 };
+                                                                                            setBomItems(ni);
+                                                                                        }} className="input-primary text-right py-1 w-full font-bold text-emerald-600 border-[#ab8a3b]/20" />
+                                                                                    ) : (
+                                                                                        <span className="text-emerald-600 font-bold">฿{Number(item.cost)?.toLocaleString()}</span>
+                                                                                    )}
+                                                                                </td>
+                                                                                <td className="minimal-td text-center">
+                                                                                    {isEditing ? (
+                                                                                        <input type="number" value={item.scrap} onChange={e => {
+                                                                                            const ni = [...bomItems];
+                                                                                            ni[idx] = { ...ni[idx], scrap: Number(e.target.value) || 0 };
+                                                                                            setBomItems(ni);
+                                                                                        }} className="input-primary text-center py-1 w-full text-amber-500 font-bold border-[#ab8a3b]/20" />
+                                                                                    ) : (
+                                                                                        <span className="font-bold text-amber-500">{item.scrap}%</span>
+                                                                                    )}
+                                                                                </td>
+                                                                                <td className="minimal-td text-right font-black text-[#111f42] bg-slate-50/20">
+                                                                                    ฿{lineTotal?.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                                                                                </td>
+                                                                                {isEditing && (
+                                                                                    <td className="minimal-td text-center">
+                                                                                        <button onClick={() => removeBomItem(idx)} className="text-slate-300 hover:text-rose-500 transition-colors p-1"><Trash2 size={14}/></button>
+                                                                                    </td>
+                                                                                )}
+                                                                            </tr>
+                                                                        );
+                                                                    })}
+
+                                                                    {/* ADD ITEM ROW INTEGRATED IN TABLE */}
+                                                                    {isEditing && (
+                                                                        <tr className="bg-amber-50/40 border-t-2 border-[#ab8a3b]/30">
+                                                                            <td className="minimal-td text-center text-amber-600"><Plus size={14}/></td>
+                                                                            <td className="minimal-td">
+                                                                                <select value={newItem.code} onChange={onMaterialSelect} className="input-primary py-1.5 font-bold border-[#ab8a3b]/40 h-10">
+                                                                                    <option value="">-- Select Component --</option>
+                                                                                    {materialDb.map(m => <option key={m.code} value={m.code}>{m.code} - {m.name}</option>)}
+                                                                                </select>
+                                                                            </td>
+                                                                            <td className="minimal-td text-center text-[10px] font-mono text-slate-400 uppercase">{newItem.type || '-'}</td>
+                                                                            <td className="minimal-td"><input type="number" value={newItem.qty} onChange={e=>setNewItem({...newItem, qty: Number(e.target.value)})} className="input-primary text-right font-black h-10 border-[#ab8a3b]/40" placeholder="0" /></td>
+                                                                            <td className="minimal-td text-center text-[10px] font-mono text-slate-400 uppercase font-bold">{newItem.unit || '-'}</td>
+                                                                            <td className="minimal-td"><input type="number" value={newItem.cost} onChange={e=>setNewItem({...newItem, cost: Number(e.target.value)})} className="input-primary text-right font-bold text-emerald-600 h-10 border-[#ab8a3b]/40" placeholder="0.00" /></td>
+                                                                            <td className="minimal-td"><input type="number" value={newItem.scrap} onChange={e=>setNewItem({...newItem, scrap: Number(e.target.value)})} className="input-primary text-center font-bold text-amber-500 h-10 border-[#ab8a3b]/40" placeholder="0" /></td>
+                                                                            <td className="minimal-td text-right">
+                                                                                <button 
+                                                                                    onClick={addBomItem} 
+                                                                                    disabled={!newItem.code}
+                                                                                    className="w-full h-10 bg-[#111f42] text-[#ab8a3b] rounded-xl font-black text-[11px] uppercase tracking-widest shadow-md hover:brightness-110 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+                                                                                >
+                                                                                    <Plus size={14} strokeWidth={3}/> Add Item
+                                                                                </button>
+                                                                            </td>
+                                                                            <td className="minimal-td"></td>
+                                                                        </tr>
+                                                                    )}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="p-6 border-t bg-white flex justify-between items-center shrink-0">
+                                                        <button onClick={() => setIsEditing(!isEditing)} className={`px-5 py-2.5 rounded-xl text-[11px] font-black uppercase transition-all flex items-center gap-2 ${isEditing ? 'bg-[#ab8a3b] text-[#111f42] shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+                                                            {isEditing ? <CheckCircle size={16}/> : <Edit3 size={16}/>} {isEditing ? 'Confirm Structure' : 'Modify BOM'}
                                                         </button>
-                                                    </td>
-                                                    <td className="minimal-td"></td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                                        <div className="flex gap-3">
+                                                            <button onClick={closeModal} className="px-6 py-3 text-slate-400 hover:text-slate-600 text-[11px] font-black uppercase transition-colors font-mono font-mono">Discard</button>
+                                                            <button onClick={saveBOM} disabled={!isEditing} className={`px-10 py-3 rounded-xl font-black uppercase text-[11px] transition-all flex items-center gap-2 ${isEditing ? 'bg-[#111f42] text-[#ab8a3b] shadow-lg shadow-[#111f42]/20' : 'bg-slate-100 text-slate-300 cursor-not-allowed'}`}>
+                                                                <Save size={16}/> Save BOM Structure
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                            </DraggableWrapper>
 
-                            <div className="p-6 border-t bg-white flex justify-between items-center shrink-0">
-                                <button onClick={() => setIsEditing(!isEditing)} className={`px-5 py-2.5 rounded-xl text-[11px] font-black uppercase transition-all flex items-center gap-2 ${isEditing ? 'bg-[#ab8a3b] text-[#111f42] shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
-                                    {isEditing ? <CheckCircle size={16}/> : <Edit3 size={16}/>} {isEditing ? 'Confirm Structure' : 'Modify BOM'}
-                                </button>
-                                <div className="flex gap-3">
-                                    <button onClick={closeModal} className="px-6 py-3 text-slate-400 hover:text-slate-600 text-[11px] font-black uppercase transition-colors font-mono font-mono">Discard</button>
-                                    <button onClick={saveBOM} disabled={!isEditing} className={`px-10 py-3 rounded-xl font-black uppercase text-[11px] transition-all flex items-center gap-2 ${isEditing ? 'bg-[#111f42] text-[#ab8a3b] shadow-lg shadow-[#111f42]/20' : 'bg-slate-100 text-slate-300 cursor-not-allowed'}`}>
-                                        <Save size={16}/> Save BOM Structure
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 )}
 

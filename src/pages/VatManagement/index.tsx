@@ -92,7 +92,7 @@ export default function VatManagement() {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translate(-50%, 5px); } to { opacity: 1; transform: translate(-50%, 0); } }
         .animate-fade-up { animation: fadeUp 0.2s ease-out forwards; }
@@ -148,28 +148,28 @@ export default function VatManagement() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
         <KpiCard 
           title="Total Base Amount"
-          value={`฿${totalBase.toLocaleString()}`}
+          value={`฿${totalBase?.toLocaleString()}`}
           icon={Receipt}
           color="#111f42"
           subValue="Revenue excluding tax"
         />
         <KpiCard 
           title="Output VAT (Sales)"
-          value={`฿${(filteredData.filter((i: any)=>i.type==='Sales').reduce((s: number,i: any)=>s+i.vatAmount,0)).toLocaleString()}`}
+          value={`฿${(filteredData.filter((i: any)=>i.type==='Sales').reduce((s: number,i: any)=>s+i.vatAmount,0))?.toLocaleString()}`}
           icon={ArrowUpCircle}
           color="#ce5a43"
           subValue="Tax on sales collection"
         />
         <KpiCard 
           title="Input VAT (Purchase)"
-          value={`฿${(filteredData.filter((i: any)=>i.type==='Purchase').reduce((s: number,i: any)=>s+i.vatAmount,0)).toLocaleString()}`}
+          value={`฿${(filteredData.filter((i: any)=>i.type==='Purchase').reduce((s: number,i: any)=>s+i.vatAmount,0))?.toLocaleString()}`}
           icon={ArrowDownCircle}
           color="#496ca8"
           subValue="Tax from procurement"
         />
         <KpiCard 
           title="Net Tax Position"
-          value={`฿${totalVat.toLocaleString()}`}
+          value={`฿${totalVat?.toLocaleString()}`}
           icon={ShieldCheck}
           color="#10b981"
           subValue="Tax payable or claimable"

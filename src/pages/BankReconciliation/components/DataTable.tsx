@@ -21,7 +21,7 @@ export default function DataTable({
         </div>
         <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#ce5a43]/5">
           <p className="text-[10px] font-bold text-[#ce5a43] uppercase tracking-widest mb-1 flex items-center gap-1"><Scale size={12}/> Total Difference</p>
-          <p className="text-xl font-black text-[#ce5a43] font-mono">฿{totalDiffAmount.toLocaleString()}</p>
+          <p className="text-xl font-black text-[#ce5a43] font-mono">฿{totalDiffAmount?.toLocaleString()}</p>
         </div>
         <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#496ca8]/5">
           <p className="text-[10px] font-bold text-[#496ca8] uppercase tracking-widest mb-1 flex items-center gap-1">Adjustment Needed</p>

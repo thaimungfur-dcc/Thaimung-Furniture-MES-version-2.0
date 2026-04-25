@@ -51,7 +51,7 @@ export default function BomListTable({ data, onManageBom, getStatusClass }: BomL
         {
             accessorKey: 'cost',
             header: 'EST. COST',
-            cell: ({ row }) => <div className="text-right font-black">฿{(Number(row.getValue('cost')) || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
+            cell: ({ row }) => <div className="text-right font-black">฿{(Number(row.getValue('cost')) || 0)?.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
         },
         {
             accessorKey: 'status',

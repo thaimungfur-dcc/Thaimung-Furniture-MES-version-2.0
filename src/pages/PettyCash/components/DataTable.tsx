@@ -14,10 +14,10 @@ export default function DataTable({
   return (
     <div className="bg-white/90 backdrop-blur-md border border-white shadow-sm overflow-hidden rounded-none flex-1 flex flex-col mt-2">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-b border-slate-200">
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-slate-50/50"><p className="text-[10px] font-bold text-[#7693a6] uppercase tracking-widest mb-1">Total Amount</p><p className="text-xl font-black text-[#223149] font-mono">฿{totalAmount.toLocaleString()}</p></div>
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#d9b343]/5"><p className="text-[10px] font-bold text-[#d9b343] uppercase tracking-widest mb-1">Pending Approval</p><p className="text-xl font-black text-[#d9b343] font-mono">฿{filteredData.filter((i: any)=>i.status==='Pending Approval').reduce((s: number,i: any)=>s+i.amount,0).toLocaleString()}</p></div>
-        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#496ca8]/5"><p className="text-[10px] font-bold text-[#496ca8] uppercase tracking-widest mb-1">Approved (To Pay)</p><p className="text-xl font-black text-[#496ca8] font-mono">฿{filteredData.filter((i: any)=>i.status==='Approved').reduce((s: number,i: any)=>s+i.amount,0).toLocaleString()}</p></div>
-        <div className="p-4 flex flex-col justify-center bg-emerald-50/30"><p className="text-[10px] font-bold text-[#7fa85a] uppercase tracking-widest mb-1">Reimbursed (Paid)</p><p className="text-xl font-black text-[#7fa85a] font-mono">฿{filteredData.filter((i: any)=>i.status==='Reimbursed').reduce((s: number,i: any)=>s+i.amount,0).toLocaleString()}</p></div>
+        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-slate-50/50"><p className="text-[10px] font-bold text-[#7693a6] uppercase tracking-widest mb-1">Total Amount</p><p className="text-xl font-black text-[#223149] font-mono">฿{totalAmount?.toLocaleString()}</p></div>
+        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#d9b343]/5"><p className="text-[10px] font-bold text-[#d9b343] uppercase tracking-widest mb-1">Pending Approval</p><p className="text-xl font-black text-[#d9b343] font-mono">฿{filteredData.filter((i: any)=>i.status==='Pending Approval').reduce((s: number,i: any)=>s+i.amount,0)?.toLocaleString()}</p></div>
+        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#496ca8]/5"><p className="text-[10px] font-bold text-[#496ca8] uppercase tracking-widest mb-1">Approved (To Pay)</p><p className="text-xl font-black text-[#496ca8] font-mono">฿{filteredData.filter((i: any)=>i.status==='Approved').reduce((s: number,i: any)=>s+i.amount,0)?.toLocaleString()}</p></div>
+        <div className="p-4 flex flex-col justify-center bg-emerald-50/30"><p className="text-[10px] font-bold text-[#7fa85a] uppercase tracking-widest mb-1">Reimbursed (Paid)</p><p className="text-xl font-black text-[#7fa85a] font-mono">฿{filteredData.filter((i: any)=>i.status==='Reimbursed').reduce((s: number,i: any)=>s+i.amount,0)?.toLocaleString()}</p></div>
       </div>
       <div className="p-3 flex items-center justify-between gap-4 bg-white/80 border-b border-slate-200">
         <div className="flex items-center gap-4 flex-shrink-0">
@@ -61,7 +61,7 @@ export default function DataTable({
                 <td className="px-4 py-3 font-mono text-center">{formatDate(v.date)}</td>
                 <td className="px-4 py-3"><span className="font-bold text-[#223149] block">{v.employee}</span><span className="text-[9px] text-[#7693a6]">{v.department}</span></td>
                 <td className="px-4 py-3 min-w-[200px]"><span className="font-medium text-[#3c5d7d] block">{v.description}</span><span className="text-[9px] text-slate-500">{getCategoryIcon(v.category)} {v.category}</span></td>
-                <td className="px-4 py-3 font-mono font-black text-right text-[#223149]">฿{v.amount.toLocaleString()}</td>
+                <td className="px-4 py-3 font-mono font-black text-right text-[#223149]">฿{v.amount?.toLocaleString()}</td>
                 <td className="px-4 py-3 text-center whitespace-nowrap">
                   <span className={`px-2 py-1 rounded text-[9px] font-bold uppercase tracking-wider
                     ${v.status === 'Reimbursed' ? 'bg-[#7fa85a]/10 text-[#7fa85a]' : 

@@ -20,6 +20,7 @@ import {
 import { useMasterData } from '../../context/MasterDataContext';
 import { clsx } from 'clsx';
 import { PageHeader } from '../../components/shared/PageHeader';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 // Utility function to convert HEX to RGBA for dynamic background opacity
 const hexToRgba = (hex: string, opacity: number) => {
@@ -185,7 +186,7 @@ export default function MasterDataEntry() {
           subtitle="ศูนย์กลางบันทึกข้อมูล (Single Point of Entry)"
         />
 
-        <main className="flex-1 relative z-10 pt-4 flex flex-col gap-6 no-print max-w-[1600px] mx-auto w-full">
+        <main className="flex-1 relative z-10 pt-4 flex flex-col gap-6 no-print w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
             
             {/* LEFT COLUMN: Type Selector */}
@@ -262,7 +263,7 @@ export default function MasterDataEntry() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   
                   {/* Header info based on type */}
-                  <div className="border-b border-black/5 pb-4 mb-2">
+                  <div className="border-b border-black/5 mb-2">
                      <h3 className="text-lg font-black text-[#223f59] uppercase tracking-widest flex items-center gap-2">
                        {activeTx.title}
                      </h3>
@@ -275,7 +276,7 @@ export default function MasterDataEntry() {
                       <input 
                         type="date" name="date" required
                         value={formData.date} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none px-4 py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm font-mono uppercase tracking-widest"
+                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm font-mono uppercase tracking-widest"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -285,7 +286,7 @@ export default function MasterDataEntry() {
                       <input 
                         type="text" name="docNo" required placeholder="Auto-generated if left blank"
                         value={formData.docNo} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none px-4 py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest font-mono"
+                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest font-mono"
                       />
                     </div>
                   </div>
@@ -299,7 +300,7 @@ export default function MasterDataEntry() {
                       <input 
                         type="text" name="entity" required placeholder="Type name..."
                         value={formData.entity} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none px-4 py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest"
+                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest"
                       />
                     </div>
                   )}
@@ -313,7 +314,7 @@ export default function MasterDataEntry() {
                       <select 
                         name="category" required
                         value={formData.category} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none px-4 py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm uppercase tracking-widest"
+                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm uppercase tracking-widest"
                       >
                         {entryType === 'expense' && (
                           <>
@@ -357,7 +358,7 @@ export default function MasterDataEntry() {
                           <input 
                             type="number" name="amount" required step="0.01" placeholder="0.00"
                             value={formData.amount} onChange={handleInputChange}
-                            className="w-full bg-white border border-white rounded-none px-4 py-3 pl-10 text-lg font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-tighter"
+                            className="w-full bg-white border border-white rounded-none py-3 pl-10 text-lg font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-tighter"
                           />
                         </div>
                       </div>
@@ -368,7 +369,7 @@ export default function MasterDataEntry() {
                           <select 
                             name="taxType"
                             value={formData.taxType} onChange={handleInputChange}
-                            className="w-full bg-white/90 border border-white rounded-none px-4 py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm uppercase tracking-widest"
+                            className="w-full bg-white/90 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm uppercase tracking-widest"
                           >
                             <option value="Vat Exclude">VAT Exclude (+7% On top)</option>
                             <option value="Vat Include">VAT Include (Included in amount)</option>
@@ -383,7 +384,7 @@ export default function MasterDataEntry() {
                           <input 
                             type="number" name="creditTerm" required
                             value={formData.creditTerm} onChange={handleInputChange}
-                            className="w-full md:w-1/2 bg-white/90 border border-white rounded-none px-4 py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-widest"
+                            className="w-full md:w-1/2 bg-white/90 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-widest"
                           />
                         </div>
                       )}
@@ -394,15 +395,15 @@ export default function MasterDataEntry() {
                       <div className="mt-5 p-4 bg-white border border-white rounded-none flex items-center justify-between animate-fade shadow-sm">
                         <div>
                           <p className="text-[9px] font-black text-[#7693a6] uppercase tracking-[0.2em]">Base Amount</p>
-                          <p className="font-mono font-black text-[#223f59] text-sm">฿{taxData.base.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
+                          <p className="font-mono font-black text-[#223f59] text-sm">฿{taxData.base?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
                         </div>
                         <div className="text-center">
                           <p className="text-[9px] font-black text-[#7693a6] uppercase tracking-[0.2em]">VAT (7%)</p>
-                          <p className="font-mono text-[#ce5a43] font-black text-sm">+ ฿{taxData.vat.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
+                          <p className="font-mono text-[#ce5a43] font-black text-sm">+ ฿{taxData.vat?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-[9px] font-black text-[#7693a6] uppercase tracking-[0.2em]">Net Total (AR/AP)</p>
-                          <p className="font-mono text-xl font-black text-[#496ca8]">฿{taxData.total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
+                          <p className="font-mono text-xl font-black text-[#496ca8]">฿{taxData.total?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
                         </div>
                       </div>
                     )}
@@ -415,7 +416,7 @@ export default function MasterDataEntry() {
                     <button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="w-full sm:w-auto px-8 py-3.5 bg-[#223f59] hover:bg-[#1a3045] text-white rounded-none font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-2 shadow-lg transition-all disabled:opacity-50"
+                      className="w-full sm:w-auto py-3.5 bg-[#223f59] hover:bg-[#1a3045] text-white rounded-none font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-2 shadow-lg transition-all disabled:opacity-50"
                     >
                       {isSubmitting ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
                       {isSubmitting ? 'Processing...' : 'Save & Broadcast Data'}
@@ -432,9 +433,13 @@ export default function MasterDataEntry() {
         {/* User Guide Drawer */}
         {isGuideOpen && (
           <div className="fixed inset-0 z-[60] flex justify-end">
-            <div className="absolute inset-0 bg-[#223149]/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsGuideOpen(false)}></div>
+            
+                      <DraggableWrapper>
+                            <div className="absolute inset-0 bg-[#223149]/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsGuideOpen(false)}></div>
+                          </DraggableWrapper>
+
             <div className="relative w-full max-w-lg h-full bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 border-l border-white/20 rounded-none">
-              <div className="px-6 py-5 flex justify-between items-center bg-[#223149] text-white shrink-0 shadow-md">
+              <div className="py-5 flex justify-between items-center bg-[#223149] text-white shrink-0 shadow-md">
                 <h2 className="text-base font-black uppercase tracking-[0.2em] flex items-center gap-2">
                   <HelpCircle size={20} className="text-[#df8a5d]" /> MASTER GUIDE
                 </h2>
@@ -489,7 +494,7 @@ export default function MasterDataEntry() {
               </div>
 
               <div className="p-5 bg-white border-t border-slate-100 flex justify-end shrink-0 shadow-inner">
-                <button onClick={() => setIsGuideOpen(false)} className="px-6 py-2.5 rounded-none font-black bg-[#223149] text-white hover:opacity-90 transition-all uppercase tracking-widest">
+                <button onClick={() => setIsGuideOpen(false)} className="py-2.5 rounded-none font-black bg-[#223149] text-white hover:opacity-90 transition-all uppercase tracking-widest">
                   รับทราบ (Close)
                 </button>
               </div>

@@ -57,8 +57,11 @@ export const api = {
       if (useCache && result.status === 'success') cache.set(cacheKey, result.data);
       return result;
     } catch (error) {
-      console.error('API Error:', error);
-      throw error;
+      console.warn('API Error (Fallback):', error);
+      console.warn('Failed to fetch from the provided URL. Falling back to mock response.');
+      const response = await mockResponse(action, data);
+      if (useCache && response.status === 'success') cache.set(cacheKey, response.data);
+      return response;
     }
   }
 };

@@ -203,7 +203,6 @@ export default function SaleOrder() {
   return (
     <>
       <style>{`
-        * { font-family: 'JetBrains Mono', 'Noto Sans Thai', sans-serif !important; }
         .kanban-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
         .kanban-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
         @media print {

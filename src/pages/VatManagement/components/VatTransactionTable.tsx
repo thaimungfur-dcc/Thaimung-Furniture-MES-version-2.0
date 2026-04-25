@@ -66,15 +66,15 @@ const VatTransactionTable: React.FC<VatTransactionTableProps> = ({ data, vatSubT
                   <span className="font-medium text-[12px] text-slate-700">{item.customer}</span>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <span className="font-semibold text-[12px] text-slate-700">฿{item.amount.toLocaleString()}</span>
+                  <span className="font-semibold text-[12px] text-slate-700">฿{item.amount?.toLocaleString()}</span>
                 </td>
                 <td className="px-6 py-4 text-center">
                   <span className="font-semibold text-[12px]" style={{ color: '#b22026' }}>
-                    ฿{item.vat.toLocaleString()}
+                    ฿{item.vat?.toLocaleString()}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <span className="font-semibold text-[12px] text-[#111f42]">฿{item.total.toLocaleString()}</span>
+                  <span className="font-semibold text-[12px] text-[#111f42]">฿{item.total?.toLocaleString()}</span>
                 </td>
                 <td className="px-6 py-4 text-center">
                   <span className={`px-3 py-1.5 font-semibold uppercase tracking-widest border rounded-md text-[9px] ${item.status === 'Recorded' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100'}`}>

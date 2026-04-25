@@ -58,7 +58,7 @@ export default function GeneralLedger() {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 text-[12px] bg-[#F9F7F6]">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 transition-colors duration-500 text-[12px]">
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translate(-50%, 5px); } to { opacity: 1; transform: translate(-50%, 0); } }
         .animate-fade-up { animation: fadeUp 0.2s ease-out forwards; }
@@ -82,7 +82,7 @@ export default function GeneralLedger() {
             </div>
 
             <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl shrink-0">
-              <button className="px-4 py-1.5 font-black transition-all flex items-center gap-1.5 uppercase tracking-widest rounded-lg text-[10px] bg-[#111f42] text-white shadow-sm">
+              <button className="py-1.5 font-black transition-all flex items-center gap-1.5 uppercase tracking-widest rounded-lg text-[10px] bg-[#111f42] text-white shadow-sm">
                 <Database size={12} /> DETAILED DATA
               </button>
             </div>

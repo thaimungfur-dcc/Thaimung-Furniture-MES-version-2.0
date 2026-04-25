@@ -80,7 +80,7 @@ export default function KanbanBoard({
                           SALES ORDER
                         </span>
                         <span className="text-[10px] font-bold text-[#111f42]">
-                          Total: <span className="text-[#6b7556]">฿{(so.total || 0).toLocaleString()}</span>
+                          Total: <span className="text-[#6b7556]">฿{(so.total || 0)?.toLocaleString()}</span>
                         </span>
                       </div>
                     </div>

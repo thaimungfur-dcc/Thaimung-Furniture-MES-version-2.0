@@ -83,7 +83,7 @@ export default function OrdersTable({
                       {isMulti && <span className="text-[8px] bg-orange-50 text-[#E3624A] px-1.5 py-0.5 rounded font-normal">Split Delv.</span>}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-right font-bold text-[#E3624A]">฿{(so.total || 0).toLocaleString()}</td>
+                  <td className="px-6 py-4 text-right font-bold text-[#E3624A]">฿{(so.total || 0)?.toLocaleString()}</td>
                   <td className="px-6 py-4 text-center"><span className={`px-3 py-1 font-normal uppercase text-[8px] border rounded-full ${style.bg} ${style.text} ${style.border}`}>{so.status}</span></td>
                   <td className="px-6 py-4 text-center">
                     <div className="flex items-center justify-center gap-4">

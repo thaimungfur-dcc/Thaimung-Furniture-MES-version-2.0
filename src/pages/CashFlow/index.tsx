@@ -115,7 +115,7 @@ export default function CashFlow() {
   };
 
   return (
-    <div className="w-full space-y-4 relative flex-1 flex flex-col animate-fade-in-up">
+    <div className="flex flex-col space-y-4 w-full relative flex-1 animate-fade-in-up">
       <style>{`
         .kanban-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .kanban-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -173,28 +173,28 @@ export default function CashFlow() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
         <KpiCard 
           title="Cleared Inflows"
-          value={`฿${totalInflows.toLocaleString()}`}
+          value={`฿${totalInflows?.toLocaleString()}`}
           icon={ArrowUpCircle}
           color="#10b981"
           subValue="Revenue collected and cleared"
         />
         <KpiCard 
           title="Cleared Outflows"
-          value={`฿${totalOutflows.toLocaleString()}`}
+          value={`฿${totalOutflows?.toLocaleString()}`}
           icon={ArrowDownCircle}
           color="#ce5a43"
           subValue="Payments settled successfully"
         />
         <KpiCard 
           title="Net Cash Position"
-          value={`฿${(totalInflows - totalOutflows).toLocaleString()}`}
+          value={`฿${(totalInflows - totalOutflows)?.toLocaleString()}`}
           icon={TrendingUp}
           color="#111f42"
           subValue="Actual cash balance change"
         />
         <KpiCard 
           title="Net Pending/Forecast"
-          value={`฿${netPending.toLocaleString()}`}
+          value={`฿${netPending?.toLocaleString()}`}
           icon={AlertCircle}
           color={netPending >= 0 ? "#10b981" : "#ce5a43"}
           subValue="Future expected liquidity"
@@ -202,7 +202,7 @@ export default function CashFlow() {
       </div>
 
       {mainTab === 'kanban' && (
-        <div className="flex-1 overflow-x-auto overflow-y-hidden kanban-scroll pb-4 flex h-full">
+        <div className="flex-1 overflow-x-auto overflow-y-hidden kanban-scroll flex h-full">
           <div className="flex gap-4 h-full min-w-max items-start">
             {[
               { id: 'Forecasted', title: 'คาดการณ์ (Forecasted)', color: 'bg-slate-400' },
@@ -231,7 +231,7 @@ export default function CashFlow() {
                         <p className="text-[10px] font-mono text-slate-400 mb-3 uppercase tracking-widest">{formatDate(tx.date)}</p>
                         <div className="border-t border-slate-100 pt-3 flex justify-between items-center">
                           <span className={`text-[12px] font-black ${tx.type === 'Inflow' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                            {tx.type === 'Inflow' ? '+' : '-'} ฿{tx.amount.toLocaleString()}
+                            {tx.type === 'Inflow' ? '+' : '-'} ฿{tx.amount?.toLocaleString()}
                           </span>
                           <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest flex items-center gap-1"><Lock size={8}/> SYNCED</span>
                         </div>
@@ -277,12 +277,12 @@ export default function CashFlow() {
 
             <div className="flex items-center gap-2 justify-end flex-shrink-0 ml-auto">
               <button 
-                className="h-10 px-4 py-0 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition-all font-black text-[10px] uppercase tracking-widest flex items-center gap-2 shadow-sm"
+                className="h-10 py-0 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition-all font-black text-[10px] uppercase tracking-widest flex items-center gap-2 shadow-sm"
               >
                 <Printer size={16} /> PRINT REPORT
               </button>
               <button 
-                className="h-10 px-4 py-0 rounded-lg bg-[#111f42] text-white hover:bg-[#1a2d5c] transition-all font-black text-[10px] uppercase tracking-widest flex items-center gap-2 shadow-md"
+                className="h-10 py-0 rounded-lg bg-[#111f42] text-white hover:bg-[#1a2d5c] transition-all font-black text-[10px] uppercase tracking-widest flex items-center gap-2 shadow-md"
               >
                 <Download size={16} className="text-[#E3624A]" /> EXPORT CSV
               </button>
@@ -293,30 +293,30 @@ export default function CashFlow() {
             <table className="w-full text-left border-collapse min-w-[1000px]">
               <thead className="bg-[#111f42] text-white sticky top-0 z-10">
                 <tr>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] w-32">Date</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] w-40">Ref No.</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em]">Description / Category</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] w-32">Source</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-right w-40">Amount</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-center w-32">Status</th>
+                  <th className="text-[10px] font-black uppercase tracking-[0.2em] w-32">Date</th>
+                  <th className="text-[10px] font-black uppercase tracking-[0.2em] w-40">Ref No.</th>
+                  <th className="text-[10px] font-black uppercase tracking-[0.2em]">Description / Category</th>
+                  <th className="text-[10px] font-black uppercase tracking-[0.2em] w-32">Source</th>
+                  <th className="text-[10px] font-black uppercase tracking-[0.2em] text-right w-40">Amount</th>
+                  <th className="text-[10px] font-black uppercase tracking-[0.2em] text-center w-32">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {currentItems.map(tx => (
                   <tr key={tx.id} className="hover:bg-slate-50 transition-colors group">
-                    <td className="px-6 py-4 font-mono text-[11px] text-slate-500">{formatDate(tx.date)}</td>
-                    <td className="px-6 py-4 font-mono text-[11px] font-black text-[#111f42] tracking-tighter uppercase">{tx.refNo}</td>
-                    <td className="px-6 py-4">
+                    <td className="font-mono text-[11px] text-slate-500">{formatDate(tx.date)}</td>
+                    <td className="font-mono text-[11px] font-black text-[#111f42] tracking-tighter uppercase">{tx.refNo}</td>
+                    <td className="">
                       <div className="font-black text-[#111f42] uppercase text-[12px]">{tx.description}</div>
                       <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{tx.category}</div>
                     </td>
-                    <td className="px-6 py-4">{getSourceBadge(tx.source)}</td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="">{getSourceBadge(tx.source)}</td>
+                    <td className="text-right">
                       <span className={`font-black text-[13px] ${tx.type === 'Inflow' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                        {tx.type === 'Inflow' ? '+' : '-'} ฿{tx.amount.toLocaleString()}
+                        {tx.type === 'Inflow' ? '+' : '-'} ฿{tx.amount?.toLocaleString()}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-center">
+                    <td className="text-center">
                       <span className={`inline-flex px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border ${
                         tx.status === 'Cleared' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
                         tx.status === 'Delayed' ? 'bg-rose-50 text-rose-600 border-rose-100' :
@@ -332,7 +332,7 @@ export default function CashFlow() {
             </table>
           </div>
 
-          <div className="px-6 py-4 bg-white border-t border-slate-100 flex items-center justify-between shadow-inner">
+          <div className="bg-white border-t border-slate-100 flex items-center justify-between shadow-inner">
             <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
               Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredData.length)} of {filteredData.length} records
             </div>
@@ -384,7 +384,7 @@ export default function CashFlow() {
         <>
           <div className="fixed inset-0 bg-[#111f42]/40 backdrop-blur-sm z-[100] animate-in fade-in duration-200 no-print" onClick={() => setIsGuideOpen(false)} />
           <div className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[110] flex flex-col animate-in slide-in-from-right duration-300 no-print">
-            <div className="px-6 py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0">
+            <div className="py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0">
               <h2 className="text-base font-black uppercase tracking-[0.2em] flex items-center gap-3"><HelpCircle size={20} className="text-[#E3624A]" /> CASH FLOW GUIDE</h2>
               <button onClick={() => setIsGuideOpen(false)} className="hover:bg-white/20 p-2 rounded-lg transition-colors"><X size={20} /></button>
             </div>

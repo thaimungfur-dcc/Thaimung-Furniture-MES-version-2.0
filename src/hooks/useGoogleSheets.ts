@@ -21,7 +21,7 @@ export function useGoogleSheets<T>(sheetName: string) {
       }
     } catch (err: any) {
       setError(err.message);
-      console.error(`Error fetching ${sheetName}:`, err);
+      console.warn(`Error fetching ${sheetName}:`, err);
     } finally {
       setLoading(false);
     }

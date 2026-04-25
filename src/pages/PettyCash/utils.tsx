@@ -8,6 +8,7 @@ export const formatDate = (dateString: string) => {
 };
 
 export const getCategoryIcon = (cat: string) => {
+  if (!cat) return <FileText size={14} className="inline mr-1 text-[#df8a5d]" />;
   if (cat.includes('Travel')) return <Car size={14} className="inline mr-1 text-[#496ca8]" />;
   if (cat.includes('Meals')) return <Coffee size={14} className="inline mr-1 text-[#d9b343]" />;
   if (cat.includes('Supplies')) return <Package size={14} className="inline mr-1 text-[#7fa85a]" />;

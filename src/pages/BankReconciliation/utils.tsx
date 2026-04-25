@@ -9,7 +9,7 @@ export const formatDate = (dateString: string) => {
 
 export const getFormatAmount = (amt: number | null) => {
   if (amt === null) return <span className="text-slate-300">-</span>;
-  return <span className={amt < 0 ? 'text-[#ce5a43]' : 'text-[#223149]'}>{amt < 0 ? `(${Math.abs(amt).toLocaleString()})` : amt.toLocaleString()}</span>;
+  return <span className={amt < 0 ? 'text-[#ce5a43]' : 'text-[#223149]'}>{amt < 0 ? `(${Math.abs(amt)?.toLocaleString()})` : amt?.toLocaleString()}</span>;
 };
 
 export const getSourceBadge = (source: string) => (

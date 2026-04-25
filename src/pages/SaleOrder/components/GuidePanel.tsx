@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, HelpCircle, LayoutDashboard, Plus, Truck, Kanban } from 'lucide-react';
+import { DraggableWrapper } from "../../../components/shared/DraggableWrapper";
 
 interface GuidePanelProps {
   isGuideOpen: boolean;
@@ -9,7 +10,11 @@ interface GuidePanelProps {
 export default function GuidePanel({ isGuideOpen, setIsGuideOpen }: GuidePanelProps) {
   return (
     <div className={`fixed inset-0 z-[200] transition-opacity duration-300 no-print ${isGuideOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-      <div className="absolute inset-0 bg-[#111f42]/40 backdrop-blur-sm" onClick={() => setIsGuideOpen(false)}></div>
+      
+          <DraggableWrapper>
+                <div className="absolute inset-0 bg-[#111f42]/40 backdrop-blur-sm" onClick={() => setIsGuideOpen(false)}></div>
+              </DraggableWrapper>
+
       <div className={`absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${isGuideOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="bg-[#111f42] text-white p-6 flex justify-between items-center border-b-4 border-[#E3624A] shrink-0">
           <h2 className="text-lg font-bold flex items-center gap-3 tracking-widest uppercase"><HelpCircle size={22} className="text-[#ab8a3b]" /> คู่มือการใช้งาน (SO)</h2>

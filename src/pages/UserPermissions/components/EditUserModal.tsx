@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import Draggable from 'react-draggable';
 import { UserCog, Image as ImageIcon, Save, Lock, ChevronDown } from 'lucide-react';
 import { SYSTEM_MODULES, PERMISSION_LEVELS } from '../constants';
+import { DraggableWrapper } from "../../../components/shared/DraggableWrapper";
 
 interface EditUserModalProps {
   nodeRef: React.RefObject<HTMLDivElement>;
@@ -31,13 +32,17 @@ export default function EditUserModal({
 }: EditUserModalProps) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none">
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={() => setIsEditModalOpen(false)}
-        className="absolute inset-0 bg-[#111f42]/60 backdrop-blur-sm pointer-events-auto"
-      />
+      
+          <DraggableWrapper>
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="absolute inset-0 bg-[#111f42]/60 backdrop-blur-sm pointer-events-auto"
+                />
+              </DraggableWrapper>
+
       <Draggable nodeRef={nodeRef} handle=".modal-drag-handle" cancel="button, input, select, textarea">
         <div ref={nodeRef} className="relative w-full max-w-[1200px] h-[90vh] pointer-events-auto">
           <motion.div 

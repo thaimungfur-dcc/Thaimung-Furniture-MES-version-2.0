@@ -24,6 +24,7 @@ import { CsvUploadModal } from '../../components/shared/CsvUploadModal';
 import { DataTable } from '../../components/shared/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
 import { PageHeader } from '../../components/shared/PageHeader';
+import { DraggableWrapper } from "../../components/shared/DraggableWrapper";
 
 export default function WarehouseInApp() {
     // --- State Management ---
@@ -78,7 +79,7 @@ export default function WarehouseInApp() {
     const warehouses = ['All', 'FG', 'RM', 'WIP', 'REWORK', 'SCRAP'];
     const statuses = ['Not Started', 'In Progress', 'Completed', 'All'];
     const receiveTypes = ['Production', 'Purchase', 'Return', 'Transfer', 'Consignment', 'Free Goods', 'Subcontract', 'Rework Return', 'Adjustment', 'Opening'];
-    const productMaster = items.map(item => ({ sku: item.itemCode, name: item.itemName }));
+    const productMaster = useMemo(() => (items || []).map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
 
     // Load QR and Barcode libraries dynamically
     useEffect(() => {
@@ -148,7 +149,7 @@ export default function WarehouseInApp() {
         { 
             accessorKey: 'qty', 
             header: 'Qty In',
-            cell: info => <span className="text-lg font-black text-[#10b981] font-mono">+{Number(info.getValue()).toLocaleString()}</span>
+            cell: info => <span className="text-lg font-black text-[#10b981] font-mono">+{Number(info.getValue())?.toLocaleString()}</span>
         },
         { 
             accessorKey: 'warehouseName', 
@@ -296,7 +297,7 @@ export default function WarehouseInApp() {
     };
 
     const submitReceive = async (isComplete = false) => {
-        const timestamp = new Date().toLocaleString('en-GB').replace(',', '');
+        const timestamp = new Date()?.toLocaleString('en-GB').replace(',', '');
         try {
             setIsSubmitting(true);
             if (modalType === 'MANUAL') {
@@ -444,7 +445,7 @@ export default function WarehouseInApp() {
         setIsSubmitting(true);
         
         try {
-            const timestamp = new Date().toLocaleString('en-GB').replace(',', '');
+            const timestamp = new Date()?.toLocaleString('en-GB').replace(',', '');
             for (let i = 0; i < parsedData.length; i++) {
                 const item = parsedData[i];
                 const newLog = {
@@ -489,7 +490,7 @@ export default function WarehouseInApp() {
 
 
     return (
-        <div className="flex flex-col w-full pb-10 animate-fade-in-up">
+        <div className="flex flex-col w-full relative flex-1 animate-fade-in-up">
             {/* Header */}
             <PageHeader
                 icon={ArrowDownToLine}
@@ -524,24 +525,26 @@ export default function WarehouseInApp() {
                         {/* KPI Cards */}
                         <InboundKpiSection stats={stats} />
 
-                        <div className="bg-white flex flex-col min-h-[500px] relative rounded-2xl border border-slate-200 shadow-sm overflow-hidden mt-6">
+                        <div className="flex flex-col relative mt-2 gap-4 min-h-[500px]">
                             {/* Toolbar */}
-                            <InboundToolbar 
-                                activeTab={activeTab}
-                                activeWhTab={activeWhTab}
-                                setActiveWhTab={setActiveWhTab}
-                                statusFilter={statusFilter}
-                                setStatusFilter={setStatusFilter}
-                                searchQuery={searchQuery}
-                                setSearchQuery={setSearchQuery}
-                                onImportClick={() => setShowImportModal(true)}
-                                onManualClick={() => openReceiveModal(null, 'MANUAL')}
-                                warehouses={warehouses}
-                                statuses={statuses}
-                            />
+                            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden z-20">
+                                <InboundToolbar 
+                                    activeTab={activeTab}
+                                    activeWhTab={activeWhTab}
+                                    setActiveWhTab={setActiveWhTab}
+                                    statusFilter={statusFilter}
+                                    setStatusFilter={setStatusFilter}
+                                    searchQuery={searchQuery}
+                                    setSearchQuery={setSearchQuery}
+                                    onImportClick={() => setShowImportModal(true)}
+                                    onManualClick={() => openReceiveModal(null, 'MANUAL')}
+                                    warehouses={warehouses}
+                                    statuses={statuses}
+                                />
+                            </div>
 
                             {/* Table View */}
-                            <div className="w-full relative flex-1 p-4 bg-white">
+                            <div className="w-full relative flex-1">
                                 {activeTab === 'all' ? (
                                     <DataTable 
                                         data={filteredLogs}
@@ -573,7 +576,7 @@ export default function WarehouseInApp() {
                     </div>
                 ) : (
                     <div className="bg-white border border-slate-100 flex flex-col min-h-[600px] animate-fade-in-up rounded-none shadow-sm relative flex-1">
-                        <div className="px-6 py-5 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
+                        <div className="py-5 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
                             <div className="flex flex-1 items-center gap-4 w-full overflow-x-auto no-scrollbar">
                                 <div className="flex items-center gap-3 mr-2 shrink-0">
                                     <h2 className="text-sm font-black text-[#111f42] uppercase tracking-widest leading-none">Receive Report</h2>
@@ -586,11 +589,11 @@ export default function WarehouseInApp() {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono">To</label>
                                     <input type="date" value={reportDateRange.end} onChange={(e) => setReportDateRange({...reportDateRange, end: e.target.value})} className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-[11px] font-black text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 uppercase" />
                                 </div>
-                                <button onClick={generateReport} className="h-9 px-6 bg-[#111f42] text-[#ab8a3b] rounded-xl font-black text-[10px] shadow-sm flex items-center gap-2 uppercase tracking-widest hover:brightness-110 transition-all font-mono shrink-0">GENERATE</button>
+                                <button onClick={generateReport} className="h-9 bg-[#111f42] text-[#ab8a3b] rounded-xl font-black text-[10px] shadow-sm flex items-center gap-2 uppercase tracking-widest hover:brightness-110 transition-all font-mono shrink-0">GENERATE</button>
                             </div>
                             
                             {reportData.length > 0 && (
-                                <button onClick={() => setShowReportPreview(true)} className="h-9 px-6 bg-[#ab8a3b] text-white text-[10px] font-black rounded-xl shadow-sm uppercase transition-all flex items-center gap-2 tracking-widest font-mono shrink-0 hover:bg-[#917532]">
+                                <button onClick={() => setShowReportPreview(true)} className="h-9 bg-[#ab8a3b] text-white text-[10px] font-black rounded-xl shadow-sm uppercase transition-all flex items-center gap-2 tracking-widest font-mono shrink-0 hover:bg-[#917532]">
                                     <Printer size={14} /> PRINT PREVIEW
                                 </button>
                             )}
@@ -601,31 +604,31 @@ export default function WarehouseInApp() {
                                 <table className="w-full text-left whitespace-nowrap border-collapse">
                                     <thead className="sticky top-0 z-10 shadow-sm bg-white">
                                         <tr className="bg-[#111f42]">
-                                            <th className="px-6 py-4 text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Trans ID</th>
-                                            <th className="px-6 py-4 text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Date</th>
-                                            <th className="px-6 py-4 text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Item Information</th>
-                                            <th className="px-6 py-4 text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Warehouse / Location</th>
-                                            <th className="px-6 py-4 text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b] text-right">Qty In</th>
+                                            <th className="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Trans ID</th>
+                                            <th className="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Date</th>
+                                            <th className="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Item Information</th>
+                                            <th className="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b]">Warehouse / Location</th>
+                                            <th className="text-[10px] font-black text-white uppercase tracking-widest border-b-2 border-[#ab8a3b] text-right">Qty In</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 bg-white">
                                         {reportData.map((r, i) => (
                                             <tr key={i} className="hover:bg-slate-50 transition-colors">
-                                                <td className="px-6 py-4 text-[11px] font-black text-[#111f42] font-mono tracking-wider">{String(r.transId)}</td>
-                                                <td className="px-6 py-4 text-slate-400 font-mono text-[10px] uppercase font-black">{String(r.date)}</td>
-                                                <td className="px-6 py-4">
+                                                <td className="text-[11px] font-black text-[#111f42] font-mono tracking-wider">{String(r.transId)}</td>
+                                                <td className="text-slate-400 font-mono text-[10px] uppercase font-black">{String(r.date)}</td>
+                                                <td className="">
                                                     <div className="flex flex-col">
                                                         <span className="font-black text-[#111f42] font-mono text-[11px]">{String(r.sku)}</span>
                                                         <span className="text-[10px] text-slate-400 font-black uppercase truncate max-w-[200px]">{String(r.itemName)}</span>
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="">
                                                     <div className="flex flex-col">
                                                         <span className="font-black text-[#111f42] text-[11px] uppercase tracking-wider">{String(r.warehouseName)}</span>
                                                         <span className="text-[10px] text-slate-400 font-black font-mono uppercase">{String(r.location)}</span>
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-4 text-right font-black text-[#10b981] font-mono text-[14px]">+{Number(r.qty).toLocaleString()}</td>
+                                                <td className="text-right font-black text-[#10b981] font-mono text-[14px]">+{Number(r.qty)?.toLocaleString()}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -717,8 +720,11 @@ export default function WarehouseInApp() {
             {/* Loading Overlay */}
             {(loading || isSubmitting) && (
                 <div className="fixed inset-0 z-[20000] bg-white/60 backdrop-blur-md flex flex-col items-center justify-center gap-4 animate-in fade-in duration-300">
-                    <Loader2 className="animate-spin text-[#111f42]" size={40} />
-                    <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[10px] animate-pulse font-mono">Syncing Ledger...</p>
+                    
+                    <div className="p-8 bg-white rounded-2xl shadow-2xl flex flex-col items-center gap-4 border border-slate-100">
+                        <Loader2 className="animate-spin text-[#111f42]" size={40} />
+                        <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[10px] animate-pulse font-mono">Syncing Ledger...</p>
+                    </div>
                 </div>
             )}
             

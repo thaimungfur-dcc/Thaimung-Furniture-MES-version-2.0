@@ -49,7 +49,7 @@ export default function InboundLogTable({
     {
       accessorKey: 'qty',
       header: 'QTY (+)',
-      cell: ({ row }) => <div className="text-right font-mono font-black text-emerald-600 text-[13px]">+{Number(row.getValue('qty')).toLocaleString()}</div>
+      cell: ({ row }) => <div className="text-right font-mono font-black text-emerald-600 text-[13px]">+{Number(row.getValue('qty'))?.toLocaleString()}</div>
     },
     {
       id: 'warehouse',

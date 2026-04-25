@@ -149,7 +149,7 @@ export function CsvUploadModal({
             className="relative bg-white rounded-[40px] shadow-2xl border border-white/20 w-full max-w-5xl overflow-hidden flex flex-col max-h-[90vh]"
           >
             {/* Header */}
-            <div className="px-10 py-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/10">
                   <Database size={24} />
@@ -168,11 +168,11 @@ export function CsvUploadModal({
             </div>
 
             {/* Content Container */}
-            <div className="flex-1 overflow-y-auto p-10 master-custom-scrollbar bg-[#F9F7F6]">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5 master-custom-scrollbar bg-[#F9F7F6]">
               {step === 'upload' ? (
-                <div className="space-y-8">
+                <div className="space-y-5">
                   {/* Instructions */}
-                  <div className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm relative overflow-hidden">
+                  <div className="bg-white rounded-3xl p-5 border border-blue-100 shadow-sm relative overflow-hidden">
                     <div className="absolute right-0 top-0 w-32 h-32 bg-blue-50/30 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                     <div className="flex items-start gap-5 relative z-10">
                       <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl">
@@ -205,7 +205,7 @@ export function CsvUploadModal({
                     <input {...getInputProps()} />
                     <div className="relative mb-8">
                       <div className="absolute inset-0 bg-[#111f42] rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                      <div className={`p-8 rounded-full border-4 border-white shadow-2xl transition-all duration-500 ${isDragActive ? 'bg-[#111f42] text-white rotate-12' : 'bg-[#111f42] text-white group-hover:scale-110'}`}>
+                      <div className={`p-5 rounded-full border-4 border-white shadow-2xl transition-all duration-500 ${isDragActive ? 'bg-[#111f42] text-white rotate-12' : 'bg-[#111f42] text-white group-hover:scale-110'}`}>
                         <UploadCloud size={48} strokeWidth={1.5} />
                       </div>
                     </div>
@@ -237,7 +237,7 @@ export function CsvUploadModal({
                       <div className="w-px h-10 bg-slate-200"></div>
                       <div className="flex flex-col">
                         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">RECORD COUNT</span>
-                        <div className="text-[#111f42] font-black text-xl font-mono mt-0.5">{data.length.toLocaleString()} <span className="text-[10px] uppercase font-sans text-slate-400 tracking-widest">ROWS</span></div>
+                        <div className="text-[#111f42] font-black text-xl font-mono mt-0.5">{data.length?.toLocaleString()} <span className="text-[10px] uppercase font-sans text-slate-400 tracking-widest">ROWS</span></div>
                       </div>
                     </div>
                     <button 
@@ -274,7 +274,7 @@ export function CsvUploadModal({
                         </tbody>
                       </table>
                     </div>
-                    <div className="px-6 py-4 bg-amber-50 text-amber-700 text-[10px] font-black uppercase tracking-widest text-center border-t border-amber-100 flex items-center justify-center gap-2">
+                    <div className="px-6 py-2.5 bg-amber-50 text-amber-700 text-[10px] font-black uppercase tracking-widest text-center border-t border-amber-100 flex items-center justify-center gap-2">
                       <AlertCircle size={14} /> Showing 5 rows preview. Integration summary: {data.length} total records found in matrix.
                     </div>
                   </div>
@@ -283,17 +283,17 @@ export function CsvUploadModal({
             </div>
 
             {/* Footer */}
-            <div className="px-10 py-8 border-t border-slate-100 flex items-center justify-end bg-slate-50/50 gap-4">
+            <div className="px-6 py-5 border-t border-slate-100 flex items-center justify-end bg-slate-50/50 gap-4">
               <button 
                 onClick={handleClose}
-                className="px-8 py-3.5 text-[11px] font-black text-slate-500 hover:text-[#111f42] uppercase tracking-[0.2em] transition-all"
+                className="px-5 py-3 text-[11px] font-black text-slate-500 hover:text-[#111f42] uppercase tracking-[0.2em] transition-all"
               >
                 Cancel Process
               </button>
               {step === 'preview' && (
                 <button 
                   onClick={() => onConfirm(data)}
-                  className="px-10 py-4 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group"
+                  className="px-6 py-2.5 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group"
                 >
                   Confirm Ingestion
                   <ChevronRight size={18} className="text-white group-hover:translate-x-1 transition-transform" />

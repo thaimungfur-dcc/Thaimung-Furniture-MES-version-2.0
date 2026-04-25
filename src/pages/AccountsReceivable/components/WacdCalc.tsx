@@ -31,11 +31,11 @@ export default function WacdCalc({ invoices }: any) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div className="bg-[#f5f0e9] border border-[#496ca8]/30 p-4 text-center">
           <p className="text-[10px] font-bold text-[#7693a6] uppercase tracking-widest mb-1">∑ Total AR Paid</p>
-          <p className="text-2xl font-black text-[#223149] font-mono">฿{wacdMetrics.totalPaidAmount.toLocaleString()}</p>
+          <p className="text-2xl font-black text-[#223149] font-mono">฿{wacdMetrics.totalPaidAmount?.toLocaleString()}</p>
         </div>
         <div className="bg-[#f5f0e9] border border-[#496ca8]/30 p-4 text-center">
           <p className="text-[10px] font-bold text-[#7693a6] uppercase tracking-widest mb-1">∑ (Days × Amount)</p>
-          <p className="text-2xl font-black text-[#496ca8] font-mono">{wacdMetrics.totalWeight.toLocaleString()}</p>
+          <p className="text-2xl font-black text-[#496ca8] font-mono">{wacdMetrics.totalWeight?.toLocaleString()}</p>
         </div>
         <div className="bg-gradient-to-r from-[#223149] to-[#3c5d7d] border border-[#223149] p-4 text-center text-white shadow-md">
           <p className="text-[10px] font-bold text-[#a8bbbf] uppercase tracking-widest mb-1">Resulting AR WACD</p>
@@ -89,8 +89,8 @@ export default function WacdCalc({ invoices }: any) {
                   <td className="px-4 py-3 font-mono text-center text-slate-600">{formatDate(row.issueDate)}</td>
                   <td className="px-4 py-3 font-mono text-center text-[#7fa85a] font-semibold">{formatDate(row.payDate)}</td>
                   <td className="px-4 py-3 font-bold text-center text-[#ce5a43]">{days}</td>
-                  <td className="px-4 py-3 font-mono font-semibold text-[#223149]">฿{row.amount.toLocaleString()}</td>
-                  <td className="px-4 py-3 font-mono font-bold text-[#496ca8]">{weight.toLocaleString()}</td>
+                  <td className="px-4 py-3 font-mono font-semibold text-[#223149]">฿{row.amount?.toLocaleString()}</td>
+                  <td className="px-4 py-3 font-mono font-bold text-[#496ca8]">{weight?.toLocaleString()}</td>
                 </tr>
               );
             })}

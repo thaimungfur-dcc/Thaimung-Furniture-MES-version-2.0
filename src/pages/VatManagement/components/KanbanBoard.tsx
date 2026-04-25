@@ -38,8 +38,8 @@ export default function KanbanBoard({ taxRecords }: any) {
                     <div className="bg-slate-50 p-2 rounded-lg mb-3">
                        <div className="flex justify-between text-[9px] font-bold text-slate-400 mb-1 uppercase"><span>Base</span> <span>VAT (7%)</span></div>
                        <div className="flex justify-between text-[12px] font-mono font-black text-[#1e293b]">
-                          <span>฿{rec.baseAmount.toLocaleString()}</span>
-                          <span className={rec.type === 'Sales' ? 'text-[#ce5a43]' : 'text-[#496ca8]'}>฿{rec.vatAmount.toLocaleString()}</span>
+                          <span>฿{rec.baseAmount?.toLocaleString()}</span>
+                          <span className={rec.type === 'Sales' ? 'text-[#ce5a43]' : 'text-[#496ca8]'}>฿{rec.vatAmount?.toLocaleString()}</span>
                        </div>
                     </div>
                     <div className="border-t border-slate-100 pt-3 flex justify-between items-center">

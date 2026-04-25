@@ -42,17 +42,17 @@ export function AspectModal({
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="p-8 space-y-6"
+          className="p-5 space-y-4"
         >
           {children}
         </motion.div>
 
         {/* Footer Actions */}
-        <div className="p-8 border-t border-slate-100 bg-slate-50/50 flex items-center justify-end gap-4">
+        <div className="p-5 border-t border-slate-100 bg-slate-50/50 flex items-center justify-end gap-4">
           <button 
             disabled={isLoading}
             onClick={onClose}
-            className="px-8 py-3.5 text-[11px] font-black text-slate-400 hover:text-[#111f42] uppercase tracking-[0.2em] transition-all disabled:opacity-50"
+            className="px-5 py-3.5 text-[11px] font-black text-slate-400 hover:text-[#111f42] uppercase tracking-[0.2em] transition-all disabled:opacity-50"
           >
             Cancel
           </button>

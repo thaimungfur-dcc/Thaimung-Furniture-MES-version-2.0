@@ -32,7 +32,7 @@ export default function StructureChart({ stats }: StructureChartProps) {
         >
           <div className="w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 bg-white rounded-full flex flex-col items-center justify-center shadow-inner z-10">
             <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Total Flow</p>
-            <p className="text-xl sm:text-2xl font-bold text-[#111f42]">฿{totalAbs.toLocaleString()}</p>
+            <p className="text-xl sm:text-2xl font-bold text-[#111f42]">฿{totalAbs?.toLocaleString()}</p>
           </div>
         </div>
 

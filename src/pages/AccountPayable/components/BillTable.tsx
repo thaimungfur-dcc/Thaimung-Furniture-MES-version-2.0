@@ -155,9 +155,9 @@ export default function BillTable({
 
                   {/* AMOUNT */}
                   <td className="px-4 py-3 align-top border-r border-slate-100 text-right w-[1%]">
-                     <p className="font-mono font-bold text-[#7693a6] text-[10px]">Total: ฿{bill.amount.toLocaleString()}</p>
-                     <p className="font-mono font-bold text-[#7fa85a] text-[10px]">Paid: -฿{bill.paid.toLocaleString()}</p>
-                     <p className="font-mono font-black text-[#223149] text-sm mt-1">Bal: ฿{bill.balance.toLocaleString()}</p>
+                     <p className="font-mono font-bold text-[#7693a6] text-[10px]">Total: ฿{bill.amount?.toLocaleString()}</p>
+                     <p className="font-mono font-bold text-[#7fa85a] text-[10px]">Paid: -฿{bill.paid?.toLocaleString()}</p>
+                     <p className="font-mono font-black text-[#223149] text-sm mt-1">Bal: ฿{bill.balance?.toLocaleString()}</p>
                   </td>
 
                   {/* STATUS & RISK */}

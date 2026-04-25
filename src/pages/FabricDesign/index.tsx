@@ -138,7 +138,7 @@ export default function FabricDesignApp() {
     };
 
     return (
-        <div className="w-full space-y-4 relative flex-1 flex flex-col pt-0 transition-colors duration-500 text-[12px] bg-[#F9F7F6]">
+        <div className="flex flex-col space-y-4 w-full relative flex-1 transition-colors duration-500 text-[12px]">
             <style>{`
                 .master-custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
                 .master-custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -189,7 +189,7 @@ export default function FabricDesignApp() {
                 <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col flex-1">
                     
                     {/* Toolbar Filter */}
-                    <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
+                    <div className="border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
                         <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
                             <div className="relative flex-shrink-0">
                                 <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[#ab8a3b]" size={14} />
@@ -218,7 +218,7 @@ export default function FabricDesignApp() {
                             </div>
                         </div>
                         <div className="flex gap-3 shrink-0 flex-nowrap items-center ml-auto">
-                            <button onClick={() => openModal()} className="px-6 py-2.5 rounded-xl text-xs font-bold bg-[#111f42] text-white hover:bg-[#1e346b] shadow-md flex items-center gap-2 uppercase tracking-wide whitespace-nowrap transition-all">
+                            <button onClick={() => openModal()} className="py-2.5 rounded-xl text-xs font-bold bg-[#111f42] text-white hover:bg-[#1e346b] shadow-md flex items-center gap-2 uppercase tracking-wide whitespace-nowrap transition-all">
                                 <Plus size={16} className="text-[#ab8a3b]" strokeWidth={3} /> ADD DESIGN
                             </button>
                         </div>
@@ -242,7 +242,7 @@ export default function FabricDesignApp() {
                 <>
                     <div className="fixed inset-0 bg-[#111f42]/40 backdrop-blur-sm z-[100] no-print" onClick={() => setIsGuideOpen(false)} />
                     <div className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[110] flex flex-col no-print">
-                        <div className="px-6 py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#ab8a3b]">
+                        <div className="py-5 flex justify-between items-center bg-[#111f42] text-white shrink-0 border-b-4 border-[#ab8a3b]">
                             <div className="flex items-center gap-2"><HelpCircle size={20} className="text-[#ab8a3b]" /><h2 className="text-base font-semibold uppercase tracking-widest">คู่มือการใช้งานระบบ</h2></div>
                             <button onClick={() => setIsGuideOpen(false)} className="hover:bg-white/20 p-1.5 rounded-lg transition-colors"><X size={20} /></button>
                         </div>
@@ -256,7 +256,7 @@ export default function FabricDesignApp() {
                                 <p>สามารถกดไอคอน Pencil ที่รูปภาพในโหมด Grid หรือคอลัมน์ขวาสุดในโหมด List เพื่อเข้าสู่หน้าจอแก้ไข</p>
                             </section>
                         </div>
-                        <div className="p-4 border-t flex justify-end bg-slate-50"><button onClick={()=>setIsGuideOpen(false)} className="bg-[#111f42] text-white px-8 py-2.5 rounded-none font-bold text-[12px] uppercase tracking-wider shadow-md hover:bg-[#1e346b] transition-colors">เข้าใจแล้ว</button></div>
+                        <div className="p-4 border-t flex justify-end bg-slate-50"><button onClick={()=>setIsGuideOpen(false)} className="bg-[#111f42] text-white py-2.5 rounded-none font-bold text-[12px] uppercase tracking-wider shadow-md hover:bg-[#1e346b] transition-colors">เข้าใจแล้ว</button></div>
                     </div>
                 </>
             )}

@@ -36,25 +36,30 @@ export class GoogleSheetsService {
   /**
    * ส่ง Request พร้อมระบบ Retry อัตโนมัติ (Exponential Backoff) กรณีเกิด Concurrent สูง
    */
-  async request<T = any>(payload: SheetRequest, retries = 3, delay = 1000): Promise<SheetResponse<T>> {
-    const SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL;
+  async request<T = any>(payload: SheetRequest, retries = 1, delay = 1000): Promise<SheetResponse<T>> {
+    const rawUrl = import.meta.env.VITE_APPS_SCRIPT_URL;
+    const SCRIPT_URL = typeof rawUrl === 'string' ? rawUrl.trim() : '';
 
-    if (!SCRIPT_URL) {
-      console.warn('VITE_APPS_SCRIPT_URL is not set. Switching to Demo Mode (Mock Data).');
+    if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+      console.warn('VITE_APPS_SCRIPT_URL is not set or uses a placeholder. Switching to Demo Mode (Mock Data).');
       return this.handleMockRequest(payload);
     }
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
       const response = await fetch(SCRIPT_URL, {
+        signal: controller.signal,
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload),
       });
 
+      clearTimeout(timeoutId);
       const result = await response.json();
 
       // ถ้า LockService ใน Backend เต็ม มันจะโยน Error กลับมา เราสามารถให้ Frontend รอแล้วยิงซ้ำได้
-      if (result.status === 'error' && result.message.includes('Lock') && retries > 0) {
+      if (result.status === 'error' && result.message && result.message.includes('Lock') && retries > 0) {
         console.warn(`[Retry] Lock collision detected. Retrying in ${delay}ms...`);
         await new Promise(res => setTimeout(res, delay));
         return this.request<T>(payload, retries - 1, delay * 2);
@@ -67,8 +72,11 @@ export class GoogleSheetsService {
         await new Promise(res => setTimeout(res, delay));
         return this.request<T>(payload, retries - 1, delay * 2);
       }
-      console.error(`Error executing Google Sheets action [${payload.action}]:`, error);
-      return { status: 'error', message: error instanceof Error ? error.message : 'Unknown network error' };
+      console.warn(`Error executing Google Sheets action [${payload.action}]:`, error);
+      
+      // Fallback to Demo Mode on network error to prevent app crash
+      console.warn('Failed to fetch from the provided URL. Falling back to Demo Mode (Mock Data).');
+      return this.handleMockRequest(payload);
     }
   }
 

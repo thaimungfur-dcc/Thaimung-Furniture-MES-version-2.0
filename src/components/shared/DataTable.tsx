@@ -242,7 +242,7 @@ export function DataTable<T>({
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden min-h-[400px] flex flex-col">
+      <div className="bg-white rounded-xl border-t border-b sm:border border-slate-200 shadow-sm sm:rounded-2xl overflow-hidden min-h-[400px] flex flex-col">
         <div className="flex-1 overflow-x-auto master-custom-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>

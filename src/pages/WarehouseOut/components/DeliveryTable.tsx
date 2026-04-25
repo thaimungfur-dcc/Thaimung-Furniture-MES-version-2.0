@@ -55,7 +55,7 @@ export default function DeliveryTable({ data, onShip, onComplete, getProgressCol
         {
             accessorKey: 'qty',
             header: 'ORDER QTY',
-            cell: ({ row }) => <div className="text-right font-black text-[#111f42] text-xs font-mono">{(Number(row.getValue('qty')) || 0).toLocaleString()}</div>
+            cell: ({ row }) => <div className="text-right font-black text-[#111f42] text-xs font-mono">{(Number(row.getValue('qty')) || 0)?.toLocaleString()}</div>
         },
         {
             accessorKey: 'shipped',
@@ -69,7 +69,7 @@ export default function DeliveryTable({ data, onShip, onComplete, getProgressCol
                                 style={{width: Math.min((order.shipped / order.qty) * 100, 100) + '%', backgroundColor: getProgressColor(order)}}></div>
                         </div>
                         <span className={`text-[10px] font-mono font-bold ${order.shipped >= order.qty ? 'text-emerald-600' : 'text-slate-500'}`}>
-                            {order.shipped.toLocaleString()} / {Math.round((order.shipped/order.qty)*100)}%
+                            {order.shipped?.toLocaleString()} / {Math.round((order.shipped/order.qty)*100)}%
                         </span>
                     </div>
                 );
@@ -84,7 +84,7 @@ export default function DeliveryTable({ data, onShip, onComplete, getProgressCol
                 const balance = order.qty - order.shipped;
                 return (
                     <div className={`text-right text-xs font-mono font-black ${balance <= 0 ? 'text-emerald-500' : 'text-[#E3624A]'}`}>
-                        {balance.toLocaleString()}
+                        {balance?.toLocaleString()}
                     </div>
                 );
             }

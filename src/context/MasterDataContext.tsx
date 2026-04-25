@@ -122,7 +122,7 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
             }
             return [];
         } catch (error) {
-            console.error(`Error fetching ${sheetName}:`, error);
+            console.warn(`Error fetching ${sheetName}:`, error);
             return [];
         }
     }, []);

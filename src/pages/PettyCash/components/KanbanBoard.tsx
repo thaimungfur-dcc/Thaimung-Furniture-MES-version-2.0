@@ -35,7 +35,7 @@ export default function KanbanBoard({ vouchers }: any) {
                     <p className="text-[10px] font-semibold text-[#7693a6] truncate mb-2">{getCategoryIcon(v.category)} {v.category}</p>
                     <div className="border-t border-black/5 pt-3 flex justify-between items-center mt-3">
                       <div className="flex flex-col">
-                        <span className="text-xs font-black text-[#223149]">฿{v.amount.toLocaleString()}</span>
+                        <span className="text-xs font-black text-[#223149]">฿{v.amount?.toLocaleString()}</span>
                         <span className="text-[9px] text-slate-400">By {v.employee}</span>
                       </div>
                       <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest flex items-center gap-1"><Lock size={8}/> Locked</span>
