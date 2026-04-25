@@ -92,18 +92,18 @@ export default function AccountsReceivable() {
   useEffect(() => { setCurrentPage(1); }, [subTab, selectedMonth, searchTerm, itemsPerPage, mainTab]);
 
   const updateStatus = (id: number, newStatus: string) => {
-    setInvoices(prev => prev.map(inv => inv.id === id ? { ...inv, status: newStatus } : inv));
+    setInvoices(prev => prev?.map(inv => inv.id === id ? { ...inv, status: newStatus } : inv));
   };
 
   const toggleBadDebt = (id: number) => {
-    setInvoices(prev => prev.map(inv => inv.id === id ? { ...inv, isBadDebt: !inv.isBadDebt } : inv));
+    setInvoices(prev => prev?.map(inv => inv.id === id ? { ...inv, isBadDebt: !inv.isBadDebt } : inv));
   };
 
   const handlePaymentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (paymentModal) {
       const invId = paymentModal.id;
-      setInvoices(prev => prev.map(inv => {
+      setInvoices(prev => prev?.map(inv => {
         if (inv.id === invId) {
           const newPaid = inv.paid + paymentForm.amount;
           return {
@@ -138,7 +138,7 @@ export default function AccountsReceivable() {
     const headers = ['Issue Date', 'Due Date', 'Inv No.', 'SO Ref', 'Customer', 'Industry', 'Credit Term', 'Risk', 'Amount', 'Paid', 'Balance', 'Status', 'Is Bad Debt'];
     const csvRows = [
       headers.join(','),
-      ...filteredInvoices.map(row => [
+      ...filteredInvoices?.map(row => [
         row.issueDate, row.dueDate, row.invoiceNo, row.soRef, `"${row.customer}"`, row.industry, row.creditTerm, row.risk, row.amount, row.paid, row.balance, row.status, row.isBadDebt
       ].join(','))
     ].join('\n');

@@ -39,8 +39,8 @@ export const InboundToolbar: React.FC<InboundToolbarProps> = ({
             className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-xl pl-9 pr-10 py-2.5 outline-none focus:border-[#111f42] text-[#111f42] font-black text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer font-mono h-10"
           >
             {activeTab === 'all' 
-              ? warehouses.map(wh => <option key={wh} value={wh}>{wh === 'All' ? 'ALL WAREHOUSES' : wh + ' WAREHOUSE'}</option>) 
-              : statuses.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)
+              ? warehouses?.map(wh => <option key={wh} value={wh}>{wh === 'All' ? 'ALL WAREHOUSES' : wh + ' WAREHOUSE'}</option>) 
+              : statuses?.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)
             }
           </select>
           <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"><ChevronDown size={14} /></div>

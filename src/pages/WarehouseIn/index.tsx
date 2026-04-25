@@ -79,7 +79,7 @@ export default function WarehouseInApp() {
     const warehouses = ['All', 'FG', 'RM', 'WIP', 'REWORK', 'SCRAP'];
     const statuses = ['Not Started', 'In Progress', 'Completed', 'All'];
     const receiveTypes = ['Production', 'Purchase', 'Return', 'Transfer', 'Consignment', 'Free Goods', 'Subcontract', 'Rework Return', 'Adjustment', 'Opening'];
-    const productMaster = useMemo(() => (items || []).map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
+    const productMaster = useMemo(() => (items || [])?.map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
 
     // Load QR and Barcode libraries dynamically
     useEffect(() => {
@@ -612,7 +612,7 @@ export default function WarehouseInApp() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 bg-white">
-                                        {reportData.map((r, i) => (
+                                        {reportData?.map((r, i) => (
                                             <tr key={i} className="hover:bg-slate-50 transition-colors">
                                                 <td className="text-[11px] font-black text-[#111f42] font-mono tracking-wider">{String(r.transId)}</td>
                                                 <td className="text-slate-400 font-mono text-[10px] uppercase font-black">{String(r.date)}</td>

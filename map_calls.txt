@@ -1,0 +1,294 @@
+src/pages/InventoryPlanning/InventoryTable.tsx:29:                            {filters.map((f: string) => (
+src/pages/InventoryPlanning/InventoryTable.tsx:70:                        {paginatedItems.map((item: any) => (
+src/pages/InventoryPlanning/InventoryTable.tsx:121:                        {[...Array(totalPages)].map((_, i) => (
+src/pages/InventoryPlanning/index.tsx:47:            const syncItems = itemsMaster.map(item => {
+src/pages/InventoryPlanning/AnalysisCharts.tsx:38:                            labels: lowItems.map(i => i.id),
+src/pages/InventoryPlanning/AnalysisCharts.tsx:40:                                { label: 'Onhand', data: lowItems.map(i => i.onhand), backgroundColor: '#E3624A', borderRadius: 4 },
+src/pages/InventoryPlanning/AnalysisCharts.tsx:41:                                { label: 'Min Point', data: lowItems.map(i => i.minPoint), backgroundColor: '#f1f5f9', type: 'line', borderColor: '#ab8a3b', borderWidth: 2, pointRadius: 0 }
+src/pages/ProductionTracking/components/JobOrderModal.tsx:163:                {['Pending', 'Cutting', 'Assembly', 'Finishing', 'Upholstery', 'QC', 'Packing', 'Completed'].map(s => (
+src/pages/ProductionTracking/components/ProductionTable.tsx:44:          {data.map((order) => {
+src/pages/ProductionTracking/components/KanbanBoard.tsx:36:      {stages.map((stage) => (
+src/pages/ProductionTracking/components/KanbanBoard.tsx:52:            {getOrdersByStage(stage).map((order) => (
+src/pages/ProductionTracking/index.tsx:59:    return (jobOrders || []).map((jo: any) => ({
+src/pages/ProductionTracking/index.tsx:290:              {STAGES.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
+src/pages/ProductionTracking/index.tsx:384:                    ].map((s, i) => (
+src/pages/Home/components/ProductionStatus.tsx:30:          ].map((task, i) => (
+src/pages/Home/components/HomeKpiSection.tsx:50:      {kpis.map((kpi, i) => (
+src/pages/Home/components/StockAlertsBoard.tsx:37:            ].map((item, i) => (
+src/pages/Home/components/StockAlertsBoard.tsx:68:            ].map((item, i) => (
+src/pages/WarehouseIn/components/InboundToolbar.tsx:42:              ? warehouses.map(wh => <option key={wh} value={wh}>{wh === 'All' ? 'ALL WAREHOUSES' : wh + ' WAREHOUSE'}</option>) 
+src/pages/WarehouseIn/components/InboundToolbar.tsx:43:              : statuses.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:43:                                                {warehouses.slice(1).map((w: string) => <option key={w} value={w}>{w}</option>)}
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:34:                                                {receiveTypes.map((t: string) => <option key={t} value={t}>{t}</option>)}
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:66:                                                        {warehouses.slice(1).map((w: string) => <option key={w} value={w}>{w}</option>)}
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:89:                                            {form.manualItems.map((item: any, idx: number) => (
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:99:                                                            {productMaster.map((p: any) => <option key={p.sku} value={p.sku}>{p.sku} : {p.name}</option>)}
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:109:                                                            {warehouses.slice(1).map((w: string) => <option key={w} value={w}>{w}</option>)}
+src/pages/WarehouseIn/components/ReportPreviewModal.tsx:66:                                                {reportData.map((item: any, idx: number) => (
+src/pages/WarehouseIn/components/ReportPreviewModal.tsx:75:                                                {[...Array(Math.max(0, 10 - reportData.length))].map((_, i) => (
+src/pages/WarehouseIn/components/PrintTagModal.tsx:71:                                                    {[...Array(10)].map((_, i) => (
+src/pages/WarehouseIn/components/PrintTagModal.tsx:134:                                                        {[...Array(10)].map((_, i) => (
+src/pages/WarehouseIn/components/PrintDocModal.tsx:98:                                                {[...Array(6)].map((_, i) => (
+src/pages/WarehouseIn/index.tsx:82:    const productMaster = useMemo(() => (items || []).map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
+src/pages/WarehouseIn/index.tsx:615:                                        {reportData.map((r, i) => (
+src/pages/InspectionStandards/components/CategoryView.tsx:20:                {MAIN_CATEGORIES.map(cat => {
+src/pages/InspectionStandards/components/ProductDetailView.tsx:92:                        {currentSteps.map(proc => {
+src/pages/InspectionStandards/components/ProductDetailView.tsx:165:                                    {filteredStandards.map(std => (
+src/pages/InspectionStandards/components/ActionModal.tsx:85:                                                    {ITEM_MASTER_DB.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} : {i.itemName}</option>)}
+src/pages/InspectionStandards/components/ProductListView.tsx:160:                        {filteredProducts.map(product => (
+src/pages/InspectionStandards/index.tsx:190:                const updatedProducts = products.map(p => p.id === selectedProduct?.id ? { ...p, dimensionImage: reader.result as string } : p);
+src/pages/InspectionStandards/index.tsx:204:                setProducts(prev => prev.map(p => p.id === productForm.id ? productForm : p));
+src/pages/InspectionStandards/index.tsx:214:                setStandards(prev => prev.map(s => s.id === standardForm.id ? standardForm : s));
+src/pages/InspectionStandards/index.tsx:242:            const newStandards = standards.filter(s => s.productId === product.id).map(s => ({ ...s, id: Date.now() + Math.random(), productId: newId }));
+src/pages/InspectionStandards/index.tsx:395:                                                                {Object.keys(categorySteps).map(k => <option key={k} value={k}>{k}</option>)}
+src/pages/InspectionStandards/index.tsx:401:                                                                {categorySteps[configCategory].map(proc => (
+src/pages/DataEntry/index.tsx:197:                {txTypes.map((tx) => {
+src/pages/DataEntry/index.tsx:231:                    {getRoutingTags().map((tag, i) => (
+src/pages/Catalogue/components/StarRating.tsx:9:    {[1, 2, 3, 4, 5].map(i => (
+src/pages/Catalogue/components/CatalogueGrid.tsx:13:      {products.map(p => (
+src/pages/Catalogue/components/CatalogueActionModal.tsx:79:                      {['info', 'detail', 'specs', 'history'].map(tab => (
+src/pages/Catalogue/components/CatalogueActionModal.tsx:114:                                  {itemMasterFG.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
+src/pages/Catalogue/components/CatalogueActionModal.tsx:131:                                {productCategories.map(c => <option key={c} value={c}>{c}</option>)}
+src/pages/Catalogue/components/CatalogueActionModal.tsx:173:                              form.history.map((h: any, i: number) => (
+src/pages/Catalogue/index.tsx:126:            setProducts(prev => prev.map(p => p.id === form.id ? form : p));
+src/pages/Catalogue/index.tsx:189:                                    {productCategories.map(cat => (
+src/pages/RecipeBOM/index.tsx:88:            setBomItems(JSON.parse(JSON.stringify(product.items || [])).map((i: any) => ({...i})));
+src/pages/RecipeBOM/index.tsx:210:                                    {['All', 'Active', 'Draft', 'Review'].map(s => (
+src/pages/RecipeBOM/index.tsx:272:                                                                        {itemMasterFG.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
+src/pages/RecipeBOM/index.tsx:315:                                                                    {bomItems.map((item, idx) => {
+src/pages/RecipeBOM/index.tsx:384:                                                                                    {materialDb.map(m => <option key={m.code} value={m.code}>{m.code} - {m.name}</option>)}
+src/pages/NcControl/components/NcActionModal.tsx:52:                    ].map(tab => {
+src/pages/NcControl/components/NcKanbanBoard.tsx:36:        {statuses.map(status => {
+src/pages/NcControl/components/NcKanbanBoard.tsx:56:                  {allColItems.map((item, index) => (
+src/pages/NcControl/index.tsx:181:    else setNcData(ncData.map(d => d.id === finalData.id ? finalData : d));
+src/pages/NcControl/index.tsx:284:                {ncData.slice(0, 5).map((item, i) => (
+src/pages/NcControl/index.tsx:322:                  {['all', 'Submitted', 'Responded', 'Follow up', 'Closed'].map(f => (
+src/pages/AccountPayable/index.tsx:95:    setBills(prev => prev.map(b => b.id === id ? { ...b, status: newStatus } : b));
+src/pages/AccountPayable/index.tsx:99:    setBills(prev => prev.map(b => b.id === id ? { ...b, isDisputed: !b.isDisputed } : b));
+src/pages/AccountPayable/index.tsx:106:      setBills(prev => prev.map(b => {
+src/pages/AccountPayable/index.tsx:141:      ...filteredBills.map(row => [
+src/pages/AccountPayable/components/PrintPreviewModal.tsx:90:                              filteredBills.map((bill: any, i: number) => (
+src/pages/AccountPayable/components/BillTable.tsx:106:              {currentItems.length > 0 ? currentItems.map((bill: any) => (
+src/pages/AccountPayable/components/KanbanBoard.tsx:18:        {columns.map(col => {
+src/pages/AccountPayable/components/KanbanBoard.tsx:31:                {colItems.map((bill: any) => (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:68:            {filteredPendingPRs.slice(0, kanbanLimits.pendingPR || 5).map(pr => (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:107:            {getBoardItems('Pending Approve').slice(0, kanbanLimits['Pending Approve'] || 5).map(po => (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:147:            {getBoardItems('Approved').slice(0, kanbanLimits['Approved'] || 5).map(po => (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:186:            {getBoardItems('Sent').slice(0, kanbanLimits['Sent'] || 5).map(po => (
+src/pages/PurchaseOrder/components/PoActionModal.tsx:148:                            {poForm.items.map((item: any, index: number) => (
+src/pages/PurchaseOrder/components/PoActionModal.tsx:226:                          poForm.history.map((h: any, i: number) => (
+src/pages/PurchaseOrder/components/PoPrWaitingTable.tsx:53:              {paginatedPendingPRs.map(pr => (
+src/pages/PurchaseOrder/components/PoPrWaitingTable.tsx:88:            {[...Array(pendingTotalPages)].map((_, i) => (
+src/pages/PurchaseOrder/components/PoPreviewModal.tsx:101:                            {selectedItem.items.map((item: any, idx: number) => (
+src/pages/PurchaseOrder/components/PoPreviewModal.tsx:113:                            {[...Array(Math.max(0, 6 - selectedItem.items.length))].map((_, i) => (
+src/pages/PurchaseOrder/components/PoTable.tsx:60:            {paginatedPOList.map(po => (
+src/pages/PurchaseOrder/components/PoTable.tsx:96:            {[...Array(totalPages)].map((_, i) => (
+src/pages/PurchaseOrder/index.tsx:168:        items: data.items.map((i: any) => ({ ...i })), history: []
+src/pages/PurchaseOrder/index.tsx:217:      setPoList(poList.map(p => p.id === poForm.id ? updatedPO : p));
+src/pages/PurchaseOrder/index.tsx:227:    setPoList(poList.map(p => {
+src/pages/PurchaseNC/components/NcCharts.tsx:30:      const trendData = months.map((m, i) => {
+src/pages/PurchaseNC/components/NcCharts.tsx:99:              ].map(s=>(
+src/pages/PurchaseNC/components/NcKanbanBoard.tsx:39:        {statuses.map(status => {
+src/pages/PurchaseNC/components/NcKanbanBoard.tsx:59:                  {allColItems.map((item, index) => (
+src/pages/PurchaseNC/components/NcLogTable.tsx:45:          {logTableData.length > 0 ? logTableData.map(scar => (
+src/pages/PurchaseNC/components/NcActionModal.tsx:52:                    ].map(tab => {
+src/pages/PurchaseNC/index.tsx:191:    else setScarData(scarData.map(d => d.id === finalData.id ? finalData : d));
+src/pages/PurchaseNC/index.tsx:297:                {scarData.slice(0, 5).map((item, i) => (
+src/pages/PurchaseNC/index.tsx:336:                  {['all', 'Submitted', 'Vendor Responded', 'Follow up', 'Closed'].map(f => (
+src/pages/PrAnalysis/index.tsx:57:              {periods.map(p => (
+src/pages/GeneralLedger/components/DataTable.tsx:73:            {currentItems.map((v: any) => (
+src/pages/BankReconciliation/index.tsx:36:      const processed = mockData.map(rec => {
+src/pages/BankReconciliation/components/KanbanBoard.tsx:16:        {columns.map(col => {
+src/pages/BankReconciliation/components/KanbanBoard.tsx:27:                {colItems.map((rec: any) => (
+src/pages/BankReconciliation/components/DataTable.tsx:71:            {currentItems.map((rec: any) => (
+src/pages/VatManagement/components/VatTransactionTable.tsx:47:            {data.length > 0 ? data.map((item) => (
+src/pages/VatManagement/components/DataTable.tsx:75:            {currentItems.map((rec: any) => (
+src/pages/VatManagement/components/KanbanBoard.tsx:15:        {columns.map(col => {
+src/pages/VatManagement/components/KanbanBoard.tsx:28:                {colItems.map((rec: any) => (
+src/pages/VatManagement/components/VatPreviewModal.tsx:103:                                    filteredData.filter(item => item.type === 'sales').map((item, i) => (
+src/pages/VatManagement/components/VatPreviewModal.tsx:149:                                    filteredData.filter(item => item.type === 'purchase').map((item, i) => (
+src/pages/VatManagement/components/VatTrendChart.tsx:18:  const maxTrendVat = Math.max(...data.map(d => d.netVat)) * 1.2 || 4500;
+src/pages/VatManagement/components/VatTrendChart.tsx:23:    return data.map((point, index) => {
+src/pages/VatManagement/components/VatTrendChart.tsx:64:          {data.map((point, index) => {
+src/pages/VatManagement/components/VatTrendChart.tsx:107:          {data.map((d, i) => (
+src/pages/VatManagement/index.tsx:45:      const processed = mockData.map(rec => {
+src/pages/FabricDesign/components/FabricTable.tsx:63:            {colors && colors.map((c: string, i: number) => (
+src/pages/FabricDesign/components/FabricGrid.tsx:12:      {patterns.map(p => (
+src/pages/FabricDesign/components/FabricGrid.tsx:54:              {p.colors && p.colors.map((c: string, i: number) => (
+src/pages/FabricDesign/components/FabricActionModal.tsx:99:                          {fabricCategories.map(cat => (
+src/pages/FabricDesign/components/FabricActionModal.tsx:110:                          {['info', 'detail', 'specs', 'history'].map(tab => (
+src/pages/FabricDesign/components/FabricActionModal.tsx:142:                                  {form.colors.map((c: string, i: number) => (
+src/pages/FabricDesign/components/FabricActionModal.tsx:168:                                  {fabricCategories.map(c => <option key={c} value={c}>{c}</option>)}
+src/pages/FabricDesign/components/FabricActionModal.tsx:229:                                form.history.map((h: any, i: number) => (
+src/pages/FabricDesign/index.tsx:202:                                    {fabricCategories.map(cat => (
+src/pages/Supplier/components/SupplierTable.tsx:51:            {suppliers.map(supp => (
+src/pages/Supplier/components/SupplierActionModal.tsx:117:                                {masterConfig.categories.map((c: string)=><option key={c} value={c}>{c}</option>)}
+src/pages/Supplier/components/SupplierActionModal.tsx:123:                                {masterConfig.subCategories[form.category || 'Supplier']?.map((sc: string) => <option key={sc} value={sc}>{sc}</option>)}
+src/pages/Supplier/components/SupplierConfigModal.tsx:34:                        {masterConfig.categories.map((c: string) => (
+src/pages/Supplier/components/SupplierConfigModal.tsx:47:                        {Object.entries(masterConfig.subCategories).map(([cat, subs]: [string, any]) => (
+src/pages/Supplier/components/SupplierConfigModal.tsx:53:                              {subs.map((s: string) => (
+src/pages/Supplier/index.tsx:138:            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'].map(status => suppliers.filter(s => s.status === status).length),
+src/pages/Supplier/index.tsx:157:            data: masterConfig.categories.map(c => suppliers.filter(s => s.category === c).length),
+src/pages/Supplier/index.tsx:314:                      {filterCategories.map(f => (
+src/pages/MasterCode/components/Analytics.tsx:49:        const mockData = items.slice(0, 6).map(i => ({code: i.mastCode, value: Math.floor(Math.random() * 1000)}));
+src/pages/MasterCode/components/Analytics.tsx:53:            labels: mockData.map(i => i.code),
+src/pages/MasterCode/components/Analytics.tsx:56:              data: mockData.map(i => i.value),
+src/pages/MasterCode/components/MasterList.tsx:27:            {groups.map(g => <span key={g} className={`badge ${getTypeClass(g)}`}>{g}</span>)}
+src/pages/MasterCode/components/GroupModal.tsx:56:                      {groups.filter(x => x !== 'All').map(g => (
+src/pages/MasterCode/components/MasterModal.tsx:51:                        {groups.filter(g => g !== 'All').map(g => (
+src/pages/MasterCode/index.tsx:118:      setGroups(prev => prev.map(g => g === oldGroup ? newName : g));
+src/pages/MasterCode/index.tsx:121:          updateItem(item.id, { groups: item.groups.map((g: string) => g === oldGroup ? newName : g) });
+src/pages/WarehouseOut/components/OutboundModal.tsx:79:                                                 {OUTBOUND_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+src/pages/WarehouseOut/components/OutboundModal.tsx:112:                                                         {form.manualItems.map((item: any, index: number) => (
+src/pages/WarehouseOut/components/OutboundModal.tsx:131:                                                                         {WAREHOUSES.slice(1).map(w => <option key={w} value={w}>{w}</option>)}
+src/pages/WarehouseOut/components/OutboundModal.tsx:167:                                                             {WAREHOUSES.slice(1).map(w => <option key={w} value={w}>{w}</option>)}
+src/pages/WarehouseOut/components/OutboundToolbar.tsx:55:              warehouses.map(wh => (
+src/pages/WarehouseOut/components/OutboundToolbar.tsx:65:              statuses.map(status => (
+src/pages/WarehouseOut/index.tsx:44:    const productMaster = useMemo(() => (items || []).map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
+src/pages/WarehouseOut/index.tsx:492:                        {dropdownState.items.map(p => (
+src/pages/PoAnalysis/index.tsx:51:              {periods.map(p => (
+src/pages/StockCard/index.tsx:28:    const itemsMaster = useMemo(() => (items || []).map(item => ({
+src/pages/StockCard/index.tsx:42:        const inMoves = historyLogs.filter(l => l.sku === viewState.itemId).map(l => ({
+src/pages/StockCard/index.tsx:54:        const outMoves = warehouseOutLogs.filter(l => l.sku === viewState.itemId).map(l => ({
+src/pages/StockCard/index.tsx:74:        const withBalance = ascSorted.map(m => {
+src/pages/StockCard/index.tsx:111:    const availableLots = useMemo(() => Array.from(new Set(movements.map(m => m.lot))).sort(), [movements]);
+src/pages/StockCard/index.tsx:233:                                        {paginatedMovements.map((m, idx) => (
+src/pages/StockCard/components/StockCardToolbar.tsx:54:              {filteredItems.map(item => (
+src/pages/StockCard/components/StockCardToolbar.tsx:75:              {availableLots.map(lot => <option key={lot} value={lot as string}>{lot as string}</option>)}
+src/pages/SaleOrder/index.tsx:102:      const accurateMockData = generatedMocks.map(order => {
+src/pages/SaleOrder/index.tsx:170:    else setOrders(orders.map(o => o.id === orderToSave.id ? orderToSave : o));
+src/pages/SaleOrder/index.tsx:175:    setOrders(orders.map(o => o.id === id ? { ...o, status: newStatus } : o));
+src/pages/SaleOrder/components/OrderModal.tsx:58:                      ].map(t => (
+src/pages/SaleOrder/components/OrderModal.tsx:81:                                  {MASTER_CUSTOMERS.map(c => <option key={c} value={c}>{c}</option>)}
+src/pages/SaleOrder/components/OrderModal.tsx:113:                              {orderModal.data.items.map((item, idx) => (
+src/pages/SaleOrder/components/OrderModal.tsx:127:                                      {MASTER_PRODUCTS.map(p => <option key={p.sku} value={p.sku}>{p.name} ({p.sku})</option>)}
+src/pages/SaleOrder/components/OrderModal.tsx:181:                            {orderModal.data.items.map((item, itemIdx) => {
+src/pages/SaleOrder/components/OrderModal.tsx:218:                                    {item.deliveries.map((del, delIdx) => (
+src/pages/SaleOrder/components/OrdersTable.tsx:43:            {['Booking', 'Production', 'Ready to Ship', 'Delivered'].map(s => (
+src/pages/SaleOrder/components/OrdersTable.tsx:72:            {currentItems.map(so => {
+src/pages/SaleOrder/components/PreviewModal.tsx:119:                                {previewModal.data.items.map((item, idx) => (
+src/pages/SaleOrder/components/PreviewModal.tsx:128:                                            {item.deliveries.map((del, dIdx) => (
+src/pages/SaleOrder/components/PreviewModal.tsx:208:                              {filteredOrders.map((o, i)=>(
+src/pages/SaleOrder/components/KanbanBoard.tsx:25:        {STATUS_LIST.map(status => {
+src/pages/SaleOrder/components/KanbanBoard.tsx:53:                {displayItems.map(so => {
+src/pages/CashFlow/components/PreviewModal.tsx:90:                                  {completedItems.filter(i => i.flowType === 'CFO').map(item => (
+src/pages/CashFlow/components/PreviewModal.tsx:111:                                  {completedItems.filter(i => i.flowType === 'CFI').map(item => (
+src/pages/CashFlow/components/PreviewModal.tsx:133:                                  {completedItems.filter(i => i.flowType === 'CFF').map(item => (
+src/pages/CashFlow/components/PreviewModal.tsx:183:                                filteredData.map((item, i) => (
+src/pages/CashFlow/components/TrendChart.tsx:15:  const maxTrend = Math.max(...data.map(d => d.balance)) * 1.1 || 500000;
+src/pages/CashFlow/components/TrendChart.tsx:20:    return data.map((point, index) => {
+src/pages/CashFlow/components/TrendChart.tsx:60:          {data.map((point, index) => {
+src/pages/CashFlow/components/TrendChart.tsx:99:          {data.map((d, i) => (
+src/pages/CashFlow/components/TransactionTable.tsx:45:          {data.length > 0 ? data.map((item) => (
+src/pages/CashFlow/index.tsx:213:            ].map(col => {
+src/pages/CashFlow/index.tsx:224:                    {colItems.map(tx => (
+src/pages/CashFlow/index.tsx:305:                {currentItems.map(tx => (
+src/pages/CashFlow/index.tsx:360:                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+src/pages/AccountsReceivable/components/KanbanBoard.tsx:18:        {columns.map(col => {
+src/pages/AccountsReceivable/components/KanbanBoard.tsx:31:                {colItems.map((inv: any) => (
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:36:            {['all', 'Unpaid', 'Overdue', 'BadDebt', 'Exception'].map(tab => (
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:93:              {currentItems.length > 0 ? currentItems.map((inv: any) => (
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:255:                {[...Array(totalPages)].map((_, i) => (
+src/pages/AccountsReceivable/components/PrintPreviewModal.tsx:90:                              filteredInvoices.map((inv: any, i: number) => (
+src/pages/AccountsReceivable/components/WacdCalc.tsx:82:            {invoices.filter((i: any) => i.balance === 0 && i.payDate).map((row: any, i: number) => {
+src/pages/AccountsReceivable/index.tsx:95:    setInvoices(prev => prev.map(inv => inv.id === id ? { ...inv, status: newStatus } : inv));
+src/pages/AccountsReceivable/index.tsx:99:    setInvoices(prev => prev.map(inv => inv.id === id ? { ...inv, isBadDebt: !inv.isBadDebt } : inv));
+src/pages/AccountsReceivable/index.tsx:106:      setInvoices(prev => prev.map(inv => {
+src/pages/AccountsReceivable/index.tsx:141:      ...filteredInvoices.map(row => [
+src/pages/ItemMaster/components/ItemModal.tsx:54:                                                {groups.filter(x => x !== 'All').map(g => <option key={g} value={g}>{g}</option>)}
+src/pages/ItemMaster/components/NameRuleModal.tsx:33:                                            {groups.filter(x => x !== 'All').map(g => <option key={g} value={g}>{g}</option>)}
+src/pages/MESCalendar/index.tsx:193:      setEvents(events.map(e => e.id === eventForm.id ? { ...eventForm, title: processedTitle, color: typeColors[eventForm.type] || e.color } : e));
+src/pages/MESCalendar/index.tsx:281:                {daysOfWeek.map((day, idx) => (
+src/pages/MESCalendar/index.tsx:292:                {calendarDays.map((d, idx) => {
+src/pages/MESCalendar/index.tsx:308:                            {dayEvents.map((ev, i) => (
+src/pages/MESCalendar/index.tsx:348:                    {paginatedEvents.map((ev) => (
+src/pages/MESCalendar/index.tsx:407:                      {[...Array(totalPages)].map((_, i) => {
+src/pages/UserPermissions/components/Step2Operational.tsx:41:                {users.map((user) => (
+src/pages/UserPermissions/components/Step2Operational.tsx:82:                  {users.map(user => (
+src/pages/UserPermissions/components/Step2Operational.tsx:93:                {SYSTEM_MODULES.map(module => {
+src/pages/UserPermissions/components/Step2Operational.tsx:107:                        {users.map(user => {
+src/pages/UserPermissions/components/Step2Operational.tsx:112:                                {levels.map(lvl => {
+src/pages/UserPermissions/components/Step2Operational.tsx:122:                      {hasSub && isExpanded && module.subItems?.map(sub => (
+src/pages/UserPermissions/components/Step2Operational.tsx:128:                          {users.map(user => {
+src/pages/UserPermissions/components/Step2Operational.tsx:133:                                  {levels.map(lvl => {
+src/pages/UserPermissions/components/Step1Confidentiality.tsx:71:          {SYSTEM_MODULES.map(module => {
+src/pages/UserPermissions/components/Step1Confidentiality.tsx:107:                    {module.subItems?.map(sub => {
+src/pages/UserPermissions/components/EditUserModal.tsx:124:                    }).map(p => (
+src/pages/UserPermissions/components/EditUserModal.tsx:133:                  {SYSTEM_MODULES.map((module) => {
+src/pages/UserPermissions/components/EditUserModal.tsx:155:                            }).map((p) => {
+src/pages/UserPermissions/components/EditUserModal.tsx:179:                              {module.subItems?.map(sub => {
+src/pages/UserPermissions/components/EditUserModal.tsx:191:                                      }).map((p) => {
+src/pages/WarehouseBooking/components/TagPrintModal.tsx:66:                        {[...Array(10)].map((_, i) => (
+src/pages/WarehouseBooking/components/ReportPreviewModal.tsx:73:                                                {reportData.map((item, idx) => (
+src/pages/WarehouseBooking/components/ReportPreviewModal.tsx:82:                                                {[...Array(Math.max(0, 10 - reportData.length))].map((_, i) => (
+src/pages/WarehouseBooking/index.tsx:172:                setBookings(prev => prev.map(b => b.id === item.id ? { ...b, status: 'Completed' } : b));
+src/pages/WarehouseBooking/index.tsx:183:        setBookings(prev => prev.map(b => b.id === selectedItem.id ? { ...b, booked: newBooked, status: newStatus } : b));
+src/pages/WarehouseBooking/index.tsx:295:                                        {statuses.map(s => (
+src/pages/WarehouseBooking/index.tsx:324:                                        {paginatedData.map(b => (
+src/pages/WarehouseBooking/index.tsx:405:                                        {reportData.map((r, i) => (
+src/pages/ProductCost/index.tsx:260:                                {productRows.map((row, rowIndex) => (
+src/pages/ProductCost/index.tsx:262:                                        {row.map((product: any) => (
+src/pages/ProductCost/index.tsx:298:                                        {row.length < 5 && [...Array(5 - row.length)].map((_, i) => (<div key={`e-${i}`} className="hidden lg:block flex-1"></div>))}
+src/pages/ProductCost/index.tsx:368:                                                                        {items.filter(i => i.itemType === 'FG').map(item => (
+src/pages/ProductCost/index.tsx:382:                                                                <tbody>{form.dm.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:393:                                                                <tbody>{form.dl.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:405:                                                                    <tbody>{form.factory_oh.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:415:                                                                    <tbody>{form.office_oh.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:425:                                                                    <tbody>{form.utilities.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:435:                                                                    <tbody>{form.depreciation.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:451:                                                                <tbody>{form.selling.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:461:                                                                <tbody>{form.admin.map((r: any, i: number) => (
+src/pages/ProductCost/index.tsx:471:                                                                <tbody>{form.others.map((r: any, i: number) => (
+src/pages/Home.tsx:46:    const labels = last7Days.map(d => days[d.getDay()]);
+src/pages/Home.tsx:48:    const producedData = last7Days.map(d => {
+src/pages/Home.tsx:54:    const shippedData = last7Days.map(d => {
+src/pages/Home.tsx:261:          ].map((item, i) => (
+src/pages/Customer/components/CustomerTable.tsx:57:            {paginatedCustomers.map(cust => (
+src/pages/Customer/components/CustomerActionModal.tsx:112:                                {masterConfig.categories.map((c: string) => <option key={c} value={c}>{c}</option>)}
+src/pages/Customer/components/CustomerActionModal.tsx:118:                                {masterConfig.subCategories[form.category || 'Retail']?.map((sc: string) => <option key={sc} value={sc}>{sc}</option>)}
+src/pages/Customer/components/CustomerConfigModal.tsx:34:                        {masterConfig.categories.map((c: string) => (
+src/pages/Customer/components/CustomerConfigModal.tsx:47:                        {Object.entries(masterConfig.subCategories).map(([cat, subs]: [string, any]) => (
+src/pages/Customer/components/CustomerConfigModal.tsx:53:                              {subs.map((s: string) => (
+src/pages/Customer/index.tsx:142:            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'].map(status => customers.filter(c => c.status === status).length),
+src/pages/Customer/index.tsx:161:            data: masterConfig.categories.map(cat => customers.filter(c => c.category === cat).length),
+src/pages/Customer/index.tsx:289:                    {filterCategories.map(f => (
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:51:        {KANBAN_COLS.map(col => {
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:73:                {displayedItems.map(item => (
+src/pages/PurchaseRequisition/components/PrTable.tsx:46:          {paginatedPRs.map(item => (
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:60:                      ].map(tab => (
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:147:                                  {formData.items.map((item: any, index: number) => (
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:231:                                formData.history.map((h: any, i: number) => (
+src/pages/PurchaseRequisition/components/PrPreviewModal.tsx:101:                            {selectedPR.items.map((item: any, idx: number) => (
+src/pages/PurchaseRequisition/components/PrPreviewModal.tsx:112:                            {[...Array(Math.max(0, 5 - selectedPR.items.length))].map((_, i) => (
+src/pages/PurchaseRequisition/index.tsx:188:      setPrs(prs.map(p => p.id === formData.id ? updatedPR : p));
+src/pages/PurchaseRequisition/index.tsx:354:                  {[...Array(totalPages)].map((_, i) => (
+src/pages/PettyCash/components/KanbanBoard.tsx:17:        {columns.map(col => {
+src/pages/PettyCash/components/KanbanBoard.tsx:28:                {colItems.map((v: any) => (
+src/pages/PettyCash/components/DataTable.tsx:57:            {currentItems.map((v: any) => (
+src/pages/FixedAsset/components/KanbanBoard.tsx:15:        {columns.map(col => {
+src/pages/FixedAsset/components/KanbanBoard.tsx:26:                {colItems.map((v: any) => (
+src/pages/FixedAsset/components/DataTable.tsx:63:            {currentItems.map((v: any) => (
+src/pages/SystemConfig/index.tsx:109:                    {categories.map((category) => (
+src/components/shared/CsvUploadModal.tsx:187:                          {expectedHeaders.map(h => (
+src/components/shared/CsvUploadModal.tsx:257:                            {headers.map(h => (
+src/components/shared/CsvUploadModal.tsx:265:                          {data.slice(0, 5).map((row, i) => (
+src/components/shared/CsvUploadModal.tsx:267:                              {headers.map(h => (
+src/components/shared/LoadingOverlay.tsx:42:              {[0, 1, 2].map((i) => (
+src/components/shared/FileAttachment.tsx:60:    const newAttachments: Attachment[] = acceptedFiles.map(file => ({
+src/components/shared/FileAttachment.tsx:71:    onFilesChange(updated.map(a => a.file));
+src/components/shared/FileAttachment.tsx:80:    onFilesChange(updated.map(a => a.file));
+src/components/shared/FileAttachment.tsx:139:            {attachments.map((att) => (
+src/components/shared/DataTable.tsx:174:                    {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+src/components/shared/DataTable.tsx:186:                    {years.map(y => <option key={y} value={y}>{y}</option>)}
+src/components/shared/DataTable.tsx:194:            {filterColumns.map(colId => {
+src/components/shared/DataTable.tsx:215:                      {facets.map(([val, count]) => (
+src/components/shared/DataTable.tsx:249:              {table.getHeaderGroups().map(headerGroup => (
+src/components/shared/DataTable.tsx:251:                  {headerGroup.headers.map(header => {
+src/components/shared/DataTable.tsx:272:                table.getRowModel().rows.map(row => (
+src/components/shared/DataTable.tsx:274:                    {row.getVisibleCells().map(cell => (
+src/components/Watermark.tsx:79:          {Array.from({ length: 150 }).map((_, i) => (
+src/components/Sidebar.tsx:120:  const [expandedSections, setExpandedSections] = useState<string[]>(MENU_SECTIONS.map(s => s.title));
+src/components/Sidebar.tsx:163:        {MENU_SECTIONS.map((section) => (
+src/components/Sidebar.tsx:189:                  {section.items.map((item) => {
+src/components/Layout.tsx:186:                {menuModules.map((module, index) => {
+src/components/Layout.tsx:219:                          {module.subItems.map((sub, i) => {

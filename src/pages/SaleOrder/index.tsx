@@ -99,7 +99,7 @@ export default function SaleOrder() {
       }
 
       // Auto calculate grand total for all mock orders to ensure 100% accuracy
-      const accurateMockData = generatedMocks.map(order => {
+      const accurateMockData = generatedMocks?.map(order => {
         const totals = calculateTotals(order);
         return { ...order, total: totals.grandTotal };
       });
@@ -167,12 +167,12 @@ export default function SaleOrder() {
     const totals = calculateTotals(orderModal.data);
     const orderToSave = { ...orderModal.data, total: totals.grandTotal, id: orderModal.mode === 'create' ? Date.now() : orderModal.data.id };
     if (orderModal.mode === 'create') setOrders([orderToSave, ...orders]);
-    else setOrders(orders.map(o => o.id === orderToSave.id ? orderToSave : o));
+    else setOrders(orders?.map(o => o.id === orderToSave.id ? orderToSave : o));
     setOrderModal(null);
   };
 
   const updateOrderStatus = (id: number, newStatus: string) => {
-    setOrders(orders.map(o => o.id === id ? { ...o, status: newStatus } : o));
+    setOrders(orders?.map(o => o.id === id ? { ...o, status: newStatus } : o));
   };
 
   // Delivery Handlers

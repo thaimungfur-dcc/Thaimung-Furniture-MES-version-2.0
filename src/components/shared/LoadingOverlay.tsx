@@ -39,7 +39,7 @@ export function LoadingOverlay({
               {message}
             </h3>
             <div className="flex items-center justify-center gap-1.5">
-              {[0, 1, 2].map((i) => (
+              {[0, 1, 2]?.map((i) => (
                 <motion.div
                   key={i}
                   animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}

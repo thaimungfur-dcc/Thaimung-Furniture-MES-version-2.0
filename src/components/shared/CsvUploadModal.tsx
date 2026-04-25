@@ -184,7 +184,7 @@ export function CsvUploadModal({
                           Ensure your spreadsheet matches the requirements below to prevent ingestion failure. All column headers must match exactly (case-sensitive).
                         </p>
                         <div className="flex flex-wrap gap-2 pt-2">
-                          {expectedHeaders.map(h => (
+                          {expectedHeaders?.map(h => (
                             <span key={h} className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-700 text-[10px] font-black rounded-lg border border-blue-100 uppercase tracking-wider">
                               <FileText size={10} /> {h}
                             </span>
@@ -254,7 +254,7 @@ export function CsvUploadModal({
                       <table className="w-full text-left border-collapse">
                         <thead className="sticky top-0 z-10 bg-[#111f42]">
                           <tr>
-                            {headers.map(h => (
+                            {headers?.map(h => (
                               <th key={h} className="px-6 py-3.5 text-[10px] font-black text-white uppercase tracking-widest border-b border-blue-900/50">
                                 {h}
                               </th>
@@ -262,9 +262,9 @@ export function CsvUploadModal({
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
-                          {data.slice(0, 5).map((row, i) => (
+                          {data.slice(0, 5)?.map((row, i) => (
                             <tr key={i} className="hover:bg-slate-50 transition-colors">
-                              {headers.map(h => (
+                              {headers?.map(h => (
                                 <td key={`${i}-${h}`} className="px-6 py-2.5 text-[11px] font-bold text-[#111f42] whitespace-nowrap">
                                   {row[h]}
                                 </td>

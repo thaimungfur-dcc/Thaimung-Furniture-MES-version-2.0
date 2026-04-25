@@ -42,7 +42,7 @@ export default function VatManagement() {
         { id: 8, docNo: 'PV-2603004', date: '2026-03-15', entityName: 'Fuel Supply Ltd', type: 'Purchase', taxMethod: 'Vat Exclude', amount: 12000, status: 'Recorded', source: 'Master' },
       ];
       
-      const processed = mockData.map(rec => {
+      const processed = mockData?.map(rec => {
         let base = 0;
         let vat = 0;
         let total = 0;

@@ -48,7 +48,7 @@ export default function PoAnalysis() {
           <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
             {/* Main Tabs: Same as PR/PO style */}
             <div className="flex bg-[#e2e8f0] p-1 border border-slate-200 shadow-inner rounded-xl">
-              {periods.map(p => (
+              {periods?.map(p => (
                 <button 
                   key={p}
                   onClick={() => setPeriod(p)} 

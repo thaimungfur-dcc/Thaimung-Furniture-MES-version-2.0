@@ -76,7 +76,7 @@ export default function OutboundModal({
                                          <div>
                                              <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 font-mono tracking-widest">Outbound Type</label>
                                              <select value={form.outType} onChange={e => onFormChange('outType', e.target.value)} className="input-primary w-full cursor-pointer bg-slate-50 font-bold text-[12px]" disabled={type !== 'MANUAL'}>
-                                                 {OUTBOUND_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                                                 {OUTBOUND_TYPES?.map(t => <option key={t} value={t}>{t}</option>)}
                                              </select>
                                          </div>
                                          {type === 'MANUAL' && (
@@ -109,7 +109,7 @@ export default function OutboundModal({
                                                          </tr>
                                                      </thead>
                                                      <tbody className="divide-y divide-slate-100">
-                                                         {form.manualItems.map((item: any, index: number) => (
+                                                         {form.manualItems?.map((item: any, index: number) => (
                                                              <tr key={index} className="hover:bg-slate-50/80 transition-colors group">
                                                                  <td className="p-3 text-center text-[10px] font-mono text-slate-400 font-black border-r bg-slate-50/30">{index + 1}</td>
                                                                  <td className="p-3">
@@ -128,7 +128,7 @@ export default function OutboundModal({
                                                                  <td className="p-3">
                                                                      <select value={item.warehouseName} onChange={e => onManualItemChange(index, 'warehouseName', e.target.value)} className="input-primary w-full text-[10px] font-black uppercase tracking-widest cursor-pointer border-2 border-slate-100 bg-slate-50 focus:bg-white focus:border-[#ab8a3b] shadow-none rounded-none">
                                                                          <option value="" disabled>Select</option>
-                                                                         {WAREHOUSES.slice(1).map(w => <option key={w} value={w}>{w}</option>)}
+                                                                         {WAREHOUSES.slice(1)?.map(w => <option key={w} value={w}>{w}</option>)}
                                                                      </select>
                                                                  </td>
                                                                  <td className="p-3">
@@ -164,7 +164,7 @@ export default function OutboundModal({
                                                      <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5 font-mono tracking-widest">Warehouse / Location</label>
                                                      <div className="flex gap-2">
                                                          <select value={form.warehouseName} onChange={e => onFormChange('warehouseName', e.target.value)} className="input-primary w-1/2 cursor-pointer font-bold text-[12px]">
-                                                             {WAREHOUSES.slice(1).map(w => <option key={w} value={w}>{w}</option>)}
+                                                             {WAREHOUSES.slice(1)?.map(w => <option key={w} value={w}>{w}</option>)}
                                                          </select>
                                                          <input type="text" value={form.location} onChange={e => onFormChange('location', e.target.value)} className="input-primary w-1/2 text-[12px]" placeholder="Loc (e.g. A-01)" />
                                                      </div>

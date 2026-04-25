@@ -17,7 +17,7 @@ export default function CategoryView({ products, onSelectCategory }: CategoryVie
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-8">
-                {MAIN_CATEGORIES.map(cat => {
+                {MAIN_CATEGORIES?.map(cat => {
                     const IconComp = cat.Icon;
                     const itemCount = products.filter(p => p.category === cat.id).length;
                     return (

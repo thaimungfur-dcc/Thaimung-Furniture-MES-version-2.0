@@ -63,7 +63,7 @@ export default function TagPrintModal({ isOpen, selectedItem, printFormat, setPr
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-[#111f42]/30">
-                        {[...Array(10)].map((_, i) => (
+                        {[...Array(10)]?.map((_, i) => (
                             <tr key={i}>
                                 <td className="py-2 border-r border-[#111f42]/30"></td>
                                 <td className="py-2 border-r border-[#111f42]/30"></td>

@@ -54,7 +54,7 @@ export default function DataTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {currentItems.map((v: any) => (
+            {currentItems?.map((v: any) => (
               <tr key={v.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-4 py-3 font-mono font-bold text-[#7fa85a]">{v.pcvNo}</td>
                 <td className="px-4 py-3 text-center">{getSourceBadge(v.source)}</td>

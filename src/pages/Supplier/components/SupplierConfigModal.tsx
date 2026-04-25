@@ -31,7 +31,7 @@ const SupplierConfigModal: React.FC<SupplierConfigModalProps> = ({
                         <button className="text-[10px] font-bold text-[#ab8a3b] flex items-center gap-1 hover:underline"><PlusCircle size={12}/> Add Category</button>
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {masterConfig.categories.map((c: string) => (
+                        {masterConfig.categories?.map((c: string) => (
                           <div key={c} className="bg-white px-4 py-2 rounded-xl flex items-center gap-3 border border-slate-200 shadow-sm">
                             <span className="font-bold text-[11px] text-[#111f42]">{c}</span>
                             <button className="text-slate-300 hover:text-rose-500 transition-colors"><X size={12}/></button>
@@ -44,13 +44,13 @@ const SupplierConfigModal: React.FC<SupplierConfigModalProps> = ({
                         <h4 className="font-black text-[#111f42] uppercase text-[11px] tracking-widest">Sub Categories Mappings</h4>
                       </div>
                       <div className="grid grid-cols-1 gap-4">
-                        {Object.entries(masterConfig.subCategories).map(([cat, subs]: [string, any]) => (
+                        {Object.entries(masterConfig.subCategories)?.map(([cat, subs]: [string, any]) => (
                           <div key={cat} className="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm">
                             <div className="font-black text-[11px] text-[#E3624A] uppercase tracking-widest mb-4 flex items-center gap-2">
                               <div className="w-2 h-2 rounded-full bg-[#E3624A]"></div> {cat}
                             </div>
                             <div className="flex flex-wrap gap-2">
-                              {subs.map((s: string) => (
+                              {subs?.map((s: string) => (
                                 <span key={s} className="bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg text-[10px] font-bold text-slate-600 flex items-center gap-2 group">
                                   {s} <X size={10} className="cursor-pointer text-slate-300 group-hover:text-rose-500 transition-colors" />
                                 </span>

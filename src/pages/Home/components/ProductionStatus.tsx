@@ -27,7 +27,7 @@ export const ProductionStatus: React.FC = () => {
             { dept: 'CUTTING STATION 2', id: 'WO-2024-089', issue: 'MATERIAL WAIT', sub: 'OAK BOARD 20MM', status: 'PENDING' },
             { dept: 'UPHOLSTERY DEPT', id: 'WO-2024-085', issue: 'QC INSPECTION', sub: 'LEATHER SOFA SET A', status: 'IN REVIEW' },
             { dept: 'LOGISTICS TEAM', id: 'DO-2024-042', issue: 'ROUTE ASSIGN', sub: 'DELIVERY BKK ZONE', status: 'PROCESSING' }
-          ].map((task, i) => (
+          ]?.map((task, i) => (
             <div key={i} className="flex justify-between items-center p-4 rounded-xl border border-slate-100 hover:border-slate-200 hover:bg-slate-50/50 transition-all cursor-pointer group">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 border border-slate-100">

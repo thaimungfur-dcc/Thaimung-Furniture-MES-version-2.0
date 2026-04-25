@@ -169,7 +169,7 @@ export default function WarehouseBooking() {
             message: `ยืนยันการปิดงานการจอง ${item.bookingId} ถึงแม้จะยังไม่ครบจำนวน?`,
             type: 'warning',
             onConfirm: () => {
-                setBookings(prev => prev.map(b => b.id === item.id ? { ...b, status: 'Completed' } : b));
+                setBookings(prev => prev?.map(b => b.id === item.id ? { ...b, status: 'Completed' } : b));
                 setNotif(prev => ({...prev, isOpen: false}));
                 showToast('Success', 'ปิดงานเรียบร้อยแล้ว');
             }
@@ -180,7 +180,7 @@ export default function WarehouseBooking() {
         if (form.qty <= 0) return showToast('Error', 'กรุณาระบุจำนวนที่ต้องการจอง', 'error');
         const newBooked = selectedItem.booked + Number(form.qty);
         const newStatus = (isFinal || newBooked >= selectedItem.qty) ? 'Completed' : 'In Progress';
-        setBookings(prev => prev.map(b => b.id === selectedItem.id ? { ...b, booked: newBooked, status: newStatus } : b));
+        setBookings(prev => prev?.map(b => b.id === selectedItem.id ? { ...b, booked: newBooked, status: newStatus } : b));
         setShowModal(false);
         showToast('Success', 'บันทึกการจัดสรรสต็อกเรียบร้อยแล้ว');
     };
@@ -292,7 +292,7 @@ export default function WarehouseBooking() {
                             <div className="border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
                                 <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
                                     <div className="flex bg-white p-1 rounded-lg border border-slate-200 shadow-sm shrink-0">
-                                        {statuses.map(s => (
+                                        {statuses?.map(s => (
                                             <button key={s} onClick={() => {setStatusFilter(s); setCurrentPage(1);}} 
                                                 className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all uppercase ${statusFilter === s ? 'bg-[#111f42] text-white' : 'text-slate-500 hover:bg-slate-50'}`}>
                                                 {s}
@@ -321,7 +321,7 @@ export default function WarehouseBooking() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 bg-white text-[12px]">
-                                        {paginatedData.map(b => (
+                                        {paginatedData?.map(b => (
                                             <tr key={b.id} className="hover:bg-slate-50 transition-colors group">
                                                 <td className="minimal-td font-black text-[#111f42] font-mono leading-none">{String(b.bookingId)}</td>
                                                 <td className="minimal-td">
@@ -402,7 +402,7 @@ export default function WarehouseBooking() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 bg-white">
-                                        {reportData.map((r, i) => (
+                                        {reportData?.map((r, i) => (
                                             <tr key={i} className="hover:bg-slate-50 transition-colors">
                                                 <td className="minimal-td font-black text-[#ab8a3b] font-mono leading-none">{String(r.bookingId)}</td>
                                                 <td className="minimal-td text-slate-500 font-mono text-[11px] leading-none">{String(r.date)}</td>

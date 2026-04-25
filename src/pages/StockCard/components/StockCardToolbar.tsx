@@ -51,7 +51,7 @@ export const StockCardToolbar: React.FC<StockCardToolbarProps> = ({
           </div>
           {isItemDropdownOpen && (
             <div className="absolute top-full left-0 right-0 bg-white border-2 border-slate-200 rounded-xl shadow-2xl z-[1000] mt-1 max-h-[250px] overflow-y-auto master-custom-scrollbar animate-in slide-in-from-top-2 duration-200">
-              {filteredItems.map(item => (
+              {filteredItems?.map(item => (
                 <div key={item.id} onClick={() => handleItemSelect(item)} className="px-5 py-4 cursor-pointer border-b border-slate-50 hover:bg-slate-50 transition-all flex flex-col gap-1">
                   <div className="text-[11px] font-black text-[#111f42] font-mono tracking-wider uppercase">{item.id}</div>
                   <div className="text-[9px] text-[#ab8a3b] font-black uppercase tracking-widest opacity-70">{item.name}</div>
@@ -72,7 +72,7 @@ export const StockCardToolbar: React.FC<StockCardToolbarProps> = ({
               className="w-full h-full bg-white border-2 border-slate-200 rounded-xl pl-10 pr-8 text-[10px] font-black text-[#111f42] outline-none focus:border-[#111f42] appearance-none disabled:bg-slate-50/50 disabled:text-slate-300 cursor-pointer uppercase tracking-[0.15em] transition-all"
             >
               <option value="">ALL LOT NUMBERS</option>
-              {availableLots.map(lot => <option key={lot} value={lot as string}>{lot as string}</option>)}
+              {availableLots?.map(lot => <option key={lot} value={lot as string}>{lot as string}</option>)}
             </select>
             <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
           </div>

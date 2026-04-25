@@ -165,7 +165,7 @@ export default function PurchaseOrder() {
         id: Date.now(), poNumber: getNewPONumber(), date: new Date().toISOString().split('T')[0], 
         vendor: '', vendorAddress: '', prRef: data.id, paymentTerm: 'Credit 30 Days', 
         deliveryDate: '', remarks: '', status: 'Pending Approve', subTotal: sub, vat: vt, grandTotal: sub + vt, 
-        items: data.items.map((i: any) => ({ ...i })), history: []
+        items: data.items?.map((i: any) => ({ ...i })), history: []
       });
     } else {
       setSelectedItem(data); 
@@ -214,7 +214,7 @@ export default function PurchaseOrder() {
       }
     } else {
       const updatedPO = { ...poForm, history: [...(poForm.history || []), { date: formattedNow, user: 'Admin', action: `Updated PO`, note: '' }] };
-      setPoList(poList.map(p => p.id === poForm.id ? updatedPO : p));
+      setPoList(poList?.map(p => p.id === poForm.id ? updatedPO : p));
     }
     setModalOpen(false);
   };
@@ -224,7 +224,7 @@ export default function PurchaseOrder() {
     if(!targetId) return;
     const now = new Date();
     const formattedNow = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-    setPoList(poList.map(p => {
+    setPoList(poList?.map(p => {
       if (p.id === targetId) {
         return { ...p, status, history: [...(p.history || []), { date: formattedNow, user: 'Admin', action: `Status changed to ${status}`, note: '' }] };
       }

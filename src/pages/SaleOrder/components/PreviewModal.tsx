@@ -116,7 +116,7 @@ export default function PreviewModal({
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-slate-100 border-b-2 border-[#111f42]">
-                                {previewModal.data.items.map((item, idx) => (
+                                {previewModal.data.items?.map((item, idx) => (
                                   <React.Fragment key={idx}>
                                     <tr className="bg-white">
                                       <td className="py-2 px-3 text-center text-slate-500 font-medium align-top">{idx + 1}</td>
@@ -125,7 +125,7 @@ export default function PreviewModal({
                                         {item.deliveries && item.deliveries.length > 0 && (
                                           <div className="mt-1 pl-2 border-l-2 border-slate-200 space-y-0.5">
                                             <p className="text-[8px] font-normal text-slate-400 uppercase tracking-widest">Delivery Schedule:</p>
-                                            {item.deliveries.map((del, dIdx) => (
+                                            {item.deliveries?.map((del, dIdx) => (
                                               <div key={dIdx} className="text-[9px] text-slate-600 flex gap-4 font-normal">
                                                 <span>Round {del.round}:</span>
                                                 <span className="font-mono text-[#ab8a3b]">{formatDate(del.date)}</span>
@@ -205,7 +205,7 @@ export default function PreviewModal({
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100 border-b-2 border-[#111f42]">
-                              {filteredOrders.map((o, i)=>(
+                              {filteredOrders?.map((o, i)=>(
                                 <tr key={i}>
                                   <td className="py-2 px-3 font-medium text-slate-500">{formatDate(o.date)}</td>
                                   <td className="py-2 px-3 font-bold text-[#111f42] font-mono">{o.soNumber}</td>

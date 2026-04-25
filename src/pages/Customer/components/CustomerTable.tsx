@@ -54,7 +54,7 @@ const CustomerTable: React.FC<CustomerTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 text-[12px] font-medium text-[#111f42]">
-            {paginatedCustomers.map(cust => (
+            {paginatedCustomers?.map(cust => (
               <tr key={cust.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-3 font-mono font-black text-[#ab8a3b]">{cust.customerID}</td>
                 <td className="px-6 py-3 font-bold text-[#111f42] uppercase">{cust.customerName}</td>

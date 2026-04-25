@@ -53,7 +53,7 @@ export default function GroupModal({
                     </div>
 
                     <div className="space-y-1.5 max-h-[200px] overflow-y-auto master-custom-scrollbar pr-1">
-                      {groups.filter(x => x !== 'All').map(g => (
+                      {groups.filter(x => x !== 'All')?.map(g => (
                         <div key={g} className="flex justify-between items-center p-2 bg-white rounded-lg border border-slate-200 group hover:border-[#ab8a3b] transition-colors">
                           <span className="font-mono text-[11px] font-black text-[#111f42] flex-1 truncate">{g}</span>
                           <div className="flex gap-1 opacity-40 group-hover:opacity-100 transition-opacity shrink-0 ml-1">

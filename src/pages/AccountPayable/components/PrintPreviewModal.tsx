@@ -87,7 +87,7 @@ export default function PrintPreviewModal({
                           </thead>
                           <tbody className="divide-y divide-slate-100">
                             {filteredBills.length > 0 ? (
-                              filteredBills.map((bill: any, i: number) => (
+                              filteredBills?.map((bill: any, i: number) => (
                                 <tr key={i} className={bill.isDisputed ? 'bg-red-50/50' : ''} style={{ WebkitPrintColorAdjust: 'exact' }}>
                                   <td className="px-2 py-1.5 font-mono">{formatDate(bill.issueDate)}</td>
                                   <td className={`px-2 py-1.5 font-mono ${isOverdue(bill) ? 'text-[#ce5a43] font-bold' : ''}`}>{formatDate(bill.dueDate)}</td>

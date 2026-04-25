@@ -42,7 +42,7 @@ export default function TransactionTable({ data, onApprove }: TransactionTablePr
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-50">
-          {data.length > 0 ? data.map((item) => (
+          {data.length > 0 ? data?.map((item) => (
             <tr key={item.id} className="transition-colors hover:bg-slate-50">
               <td className="px-6 py-2.5">
                 <div className="flex items-center gap-2 text-slate-600">

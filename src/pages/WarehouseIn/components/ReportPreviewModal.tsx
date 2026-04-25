@@ -63,7 +63,7 @@ export const ReportPreviewModal = ({ showReportPreview, setShowReportPreview, re
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-slate-200">
-                                                {reportData.map((item: any, idx: number) => (
+                                                {reportData?.map((item: any, idx: number) => (
                                                     <tr key={idx} className="even:bg-slate-50/50">
                                                         <td className="px-3 py-3 border-r text-center text-slate-500 font-mono">{idx + 1}</td>
                                                         <td className="px-3 py-3 border-r font-mono"><span className="font-bold text-[#111f42]">{String(item.transId)}</span><br/><span className="text-[10px] text-slate-500">{String(item.date)}</span></td>
@@ -72,7 +72,7 @@ export const ReportPreviewModal = ({ showReportPreview, setShowReportPreview, re
                                                         <td className="px-3 py-3 text-right font-mono font-bold text-[#10b981] bg-emerald-50/30">+{Number(item.qty)?.toLocaleString()}</td>
                                                     </tr>
                                                 ))}
-                                                {[...Array(Math.max(0, 10 - reportData.length))].map((_, i) => (
+                                                {[...Array(Math.max(0, 10 - reportData.length))]?.map((_, i) => (
                                                     <tr key={`empty-${i}`}><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5"></td></tr>
                                                 ))}
                                             </tbody>

@@ -100,7 +100,7 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
                                   {filteredData.filter(item => item.type === 'sales').length > 0 ? (
-                                    filteredData.filter(item => item.type === 'sales').map((item, i) => (
+                                    filteredData.filter(item => item.type === 'sales')?.map((item, i) => (
                                       <tr key={i}>
                                         <td className="px-2 py-1.5 font-medium">{formatDate(item.date)}</td>
                                         <td className="px-2 py-1.5 font-semibold text-[#111f42]">{item.invoice}</td>
@@ -146,7 +146,7 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
                                   {filteredData.filter(item => item.type === 'purchase').length > 0 ? (
-                                    filteredData.filter(item => item.type === 'purchase').map((item, i) => (
+                                    filteredData.filter(item => item.type === 'purchase')?.map((item, i) => (
                                       <tr key={i}>
                                         <td className="px-2 py-1.5 font-medium">{formatDate(item.date)}</td>
                                         <td className="px-2 py-1.5 font-semibold text-[#111f42]">{item.invoice}</td>

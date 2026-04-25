@@ -183,7 +183,7 @@ export default function Layout() {
                   OPERATIONAL MODULES
                 </p>
                 
-                {menuModules.map((module, index) => {
+                {menuModules?.map((module, index) => {
                   const isExpanded = expandedModule === module.name;
                   const isActive = location.pathname === module.path || module.subItems.some(sub => location.pathname === sub.path);
                   return (
@@ -216,7 +216,7 @@ export default function Layout() {
                       
                       <div className={`overflow-hidden transition-all duration-300 ${isExpanded && isSidebarOpen ? 'max-h-[800px] mt-1 mb-2 opacity-100' : 'max-h-0 opacity-0'}`}>
                         <div className="ml-5.5 space-y-0.5 border-l-2 border-white/10 pl-3">
-                          {module.subItems.map((sub, i) => {
+                          {module.subItems?.map((sub, i) => {
                             const isSubActive = location.pathname === sub.path;
                             
                             return (

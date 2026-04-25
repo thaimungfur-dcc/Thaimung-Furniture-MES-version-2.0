@@ -48,7 +48,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 text-[12px] font-medium text-[#111f42]">
-            {suppliers.map(supp => (
+            {suppliers?.map(supp => (
               <tr key={supp.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-3 font-mono font-black text-[#ab8a3b]">{supp.supplierID}</td>
                 <td className="px-6 py-3 font-bold text-[#111f42] uppercase">{supp.supplierName}</td>

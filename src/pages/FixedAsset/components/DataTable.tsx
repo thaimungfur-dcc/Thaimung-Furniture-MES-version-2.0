@@ -60,7 +60,7 @@ export default function DataTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {currentItems.map((v: any) => (
+            {currentItems?.map((v: any) => (
               <tr key={v.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-4 py-3 font-mono font-bold text-[#0f766e]">{v.assetCode}</td>
                 <td className="px-4 py-3"><span className="font-bold text-[#223149] block">{v.name}</span><span className="text-[9px] text-[#7693a6]">{v.category} • {v.location}</span></td>

@@ -114,7 +114,7 @@ const SupplierActionModal: React.FC<SupplierActionModalProps> = ({
                                   supplierID: modalMode === 'create' ? generateSupplierID(newCat) : form.supplierID
                                 });
                               }} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] bg-white cursor-pointer font-bold text-[13px] disabled:bg-slate-50/50 disabled:text-slate-500">
-                                {masterConfig.categories.map((c: string)=><option key={c} value={c}>{c}</option>)}
+                                {masterConfig.categories?.map((c: string)=><option key={c} value={c}>{c}</option>)}
                               </select>
                             </div>
                             <div className="space-y-1.5">

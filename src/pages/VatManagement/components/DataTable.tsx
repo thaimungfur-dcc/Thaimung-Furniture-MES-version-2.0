@@ -72,7 +72,7 @@ export default function DataTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {currentItems.map((rec: any) => (
+            {currentItems?.map((rec: any) => (
               <tr key={rec.id} className="hover:bg-slate-50 transition-colors group">
                 <td className="px-6 py-4 font-mono text-[11px] text-slate-500">{formatDate(rec.date)}</td>
                 <td className="px-6 py-4">

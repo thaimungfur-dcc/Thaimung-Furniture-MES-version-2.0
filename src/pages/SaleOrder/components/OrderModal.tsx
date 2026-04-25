@@ -55,7 +55,7 @@ export default function OrderModal({
                         { id: 'Delivery Schedule', icon: Truck },
                         { id: 'Summary & Note', icon: FileText },
                         { id: 'History Log', icon: History }
-                      ].map(t => (
+                      ]?.map(t => (
                         <button 
                           type="button"
                           key={t.id} 
@@ -78,7 +78,7 @@ export default function OrderModal({
                                 <label className="text-[10px] font-normal text-slate-400 uppercase tracking-widest ml-1">Customer</label>
                                 <select required value={orderModal.data.customer} onChange={e => setOrderModal({...orderModal, data:{...orderModal.data, customer: e.target.value}})} disabled={orderModal.mode === 'view'} className="w-full bg-slate-50 border-2 border-slate-100 p-3.5 rounded-2xl text-sm font-medium focus:border-[#ab8a3b] outline-none">
                                   <option value="" disabled>Select Customer...</option>
-                                  {MASTER_CUSTOMERS.map(c => <option key={c} value={c}>{c}</option>)}
+                                  {MASTER_CUSTOMERS?.map(c => <option key={c} value={c}>{c}</option>)}
                                 </select>
                               </div>
                               <div className="space-y-2">
@@ -110,7 +110,7 @@ export default function OrderModal({
                               )}
                             </div>
                             <div className="space-y-4">
-                              {orderModal.data.items.map((item, idx) => (
+                              {orderModal.data.items?.map((item, idx) => (
                                 <div key={idx} className="bg-slate-50 p-4 sm:p-5 rounded-[2rem] border-2 border-slate-100 flex flex-wrap gap-4 items-end relative">
                                   <div className="absolute -top-3 -left-3 w-8 h-8 bg-white border-2 border-slate-100 rounded-full flex items-center justify-center font-bold text-slate-400 text-xs shadow-sm">{idx + 1}</div>
                                   <div className="flex-1 min-w-[200px] space-y-2">
@@ -124,7 +124,7 @@ export default function OrderModal({
                                       }
                                     }} disabled={orderModal.mode === 'view'} className="w-full bg-white border-2 border-white p-3 rounded-xl text-xs font-bold shadow-sm focus:border-[#ab8a3b] outline-none transition-all">
                                       <option value="" disabled>Select product...</option>
-                                      {MASTER_PRODUCTS.map(p => <option key={p.sku} value={p.sku}>{p.name} ({p.sku})</option>)}
+                                      {MASTER_PRODUCTS?.map(p => <option key={p.sku} value={p.sku}>{p.name} ({p.sku})</option>)}
                                     </select>
                                   </div>
                                   <div className="w-24 space-y-2">
@@ -178,7 +178,7 @@ export default function OrderModal({
                               <p className="text-[10px] font-normal text-slate-400 uppercase">Define specific delivery dates for items</p>
                             </div>
 
-                            {orderModal.data.items.map((item, itemIdx) => {
+                            {orderModal.data.items?.map((item, itemIdx) => {
                               if (!item.sku) return (
                                 <div key={itemIdx} className="bg-slate-50 p-4 sm:p-5 rounded-[2rem] border-2 border-dashed border-slate-200 text-center flex flex-col items-center justify-center gap-3">
                                   <Package size={32} className="text-slate-300" />
@@ -215,7 +215,7 @@ export default function OrderModal({
                                   </div>
 
                                   <div className="ml-4 space-y-3">
-                                    {item.deliveries.map((del, delIdx) => (
+                                    {item.deliveries?.map((del, delIdx) => (
                                       <div key={delIdx} className="bg-slate-50 border border-slate-100 p-4 rounded-xl flex items-center gap-4 group">
                                         <div className="w-16">
                                           <span className="text-[9px] font-normal uppercase tracking-widest text-slate-400 block">Round</span>

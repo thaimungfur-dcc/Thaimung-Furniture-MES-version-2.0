@@ -57,7 +57,7 @@ export function FileAttachment({
       return;
     }
 
-    const newAttachments: Attachment[] = acceptedFiles.map(file => ({
+    const newAttachments: Attachment[] = acceptedFiles?.map(file => ({
       id: Math.random().toString(36).substring(7),
       file,
       name: file.name,
@@ -68,7 +68,7 @@ export function FileAttachment({
 
     const updated = [...attachments, ...newAttachments];
     setAttachments(updated);
-    onFilesChange(updated.map(a => a.file));
+    onFilesChange(updated?.map(a => a.file));
   };
 
   const removeAttachment = (id: string) => {
@@ -77,7 +77,7 @@ export function FileAttachment({
     
     const updated = attachments.filter(a => a.id !== id);
     setAttachments(updated);
-    onFilesChange(updated.map(a => a.file));
+    onFilesChange(updated?.map(a => a.file));
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -136,7 +136,7 @@ export function FileAttachment({
             animate={{ opacity: 1 }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-3"
           >
-            {attachments.map((att) => (
+            {attachments?.map((att) => (
               <motion.div 
                 key={att.id}
                 layout

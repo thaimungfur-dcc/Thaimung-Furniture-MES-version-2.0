@@ -210,7 +210,7 @@ export default function CashFlow() {
               { id: 'Cleared', title: 'สำเร็จ (Cleared)', color: 'bg-emerald-400' },
               { id: 'Delayed', title: 'ล่าช้า (Delayed)', color: 'bg-rose-400' },
               { id: 'Cancelled', title: 'ยกเลิก (Cancelled)', color: 'bg-fuchsia-400' },
-            ].map(col => {
+            ]?.map(col => {
               const colItems = transactions.filter(i => i.status === col.id);
               return (
                 <div key={col.id} className="w-[300px] flex-shrink-0 flex flex-col h-full bg-slate-50/50 rounded-2xl p-4 border border-slate-200 shadow-sm">
@@ -221,7 +221,7 @@ export default function CashFlow() {
                     <span className="bg-white text-[#111f42] text-[10px] px-2 py-0.5 rounded-full font-bold border border-slate-200 shadow-sm">{colItems.length}</span>
                   </div>
                   <div className="flex-1 overflow-y-auto kanban-scroll space-y-3 pr-2">
-                    {colItems.map(tx => (
+                    {colItems?.map(tx => (
                       <div key={tx.id} className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 group relative hover:border-[#111f42]/30 transition-all">
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-mono text-[9px] font-bold px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-slate-500 uppercase tracking-widest">{tx.refNo}</span>
@@ -302,7 +302,7 @@ export default function CashFlow() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {currentItems.map(tx => (
+                {currentItems?.map(tx => (
                   <tr key={tx.id} className="hover:bg-slate-50 transition-colors group">
                     <td className="font-mono text-[11px] text-slate-500">{formatDate(tx.date)}</td>
                     <td className="font-mono text-[11px] font-black text-[#111f42] tracking-tighter uppercase">{tx.refNo}</td>
@@ -357,7 +357,7 @@ export default function CashFlow() {
                   <ChevronLeft size={16} />
                 </button>
                 <div className="flex items-center">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)?.map(p => (
                     <button 
                       key={p} onClick={() => setCurrentPage(p)}
                       className={`w-8 h-8 rounded-lg font-black text-[10px] transition-all ${currentPage === p ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-400 hover:bg-slate-50'}`}

@@ -89,7 +89,7 @@ export default function ProductDetailView({
                             <Ruler size={14} /> Dims
                         </button>
                         <div className="w-px h-4 bg-slate-200 mx-1 self-center"></div>
-                        {currentSteps.map(proc => {
+                        {currentSteps?.map(proc => {
                             const Icon = getProcessIcon(proc);
                             return (
                                 <button 
@@ -162,7 +162,7 @@ export default function ProductDetailView({
                             </div>
                             <div className="flex-1 overflow-y-auto master-custom-scrollbar pr-1 pb-4">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    {filteredStandards.map(std => (
+                                    {filteredStandards?.map(std => (
                                         <div key={std.id} className="group flex h-40 border border-slate-200 rounded-xl overflow-hidden bg-white hover:border-[#ab8a3b] transition-all shadow-sm">
                                             <div className="w-36 bg-slate-100 relative overflow-hidden border-r border-slate-100 shrink-0">
                                                 {std.image ? (

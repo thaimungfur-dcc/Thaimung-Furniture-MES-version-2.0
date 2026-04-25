@@ -49,7 +49,7 @@ const NcActionModal: React.FC<NcActionModalProps> = ({
                       { id: 'general', label: '1. Problem Details', icon: AlertTriangle }, 
                       { id: 'response', label: '2. Vendor Response', icon: MessageSquare }, 
                       { id: 'followup', label: '3. Follow Up (PC/QA)', icon: ClipboardCheck } 
-                    ].map(tab => {
+                    ]?.map(tab => {
                       const isActive = modalTab === tab.id;
                       let tabStyle = isActive ? (tab.id === 'response' ? 'bg-rose-500 text-white border-b-rose-700 shadow-inner' : 'bg-white text-[#111f42] border-b-[#E3624A]') : 'text-slate-400 hover:bg-slate-100';
                       if (!isActive && tab.id === 'response') tabStyle = 'text-rose-500 hover:bg-rose-50';

@@ -42,7 +42,7 @@ const NcLogTable: React.FC<NcLogTableProps> = ({
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100 text-[11px]">
-          {logTableData.length > 0 ? logTableData.map(scar => (
+          {logTableData.length > 0 ? logTableData?.map(scar => (
             <tr key={scar.id} className="hover:bg-slate-50 transition-colors">
               <td className="px-6 py-4 font-bold text-rose-600 whitespace-nowrap">{scar.id}</td>
               <td className="px-6 py-4 text-slate-500 font-mono whitespace-nowrap">{formatDate(scar.date)}</td>

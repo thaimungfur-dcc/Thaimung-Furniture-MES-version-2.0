@@ -33,7 +33,7 @@ export default function KanbanBoard({ jobOrders, stages, onMoveOrder, onViewDeta
 
   return (
     <div className="flex gap-6 overflow-x-auto pb-6 min-h-[600px] no-scrollbar">
-      {stages.map((stage) => (
+      {stages?.map((stage) => (
         <div key={stage} className="flex-shrink-0 w-80 bg-slate-100/50 rounded-3xl p-4 flex flex-col border border-slate-200/60">
           <div className="flex items-center justify-between mb-4 px-2">
             <div className="flex items-center gap-2">
@@ -49,7 +49,7 @@ export default function KanbanBoard({ jobOrders, stages, onMoveOrder, onViewDeta
           </div>
 
           <div className="flex-1 space-y-4">
-            {getOrdersByStage(stage).map((order) => (
+            {getOrdersByStage(stage)?.map((order) => (
               <motion.div
                 key={order.id}
                 layoutId={order.id}

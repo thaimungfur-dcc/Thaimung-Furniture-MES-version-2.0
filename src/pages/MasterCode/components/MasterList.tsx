@@ -24,7 +24,7 @@ export default function MasterList({ items, openModal, deleteItem }: MasterListP
         const groups = row.getValue('groups') as string[];
         return (
           <div className="flex gap-1 flex-wrap">
-            {groups.map(g => <span key={g} className={`badge ${getTypeClass(g)}`}>{g}</span>)}
+            {groups?.map(g => <span key={g} className={`badge ${getTypeClass(g)}`}>{g}</span>)}
           </div>
         );
       }

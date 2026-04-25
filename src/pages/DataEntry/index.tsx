@@ -194,7 +194,7 @@ export default function MasterDataEntry() {
               <h2 className="text-[10px] font-black text-[#7693a6] uppercase tracking-widest px-1 mb-2">1. Select Transaction Type</h2>
               
               <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar pb-6">
-                {txTypes.map((tx) => {
+                {txTypes?.map((tx) => {
                   const isSelected = entryType === tx.id;
                   const Icon = tx.icon;
                   return (
@@ -228,7 +228,7 @@ export default function MasterDataEntry() {
                     <RefreshCw size={14} className="text-[#496ca8]" /> Auto-Routing Flow:
                   </h4>
                   <div className="flex flex-wrap gap-2 text-white">
-                    {getRoutingTags().map((tag, i) => (
+                    {getRoutingTags()?.map((tag, i) => (
                       <span key={i} className={`px-2 py-1 rounded-none text-[9px] font-black uppercase tracking-[0.2em] border brightness-90 ${tag.style}`}>
                         {tag.label}
                       </span>

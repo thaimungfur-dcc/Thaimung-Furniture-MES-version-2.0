@@ -70,7 +70,7 @@ export default function DataTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 bg-white">
-            {currentItems.map((v: any) => (
+            {currentItems?.map((v: any) => (
               <tr key={v.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-5 py-3 font-mono text-slate-400 text-[11px]">{formatDate(v.date)}</td>
                 <td className="px-5 py-3 font-mono font-black text-[#1e3a8a]">{v.jvNo}</td>

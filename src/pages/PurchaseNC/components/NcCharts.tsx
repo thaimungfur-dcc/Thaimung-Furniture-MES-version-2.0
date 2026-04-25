@@ -27,7 +27,7 @@ const NcCharts: React.FC<NcChartsProps> = ({ stats, scarData, theme }) => {
       Chart.defaults.font.family = "'JetBrains Mono', 'Noto Sans Thai', sans-serif";
 
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const trendData = months.map((m, i) => {
+      const trendData = months?.map((m, i) => {
          const dateStr = `2026-${String(i+1).padStart(2, '0')}`;
          return scarData.filter(d => d.date.startsWith(dateStr)).length;
       });
@@ -96,7 +96,7 @@ const NcCharts: React.FC<NcChartsProps> = ({ stats, scarData, theme }) => {
                 {l:'Critical',c:stats.critical,clr:'text-red-500',bg:'bg-red-500'}, 
                 {l:'Major',c:stats.major,clr:'text-orange-500',bg:'bg-orange-500'}, 
                 {l:'Minor',c:stats.minor,clr:'text-blue-500',bg:'bg-blue-500'} 
-              ].map(s=>(
+              ]?.map(s=>(
                 <div key={s.l} className="space-y-1.5">
                    <div className="flex justify-between text-[10px] font-bold mb-1">
                      <span className={`uppercase tracking-widest ${s.clr}`}>{s.l}</span>

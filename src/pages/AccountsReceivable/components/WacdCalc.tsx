@@ -79,7 +79,7 @@ export default function WacdCalc({ invoices }: any) {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 bg-white">
-            {invoices.filter((i: any) => i.balance === 0 && i.payDate).map((row: any, i: number) => {
+            {invoices.filter((i: any) => i.balance === 0 && i.payDate)?.map((row: any, i: number) => {
               const days = calculateDaysDiff(row.issueDate, row.payDate);
               const weight = days * row.amount;
               return (

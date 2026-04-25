@@ -15,12 +15,12 @@ interface VatTrendChartProps {
 const VatTrendChart: React.FC<VatTrendChartProps> = ({ data }) => {
   const [hoveredTrend, setHoveredTrend] = useState<number | null>(null);
 
-  const maxTrendVat = Math.max(...data.map(d => d.netVat)) * 1.2 || 4500;
+  const maxTrendVat = Math.max(...data?.map(d => d.netVat)) * 1.2 || 4500;
   
   const generateLinePath = (data: TrendData[], key: keyof TrendData, height: number, width: number, maxValue: number) => {
     if (!data.length) return '';
     const xStep = width / (data.length - 1 || 1);
-    return data.map((point, index) => {
+    return data?.map((point, index) => {
       const x = index * xStep;
       const val = point[key] as number;
       const y = height - ((val / maxValue) * height);
@@ -61,7 +61,7 @@ const VatTrendChart: React.FC<VatTrendChartProps> = ({ data }) => {
             strokeWidth="4" 
             strokeLinejoin="round"
           />
-          {data.map((point, index) => {
+          {data?.map((point, index) => {
             const cx = index * (1000 / (data.length - 1));
             const cy = 200 - ((point.netVat / maxTrendVat) * 200);
             return (
@@ -104,7 +104,7 @@ const VatTrendChart: React.FC<VatTrendChartProps> = ({ data }) => {
         )}
 
         <div className="flex justify-between w-full mt-4 px-1">
-          {data.map((d, i) => (
+          {data?.map((d, i) => (
             <span key={i} className={`text-[11px] font-bold uppercase transition-colors ${hoveredTrend === i ? 'text-[#111f42]' : 'text-slate-400'}`}>
               {d.month}
             </span>

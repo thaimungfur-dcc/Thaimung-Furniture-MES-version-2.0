@@ -35,10 +35,10 @@ export default function AnalysisCharts({ inventoryItems }: { inventoryItems: any
                     chartInstances.current.lowStock = new Chart(lowStockChartRef.current, {
                         type: 'bar',
                         data: {
-                            labels: lowItems.map(i => i.id),
+                            labels: lowItems?.map(i => i.id),
                             datasets: [
-                                { label: 'Onhand', data: lowItems.map(i => i.onhand), backgroundColor: '#E3624A', borderRadius: 4 },
-                                { label: 'Min Point', data: lowItems.map(i => i.minPoint), backgroundColor: '#f1f5f9', type: 'line', borderColor: '#ab8a3b', borderWidth: 2, pointRadius: 0 }
+                                { label: 'Onhand', data: lowItems?.map(i => i.onhand), backgroundColor: '#E3624A', borderRadius: 4 },
+                                { label: 'Min Point', data: lowItems?.map(i => i.minPoint), backgroundColor: '#f1f5f9', type: 'line', borderColor: '#ab8a3b', borderWidth: 2, pointRadius: 0 }
                             ]
                         },
                         options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { beginAtZero: true } } }

@@ -48,7 +48,7 @@ const PrKanbanBoard: React.FC<PrKanbanBoardProps> = ({
   return (
     <div className="animate-in fade-in duration-500 w-full overflow-x-auto pb-4 kanban-scroll no-print">
       <div className="flex gap-6 min-w-max h-[650px] px-1">
-        {KANBAN_COLS.map(col => {
+        {KANBAN_COLS?.map(col => {
           const allColItems = prs.filter(d => {
             const matchStatus = d.status === col.id;
             const matchMonth = listTimeFilter === 'all' || d.date.startsWith(selectedMonth);
@@ -70,7 +70,7 @@ const PrKanbanBoard: React.FC<PrKanbanBoardProps> = ({
               </div>
               
               <div className="flex-1 overflow-y-auto kanban-scroll p-3 space-y-3 relative bg-slate-50/50">
-                {displayedItems.map(item => (
+                {displayedItems?.map(item => (
                   <div key={item.id} className="bg-white p-3 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all cursor-pointer group flex flex-col gap-2" onClick={()=>openModal('view', item)}>
                     <div className="flex justify-between items-center">
                       <span className={`font-bold text-[10px] px-2 py-0.5 rounded ${col.id==='Revise'?'text-rose-600 bg-rose-50':col.id==='Pending Approve'?'text-[#3d97bd] bg-[#3d97bd]/10':col.id==='Approved'?'text-[#849a28] bg-[#849a28]/10':col.id==='Rejected'?'text-slate-600 bg-slate-200':'text-amber-700 bg-amber-50'}`}>{item.id}</span>

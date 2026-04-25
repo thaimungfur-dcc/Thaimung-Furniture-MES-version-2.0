@@ -26,7 +26,7 @@ export default function InventoryTable({
                             onChange={(e) => {setActiveFilter(e.target.value); setCurrentPage(1);}} 
                             className="appearance-none min-w-[220px] bg-white border border-slate-200 rounded-lg pl-9 pr-10 py-2.5 outline-none focus:border-[#111f42] text-[#111f42] font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer font-mono"
                         >
-                            {filters.map((f: string) => (
+                            {filters?.map((f: string) => (
                                 <option key={f} value={f}>
                                     {f === 'All' ? 'ALL STATUS' : f.toUpperCase()} ({getFilterCount(f)})
                                 </option>
@@ -67,7 +67,7 @@ export default function InventoryTable({
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 bg-white text-[12px]">
-                        {paginatedItems.map((item: any) => (
+                        {paginatedItems?.map((item: any) => (
                             <tr key={item.id} className="hover:bg-slate-50 transition-colors">
                                 <td className="minimal-td py-3">
                                     <div className="flex items-center gap-3">
@@ -118,7 +118,7 @@ export default function InventoryTable({
                 <div className="flex items-center gap-2 font-mono">
                     <button onClick={() => setCurrentPage((p: number) => Math.max(1, p - 1))} disabled={currentPage === 1} className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"><ChevronLeft size={14}/></button>
                     <div className="flex items-center gap-1">
-                        {[...Array(totalPages)].map((_, i) => (
+                        {[...Array(totalPages)]?.map((_, i) => (
                             <button 
                                 key={i} 
                                 onClick={() => setCurrentPage(i + 1)}

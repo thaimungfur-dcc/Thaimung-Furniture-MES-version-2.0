@@ -96,7 +96,7 @@ const FabricActionModal: React.FC<FabricActionModalProps> = ({
                           <button onClick={addCategory} className="bg-[#111f42] hover:bg-[#1e346b] text-white px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest shadow-md transition-all">ADD</button>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          {fabricCategories.map(cat => (
+                          {fabricCategories?.map(cat => (
                             <div key={cat} className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg text-[11px] font-bold text-[#111f42] border border-slate-200">
                               <span>{cat}</span>
                               <button onClick={() => removeCategory(cat)} className="text-slate-400 hover:text-rose-500 transition-colors"><X size={12} /></button>
@@ -107,7 +107,7 @@ const FabricActionModal: React.FC<FabricActionModalProps> = ({
                     ) : (
                       <div className="space-y-4 animate-fade-in-up">
                         <div className="flex bg-slate-50 p-1 rounded-xl border border-slate-200 w-fit mb-2">
-                          {['info', 'detail', 'specs', 'history'].map(tab => (
+                          {['info', 'detail', 'specs', 'history']?.map(tab => (
                             <button 
                               key={tab} 
                               onClick={() => setActiveTab(tab)} 
@@ -139,7 +139,7 @@ const FabricActionModal: React.FC<FabricActionModalProps> = ({
                               <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
                                 <label className="block text-[10px] font-black text-slate-400 uppercase mb-3 font-mono tracking-widest">Color Palette</label>
                                 <div className="flex flex-wrap gap-2 items-center">
-                                  {form.colors.map((c: string, i: number) => (
+                                  {form.colors?.map((c: string, i: number) => (
                                     <div key={i} className="flex items-center bg-slate-50 p-1 rounded-full border border-slate-200 shadow-sm">
                                       <input 
                                         type="color" 
@@ -165,7 +165,7 @@ const FabricActionModal: React.FC<FabricActionModalProps> = ({
                               <div>
                                 <label className="block text-[10px] font-black text-[#111f42] uppercase mb-1.5 tracking-widest font-mono">Category</label>
                                 <select value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="input-primary w-full cursor-pointer font-bold text-[12px] bg-white">
-                                  {fabricCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                                  {fabricCategories?.map(c => <option key={c} value={c}>{c}</option>)}
                                 </select>
                               </div>
                               <div>
@@ -226,7 +226,7 @@ const FabricActionModal: React.FC<FabricActionModalProps> = ({
                             
                             <div className="space-y-5">
                               {form.history && form.history.length > 0 ? (
-                                form.history.map((h: any, i: number) => (
+                                form.history?.map((h: any, i: number) => (
                                   <div key={i} className="flex gap-4">
                                     <div className="flex flex-col items-center">
                                       <div className="w-8 h-8 rounded-full bg-[#111f42] flex items-center justify-center text-[#ab8a3b] shadow-sm z-10">

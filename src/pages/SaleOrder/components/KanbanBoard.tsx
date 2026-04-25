@@ -22,7 +22,7 @@ export default function KanbanBoard({
   return (
     <div className="flex-1 min-h-0 overflow-x-auto overflow-y-hidden kanban-scroll pb-2 no-print block">
       <div className="flex gap-4 h-full min-w-max items-stretch px-1">
-        {STATUS_LIST.map(status => {
+        {STATUS_LIST?.map(status => {
           const style = getStatusStyle(status);
           const colItems = filteredOrders.filter(o => o.status === status);
           const isExpanded = expandedCols[status];
@@ -50,7 +50,7 @@ export default function KanbanBoard({
               </div>
               
               <div className="flex-1 overflow-y-auto kanban-scroll p-3 space-y-2.5">
-                {displayItems.map(so => {
+                {displayItems?.map(so => {
                    const totalItems = so.items.length;
                    const isMultiDelivery = so.items.some(i => i.deliveries.length > 1);
                    return (

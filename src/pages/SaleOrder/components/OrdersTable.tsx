@@ -40,7 +40,7 @@ export default function OrdersTable({
         <div className="flex items-center gap-4">
           <div className="flex bg-slate-50 p-1 border border-slate-200 rounded-xl">
             <button onClick={() => {setSubTab('all'); setCurrentPage(1);}} className={`px-5 py-2 whitespace-nowrap font-normal text-[10px] uppercase rounded-lg transition-all ${subTab === 'all' ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-200'}`}>All</button>
-            {['Booking', 'Production', 'Ready to Ship', 'Delivered'].map(s => (
+            {['Booking', 'Production', 'Ready to Ship', 'Delivered']?.map(s => (
               <button key={s} onClick={() => {setSubTab(s); setCurrentPage(1);}} className={`px-5 py-2 whitespace-nowrap font-normal text-[10px] uppercase rounded-lg transition-all ${subTab === s ? 'bg-[#111f42] text-white shadow-md' : 'text-slate-500 hover:bg-slate-200'}`}>{s}</button>
             ))}
           </div>
@@ -69,7 +69,7 @@ export default function OrdersTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {currentItems.map(so => {
+            {currentItems?.map(so => {
               const style = getStatusStyle(so.status);
               const isMulti = so.items.some(i => i.deliveries.length > 1);
               return (

@@ -6,7 +6,7 @@ interface StarRatingProps {
 
 const StarRating: React.FC<StarRatingProps> = ({ rating }) => (
   <div className="flex gap-0.5">
-    {[1, 2, 3, 4, 5].map(i => (
+    {[1, 2, 3, 4, 5]?.map(i => (
       <svg 
         key={i} 
         width="12" 

@@ -60,7 +60,7 @@ const FabricTable: React.FC<FabricTableProps> = ({ patterns, onEdit }) => {
         const colors = row.getValue('colors') as string[];
         return (
           <div className="flex flex-wrap items-center gap-1.5 max-w-[200px]">
-            {colors && colors.map((c: string, i: number) => (
+            {colors && colors?.map((c: string, i: number) => (
               <div key={i} className="flex items-center gap-1 bg-white pl-1 pr-1.5 py-0.5 rounded-md border border-slate-200 shadow-sm" title={c}>
                 <span className="w-2.5 h-2.5 rounded-full border border-black/10 shadow-inner" style={{backgroundColor: c}}></span>
                 <span className="text-[8px] font-mono text-slate-500 font-bold uppercase">{c}</span>

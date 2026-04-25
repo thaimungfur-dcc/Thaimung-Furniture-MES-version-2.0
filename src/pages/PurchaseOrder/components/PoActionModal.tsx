@@ -145,7 +145,7 @@ const PoActionModal: React.FC<PoActionModalProps> = ({
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-slate-100">
-                            {poForm.items.map((item: any, index: number) => (
+                            {poForm.items?.map((item: any, index: number) => (
                               <tr key={index} className="hover:bg-slate-50 transition-colors">
                                 <td className="px-3 py-2 text-center text-slate-400 font-medium">{index + 1}</td>
                                 <td className="px-3 py-2">
@@ -223,7 +223,7 @@ const PoActionModal: React.FC<PoActionModalProps> = ({
                       </h3>
                       <div className="space-y-4">
                         {poForm.history && poForm.history.length > 0 ? (
-                          poForm.history.map((h: any, i: number) => (
+                          poForm.history?.map((h: any, i: number) => (
                             <div key={i} className="flex gap-4">
                               <div className="flex flex-col items-center">
                                 <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm z-10">

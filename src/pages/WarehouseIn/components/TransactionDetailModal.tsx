@@ -40,7 +40,7 @@ export const TransactionDetailModal = ({ showTransactionModal, activeTransaction
                                         <div className="space-y-1.5">
                                             <label className="block text-[9px] font-black text-slate-400 uppercase tracking-widest font-mono">Warehouse</label>
                                             <select value={activeTransaction.warehouseName} onChange={e=>setActiveTransaction({...activeTransaction, warehouseName: e.target.value})} className="input-primary font-bold h-10">
-                                                {warehouses.slice(1).map((w: string) => <option key={w} value={w}>{w}</option>)}
+                                                {warehouses.slice(1)?.map((w: string) => <option key={w} value={w}>{w}</option>)}
                                             </select>
                                         </div>
                                         <div className="space-y-1.5">

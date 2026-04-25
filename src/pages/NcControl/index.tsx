@@ -178,7 +178,7 @@ export default function NcControl() {
       finalData.response.date = new Date().toISOString().split('T')[0];
     }
     if(modalMode === 'create') setNcData([finalData, ...ncData]);
-    else setNcData(ncData.map(d => d.id === finalData.id ? finalData : d));
+    else setNcData(ncData?.map(d => d.id === finalData.id ? finalData : d));
     setModalOpen(false);
   };
 
@@ -281,7 +281,7 @@ export default function NcControl() {
                 </h3>
               </div>
               <div className="space-y-4">
-                {ncData.slice(0, 5).map((item, i) => (
+                {ncData.slice(0, 5)?.map((item, i) => (
                   <div key={i} className="flex justify-between items-center border-b border-slate-100 pb-4 last:border-0 last:pb-0">
                     <div className="flex flex-col">
                       <span className="font-bold text-[#111f42] text-xs">{item.id} - {item.department}</span>
@@ -319,7 +319,7 @@ export default function NcControl() {
             <div className="p-3 flex items-center justify-between gap-4 bg-white border-b border-slate-100 overflow-x-auto flex-shrink-0">
               <div className="flex items-center gap-4 flex-shrink-0">
                 <div className="flex bg-slate-100 p-1 rounded-lg">
-                  {['all', 'Submitted', 'Responded', 'Follow up', 'Closed'].map(f => (
+                  {['all', 'Submitted', 'Responded', 'Follow up', 'Closed']?.map(f => (
                     <button 
                       key={f} 
                       onClick={() => setFilterStatus(f)} 

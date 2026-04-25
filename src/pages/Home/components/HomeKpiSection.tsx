@@ -47,7 +47,7 @@ export const HomeKpiSection: React.FC<HomeKpiSectionProps> = ({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {kpis.map((kpi, i) => (
+      {kpis?.map((kpi, i) => (
         <KpiCard
           key={`kpi-card-${i}`}
           label={kpi.label}

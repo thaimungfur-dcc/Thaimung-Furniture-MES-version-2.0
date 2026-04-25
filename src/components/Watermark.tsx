@@ -76,7 +76,7 @@ export default function Watermark() {
         `}
       >
         <div className="flex h-[200%] w-[200%] -translate-x-1/4 -translate-y-1/4 -rotate-45 flex-wrap content-start">
-          {Array.from({ length: 150 }).map((_, i) => (
+          {Array.from({ length: 150 })?.map((_, i) => (
             <div key={i} className="p-10 text-3xl font-bold text-black whitespace-nowrap">
               {watermarkText}
             </div>

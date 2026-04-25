@@ -41,7 +41,7 @@ export default function WarehouseOut() {
 
     // Data State
     const { items } = useMasterData();
-    const productMaster = useMemo(() => (items || []).map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
+    const productMaster = useMemo(() => (items || [])?.map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
     const { data: deliveryOrders, updateRow: updateDO, loading: doLoading } = useGoogleSheets<DeliveryOrder>('DeliveryOrders');
     const { data: mrpOrders, updateRow: updateMRP, loading: mrpLoading } = useGoogleSheets<MrpOrder>('MrpOrders');
     const { data: historyLogs, addRow: addLog, updateRow: updateLog, loading: logLoading } = useGoogleSheets<HistoryLog>('WarehouseOutLogs');
@@ -489,7 +489,7 @@ export default function WarehouseOut() {
                         style={{ top: dropdownState.y + 'px', left: dropdownState.x + 'px', width: dropdownState.width + 'px' }}
                         className="fixed z-[10005] bg-white border border-slate-200 rounded-xl shadow-2xl max-h-60 overflow-y-auto animate-fade-in-up master-custom-scrollbar mt-1 py-1"
                     >
-                        {dropdownState.items.map(p => (
+                        {dropdownState.items?.map(p => (
                             <div key={p.sku} 
                                 onMouseDown={() => selectGlobalProduct(p)}
                                 className="py-2.5 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 group flex flex-col gap-0.5">

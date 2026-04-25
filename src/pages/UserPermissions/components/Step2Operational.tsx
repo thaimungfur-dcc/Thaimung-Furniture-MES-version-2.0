@@ -38,7 +38,7 @@ export default function Step2Operational({
                 </tr>
               </thead>
               <tbody className="text-sm text-gray-600">
-                {users.map((user) => (
+                {users?.map((user) => (
                   <tr key={user.id} className="hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0">
                     <td className="p-4 pl-6">
                       <div className="flex items-center gap-3">
@@ -79,7 +79,7 @@ export default function Step2Operational({
               <thead>
                 <tr>
                   <th className="sticky left-0 z-20 min-w-[200px] text-[11px] uppercase tracking-wider text-[#64748B] p-4 font-bold bg-gray-50/95 border-b border-gray-200 shadow-[2px_0_5px_rgba(0,0,0,0.05)]">Module / User</th>
-                  {users.map(user => (
+                  {users?.map(user => (
                     <th key={user.id} className="text-center min-w-[100px] text-[11px] uppercase tracking-wider text-[#64748B] p-4 font-bold bg-gray-50/95 border-b border-gray-200 hover:bg-gray-100 transition-colors cursor-pointer" onClick={() => handleEditUser(user)}>
                       <div className="flex flex-col items-center gap-2 group">
                         <img src={user.avatar} className="w-8 h-8 rounded-full border border-white shadow-sm group-hover:scale-110 transition-transform" />
@@ -90,7 +90,7 @@ export default function Step2Operational({
                 </tr>
               </thead>
               <tbody className="text-xs text-gray-600">
-                {SYSTEM_MODULES.map(module => {
+                {SYSTEM_MODULES?.map(module => {
                   const isExpanded = expandedModules[module.id];
                   const hasSub = module.subItems && module.subItems.length > 0;
                   return (
@@ -104,12 +104,12 @@ export default function Step2Operational({
                             {hasSub && <ChevronDown size={12} className={`ml-auto text-[#64748B] transition-transform ${isExpanded ? 'rotate-180' : ''}`} />}
                           </div>
                         </td>
-                        {users.map(user => {
+                        {users?.map(user => {
                           const levels = matrixPermissions[user.id]?.[module.id] || [];
                           return (
                             <td key={user.id} className="text-center border-b border-white p-2">
                               <div className="flex justify-center gap-1 flex-wrap max-w-[120px] mx-auto">
-                                {levels.map(lvl => {
+                                {levels?.map(lvl => {
                                   const pInfo = PERMISSION_LEVELS.find(p => p.level === lvl);
                                   if(!pInfo) return null;
                                   return <div key={lvl} className="inline-flex items-center justify-center w-6 h-6 rounded shadow-sm" style={{ backgroundColor: pInfo.bg }} title={pInfo.label}><pInfo.icon size={12} style={{color: pInfo.color}} /></div>;
@@ -125,12 +125,12 @@ export default function Step2Operational({
                             {sub.label}
                             {confidentialityMap[sub.id] && <Lock size={10} className="text-red-500" />}
                           </td>
-                          {users.map(user => {
+                          {users?.map(user => {
                             const levels = matrixPermissions[user.id]?.[sub.id] || [];
                             return (
                               <td key={user.id} className="text-center border-b border-gray-100 p-2">
                                 <div className="flex justify-center gap-1 flex-wrap max-w-[120px] mx-auto">
-                                  {levels.map(lvl => {
+                                  {levels?.map(lvl => {
                                     const pInfo = PERMISSION_LEVELS.find(p => p.level === lvl);
                                     if(!pInfo) return null;
                                     return <div key={lvl} className="inline-flex items-center justify-center w-6 h-6 rounded shadow-sm" style={{ backgroundColor: pInfo.bg }} title={pInfo.label}><pInfo.icon size={12} style={{color: pInfo.color}} /></div>;

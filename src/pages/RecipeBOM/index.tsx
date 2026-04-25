@@ -85,7 +85,7 @@ export default function BOMManagementApp() {
     const openBomModal = (product: any = null) => {
         if (product) {
             setSelectedProduct(JSON.parse(JSON.stringify(product)));
-            setBomItems(JSON.parse(JSON.stringify(product.items || [])).map((i: any) => ({...i})));
+            setBomItems(JSON.parse(JSON.stringify(product.items || []))?.map((i: any) => ({...i})));
             setIsEditing(false);
         } else {
             setSelectedProduct({ id: '', name: '', category: 'General', subCategory: '', version: 'V.1.0', status: 'Draft', stdPrice: 0, cost: 0 });
@@ -207,7 +207,7 @@ export default function BOMManagementApp() {
                         <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
                             <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
                                 <div className="flex items-center gap-1 p-1 bg-white rounded-lg border border-slate-200 shadow-sm shrink-0">
-                                    {['All', 'Active', 'Draft', 'Review'].map(s => (
+                                    {['All', 'Active', 'Draft', 'Review']?.map(s => (
                                         <button key={s} onClick={() => setStatusFilter(s)} 
                                             className={`filter-btn flex items-center gap-2 px-3 py-1.5 text-[11px] transition-all duration-200 ${statusFilter === s ? 'active' : 'hover:bg-slate-50'}`}>
                                             <span>{s}</span>
@@ -269,7 +269,7 @@ export default function BOMManagementApp() {
                                                                 {selectedProduct.id === '' ? (
                                                                     <select onChange={handleProductSelect} className="input-primary py-1.5 font-bold border-[#ab8a3b]/30">
                                                                         <option value="">-- Choose FG Item --</option>
-                                                                        {itemMasterFG.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
+                                                                        {itemMasterFG?.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
                                                                     </select>
                                                                 ) : (
                                                                     <div className="h-9 flex items-center font-mono font-black text-[#ab8a3b] text-[15px]">{selectedProduct.id}</div>
@@ -312,7 +312,7 @@ export default function BOMManagementApp() {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {bomItems.map((item, idx) => {
+                                                                    {bomItems?.map((item, idx) => {
                                                                         const lineTotal = Number(item.qty) * Number(item.cost) * (1 + (Number(item.scrap) || 0) / 100);
                                                                         return (
                                                                             <tr key={idx} className="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 font-mono">
@@ -381,7 +381,7 @@ export default function BOMManagementApp() {
                                                                             <td className="minimal-td">
                                                                                 <select value={newItem.code} onChange={onMaterialSelect} className="input-primary py-1.5 font-bold border-[#ab8a3b]/40 h-10">
                                                                                     <option value="">-- Select Component --</option>
-                                                                                    {materialDb.map(m => <option key={m.code} value={m.code}>{m.code} - {m.name}</option>)}
+                                                                                    {materialDb?.map(m => <option key={m.code} value={m.code}>{m.code} - {m.name}</option>)}
                                                                                 </select>
                                                                             </td>
                                                                             <td className="minimal-td text-center text-[10px] font-mono text-slate-400 uppercase">{newItem.type || '-'}</td>

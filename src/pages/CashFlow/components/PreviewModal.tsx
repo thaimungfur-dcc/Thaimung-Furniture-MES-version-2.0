@@ -87,7 +87,7 @@ export default function PreviewModal({
                               </div>
                               <table className="w-full">
                                 <tbody>
-                                  {completedItems.filter(i => i.flowType === 'CFO').map(item => (
+                                  {completedItems.filter(i => i.flowType === 'CFO')?.map(item => (
                                     <tr key={item.id} className="border-b border-slate-100">
                                       <td className="py-1.5 pl-3">{item.description}</td>
                                       <td className="py-1.5 pr-2 text-right font-mono">{item.type === 'Out' ? `(฿${item.amount?.toLocaleString()})` : `฿${item.amount?.toLocaleString()}`}</td>
@@ -108,7 +108,7 @@ export default function PreviewModal({
                               </div>
                               <table className="w-full">
                                 <tbody>
-                                  {completedItems.filter(i => i.flowType === 'CFI').map(item => (
+                                  {completedItems.filter(i => i.flowType === 'CFI')?.map(item => (
                                     <tr key={item.id} className="border-b border-slate-100">
                                       <td className="py-1.5 pl-3">{item.description}</td>
                                       <td className="py-1.5 pr-2 text-right font-mono">{item.type === 'Out' ? `(฿${item.amount?.toLocaleString()})` : `฿${item.amount?.toLocaleString()}`}</td>
@@ -130,7 +130,7 @@ export default function PreviewModal({
                               </div>
                               <table className="w-full">
                                 <tbody>
-                                  {completedItems.filter(i => i.flowType === 'CFF').map(item => (
+                                  {completedItems.filter(i => i.flowType === 'CFF')?.map(item => (
                                     <tr key={item.id} className="border-b border-slate-100">
                                       <td className="py-1.5 pl-3">{item.description}</td>
                                       <td className="py-1.5 pr-2 text-right font-mono">{item.type === 'Out' ? `(฿${item.amount?.toLocaleString()})` : `฿${item.amount?.toLocaleString()}`}</td>
@@ -180,7 +180,7 @@ export default function PreviewModal({
                             </thead>
                             <tbody className="divide-y divide-slate-100">
                               {filteredData.length > 0 ? (
-                                filteredData.map((item, i) => (
+                                filteredData?.map((item, i) => (
                                   <tr key={i}>
                                     <td className="px-2 py-1.5 font-medium">{formatDate(item.date)}</td>
                                     <td className="px-2 py-1.5 font-semibold text-[#111f42]">{item.ref}</td>

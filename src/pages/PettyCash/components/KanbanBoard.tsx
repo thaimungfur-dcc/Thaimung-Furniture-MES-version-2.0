@@ -14,7 +14,7 @@ export default function KanbanBoard({ vouchers }: any) {
   return (
     <div className="flex-1 overflow-x-auto overflow-y-hidden kanban-scroll pb-4 flex h-full mt-2">
       <div className="flex gap-6 h-full min-w-max items-start">
-        {columns.map(col => {
+        {columns?.map(col => {
           const colItems = vouchers.filter((i: any) => i.status === col.id);
           return (
             <div key={col.id} className="w-[320px] flex-shrink-0 flex flex-col h-full bg-white/60 backdrop-blur-md rounded-2xl p-4 border border-white shadow-sm">
@@ -25,7 +25,7 @@ export default function KanbanBoard({ vouchers }: any) {
                 <span className="bg-white/80 text-[#223149] text-[10px] px-2 py-0.5 rounded-full font-bold border border-white shadow-sm">{colItems.length}</span>
               </div>
               <div className="flex-1 overflow-y-auto kanban-scroll space-y-3 pr-2">
-                {colItems.map((v: any) => (
+                {colItems?.map((v: any) => (
                   <div key={v.id} className="bg-white/90 backdrop-blur p-4 rounded-xl shadow-sm border border-white hover:shadow-md transition-all group relative">
                     <div className="flex justify-between items-start mb-2 mt-1">
                       <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-slate-50 border border-slate-200 text-[#223149]">{v.pcvNo}</span>

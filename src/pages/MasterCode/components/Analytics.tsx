@@ -46,14 +46,14 @@ export default function Analytics({ items, activeTab }: AnalyticsProps) {
       }
 
       if (valueChartRef.current) {
-        const mockData = items.slice(0, 6).map(i => ({code: i.mastCode, value: Math.floor(Math.random() * 1000)}));
+        const mockData = items.slice(0, 6)?.map(i => ({code: i.mastCode, value: Math.floor(Math.random() * 1000)}));
         charts.current.value = new Chart(valueChartRef.current, {
           type: 'bar',
           data: {
-            labels: mockData.map(i => i.code),
+            labels: mockData?.map(i => i.code),
             datasets: [{
               label: 'Est. Material Value (kTHB)',
-              data: mockData.map(i => i.value),
+              data: mockData?.map(i => i.value),
               backgroundColor: '#111f42',
               borderRadius: 4
             }]

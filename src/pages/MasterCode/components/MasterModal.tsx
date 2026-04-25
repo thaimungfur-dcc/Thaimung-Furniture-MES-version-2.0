@@ -48,7 +48,7 @@ export default function MasterModal({
                     <div>
                       <label className="block text-[11px] font-black text-[#111f42] mb-2 uppercase tracking-widest font-mono">Group Type <span className="text-[#E3624A]">*</span></label>
                       <div className="flex flex-wrap gap-2">
-                        {groups.filter(g => g !== 'All').map(g => (
+                        {groups.filter(g => g !== 'All')?.map(g => (
                           <button key={g} onClick={() => toggleGroupInForm(g)} 
                             className={`px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all flex items-center gap-2 border font-mono tracking-wider ${(form.groups || []).includes(g) ? 'bg-[#111f42] text-[#ab8a3b] border-[#111f42] shadow-md' : 'bg-white text-slate-500 border-slate-200 hover:border-[#ab8a3b]'}`}>
                             {(form.groups || []).includes(g) ? <CheckCircle size={14} /> : <Circle size={14} />} {g}

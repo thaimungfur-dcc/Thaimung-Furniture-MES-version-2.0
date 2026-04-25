@@ -115,10 +115,10 @@ export default function MasterCodeApp() {
       const oldGroup = editingGroup;
       const newName = editGroupText.toUpperCase();
       
-      setGroups(prev => prev.map(g => g === oldGroup ? newName : g));
+      setGroups(prev => prev?.map(g => g === oldGroup ? newName : g));
       (items || []).forEach(item => {
         if (item.groups && item.groups.includes(oldGroup!)) {
-          updateItem(item.id, { groups: item.groups.map((g: string) => g === oldGroup ? newName : g) });
+          updateItem(item.id, { groups: item.groups?.map((g: string) => g === oldGroup ? newName : g) });
         }
       });
       cancelEditGroup();

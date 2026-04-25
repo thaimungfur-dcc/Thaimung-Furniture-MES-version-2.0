@@ -36,7 +36,7 @@ const NcKanbanBoard: React.FC<NcKanbanBoardProps> = ({
   return (
     <div className="animate-in fade-in duration-500 w-full overflow-x-auto pb-4 kanban-scroll no-print">
       <div className="flex gap-6 min-w-max h-[620px] px-1">
-        {statuses.map(status => {
+        {statuses?.map(status => {
           const allColItems = monthFilteredData.filter(d => d.status === status);
           const isStacked = !stackExpanded[status] && allColItems.length > 1;
           
@@ -56,7 +56,7 @@ const NcKanbanBoard: React.FC<NcKanbanBoardProps> = ({
                   </button>
                 )}
                 <div className={`flex flex-col transition-all duration-500 ${isStacked ? 'pt-2 pb-10' : 'space-y-3'}`}>
-                  {allColItems.map((item, index) => (
+                  {allColItems?.map((item, index) => (
                     <div 
                       key={item.id} 
                       className={`bg-white p-3 rounded-xl shadow-sm border hover:shadow-md transition-all cursor-pointer group flex flex-col gap-2 relative ${isStacked ? 'border-slate-300' : 'border-slate-200'}`} 

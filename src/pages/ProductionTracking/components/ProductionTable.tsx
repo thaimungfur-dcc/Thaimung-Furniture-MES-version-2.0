@@ -41,7 +41,7 @@ export default function ProductionTable({ data, onView, onEdit }: ProductionTabl
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100 bg-white">
-          {data.map((order) => {
+          {data?.map((order) => {
             const progress = (order.received / order.qty) * 100;
             
             return (

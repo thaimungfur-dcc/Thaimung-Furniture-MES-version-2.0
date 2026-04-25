@@ -257,9 +257,9 @@ export default function ProductCost() {
                     <div className="flex-1 flex flex-col p-8 overflow-y-auto master-custom-scrollbar">
                         {viewMode === 'summary' ? (
                             <div className="flex-1 space-y-4">
-                                {productRows.map((row, rowIndex) => (
+                                {productRows?.map((row, rowIndex) => (
                                     <div key={rowIndex} className="flex flex-col lg:flex-row gap-6 w-full h-auto lg:h-[400px]">
-                                        {row.map((product: any) => (
+                                        {row?.map((product: any) => (
                                             <div 
                                                 key={product.itemId} 
                                                 className="hover-card group relative flex flex-col justify-end p-0 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md border border-slate-200 cursor-pointer flex-1 h-[350px] lg:h-full"
@@ -295,7 +295,7 @@ export default function ProductCost() {
                                                 </div>
                                             </div>
                                         ))}
-                                        {row.length < 5 && [...Array(5 - row.length)].map((_, i) => (<div key={`e-${i}`} className="hidden lg:block flex-1"></div>))}
+                                        {row.length < 5 && [...Array(5 - row.length)]?.map((_, i) => (<div key={`e-${i}`} className="hidden lg:block flex-1"></div>))}
                                     </div>
                                 ))}
                             </div>
@@ -365,7 +365,7 @@ export default function ProductCost() {
                                                                         className="input-table font-mono w-full"
                                                                     >
                                                                         <option value="">Select Item...</option>
-                                                                        {items.filter(i => i.itemType === 'FG').map(item => (
+                                                                        {items.filter(i => i.itemType === 'FG')?.map(item => (
                                                                             <option key={item.id} value={item.itemCode}>{item.itemCode} - {item.itemName}</option>
                                                                         ))}
                                                                     </select>
@@ -379,7 +379,7 @@ export default function ProductCost() {
                                                             <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Box size={16} className="text-[#10b981]"/> 1. Direct Material (วัตถุดิบทางตรง)</h4>
                                                             <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                 <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Material</th><th className="minimal-th w-20 text-center">Unit</th><th className="minimal-th w-24 text-right">Qty</th><th className="minimal-th w-28 text-right">Price</th><th className="minimal-th w-32 text-right">Total</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                <tbody>{form.dm.map((r: any, i: number) => (
+                                                                <tbody>{form.dm?.map((r: any, i: number) => (
                                                                     <tr key={i}><td className="minimal-td text-slate-400">11-01-00-DM</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('dm', i, 'name', e.target.value)} className="input-table font-thai" /></td><td className="minimal-td"><input value={r.unit} onChange={e=>updateRow('dm', i, 'unit', e.target.value)} className="input-table text-center" /></td><td className="minimal-td"><input type="number" value={r.qty} onChange={e=>updateRow('dm', i, 'qty', e.target.value)} className="input-table text-right font-bold"/></td><td className="minimal-td"><input type="number" value={r.pricePerUnit} onChange={e=>updateRow('dm', i, 'pricePerUnit', e.target.value)} className="input-table text-right text-emerald-600 font-bold"/></td><td className="minimal-td text-right font-black">฿{(r.cost||0)?.toLocaleString()}</td><td className="minimal-td text-center"><button onClick={()=>removeRow('dm', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
                                                                 ))}</tbody>
                                                             </table>
@@ -390,7 +390,7 @@ export default function ProductCost() {
                                                             <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Users size={16} className="text-[#3981BF]"/> 2. Direct Labor (ค่าแรงทางตรง)</h4>
                                                             <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                 <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Activity</th><th className="minimal-th w-32 text-right">Rate / Hr</th><th className="minimal-th w-32 text-right">Time (Hrs)</th><th className="minimal-th w-32 text-right">Unit Total</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                <tbody>{form.dl.map((r: any, i: number) => (
+                                                                <tbody>{form.dl?.map((r: any, i: number) => (
                                                                     <tr key={i}><td className="minimal-td text-slate-400">20-01-00-DL</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('dl', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td"><input type="number" value={r.rate} onChange={e=>updateRow('dl', i, 'rate', e.target.value)} className="input-table text-right"/></td><td className="minimal-td"><input type="number" value={r.timeHrs} onChange={e=>updateRow('dl', i, 'timeHrs', e.target.value)} className="input-table text-right font-bold"/></td><td className="minimal-td text-right font-black">฿{(r.cost||0)?.toLocaleString()}</td><td className="minimal-td text-center"><button onClick={()=>removeRow('dl', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
                                                                 ))}</tbody>
                                                             </table>
@@ -402,7 +402,7 @@ export default function ProductCost() {
                                                                 <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Factory size={16} className="text-slate-400"/> 3.1 Manufacturing OH</h4>
                                                                 <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                     <thead><tr><th className="minimal-th w-auto">Item Name</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                    <tbody>{form.factory_oh.map((r: any, i: number) => (
+                                                                    <tbody>{form.factory_oh?.map((r: any, i: number) => (
                                                                         <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('factory_oh', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('factory_oh', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('factory_oh', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
                                                                     ))}</tbody>
                                                                 </table>
@@ -412,7 +412,7 @@ export default function ProductCost() {
                                                                 <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Building size={16} className="text-slate-400"/> 3.2 Office OH (Prod. Support)</h4>
                                                                 <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                     <thead><tr><th className="minimal-th w-auto">Item Name</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                    <tbody>{form.office_oh.map((r: any, i: number) => (
+                                                                    <tbody>{form.office_oh?.map((r: any, i: number) => (
                                                                         <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('office_oh', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('office_oh', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('office_oh', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
                                                                     ))}</tbody>
                                                                 </table>
@@ -422,7 +422,7 @@ export default function ProductCost() {
                                                                 <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Droplets size={16} className="text-blue-500"/> 3.3 Utilities & Power (Direct)</h4>
                                                                 <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                     <thead><tr><th className="minimal-th w-auto">Resource</th><th className="minimal-th w-32 text-right">Batch Cost</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                    <tbody>{form.utilities.map((r: any, i: number) => (
+                                                                    <tbody>{form.utilities?.map((r: any, i: number) => (
                                                                         <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('utilities', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('utilities', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('utilities', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
                                                                     ))}</tbody>
                                                                 </table>
@@ -432,7 +432,7 @@ export default function ProductCost() {
                                                                 <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Gauge size={16} className="text-slate-500"/> 3.4 Machine Depreciation</h4>
                                                                 <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                     <thead><tr><th className="minimal-th w-auto">Asset Name</th><th className="minimal-th w-32 text-right">Batch Amort.</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                    <tbody>{form.depreciation.map((r: any, i: number) => (
+                                                                    <tbody>{form.depreciation?.map((r: any, i: number) => (
                                                                         <tr key={i}><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('depreciation', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('depreciation', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('depreciation', i)} className="text-slate-200 hover:text-rose-500"><Trash2 size={14}/></button></td></tr>
                                                                     ))}</tbody>
                                                                 </table>
@@ -448,7 +448,7 @@ export default function ProductCost() {
                                                             <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><ShoppingBag size={16} className="text-[#E3624A]"/> 4. Selling Expenses (ค่าใช้จ่ายการขาย)</h4>
                                                             <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                 <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-48">Type</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                <tbody>{form.selling.map((r: any, i: number) => (
+                                                                <tbody>{form.selling?.map((r: any, i: number) => (
                                                                     <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('selling', r)}</td><td className="minimal-td"><select value={r.subType} onChange={e=>updateRow('selling', i, 'subType', e.target.value)} className="input-table text-[10px] font-bold"><option value="">-- เลือก --</option><option value="4.1 ก่อนขาย">4.1 ก่อนขาย</option><option value="4.2 ระหว่างขาย">4.2 ระหว่างขาย</option></select></td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('selling', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('selling', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('selling', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
                                                                 ))}</tbody>
                                                             </table>
@@ -458,7 +458,7 @@ export default function ProductCost() {
                                                             <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Briefcase size={16} className="text-[#3981BF]"/> 5. Admin Expenses (ค่าใช้จ่ายบริหาร)</h4>
                                                             <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                 <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-48">Type</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                <tbody>{form.admin.map((r: any, i: number) => (
+                                                                <tbody>{form.admin?.map((r: any, i: number) => (
                                                                     <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('admin', r)}</td><td className="minimal-td"><select value={r.subType} onChange={e=>updateRow('admin', i, 'subType', e.target.value)} className="input-table text-[10px] font-bold"><option value="">-- เลือก --</option><option value="5.1 บุคลากร">5.1 บุคลากร</option><option value="5.2 สำนักงาน">5.2 สำนักงาน</option></select></td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('admin', i, 'name', e.target.value)} className="input-table font-thai"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('admin', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('admin', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
                                                                 ))}</tbody>
                                                             </table>
@@ -468,7 +468,7 @@ export default function ProductCost() {
                                                             <h4 className="text-xs font-black text-[#111f42] uppercase tracking-widest flex items-center gap-2 border-b pb-3 mb-4"><Settings2 size={16} className="text-slate-400"/> 6. อื่นๆ (Extra Costs)</h4>
                                                             <table className="w-full text-left font-mono text-[11px] mb-4">
                                                                 <thead><tr><th className="minimal-th w-24">Acc Code</th><th className="minimal-th w-auto">Description</th><th className="minimal-th w-40 text-right">Batch Cost (฿)</th><th className="minimal-th w-10"></th></tr></thead>
-                                                                <tbody>{form.others.map((r: any, i: number) => (
+                                                                <tbody>{form.others?.map((r: any, i: number) => (
                                                                     <tr key={i}><td className="minimal-td text-slate-400">{getAccCode('others', r)}</td><td className="minimal-td"><input value={r.name} onChange={e=>updateRow('others', i, 'name', e.target.value)} className="input-table font-thai" placeholder="เช่น ค่าจ้างผลิตภายนอก, ค่าวิจัย"/></td><td className="minimal-td text-right"><input type="number" value={r.cost} onChange={e=>updateRow('others', i, 'cost', e.target.value)} className="input-table text-right font-black"/></td><td className="minimal-td text-center"><button onClick={()=>removeRow('others', i)} className="text-slate-200 hover:text-rose-500 transition-colors"><Trash2 size={14}/></button></td></tr>
                                                                 ))}</tbody>
                                                             </table>

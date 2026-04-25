@@ -95,7 +95,7 @@ export const PrintDocModal = ({ showPrintDocModal, activeTransaction, setShowPri
                                                     <td className="px-3 py-3 text-center font-sans font-bold text-[#111f42]">{String(activeTransaction.status)}</td>
                                                 </tr>
                                                 {/* Pad empty rows to fill space */}
-                                                {[...Array(6)].map((_, i) => (
+                                                {[...Array(6)]?.map((_, i) => (
                                                     <tr key={`empty-${i}`}>
                                                         <td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td>
                                                         <td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td>

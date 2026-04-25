@@ -10,7 +10,7 @@ interface CatalogueGridProps {
 const CatalogueGrid: React.FC<CatalogueGridProps> = ({ products, onEdit }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {products.map(p => (
+      {products?.map(p => (
         <div key={p.id} className="furniture-card flex flex-col h-full group">
           <div className="h-48 bg-slate-100 relative overflow-hidden shrink-0 border-b border-slate-100">
             {p.image ? (

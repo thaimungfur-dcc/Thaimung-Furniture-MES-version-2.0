@@ -34,7 +34,7 @@ export const StockAlertsBoard: React.FC = () => {
               { id: 'RM-OAK-002', desc: 'Oak Timber at 0. Reorder pending approval.', action: 'RESTOCK' },
               { id: 'FB-VLVT-001', desc: 'Blue Velvet fabric depleted. Halt line 2.', action: 'RESTOCK' },
               { id: 'HD-HINGE-005', desc: 'Soft-close hinges below safety level.', action: 'RESTOCK' }
-            ].map((item, i) => (
+            ]?.map((item, i) => (
               <div key={i} className="flex justify-between items-center p-4 rounded-xl border border-slate-100 bg-white hover:border-red-200 transition-colors">
                 <div className="flex gap-3 items-start">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 shrink-0"></div>
@@ -65,7 +65,7 @@ export const StockAlertsBoard: React.FC = () => {
               { id: 'CH-GLUE-012', desc: 'Adhesive batch expiring in 3 days. Check.', action: 'INSPECT' },
               { id: 'RM-PINE-003', desc: 'Moisture level warning on arriving batch.', action: 'INSPECT' },
               { id: 'PN-WHT-002', desc: 'White paint lot requires viscosity test.', action: 'INSPECT' }
-            ].map((item, i) => (
+            ]?.map((item, i) => (
               <div key={i} className="flex justify-between items-center p-4 rounded-xl border border-slate-100 bg-white hover:border-amber-200 transition-colors">
                 <div className="flex gap-3 items-start">
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></div>

@@ -31,7 +31,7 @@ export const ReceiveFormModal = ({ showModal, closeModal, modalType, selectedIte
                                         <div className="space-y-2">
                                             <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] font-mono">Transaction Type</label>
                                             <select value={form.receiveType} onChange={e => setForm({...form, receiveType: e.target.value})} className="input-primary w-full cursor-pointer font-black border-2 border-slate-200 bg-slate-50 uppercase tracking-widest text-[11px] rounded-none focus:border-[#ab8a3b]" disabled={modalType !== 'MANUAL'}>
-                                                {receiveTypes.map((t: string) => <option key={t} value={t}>{t}</option>)}
+                                                {receiveTypes?.map((t: string) => <option key={t} value={t}>{t}</option>)}
                                             </select>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@ export const ReceiveFormModal = ({ showModal, closeModal, modalType, selectedIte
                                                 <div className="space-y-2">
                                                     <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] font-mono">Storage Unit</label>
                                                     <select value={form.warehouseName} onChange={e => setForm({...form, warehouseName: e.target.value})} className="input-primary font-black border-2 border-slate-200 rounded-none focus:border-[#ab8a3b] h-10 uppercase tracking-widest">
-                                                        {warehouses.slice(1).map((w: string) => <option key={w} value={w}>{w}</option>)}
+                                                        {warehouses.slice(1)?.map((w: string) => <option key={w} value={w}>{w}</option>)}
                                                     </select>
                                                 </div>
                                                 <div className="space-y-2">
@@ -86,7 +86,7 @@ export const ReceiveFormModal = ({ showModal, closeModal, modalType, selectedIte
                                                 <h4 className="text-[12px] font-black text-[#111f42] uppercase tracking-[0.3em] font-mono">Inventory Receipt Payload</h4>
                                                 <button onClick={() => setForm({...form, manualItems: [...form.manualItems, { sku: '', itemName: '', qty: 0, warehouseName: 'FG', location: '', lotNo: '', mfgDate: new Date().toISOString().slice(0, 10), remark: '', expDate: '' }]})} className="text-[10px] bg-[#111f42] text-[#ab8a3b] px-6 py-2.5 rounded-none font-black uppercase tracking-[0.2em] shadow-xl hover:bg-[#0a1229] transition-all flex items-center gap-2 border-b-2 border-[#ab8a3b]">Add New Line Item</button>
                                             </div>
-                                            {form.manualItems.map((item: any, idx: number) => (
+                                            {form.manualItems?.map((item: any, idx: number) => (
                                                 <div key={idx} className="p-4 sm:p-5 bg-slate-50 border-2 border-slate-100 grid grid-cols-12 gap-4 relative rounded-none shadow-sm">
                                                     <div className="col-span-5">
                                                         <label className="text-[8px] font-black text-slate-400 uppercase block mb-1.5 tracking-widest">Target Logistic Item</label>
@@ -96,7 +96,7 @@ export const ReceiveFormModal = ({ showModal, closeModal, modalType, selectedIte
                                                             handleManualItemChange(idx, 'itemName', prod?.name || '');
                                                         }} className="input-primary text-[10px] font-black border-2 border-slate-200 rounded-none h-10 px-3 uppercase tracking-wider">
                                                             <option value="">-- Select SKU --</option>
-                                                            {productMaster.map((p: any) => <option key={p.sku} value={p.sku}>{p.sku} : {p.name}</option>)}
+                                                            {productMaster?.map((p: any) => <option key={p.sku} value={p.sku}>{p.sku} : {p.name}</option>)}
                                                         </select>
                                                     </div>
                                                     <div className="col-span-2">
@@ -106,7 +106,7 @@ export const ReceiveFormModal = ({ showModal, closeModal, modalType, selectedIte
                                                     <div className="col-span-2">
                                                         <label className="text-[8px] font-black text-slate-400 uppercase block mb-1.5 tracking-widest">WH</label>
                                                         <select value={item.warehouseName} onChange={e => handleManualItemChange(idx, 'warehouseName', e.target.value)} className="input-primary text-[10px] font-black border-2 border-slate-200 rounded-none h-10 px-3 uppercase tracking-wider">
-                                                            {warehouses.slice(1).map((w: string) => <option key={w} value={w}>{w}</option>)}
+                                                            {warehouses.slice(1)?.map((w: string) => <option key={w} value={w}>{w}</option>)}
                                                         </select>
                                                     </div>
                                                     <div className="col-span-2">

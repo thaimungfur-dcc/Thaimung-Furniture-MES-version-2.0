@@ -117,7 +117,7 @@ import {
 
 export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
   const { user } = useAuth();
-  const [expandedSections, setExpandedSections] = useState<string[]>(MENU_SECTIONS.map(s => s.title));
+  const [expandedSections, setExpandedSections] = useState<string[]>(MENU_SECTIONS?.map(s => s.title));
 
   const toggleSection = (title: string) => {
     setExpandedSections(prev => 
@@ -160,7 +160,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-8 px-4 space-y-8 sidebar-scrollbar">
-        {MENU_SECTIONS.map((section) => (
+        {MENU_SECTIONS?.map((section) => (
           <div key={section.title} className="space-y-3">
             {!isCollapsed && (
               <button 
@@ -186,7 +186,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                   exit={{ height: 0, opacity: 0 }}
                   className="space-y-1.5 overflow-hidden"
                 >
-                  {section.items.map((item) => {
+                  {section.items?.map((item) => {
                     const Icon = item.icon;
                     return (
                       <NavLink

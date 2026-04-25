@@ -82,7 +82,7 @@ export default function ActionModal({
                                                     className="input-primary font-bold text-[13px] bg-white cursor-pointer py-2"
                                                 >
                                                     <option value="">-- Choose Item from Master List --</option>
-                                                    {ITEM_MASTER_DB.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} : {i.itemName}</option>)}
+                                                    {ITEM_MASTER_DB?.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} : {i.itemName}</option>)}
                                                 </select>
                                             </div>
                                         ) : (

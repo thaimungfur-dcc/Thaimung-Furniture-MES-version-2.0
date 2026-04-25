@@ -121,7 +121,7 @@ export default function EditUserModal({
                     {PERMISSION_LEVELS.filter(p => {
                       if (modalStep === 1) return p.level <= 1;
                       return p.level === 0 || p.level >= 2;
-                    }).map(p => (
+                    })?.map(p => (
                       <div key={p.level} className="flex items-center gap-1 bg-white border border-gray-200 px-1.5 py-0.5 rounded text-[9px] text-gray-500">
                         <p.icon size={8} style={{color: p.color}} /> {p.label}
                       </div>
@@ -130,7 +130,7 @@ export default function EditUserModal({
                 </div>
 
                 <div className="overflow-y-auto pr-1 space-y-2 custom-scrollbar flex-1">
-                  {SYSTEM_MODULES.map((module) => {
+                  {SYSTEM_MODULES?.map((module) => {
                     const isExpanded = expandedModules[module.id];
                     const hasSub = module.subItems && module.subItems.length > 0;
                     const currentLevels = currentPermissions[module.id] || [];
@@ -152,7 +152,7 @@ export default function EditUserModal({
                             {PERMISSION_LEVELS.filter(p => {
                               if (modalStep === 1) return p.level <= 1;
                               return p.level === 0 || p.level >= 2;
-                            }).map((p) => {
+                            })?.map((p) => {
                               const isActive = p.level === 0 
                                 ? currentLevels.length === 0 || (modalStep === 2 && !currentLevels.some(l => l >= 2))
                                 : currentLevels.includes(p.level);
@@ -188,7 +188,7 @@ export default function EditUserModal({
                                       {PERMISSION_LEVELS.filter(p => {
                                         if (modalStep === 1) return p.level <= 1;
                                         return p.level === 0 || p.level >= 2;
-                                      }).map((p) => {
+                                      })?.map((p) => {
                                         const isActive = p.level === 0 
                                           ? subLevels.length === 0 || (modalStep === 2 && !subLevels.some(l => l >= 2))
                                           : subLevels.includes(p.level);

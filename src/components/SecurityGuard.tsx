@@ -40,13 +40,16 @@ export default function SecurityGuard({ children }: { children: React.ReactNode 
     >
       {isBlurred && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/50">
-          
-                  <DraggableWrapper>
-                        <p className="text-2xl font-bold text-red-600 drop-shadow-md">
-                              Screen capture is disabled for security reasons.
-                            </p>
-                      </DraggableWrapper>
-
+          <DraggableWrapper>
+            <div className="bg-white p-6 shadow-2xl rounded-2xl border border-red-100 flex flex-col items-center">
+               <div className="w-full pb-4 mb-2 border-b border-slate-100 cursor-move flex justify-center">
+                  <div className="w-12 h-1.5 bg-slate-200 rounded-full"></div>
+               </div>
+               <p className="text-2xl font-bold text-red-600 drop-shadow-sm text-center">
+                  Screen capture is disabled for security reasons.
+               </p>
+            </div>
+          </DraggableWrapper>
         </div>
       )}
       {children}

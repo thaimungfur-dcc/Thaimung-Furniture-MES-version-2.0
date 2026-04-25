@@ -92,18 +92,18 @@ export default function AccountPayable() {
   useEffect(() => { setCurrentPage(1); }, [subTab, selectedMonth, searchTerm, itemsPerPage, mainTab]);
 
   const updateStatus = (id: number, newStatus: string) => {
-    setBills(prev => prev.map(b => b.id === id ? { ...b, status: newStatus } : b));
+    setBills(prev => prev?.map(b => b.id === id ? { ...b, status: newStatus } : b));
   };
 
   const toggleDisputed = (id: number) => {
-    setBills(prev => prev.map(b => b.id === id ? { ...b, isDisputed: !b.isDisputed } : b));
+    setBills(prev => prev?.map(b => b.id === id ? { ...b, isDisputed: !b.isDisputed } : b));
   };
 
   const handlePaymentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (paymentModal) {
       const billId = paymentModal.id;
-      setBills(prev => prev.map(b => {
+      setBills(prev => prev?.map(b => {
         if (b.id === billId) {
           const newPaid = b.paid + paymentForm.amount;
           return {
@@ -138,7 +138,7 @@ export default function AccountPayable() {
     const headers = ['Issue Date', 'Due Date', 'Bill No.', 'PO Ref', 'Vendor', 'Vendor Type', 'Credit Term (Days)', 'Risk Level', 'Exception', 'Amount', 'Disc. Available', 'Disc. Captured', 'Paid', 'Balance', 'Status', 'Is Disputed'];
     const csvRows = [
       headers.join(','),
-      ...filteredBills.map(row => [
+      ...filteredBills?.map(row => [
         row.issueDate, row.dueDate, row.billNo, row.poRef, `"${row.vendor}"`, row.vendorType, row.creditTerm, row.risk, `"${row.exceptionReason}"`, row.amount, row.discountAvailable, row.discountCaptured, row.paid, row.balance, row.status, row.isDisputed
       ].join(','))
     ].join('\n');

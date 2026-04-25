@@ -106,7 +106,7 @@ export default function SystemConfig() {
             <div className="flex flex-col md:flex-row gap-6 flex-1 overflow-hidden">
                 {/* Sidebar */}
                 <div className="w-full md:w-64 flex-shrink-0 space-y-2">
-                    {categories.map((category) => (
+                    {categories?.map((category) => (
                         <button
                             key={category.id}
                             onClick={() => setActiveCategory(category.id)}

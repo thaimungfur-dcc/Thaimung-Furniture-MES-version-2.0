@@ -30,7 +30,7 @@ export default function NameRuleModal({ showNameRuleModal, setShowNameRuleModal,
                                     <div className="space-y-1.5">
                                         <label className="text-[10px] font-bold text-slate-400 uppercase">Target Item Type</label>
                                         <select value={selectedRuleType} onChange={e => setSelectedRuleType(e.target.value)} className="input-primary text-[12px] font-bold bg-slate-50 border-slate-200">
-                                            {groups.filter(x => x !== 'All').map(g => <option key={g} value={g}>{g}</option>)}
+                                            {groups.filter(x => x !== 'All')?.map(g => <option key={g} value={g}>{g}</option>)}
                                         </select>
                                     </div>
                                     <div className="space-y-1.5">

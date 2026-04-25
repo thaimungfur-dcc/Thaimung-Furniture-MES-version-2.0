@@ -98,7 +98,7 @@ const PrPreviewModal: React.FC<PrPreviewModalProps> = ({
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-slate-200">
-                            {selectedPR.items.map((item: any, idx: number) => (
+                            {selectedPR.items?.map((item: any, idx: number) => (
                               <tr key={idx} className="even:bg-slate-50/50">
                                 <td className="px-3 py-1.5 border-r text-center text-slate-500">{idx + 1}</td>
                                 <td className="px-3 py-1.5 border-r font-bold text-[#111f42]">{item.description}</td>
@@ -109,7 +109,7 @@ const PrPreviewModal: React.FC<PrPreviewModalProps> = ({
                                 <td className="px-3 py-1.5 text-slate-500 text-[9px] italic">{item.note || '-'}</td>
                               </tr>
                             ))}
-                            {[...Array(Math.max(0, 5 - selectedPR.items.length))].map((_, i) => (
+                            {[...Array(Math.max(0, 5 - selectedPR.items.length))]?.map((_, i) => (
                               <tr key={`empty-${i}`}>
                                 <td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td>
                                 <td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td>

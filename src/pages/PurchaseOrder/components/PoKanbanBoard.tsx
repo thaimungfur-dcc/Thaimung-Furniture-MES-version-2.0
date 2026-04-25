@@ -65,7 +65,7 @@ const PoKanbanBoard: React.FC<PoKanbanBoardProps> = ({
             <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{filteredPendingPRs.length}</span>
           </div>
           <div className="flex-1 overflow-y-auto kanban-scroll p-3 space-y-3 relative bg-slate-50/50">
-            {filteredPendingPRs.slice(0, kanbanLimits.pendingPR || 5).map(pr => (
+            {filteredPendingPRs.slice(0, kanbanLimits.pendingPR || 5)?.map(pr => (
               <div key={pr.id} className="bg-white p-3 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all cursor-pointer flex flex-col gap-2" onClick={() => openModal('generate', pr)}>
                  <div className="flex justify-between items-center">
                     <span className="font-bold text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded">{pr.id}</span>
@@ -104,7 +104,7 @@ const PoKanbanBoard: React.FC<PoKanbanBoardProps> = ({
             <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{getBoardItems('Pending Approve').length}</span>
           </div>
           <div className="flex-1 overflow-y-auto kanban-scroll p-3 space-y-3 relative bg-slate-50/50">
-            {getBoardItems('Pending Approve').slice(0, kanbanLimits['Pending Approve'] || 5).map(po => (
+            {getBoardItems('Pending Approve').slice(0, kanbanLimits['Pending Approve'] || 5)?.map(po => (
               <div key={po.id} className="bg-white p-3 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all cursor-pointer flex flex-col gap-2" onClick={() => openModal('approve', po)}>
                 <div className="flex justify-between items-center">
                     <span className="font-bold text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded">{po.poNumber}</span>
@@ -144,7 +144,7 @@ const PoKanbanBoard: React.FC<PoKanbanBoardProps> = ({
             <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{getBoardItems('Approved').length}</span>
           </div>
           <div className="flex-1 overflow-y-auto kanban-scroll p-3 space-y-3 relative bg-slate-50/50">
-            {getBoardItems('Approved').slice(0, kanbanLimits['Approved'] || 5).map(po => (
+            {getBoardItems('Approved').slice(0, kanbanLimits['Approved'] || 5)?.map(po => (
               <div key={po.id} className="bg-white p-3 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all cursor-pointer flex flex-col gap-2" onClick={() => openModal('view', po)}>
                  <div className="flex justify-between items-center">
                     <span className="font-bold text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded">{po.poNumber}</span>
@@ -183,7 +183,7 @@ const PoKanbanBoard: React.FC<PoKanbanBoardProps> = ({
             <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{getBoardItems('Sent').length}</span>
           </div>
           <div className="flex-1 overflow-y-auto kanban-scroll p-3 space-y-3 relative bg-slate-50/50">
-            {getBoardItems('Sent').slice(0, kanbanLimits['Sent'] || 5).map(po => (
+            {getBoardItems('Sent').slice(0, kanbanLimits['Sent'] || 5)?.map(po => (
               <div key={po.id} className="bg-white p-3 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all cursor-pointer flex flex-col gap-2" onClick={() => openModal('view', po)}>
                 <div className="flex justify-between items-center">
                     <span className="font-bold text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded">{po.poNumber}</span>

@@ -15,7 +15,7 @@ export default function KanbanBoard({ bills, updateStatus, setPaymentModal }: an
   return (
     <div className="flex-1 overflow-x-auto overflow-y-hidden kanban-scroll pb-4 no-print flex h-full mt-2">
       <div className="flex gap-6 h-full min-w-max items-start">
-        {columns.map(col => {
+        {columns?.map(col => {
           const colItems = bills.filter((i: any) => i.status === col.id);
           return (
             <div key={col.id} className="w-[320px] flex-shrink-0 flex flex-col h-full bg-white/60 backdrop-blur-md rounded-2xl p-4 border border-white shadow-sm">
@@ -28,7 +28,7 @@ export default function KanbanBoard({ bills, updateStatus, setPaymentModal }: an
               </div>
               
               <div className="flex-1 overflow-y-auto kanban-scroll space-y-3 pr-2">
-                {colItems.map((bill: any) => (
+                {colItems?.map((bill: any) => (
                   <div key={bill.id} className="bg-white/90 backdrop-blur p-4 rounded-xl shadow-sm border border-white hover:shadow-md transition-all cursor-pointer group relative" onClick={() => (col.id !== 'Paid' && col.id !== 'Disputed') && setPaymentModal(bill)}>
                     
                     <div className={`absolute top-0 right-0 px-2 py-0.5 rounded-bl-lg rounded-tr-xl text-[8px] font-bold uppercase tracking-widest text-white

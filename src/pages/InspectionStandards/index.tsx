@@ -187,7 +187,7 @@ export default function InspectionStandards() {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                const updatedProducts = products.map(p => p.id === selectedProduct?.id ? { ...p, dimensionImage: reader.result as string } : p);
+                const updatedProducts = products?.map(p => p.id === selectedProduct?.id ? { ...p, dimensionImage: reader.result as string } : p);
                 setProducts(updatedProducts);
                 if (selectedProduct) {
                     setSelectedProduct({ ...selectedProduct, dimensionImage: reader.result as string });
@@ -201,7 +201,7 @@ export default function InspectionStandards() {
         if (modalMode === 'product') {
             if (!productForm.name || !productForm.code) return window.alert('โปรดกรอกรหัสและชื่อสินค้า');
             if (isEditing) {
-                setProducts(prev => prev.map(p => p.id === productForm.id ? productForm : p));
+                setProducts(prev => prev?.map(p => p.id === productForm.id ? productForm : p));
                 if (selectedProduct && selectedProduct.id === productForm.id) {
                     setSelectedProduct(productForm);
                 }
@@ -211,7 +211,7 @@ export default function InspectionStandards() {
         } else {
             if (!standardForm.point || !standardForm.criteria) return window.alert('โปรดกรอกข้อมูลจุดตรวจสอบและเกณฑ์ยอมรับ');
             if (isEditing) {
-                setStandards(prev => prev.map(s => s.id === standardForm.id ? standardForm : s));
+                setStandards(prev => prev?.map(s => s.id === standardForm.id ? standardForm : s));
             } else {
                 setStandards(prev => [{...standardForm, id: Date.now()}, ...prev]);
             }
@@ -239,7 +239,7 @@ export default function InspectionStandards() {
         if (window.confirm(`คัดลอกมาตรฐานของ "${product.name}"?`)) {
             const newId = Date.now();
             const newProduct = { ...product, id: newId, name: product.name + ' (Copy)', code: product.code + '-CP', status: 'In Development' };
-            const newStandards = standards.filter(s => s.productId === product.id).map(s => ({ ...s, id: Date.now() + Math.random(), productId: newId }));
+            const newStandards = standards.filter(s => s.productId === product.id)?.map(s => ({ ...s, id: Date.now() + Math.random(), productId: newId }));
             setProducts([newProduct, ...products]);
             setStandards([...standards, ...newStandards]);
         }
@@ -392,13 +392,13 @@ export default function InspectionStandards() {
                                                                 onChange={(e) => setConfigCategory(e.target.value as any)} 
                                                                 className="input-primary font-bold bg-white"
                                                             >
-                                                                {Object.keys(categorySteps).map(k => <option key={k} value={k}>{k}</option>)}
+                                                                {Object.keys(categorySteps)?.map(k => <option key={k} value={k}>{k}</option>)}
                                                             </select>
                                                         </div>
                                                         <div className="space-y-2">
                                                             <label className="block text-[10px] font-black text-slate-400 uppercase mb-1 font-mono">Current Steps</label>
                                                             <div className="flex flex-wrap gap-2">
-                                                                {categorySteps[configCategory].map(proc => (
+                                                                {categorySteps[configCategory]?.map(proc => (
                                                                     <div key={proc} className="bg-white border border-slate-200 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
                                                                         <span className="text-[11px] font-bold text-[#111f42]">{proc}</span>
                                                                         <button onClick={() => removeProcess(proc)} className="text-slate-300 hover:text-rose-500 transition"><X size={12} /></button>

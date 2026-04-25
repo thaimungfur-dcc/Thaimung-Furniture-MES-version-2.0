@@ -57,7 +57,7 @@ const PrActionModal: React.FC<PrActionModalProps> = ({
                         { id: 'general', label: '1. General Info', icon: Info },
                         { id: 'items', label: '2. Line Items', icon: List },
                         { id: 'history', label: '3. History Log', icon: History }
-                      ].map(tab => (
+                      ]?.map(tab => (
                         <button 
                           key={tab.id} 
                           onClick={()=>setActiveFormTab(tab.id)} 
@@ -144,7 +144,7 @@ const PrActionModal: React.FC<PrActionModalProps> = ({
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
-                                  {formData.items.map((item: any, index: number) => (
+                                  {formData.items?.map((item: any, index: number) => (
                                     <tr key={item.id} className="hover:bg-slate-50 transition-colors">
                                       <td className="px-3 py-1.5 text-center text-slate-400 font-medium">{index + 1}</td>
                                       <td className="px-3 py-1.5">
@@ -228,7 +228,7 @@ const PrActionModal: React.FC<PrActionModalProps> = ({
                           <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
                             <div className="space-y-4">
                               {formData.history && formData.history.length > 0 ? (
-                                formData.history.map((h: any, i: number) => (
+                                formData.history?.map((h: any, i: number) => (
                                   <div key={i} className="flex gap-4">
                                     <div className="flex flex-col items-center">
                                       <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 shadow-sm z-10">

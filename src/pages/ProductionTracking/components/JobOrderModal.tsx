@@ -160,7 +160,7 @@ export default function JobOrderModal({ isOpen, onClose, onSave, editingOrder }:
                 onChange={(e) => setFormData({ ...formData, currentStage: e.target.value as ProductionStage })}
                 className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-black text-[#111f42] font-mono text-[10px] uppercase tracking-widest focus:border-[#ab8a3b] outline-none appearance-none"
               >
-                {['Pending', 'Cutting', 'Assembly', 'Finishing', 'Upholstery', 'QC', 'Packing', 'Completed'].map(s => (
+                {['Pending', 'Cutting', 'Assembly', 'Finishing', 'Upholstery', 'QC', 'Packing', 'Completed']?.map(s => (
                   <option key={s} value={s}>{s.toUpperCase()}</option>
                 ))}
               </select>

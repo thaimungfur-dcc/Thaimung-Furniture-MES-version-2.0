@@ -103,7 +103,7 @@ export default function BillTable({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {currentItems.length > 0 ? currentItems.map((bill: any) => (
+              {currentItems.length > 0 ? currentItems?.map((bill: any) => (
                 <tr key={bill.id} className={`transition-colors hover:bg-slate-50 ${bill.isDisputed || bill.exceptionReason ? 'bg-red-50/30' : ''}`}>
                   {/* DATES */}
                   <td className="px-4 py-3 align-top border-r border-slate-100 whitespace-nowrap w-[1%]">

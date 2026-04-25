@@ -157,7 +157,7 @@ export default function ProductListView({
             <div className="flex-1 overflow-y-auto no-scrollbar pb-6">
                 {viewMode === 'grid' ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {filteredProducts.map(product => (
+                        {filteredProducts?.map(product => (
                             <div key={product.id} onClick={() => onSelectProduct(product)} className="product-card group">
                                 <div className="h-40 bg-slate-100 relative overflow-hidden border-b border-slate-50">
                                     {product.image ? (

@@ -33,7 +33,7 @@ export default function BankReconciliation() {
         { id: 3, date: '2026-03-05', refNo: 'FEE-001', description: 'ค่าธรรมเนียมโอนเงินตปท.', bankAmount: -1500, bookAmount: null, bankAccount: 'KTB', type: 'Bank Fee', status: 'Adjusting', source: 'Master' },
         { id: 4, date: '2026-03-12', refNo: 'TRF-004', description: 'รับชำระเงินจาก Home Pro', bankAmount: 69550, bookAmount: 69550, bankAccount: 'KBank', type: 'Normal', status: 'Reconciled', source: 'Master' },
       ];
-      const processed = mockData.map(rec => {
+      const processed = mockData?.map(rec => {
         const bank = rec.bankAmount || 0;
         const book = rec.bookAmount || 0;
         return { ...rec, diff: Math.abs(bank - book) };

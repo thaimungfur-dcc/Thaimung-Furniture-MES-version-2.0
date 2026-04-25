@@ -139,7 +139,7 @@ export default function CustomerManagement() {
         data: {
           labels: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'],
           datasets: [{
-            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'].map(status => customers.filter(c => c.status === status).length),
+            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted']?.map(status => customers.filter(c => c.status === status).length),
             backgroundColor: ['#10b981', '#72A09E', '#ab8a3b', '#E3624A'],
             borderWidth: 0
           }]
@@ -158,7 +158,7 @@ export default function CustomerManagement() {
           labels: masterConfig.categories,
           datasets: [{
             label: 'Customers',
-            data: masterConfig.categories.map(cat => customers.filter(c => c.category === cat).length),
+            data: masterConfig.categories?.map(cat => customers.filter(c => c.category === cat).length),
             backgroundColor: '#111f42', borderRadius: 6
           }]
         },
@@ -286,7 +286,7 @@ export default function CustomerManagement() {
                     onChange={e => {setCatFilter(e.target.value); setCurrentPage(1);}} 
                     className="bg-white border border-slate-200 rounded-none pl-9 pr-10 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-black text-[10px] uppercase tracking-widest shadow-sm cursor-pointer appearance-none transition-all hover:border-[#ab8a3b]/50 min-w-[180px]"
                   >
-                    {filterCategories.map(f => (
+                    {filterCategories?.map(f => (
                       <option key={f} value={f}>{f === 'All' ? 'ALL CATEGORIES' : f.toUpperCase()}</option>
                     ))}
                   </select>

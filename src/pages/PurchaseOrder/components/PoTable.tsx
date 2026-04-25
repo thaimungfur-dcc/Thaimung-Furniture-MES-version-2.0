@@ -57,7 +57,7 @@ const PoTable: React.FC<PoTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50">
-            {paginatedPOList.map(po => (
+            {paginatedPOList?.map(po => (
               <tr key={po.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 font-bold text-[#111f42]">{po.poNumber}</td>
                 <td className="px-6 py-4 text-slate-500">{formatDate(po.date)}</td>
@@ -93,7 +93,7 @@ const PoTable: React.FC<PoTableProps> = ({
         <div className="flex items-center gap-2">
           <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1} className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-50 transition-all"><ChevronLeft size={16} /></button>
           <div className="flex gap-1">
-            {[...Array(totalPages)].map((_, i) => (
+            {[...Array(totalPages)]?.map((_, i) => (
               <button key={i + 1} onClick={() => setCurrentPage(i + 1)} className={`w-8 h-8 rounded-lg text-[12px] font-bold transition-all border ${currentPage === i + 1 ? 'bg-[#111f42] text-white border-[#111f42] shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'}`}>{i + 1}</button>
             ))}
           </div>

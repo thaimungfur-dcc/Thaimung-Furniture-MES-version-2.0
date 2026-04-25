@@ -199,7 +199,7 @@ export default function FabricDesignApp() {
                                     className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-lg pl-9 pr-8 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer"
                                 >
                                     <option value="All">ALL CATEGORIES ({patterns.length})</option>
-                                    {fabricCategories.map(cat => (
+                                    {fabricCategories?.map(cat => (
                                         <option key={cat} value={cat}>
                                             {cat.toUpperCase()} ({getCategoryCount(cat)})
                                         </option>

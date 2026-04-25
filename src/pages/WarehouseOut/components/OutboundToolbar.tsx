@@ -52,7 +52,7 @@ export const OutboundToolbar: React.FC<OutboundToolbarProps> = ({
         <div className="flex flex-col md:flex-row items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
           <div className="flex bg-white rounded-xl border border-slate-200 p-1 shrink-0">
             {activeTab === 'all' ? (
-              warehouses.map(wh => (
+              warehouses?.map(wh => (
                 <button 
                   key={wh} 
                   onClick={() => setActiveWhTab(wh)} 
@@ -62,7 +62,7 @@ export const OutboundToolbar: React.FC<OutboundToolbarProps> = ({
                 </button>
               ))
             ) : (
-              statuses.map(status => (
+              statuses?.map(status => (
                 <button 
                   key={status} 
                   onClick={() => setStatusFilter(status)} 

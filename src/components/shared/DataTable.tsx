@@ -171,7 +171,7 @@ export function DataTable<T>({
                     className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#111f42] transition-all h-9 cursor-pointer shadow-sm min-w-[130px]"
                   >
                     <option value="">All Months</option>
-                    {months.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+                    {months?.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
                 </div>
@@ -183,7 +183,7 @@ export function DataTable<T>({
                     className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#111f42] transition-all h-9 cursor-pointer shadow-sm min-w-[110px]"
                   >
                     <option value="">All Years</option>
-                    {years.map(y => <option key={y} value={y}>{y}</option>)}
+                    {years?.map(y => <option key={y} value={y}>{y}</option>)}
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
                 </div>
@@ -191,7 +191,7 @@ export function DataTable<T>({
               </>
             )}
 
-            {filterColumns.map(colId => {
+            {filterColumns?.map(colId => {
               const facets = getFacets(colId);
               const currentFilter = columnFilters.find(f => f.id === colId)?.value || '';
               const colLabel = columns.find((c: any) => c.accessorKey === colId)?.header as string || colId;
@@ -212,7 +212,7 @@ export function DataTable<T>({
                       className="appearance-none bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-1.5 text-[11px] font-black uppercase tracking-widest text-[#111f42] outline-none focus:border-[#111f42] transition-all h-9 cursor-pointer shadow-sm min-w-[140px]"
                     >
                       <option value="">All {colLabel}</option>
-                      {facets.map(([val, count]) => (
+                      {facets?.map(([val, count]) => (
                         <option key={val} value={val}>{val}</option>
                       ))}
                     </select>
@@ -246,9 +246,9 @@ export function DataTable<T>({
         <div className="flex-1 overflow-x-auto master-custom-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
-              {table.getHeaderGroups().map(headerGroup => (
+              {table.getHeaderGroups()?.map(headerGroup => (
                 <tr key={headerGroup.id}>
-                  {headerGroup.headers.map(header => {
+                  {headerGroup.headers?.map(header => {
                     return (
                       <th 
                         key={header.id}
@@ -269,9 +269,9 @@ export function DataTable<T>({
             </thead>
             <tbody className="divide-y divide-slate-100">
               {table.getRowModel().rows.length > 0 ? (
-                table.getRowModel().rows.map(row => (
+                table.getRowModel().rows?.map(row => (
                   <tr key={row.id} className="hover:bg-slate-50/50 transition-colors group">
-                    {row.getVisibleCells().map(cell => (
+                    {row.getVisibleCells()?.map(cell => (
                       <td key={cell.id} className="px-6 py-3 text-[12px] text-[#111f42] font-semibold bg-white group-hover:bg-transparent">
                         {cell.column.id === 'actions' ? (
                           <div className="flex items-center gap-[0.5px]">

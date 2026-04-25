@@ -12,12 +12,12 @@ interface TrendChartProps {
 
 export default function TrendChart({ data }: TrendChartProps) {
   const [hoveredTrend, setHoveredTrend] = useState<number | null>(null);
-  const maxTrend = Math.max(...data.map(d => d.balance)) * 1.1 || 500000;
+  const maxTrend = Math.max(...data?.map(d => d.balance)) * 1.1 || 500000;
 
   const generateLinePath = (data: TrendData[], key: keyof TrendData, height: number, width: number, maxValue: number) => {
     if (!data.length) return '';
     const xStep = width / (data.length - 1 || 1);
-    return data.map((point, index) => {
+    return data?.map((point, index) => {
       const x = index * xStep;
       const val = point[key] as number;
       const y = height - ((val / maxValue) * height);
@@ -57,7 +57,7 @@ export default function TrendChart({ data }: TrendChartProps) {
             strokeLinejoin="round"
           />
           
-          {data.map((point, index) => {
+          {data?.map((point, index) => {
             const cx = index * (1000 / (data.length - 1));
             const cy = 200 - ((point.balance / maxTrend) * 200);
             return (
@@ -96,7 +96,7 @@ export default function TrendChart({ data }: TrendChartProps) {
         )}
 
         <div className="flex justify-between w-full mt-4 px-1">
-          {data.map((d, i) => (
+          {data?.map((d, i) => (
             <span key={i} className={`text-[11px] font-bold uppercase transition-colors ${hoveredTrend === i ? 'text-[#111f42]' : 'text-slate-400'}`}>
               {d.month}
             </span>

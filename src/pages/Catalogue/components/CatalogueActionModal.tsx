@@ -76,7 +76,7 @@ const CatalogueActionModal: React.FC<CatalogueActionModalProps> = ({
 
                   <div className="flex-1 flex overflow-hidden">
                     <div className="w-48 bg-slate-50 border-r border-slate-100 p-4 space-y-1 shrink-0">
-                      {['info', 'detail', 'specs', 'history'].map(tab => (
+                      {['info', 'detail', 'specs', 'history']?.map(tab => (
                         <button 
                           key={tab} 
                           onClick={() => setActiveTab(tab)} 
@@ -111,7 +111,7 @@ const CatalogueActionModal: React.FC<CatalogueActionModalProps> = ({
                               {!isEditing ? (
                                 <select value={form.sku} onChange={handleItemMasterSelect} className="input-primary bg-white cursor-pointer font-bold text-[13px]">
                                   <option value="">-- เลือกสินค้าจาก Item Master --</option>
-                                  {itemMasterFG.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
+                                  {itemMasterFG?.map(i => <option key={i.itemCode} value={i.itemCode}>{i.itemCode} - {i.itemName}</option>)}
                                 </select>
                               ) : (
                                 <input value={`${form.sku} - ${form.name}`} disabled className="input-primary bg-slate-50 text-slate-500 font-bold text-[13px]" />
@@ -128,7 +128,7 @@ const CatalogueActionModal: React.FC<CatalogueActionModalProps> = ({
                             <div className="col-span-2">
                               <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Category</label>
                               <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="input-primary bg-white cursor-pointer font-bold">
-                                {productCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                                {productCategories?.map(c => <option key={c} value={c}>{c}</option>)}
                               </select>
                             </div>
                           </div>
@@ -170,7 +170,7 @@ const CatalogueActionModal: React.FC<CatalogueActionModalProps> = ({
                           
                           <div className="space-y-5">
                             {form.history && form.history.length > 0 ? (
-                              form.history.map((h: any, i: number) => (
+                              form.history?.map((h: any, i: number) => (
                                 <div key={i} className="flex gap-4">
                                   <div className="flex flex-col items-center">
                                     <div className="w-8 h-8 rounded-full bg-[#111f42] flex items-center justify-center text-[#ab8a3b] shadow-sm z-10">

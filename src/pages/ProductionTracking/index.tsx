@@ -56,7 +56,7 @@ export default function ProductionTracking() {
 
   // Logic: Type normalization & currentStage fallback
   const normalizedOrders = useMemo(() => {
-    return (jobOrders || []).map((jo: any) => ({
+    return (jobOrders || [])?.map((jo: any) => ({
       ...jo,
       id: String(jo.id),
       qty: Number(jo.qty) || 0,
@@ -287,7 +287,7 @@ export default function ProductionTracking() {
               className="appearance-none bg-slate-50 border border-slate-200 rounded-2xl pl-12 pr-10 py-3 outline-none focus:border-[#ab8a3b] text-[#111f42] font-black text-[10px] uppercase tracking-widest shadow-sm transition-all cursor-pointer h-[48px] min-w-[200px]"
             >
               <option value="All">All Production Stages</option>
-              {STAGES.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
+              {STAGES?.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
             </select>
             <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
               <ChevronDown size={14} />
@@ -381,7 +381,7 @@ export default function ProductionTracking() {
                       { label: 'Assembly', desc: 'Structural joining' },
                       { label: 'Finishing', desc: 'Sanding and coating' },
                       { label: 'Upholstery', desc: 'Padding and fabric' }
-                    ].map((s, i) => (
+                    ]?.map((s, i) => (
                       <div key={i} className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
                          <span className="text-[10px] font-black text-[#111f42] uppercase underline decoration-[#111f42] decoration-2 underline-offset-4">{s.label}</span>
                          <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-widest">{s.desc}</p>

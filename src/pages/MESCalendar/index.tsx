@@ -190,7 +190,7 @@ export default function MESCalendar() {
       };
       setEvents([...events, newEntry]);
     } else {
-      setEvents(events.map(e => e.id === eventForm.id ? { ...eventForm, title: processedTitle, color: typeColors[eventForm.type] || e.color } : e));
+      setEvents(events?.map(e => e.id === eventForm.id ? { ...eventForm, title: processedTitle, color: typeColors[eventForm.type] || e.color } : e));
     }
     setIsModalOpen(false);
   };
@@ -278,7 +278,7 @@ export default function MESCalendar() {
           {activeTab === 'calendar' ? (
             <div className="flex flex-col flex-1 overflow-y-auto custom-scrollbar">
               <div className="calendar-grid border-b border-slate-200 sticky top-0 z-10">
-                {daysOfWeek.map((day, idx) => (
+                {daysOfWeek?.map((day, idx) => (
                   <div 
                     key={idx} 
                     style={{ backgroundColor: day.color }}
@@ -289,7 +289,7 @@ export default function MESCalendar() {
                 ))}
               </div>
               <div className="calendar-grid">
-                {calendarDays.map((d, idx) => {
+                {calendarDays?.map((d, idx) => {
                   const dayEvents = events.filter(e => e.date === d.dateStr);
                   const isSunday = idx % 7 === 0;
                   const isSaturday = idx % 7 === 6;
@@ -305,7 +305,7 @@ export default function MESCalendar() {
                             <span className={`w-7 h-7 flex items-center justify-center rounded-full font-black text-[13px] ${d.isToday ? 'bg-[#E3624A] text-white shadow-md' : 'text-slate-600'} ${isSunday && !d.isToday ? 'text-[#E3624A]' : ''} ${isSaturday && !d.isToday ? 'text-[#a98ab6]' : ''}`}>{d.day}</span>
                           </div>
                           <div className="space-y-1 overflow-y-auto max-h-[85px] no-scrollbar">
-                            {dayEvents.map((ev, i) => (
+                            {dayEvents?.map((ev, i) => (
                               <div 
                                 key={i} 
                                 onClick={() => openEventModal('edit', ev)} 
@@ -345,7 +345,7 @@ export default function MESCalendar() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 bg-white">
-                    {paginatedEvents.map((ev) => (
+                    {paginatedEvents?.map((ev) => (
                       <tr key={ev.id} className="hover:bg-slate-50 transition-colors group">
                         <td className="px-6 py-4 font-black text-slate-400 font-mono text-[12px]">{ev.id}</td>
                         <td className="px-6 py-4">
@@ -404,7 +404,7 @@ export default function MESCalendar() {
                     <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className="p-2.5 hover:bg-slate-50 disabled:opacity-30 text-slate-600 border-r border-slate-100 transition-colors"><ChevronsLeft size={16} /></button>
                     <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1} className="p-2.5 hover:bg-slate-50 disabled:opacity-30 text-slate-600 border-r border-slate-100 transition-colors"><ChevronLeft size={16} /></button>
                     <div className="flex px-1 items-center gap-1 bg-slate-50/30">
-                      {[...Array(totalPages)].map((_, i) => {
+                      {[...Array(totalPages)]?.map((_, i) => {
                         const pageNum = i + 1;
                         if (totalPages > 5) { if (pageNum > currentPage + 2 || pageNum < currentPage - 2) return null; }
                         return (

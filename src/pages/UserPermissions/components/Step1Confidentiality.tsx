@@ -68,7 +68,7 @@ export default function Step1Confidentiality({
           <span className="text-[10px] font-bold text-[#64748B] uppercase">Toggle Lock to set Confidentiality</span>
         </div>
         <div className="overflow-y-auto custom-scrollbar p-6 space-y-4">
-          {SYSTEM_MODULES.map(module => {
+          {SYSTEM_MODULES?.map(module => {
             const isConfidential = confidentialityMap[module.id];
             const hasSub = module.subItems && module.subItems.length > 0;
             const isExpanded = expandedModules[module.id];

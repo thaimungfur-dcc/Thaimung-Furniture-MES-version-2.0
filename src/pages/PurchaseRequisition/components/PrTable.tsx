@@ -43,7 +43,7 @@ const PrTable: React.FC<PrTableProps> = ({
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
-          {paginatedPRs.map(item => (
+          {paginatedPRs?.map(item => (
             <tr key={item.id} className="hover:bg-slate-50 transition-colors">
               <td className="px-6 py-2.5 font-mono font-bold text-[#111f42] text-[12px]">{item.id}</td>
               <td className="px-6 py-2.5 text-slate-500 font-mono text-[12px]">{formatDate(item.date)}</td>

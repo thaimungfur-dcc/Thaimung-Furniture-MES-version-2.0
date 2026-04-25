@@ -9,7 +9,7 @@ interface FabricGridProps {
 const FabricGrid: React.FC<FabricGridProps> = ({ patterns, onEdit }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-10 items-start">
-      {patterns.map(p => (
+      {patterns?.map(p => (
         <div key={p.id} className="pattern-card group h-auto">
           <div className="h-48 w-full bg-slate-100 relative overflow-hidden shrink-0 border-b border-slate-100">
             {p.image ? (
@@ -51,7 +51,7 @@ const FabricGrid: React.FC<FabricGridProps> = ({ patterns, onEdit }) => {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
-              {p.colors && p.colors.map((c: string, i: number) => (
+              {p.colors && p.colors?.map((c: string, i: number) => (
                 <div key={i} className="flex items-center gap-1 bg-white pl-1 pr-1.5 py-0.5 rounded-md border border-slate-200 shadow-sm" title={c}>
                   <span className="w-2.5 h-2.5 rounded-full border border-black/10 shadow-inner" style={{backgroundColor: c}}></span>
                   <span className="text-[8px] font-mono text-slate-500 font-bold uppercase">{c}</span>

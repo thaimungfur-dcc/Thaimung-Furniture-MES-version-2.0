@@ -43,15 +43,15 @@ export default function Home() {
       return d;
     });
 
-    const labels = last7Days.map(d => days[d.getDay()]);
+    const labels = last7Days?.map(d => days[d.getDay()]);
     
-    const producedData = last7Days.map(d => {
+    const producedData = last7Days?.map(d => {
       const dateStr = d.toISOString().split('T')[0];
       return historyLogs?.filter(log => log.date?.startsWith(dateStr))
         .reduce((sum, log) => sum + (Number(log.qty) || 0), 0) || 0;
     });
 
-    const shippedData = last7Days.map(d => {
+    const shippedData = last7Days?.map(d => {
       const dateStr = d.toISOString().split('T')[0];
       return outLogs?.filter(log => log.date?.startsWith(dateStr))
         .reduce((sum, log) => sum + (Number(log.qty) || 0), 0) || 0;
@@ -258,7 +258,7 @@ export default function Home() {
             { img: 'https://images.unsplash.com/photo-1574358866164-9646b95b8d5a?auto=format&fit=crop&q=80&w=400', id: 'RM-OAK-045', status: 'RECEIVED', type: 'INBOUND GR', time: '10:30 AM', color: 'text-teal-600' },
             { img: 'https://images.unsplash.com/photo-1620799139834-6b8f844fbe61?auto=format&fit=crop&q=80&w=400', id: 'FB-VLVT-012', status: 'STAGING', type: 'PUTAWAY WAIT', time: '11:15 AM', color: 'text-amber-600' },
             { img: 'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&q=80&w=400', id: 'HD-HNG-005', status: 'PICKED', type: 'OUTBOUND PRD', time: '11:45 AM', color: 'text-[#E3624A]' }
-          ].map((item, i) => (
+          ]?.map((item, i) => (
             <div key={i} className="rounded-xl border border-slate-100 p-4 flex flex-col group hover:shadow-md transition-all bg-slate-50/5">
               <div className="w-full h-28 rounded-xl overflow-hidden relative mb-4 border border-slate-100">
                 <img src={item.img} alt={item.id} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />

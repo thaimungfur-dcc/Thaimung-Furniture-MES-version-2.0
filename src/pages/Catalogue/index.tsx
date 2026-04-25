@@ -123,7 +123,7 @@ export default function FurnitureCatalogueApp() {
 
     const handleSave = () => {
         if (isEditing) {
-            setProducts(prev => prev.map(p => p.id === form.id ? form : p));
+            setProducts(prev => prev?.map(p => p.id === form.id ? form : p));
         } else {
             const newProduct = { ...form, id: Date.now() };
             setProducts(prev => [...prev, newProduct]);
@@ -186,7 +186,7 @@ export default function FurnitureCatalogueApp() {
                                     className="appearance-none min-w-[200px] bg-white border border-slate-200 rounded-lg pl-9 pr-8 py-2.5 outline-none focus:border-[#ab8a3b] text-[#111f42] font-bold text-[11px] uppercase tracking-wider shadow-sm transition-all cursor-pointer"
                                 >
                                     <option value="All">ALL CATEGORIES ({products.length})</option>
-                                    {productCategories.map(cat => (
+                                    {productCategories?.map(cat => (
                                         <option key={cat} value={cat}>
                                             {cat.toUpperCase()} ({products.filter(p => p.category === cat).length})
                                         </option>

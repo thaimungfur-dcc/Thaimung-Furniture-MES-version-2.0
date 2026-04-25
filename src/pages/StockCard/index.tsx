@@ -25,7 +25,7 @@ export default function StockCardApp() {
 
     // --- Item Master: Source of Truth ---
     const { items } = useMasterData();
-    const itemsMaster = useMemo(() => (items || []).map(item => ({
+    const itemsMaster = useMemo(() => (items || [])?.map(item => ({
         id: item.itemCode,
         name: item.itemName,
         unit: item.baseUnit,
@@ -39,7 +39,7 @@ export default function StockCardApp() {
     
     // Combine logs into movements
     const movementsRaw = useMemo(() => {
-        const inMoves = historyLogs.filter(l => l.sku === viewState.itemId).map(l => ({
+        const inMoves = historyLogs.filter(l => l.sku === viewState.itemId)?.map(l => ({
             date: l.date,
             type: 'IN',
             docId: l.transId,
@@ -51,7 +51,7 @@ export default function StockCardApp() {
             sku: l.sku
         }));
 
-        const outMoves = warehouseOutLogs.filter(l => l.sku === viewState.itemId).map(l => ({
+        const outMoves = warehouseOutLogs.filter(l => l.sku === viewState.itemId)?.map(l => ({
             date: l.date,
             type: 'OUT',
             docId: l.transId,
@@ -71,7 +71,7 @@ export default function StockCardApp() {
         // We need to sort ASC to calculate balance correctly, then we can display DESC
         const ascSorted = combined.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
         let balance = 0;
-        const withBalance = ascSorted.map(m => {
+        const withBalance = ascSorted?.map(m => {
             balance += m.in - m.out;
             return { ...m, balance };
         });
@@ -108,7 +108,7 @@ export default function StockCardApp() {
     , [viewState.itemId, itemsMaster]);
 
     const currentBalance = useMemo(() => movements[0]?.balance || 0, [movements]);
-    const availableLots = useMemo(() => Array.from(new Set(movements.map(m => m.lot))).sort(), [movements]);
+    const availableLots = useMemo(() => Array.from(new Set(movements?.map(m => m.lot))).sort(), [movements]);
     const filteredMovements = useMemo(() => viewState.lotId ? movements.filter(m => m.lot === viewState.lotId) : movements, [movements, viewState.lotId]);
     const paginatedMovements = useMemo(() => filteredMovements.slice((viewState.page - 1) * viewState.rows, viewState.page * viewState.rows), [filteredMovements, viewState.page, viewState.rows]);
     const totalPages = Math.ceil(filteredMovements.length / viewState.rows) || 1;
@@ -230,7 +230,7 @@ export default function StockCardApp() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100 bg-white">
-                                        {paginatedMovements.map((m, idx) => (
+                                        {paginatedMovements?.map((m, idx) => (
                                             <tr key={idx} className="hover:bg-slate-50 transition-colors">
                                                 <td className="font-mono text-[11px] text-slate-400 font-black uppercase tracking-widest">{m.date}</td>
                                                 <td className="text-center">

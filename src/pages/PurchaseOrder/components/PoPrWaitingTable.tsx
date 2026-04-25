@@ -50,7 +50,7 @@ const PoPrWaitingTable: React.FC<PoPrWaitingTableProps> = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {paginatedPendingPRs.map(pr => (
+              {paginatedPendingPRs?.map(pr => (
                 <tr key={pr.id} className="hover:bg-slate-50 transition-colors">
                   <td className="px-6 py-4 font-bold text-[#111f42]">{pr.id}</td>
                   <td className="px-6 py-4 text-slate-500">{formatDate(pr.date)}</td>
@@ -85,7 +85,7 @@ const PoPrWaitingTable: React.FC<PoPrWaitingTableProps> = ({
         <div className="flex items-center gap-2">
           <button onClick={() => setPendingCurrentPage(prev => Math.max(1, prev - 1))} disabled={pendingCurrentPage === 1} className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-50 transition-all"><ChevronLeft size={16} /></button>
           <div className="flex gap-1">
-            {[...Array(pendingTotalPages)].map((_, i) => (
+            {[...Array(pendingTotalPages)]?.map((_, i) => (
               <button key={i + 1} onClick={() => setPendingCurrentPage(i + 1)} className={`w-8 h-8 rounded-lg text-[12px] font-bold transition-all border ${pendingCurrentPage === i + 1 ? 'bg-[#111f42] text-white border-[#111f42] shadow-sm' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'}`}>{i + 1}</button>
             ))}
           </div>

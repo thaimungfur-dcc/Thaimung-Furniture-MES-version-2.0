@@ -44,7 +44,7 @@ export default function InventoryPlanning() {
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
-            const syncItems = itemsMaster.map(item => {
+            const syncItems = itemsMaster?.map(item => {
                 const onhand = Math.floor(Math.random() * 500); 
                 const booking = Math.floor(Math.random() * 200);
                 const available = onhand - booking;

@@ -70,7 +70,7 @@ export default function ReportPreviewModal({ isOpen, reportData, reportDateRange
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-slate-200">
-                                                {reportData.map((item, idx) => (
+                                                {reportData?.map((item, idx) => (
                                                     <tr key={idx} className="even:bg-slate-50/50">
                                                         <td className="px-3 py-3 border-r text-center text-slate-500 font-mono">{idx + 1}</td>
                                                         <td className="px-3 py-3 border-r font-mono font-bold text-[#111f42]">{item.bookingId}<br/><span className="text-[9px] text-slate-400 font-sans leading-none">Ref: {item.soRef}</span></td>
@@ -79,7 +79,7 @@ export default function ReportPreviewModal({ isOpen, reportData, reportDateRange
                                                         <td className="px-3 py-3 text-right font-mono font-bold text-[#10b981] bg-emerald-50/20">{formatNum(item.qty)}</td>
                                                     </tr>
                                                 ))}
-                                                {[...Array(Math.max(0, 10 - reportData.length))].map((_, i) => (
+                                                {[...Array(Math.max(0, 10 - reportData.length))]?.map((_, i) => (
                                                     <tr key={`empty-${i}`}><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5"></td></tr>
                                                 ))}
                                             </tbody>

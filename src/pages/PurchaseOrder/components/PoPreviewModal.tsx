@@ -98,7 +98,7 @@ const PoPreviewModal: React.FC<PoPreviewModalProps> = ({
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-slate-200">
-                            {selectedItem.items.map((item: any, idx: number) => (
+                            {selectedItem.items?.map((item: any, idx: number) => (
                               <tr key={idx} className="even:bg-slate-50/50">
                                 <td className="px-3 py-3 border-r text-center text-slate-500">{idx + 1}</td>
                                 <td className="px-3 py-3 border-r">
@@ -110,7 +110,7 @@ const PoPreviewModal: React.FC<PoPreviewModalProps> = ({
                                 <td className="px-3 py-3 text-right font-mono font-bold text-[#111f42]">{formatCurrency((item.qty*item.price)||0)}</td>
                               </tr>
                             ))}
-                            {[...Array(Math.max(0, 6 - selectedItem.items.length))].map((_, i) => (
+                            {[...Array(Math.max(0, 6 - selectedItem.items.length))]?.map((_, i) => (
                               <tr key={`empty-${i}`}>
                                 <td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td>
                                 <td className="px-3 py-2.5 border-r"></td><td className="px-3 py-2.5 border-r"></td>

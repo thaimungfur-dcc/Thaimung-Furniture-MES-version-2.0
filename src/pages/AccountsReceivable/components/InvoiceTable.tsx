@@ -33,7 +33,7 @@ export default function InvoiceTable({
       <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50 sticky top-0 z-20">
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
           <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm shrink-0">
-            {['all', 'Unpaid', 'Overdue', 'BadDebt', 'Exception'].map(tab => (
+            {['all', 'Unpaid', 'Overdue', 'BadDebt', 'Exception']?.map(tab => (
               <button 
                 key={tab}
                 onClick={() => {setSubTab(tab); setCurrentPage(1);}}
@@ -90,7 +90,7 @@ export default function InvoiceTable({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {currentItems.length > 0 ? currentItems.map((inv: any) => (
+              {currentItems.length > 0 ? currentItems?.map((inv: any) => (
                 <tr key={inv.id} className={`transition-colors hover:bg-slate-50 ${inv.isBadDebt ? 'bg-red-50/30' : ''}`}>
                   {/* DATES */}
                   <td className="px-4 py-3 align-top border-r border-slate-100">
@@ -252,7 +252,7 @@ export default function InvoiceTable({
             <div>
               <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                 <button onClick={() => setCurrentPage((prev: number) => Math.max(prev - 1, 1))} disabled={currentPage === 1} className="relative inline-flex items-center rounded-l-md px-2 py-2 text-[#7693a6] bg-white ring-1 ring-inset ring-[#cbd5e1] hover:bg-slate-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50"><span className="sr-only">Previous</span><ChevronLeft size={16} /></button>
-                {[...Array(totalPages)].map((_, i) => (
+                {[...Array(totalPages)]?.map((_, i) => (
                   <button key={i + 1} onClick={() => setCurrentPage(i + 1)} className={`relative inline-flex items-center px-4 py-2 text-xs font-bold focus:z-20 ${currentPage === i + 1 ? 'z-10 bg-[#223149] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#223149]' : 'text-[#223149] bg-white ring-1 ring-inset ring-[#cbd5e1] hover:bg-slate-50 focus:outline-offset-0'}`}>
                     {i + 1}
                   </button>

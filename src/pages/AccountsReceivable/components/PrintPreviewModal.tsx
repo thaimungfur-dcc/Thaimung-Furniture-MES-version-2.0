@@ -87,7 +87,7 @@ export default function PrintPreviewModal({
                           </thead>
                           <tbody className="divide-y divide-slate-100">
                             {filteredInvoices.length > 0 ? (
-                              filteredInvoices.map((inv: any, i: number) => (
+                              filteredInvoices?.map((inv: any, i: number) => (
                                 <tr key={i} className={inv.isBadDebt ? 'bg-red-50/50' : ''} style={{ WebkitPrintColorAdjust: 'exact' }}>
                                   <td className="px-2 py-1.5 font-mono">{formatDate(inv.issueDate)}</td>
                                   <td className={`px-2 py-1.5 font-mono ${isOverdue(inv) ? 'text-[#ce5a43] font-bold' : ''}`}>{formatDate(inv.dueDate)}</td>
