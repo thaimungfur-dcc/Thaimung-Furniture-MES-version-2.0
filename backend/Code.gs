@@ -9,17 +9,32 @@
  * ฟังก์ชันสำหรับตั้งค่า Sheet และหัวตารางเบื้องต้น (รันแค่ครั้งเดียวตอนเริ่มโปรเจกต์)
  * ไปที่เมนู Run > setupDatabase
  */
+
+const GLOBAL_SHEETS_CONFIG = {
+    'ItemMaster': ['ItemCode', 'ItemName', 'Type', 'Category', 'SubCategory', 'Unit', 'Cost', 'Price'],
+    'MasterCodes': ['id', 'mastCode', 'groups', 'category', 'catCode', 'subCategory', 'subCatCode', 'note', 'updatedAt', 'updatedBy'],
+    'JobOrders': ['id', 'joNo', 'productName', 'sku', 'qty', 'received', 'status', 'currentStage', 'startDate', 'dueDate', 'priority', 'customerName', 'soRef', 'history'],
+    'ProductionLogs': ['id', 'joId', 'joNo', 'stage', 'action', 'operator', 'timestamp', 'qtyCompleted', 'notes'],
+    'WarehouseIn Logs': ['id', 'transId', 'date', 'joNo', 'sku', 'productName', 'qty', 'status', 'warehouseName', 'location', 'operator'],
+    'WarehouseOutLogs': ['id', 'transId', 'date', 'outType', 'sku', 'productName', 'qty', 'operator', 'warehouseName', 'location', 'notes'],
+    'Users': ['id', 'employeeId', 'idCard', 'name', 'role', 'avatar'],
+    'AppUsers': ['id', 'employeeId', 'name', 'role', 'permissions', 'position', 'email', 'avatar', 'isDev'],
+    'ConfidentialityMap': ['id', 'moduleId', 'isConfidential'],
+    'DeliveryOrders': ['id', 'soNo', 'refId', 'customer', 'sku', 'productName', 'qty', 'shipped', 'date', 'status', 'location'],
+    'MrpOrders': ['id', 'moNo', 'date', 'fgSku', 'fgName', 'rmSku', 'rmName', 'qty', 'issued', 'status'],
+    'HistoryLogs': ['id', 'transId', 'date', 'type', 'sku', 'productName', 'qty', 'operator', 'location', 'notes'],
+    'PurchaseOrders': ['id', 'poNo', 'supplierId', 'date', 'status', 'totalAmount', 'expectedDate', 'items', 'priority'],
+    'ProductCost': ['id', 'itemId', 'item', 'itemName', 'category', 'targetMargin', 'batchSize', 'dm', 'dl', 'factory_oh', 'office_oh', 'utilities', 'depreciation', 'selling', 'admin', 'others', 'history', 'productCost', 'periodCost', 'totalCost', 'suggestedPrice', 'status'],
+    'Items': ['id', 'itemCode', 'itemName', 'itemType', 'category', 'subCategory', 'baseUnit', 'stdCost', 'stdPrice', 'leadTime', 'moq', 'status'],
+    'Suppliers': ['id', 'code', 'name', 'contactName', 'phone', 'email', 'address', 'paymentTerms', 'status'],
+    'Customers': ['id', 'code', 'name', 'contactName', 'phone', 'email', 'address', 'creditLimit', 'status'],
+    'Settings': ['id', 'key', 'value', 'description', 'updatedAt'],
+    'Invoices': ['id', 'invoiceNo', 'customerId', 'date', 'dueDate', 'totalAmount', 'status', 'paidAmount', 'items']
+};
+
 function setupDatabase() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheetsConfig = {
-    'ItemMaster': ['ItemCode', 'ItemName', 'Type', 'Category', 'SubCategory', 'Unit', 'Cost', 'Price'],
-    'MasterCodes': ['Group', 'Category', 'CatCode', 'SubCategory', 'SubCode', 'Note'],
-    'JobOrders': ['id', 'joNo', 'productName', 'sku', 'qty', 'received', 'status', 'currentStage', 'startDate', 'dueDate', 'priority', 'customerName', 'soRef'],
-    'ProductionLogs': ['id', 'joId', 'joNo', 'stage', 'action', 'operator', 'timestamp', 'qtyCompleted', 'notes'],
-    'WarehouseIn': ['id', 'transId', 'date', 'joNo', 'sku', 'productName', 'qty', 'status', 'warehouseName', 'location', 'operator'],
-    'WarehouseOut': ['id', 'transId', 'date', 'outType', 'sku', 'productName', 'qty', 'operator', 'warehouseName', 'location', 'notes'],
-    'Users': ['id', 'employeeId', 'idCard', 'name', 'role', 'avatar']
-  };
+  const sheetsConfig = GLOBAL_SHEETS_CONFIG;
 
   for (let name in sheetsConfig) {
     let sheet = ss.getSheetByName(name);
@@ -93,14 +108,17 @@ function doPost(e) {
     let sheet = ss.getSheetByName(sheetName);
     if (!sheet && sheetName) {
       sheet = ss.insertSheet(sheetName);
-      if (data && Array.isArray(data) && data.length > 0) {
-        const columns = Object.keys(data[0]);
-        sheet.getRange(1, 1, 1, columns.length).setValues([columns])
-          .setFontWeight("bold")
-          .setBackground("#e8ecef")
-          .setFontColor("black");
-      } else if (data && typeof data === 'object' && Object.keys(data).length > 0) {
-        const columns = Object.keys(data);
+      let columns = GLOBAL_SHEETS_CONFIG[sheetName];
+      
+      if (!columns) {
+        if (data && Array.isArray(data) && data.length > 0) {
+          columns = Object.keys(data[0]);
+        } else if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+          columns = Object.keys(data);
+        }
+      }
+
+      if (columns && columns.length > 0) {
         sheet.getRange(1, 1, 1, columns.length).setValues([columns])
           .setFontWeight("bold")
           .setBackground("#e8ecef")
