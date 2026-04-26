@@ -75,7 +75,7 @@ export function FileAttachment({
     const attachment = attachments.find(a => a.id === id);
     if (attachment?.previewUrl) URL.revokeObjectURL(attachment.previewUrl);
     
-    const updated = attachments.filter(a => a.id !== id);
+    const updated = attachments?.filter(a => a.id !== id);
     setAttachments(updated);
     onFilesChange(updated?.map(a => a.file));
   };

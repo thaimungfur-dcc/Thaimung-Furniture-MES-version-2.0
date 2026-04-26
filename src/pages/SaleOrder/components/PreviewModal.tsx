@@ -217,7 +217,7 @@ export default function PreviewModal({
                           </table>
                           <div className="mt-auto pt-6 flex justify-end items-baseline gap-4">
                             <span className="text-slate-400 font-normal uppercase text-xs">TOTAL VALUE:</span>
-                            <span className="text-2xl font-bold text-[#111f42]">฿{filteredOrders.reduce((a,b)=>a+(b.total||0),0)?.toLocaleString()}</span>
+                            <span className="text-2xl font-bold text-[#111f42]">฿{filteredOrders?.reduce((a,b)=>a+(b.total||0),0)?.toLocaleString()}</span>
                           </div>
                         </>
                       )}

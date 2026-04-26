@@ -19,7 +19,7 @@ const FabricDashboard: React.FC<FabricDashboardProps> = ({ patterns }) => {
 
     // 1. Category Chart
     const catData: Record<string, number> = {};
-    patterns.forEach(p => {
+    (patterns || []).forEach(p => {
       if (p.category) catData[p.category] = (catData[p.category] || 0) + 1;
     });
 
@@ -49,7 +49,7 @@ const FabricDashboard: React.FC<FabricDashboardProps> = ({ patterns }) => {
 
     // 2. Composition Distribution Chart
     const compData: Record<string, number> = {};
-    patterns.forEach(p => {
+    (patterns || []).forEach(p => {
       const comp = p.composition || 'Other';
       compData[comp] = (compData[comp] || 0) + 1;
     });
@@ -88,7 +88,7 @@ const FabricDashboard: React.FC<FabricDashboardProps> = ({ patterns }) => {
 
     // 3. Status Chart
     const statusData: Record<string, number> = {};
-    patterns.forEach(p => {
+    (patterns || []).forEach(p => {
       statusData[p.status] = (statusData[p.status] || 0) + 1;
     });
 

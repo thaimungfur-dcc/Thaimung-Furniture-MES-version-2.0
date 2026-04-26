@@ -87,7 +87,7 @@ export default function PreviewModal({
                               </div>
                               <table className="w-full">
                                 <tbody>
-                                  {completedItems.filter(i => i.flowType === 'CFO')?.map(item => (
+                                  {completedItems?.filter(i => i.flowType === 'CFO')?.map(item => (
                                     <tr key={item.id} className="border-b border-slate-100">
                                       <td className="py-1.5 pl-3">{item.description}</td>
                                       <td className="py-1.5 pr-2 text-right font-mono">{item.type === 'Out' ? `(฿${item.amount?.toLocaleString()})` : `฿${item.amount?.toLocaleString()}`}</td>
@@ -108,13 +108,13 @@ export default function PreviewModal({
                               </div>
                               <table className="w-full">
                                 <tbody>
-                                  {completedItems.filter(i => i.flowType === 'CFI')?.map(item => (
+                                  {completedItems?.filter(i => i.flowType === 'CFI')?.map(item => (
                                     <tr key={item.id} className="border-b border-slate-100">
                                       <td className="py-1.5 pl-3">{item.description}</td>
                                       <td className="py-1.5 pr-2 text-right font-mono">{item.type === 'Out' ? `(฿${item.amount?.toLocaleString()})` : `฿${item.amount?.toLocaleString()}`}</td>
                                     </tr>
                                   ))}
-                                  {completedItems.filter(i => i.flowType === 'CFI').length === 0 && <tr><td colSpan={2} className="py-1.5 pl-3 text-slate-400 italic">No transactions</td></tr>}
+                                  {completedItems?.filter(i => i.flowType === 'CFI').length === 0 && <tr><td colSpan={2} className="py-1.5 pl-3 text-slate-400 italic">No transactions</td></tr>}
                                   <tr className="font-bold text-[#d97706]">
                                     <td className="py-2 pl-3 border-t-2 border-[#d97706]/30">Net cash provided by (used in) investing activities</td>
                                     <td className="py-2 pr-2 text-right font-mono border-t-2 border-[#d97706]/30">{stats.netCFI < 0 ? `(฿${Math.abs(stats.netCFI)?.toLocaleString()})` : `฿${stats.netCFI?.toLocaleString()}`}</td>
@@ -130,13 +130,13 @@ export default function PreviewModal({
                               </div>
                               <table className="w-full">
                                 <tbody>
-                                  {completedItems.filter(i => i.flowType === 'CFF')?.map(item => (
+                                  {completedItems?.filter(i => i.flowType === 'CFF')?.map(item => (
                                     <tr key={item.id} className="border-b border-slate-100">
                                       <td className="py-1.5 pl-3">{item.description}</td>
                                       <td className="py-1.5 pr-2 text-right font-mono">{item.type === 'Out' ? `(฿${item.amount?.toLocaleString()})` : `฿${item.amount?.toLocaleString()}`}</td>
                                     </tr>
                                   ))}
-                                  {completedItems.filter(i => i.flowType === 'CFF').length === 0 && <tr><td colSpan={2} className="py-1.5 pl-3 text-slate-400 italic">No transactions</td></tr>}
+                                  {completedItems?.filter(i => i.flowType === 'CFF').length === 0 && <tr><td colSpan={2} className="py-1.5 pl-3 text-slate-400 italic">No transactions</td></tr>}
                                   <tr className="font-bold text-[#5b21b6]">
                                     <td className="py-2 pl-3 border-t-2 border-[#5b21b6]/30">Net cash provided by (used in) financing activities</td>
                                     <td className="py-2 pr-2 text-right font-mono border-t-2 border-[#5b21b6]/30">{stats.netCFF < 0 ? `(฿${Math.abs(stats.netCFF)?.toLocaleString()})` : `฿${stats.netCFF?.toLocaleString()}`}</td>

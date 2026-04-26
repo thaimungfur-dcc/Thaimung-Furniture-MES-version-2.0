@@ -21,7 +21,7 @@ export default function Analytics({ items, activeTab }: AnalyticsProps) {
 
       if (typeChartRef.current) {
         const counts: Record<string, number> = {};
-        items.forEach(i => {
+        (items || []).forEach(i => {
           const g = i.groups[0] || 'Uncategorized';
           counts[g] = (counts[g] || 0) + 1;
         });

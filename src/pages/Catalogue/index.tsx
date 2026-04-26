@@ -81,10 +81,10 @@ export default function FurnitureCatalogueApp() {
     // Filtering & Pagination
     const filteredProducts = useMemo(() => {
         let res = products;
-        if (categoryFilter !== 'All') res = res.filter(p => p.category === categoryFilter);
+        if (categoryFilter !== 'All') res = res?.filter(p => p.category === categoryFilter);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(p => p.name?.toLowerCase().includes(q) || p.sku?.toLowerCase().includes(q));
+            res = res?.filter(p => p.name?.toLowerCase().includes(q) || p.sku?.toLowerCase().includes(q));
         }
         return res;
     }, [products, categoryFilter, searchQuery]);
@@ -116,7 +116,7 @@ export default function FurnitureCatalogueApp() {
     
     const deleteProduct = (id: any) => {
         if (window.confirm('Are you sure you want to delete this furniture item?')) {
-            setProducts(prev => prev.filter(p => p.id !== id));
+            setProducts(prev => prev?.filter(p => p.id !== id));
             closeModal();
         }
     };
@@ -188,7 +188,7 @@ export default function FurnitureCatalogueApp() {
                                     <option value="All">ALL CATEGORIES ({products.length})</option>
                                     {productCategories?.map(cat => (
                                         <option key={cat} value={cat}>
-                                            {cat.toUpperCase()} ({products.filter(p => p.category === cat).length})
+                                            {cat.toUpperCase()} ({products?.filter(p => p.category === cat).length})
                                         </option>
                                     ))}
                                 </select>

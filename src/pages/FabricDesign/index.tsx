@@ -43,17 +43,17 @@ export default function FabricDesignApp() {
     // Logic
     const filteredPatterns = useMemo(() => {
         let res = patterns;
-        if (categoryFilter !== 'All') res = res.filter(p => p.category === categoryFilter);
+        if (categoryFilter !== 'All') res = res?.filter(p => p.category === categoryFilter);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(p => p.code.toLowerCase().includes(q) || p.name.toLowerCase().includes(q) || p.tags.toLowerCase().includes(q) || (p.application && p.application.toLowerCase().includes(q)));
+            res = res?.filter(p => p.code.toLowerCase().includes(q) || p.name.toLowerCase().includes(q) || p.tags.toLowerCase().includes(q) || (p.application && p.application.toLowerCase().includes(q)));
         }
         return res;
     }, [patterns, categoryFilter, searchQuery]);
 
     const getCategoryCount = (cat: string) => {
         if(cat === 'All') return patterns.length;
-        return patterns.filter(p => p.category === cat).length;
+        return patterns?.filter(p => p.category === cat).length;
     };
 
     // Handlers
@@ -120,7 +120,7 @@ export default function FabricDesignApp() {
 
     const deletePattern = (id: any) => {
         if (window.confirm('คุณแน่ใจหรือไม่ว่าต้องการลบลายผ้านี้?')) {
-            setPatterns(prev => prev.filter(p => p.id !== id));
+            setPatterns(prev => prev?.filter(p => p.id !== id));
             closeModal();
         }
     };
@@ -133,7 +133,7 @@ export default function FabricDesignApp() {
     };
     
     const removeCategory = (cat: string) => {
-        setFabricCategories(prev => prev.filter(c => c !== cat));
+        setFabricCategories(prev => prev?.filter(c => c !== cat));
         if (categoryFilter === cat) setCategoryFilter('All');
     };
 

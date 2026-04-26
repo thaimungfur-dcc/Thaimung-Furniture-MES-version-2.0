@@ -77,13 +77,13 @@ export function DataTable<T>({
     let result = data;
     if (dateFilterColumn) {
       if (selectedMonth) {
-        result = result.filter((item: any) => {
+        result = result?.filter((item: any) => {
           const date = new Date(item[dateFilterColumn]);
           return (date.getMonth() + 1).toString().padStart(2, '0') === selectedMonth;
         });
       }
       if (selectedYear) {
-        result = result.filter((item: any) => {
+        result = result?.filter((item: any) => {
           const date = new Date(item[dateFilterColumn]);
           return date.getFullYear().toString() === selectedYear;
         });
@@ -204,7 +204,7 @@ export function DataTable<T>({
                       onChange={e => {
                         const val = e.target.value;
                         setColumnFilters(prev => {
-                          const existing = prev.filter(f => f.id !== colId);
+                          const existing = prev?.filter(f => f.id !== colId);
                           if (!val) return existing;
                           return [...existing, { id: colId, value: val }];
                         });

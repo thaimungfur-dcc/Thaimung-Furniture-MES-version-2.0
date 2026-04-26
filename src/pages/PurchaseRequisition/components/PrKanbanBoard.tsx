@@ -49,7 +49,7 @@ const PrKanbanBoard: React.FC<PrKanbanBoardProps> = ({
     <div className="animate-in fade-in duration-500 w-full overflow-x-auto pb-4 kanban-scroll no-print">
       <div className="flex gap-6 min-w-max h-[650px] px-1">
         {KANBAN_COLS?.map(col => {
-          const allColItems = prs.filter(d => {
+          const allColItems = prs?.filter(d => {
             const matchStatus = d.status === col.id;
             const matchMonth = listTimeFilter === 'all' || d.date.startsWith(selectedMonth);
             return matchStatus && matchMonth;

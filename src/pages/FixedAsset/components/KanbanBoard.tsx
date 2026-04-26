@@ -13,7 +13,7 @@ export default function KanbanBoard({ assets }: any) {
     <div className="flex-1 overflow-x-auto overflow-y-hidden kanban-scroll pb-4 flex h-full mt-2">
       <div className="flex gap-6 h-full min-w-max items-start">
         {columns?.map(col => {
-          const colItems = assets.filter((i: any) => i.status === col.id);
+          const colItems = assets?.filter((i: any) => i.status === col.id);
           return (
             <div key={col.id} className="w-[320px] flex-shrink-0 flex flex-col h-full bg-white/60 backdrop-blur-md rounded-2xl p-4 border border-white shadow-sm">
               <div className="flex justify-between items-center mb-4">

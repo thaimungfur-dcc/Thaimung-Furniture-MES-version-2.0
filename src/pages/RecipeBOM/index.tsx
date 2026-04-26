@@ -62,7 +62,7 @@ export default function BOMManagementApp() {
 
     // Total Calculation Logic
     const totalBomCost = useMemo(() => {
-        return bomItems.reduce((sum, item) => {
+        return bomItems?.reduce((sum, item) => {
             const qty = Number(item.qty) || 0;
             const cost = Number(item.cost) || 0;
             const scrap = Number(item.scrap) || 0;
@@ -139,10 +139,10 @@ export default function BOMManagementApp() {
 
     const filteredProducts = useMemo(() => {
         let res = products;
-        if (statusFilter !== 'All') res = res.filter(p => p.status === statusFilter);
+        if (statusFilter !== 'All') res = res?.filter(p => p.status === statusFilter);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(p => p.id.toLowerCase().includes(q) || p.name.toLowerCase().includes(q));
+            res = res?.filter(p => p.id.toLowerCase().includes(q) || p.name.toLowerCase().includes(q));
         }
         return res;
     }, [products, statusFilter, searchQuery]);
@@ -198,9 +198,9 @@ export default function BOMManagementApp() {
                 <main className="relative z-10 flex flex-col gap-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <KpiCard title="Total Products" value={products.length} color="#111f42" icon={Box} subValue="FG with BOM Records" />
-                        <KpiCard title="Active Formula" value={products.filter(p=>p.status==='Active').length} color="#ab8a3b" icon={CheckCircle} subValue="Ready for Production" />
+                        <KpiCard title="Active Formula" value={products?.filter(p=>p.status==='Active').length} color="#ab8a3b" icon={CheckCircle} subValue="Ready for Production" />
                         <KpiCard title="Avg Cost / Set" value="฿4,250" color="#10b981" icon={DollarSign} subValue="Current Production Avg" />
-                        <KpiCard title="Pending Review" value={products.filter(p=>p.status==='Draft').length} color="#E3624A" icon={Clock} subValue="Draft or Pending" />
+                        <KpiCard title="Pending Review" value={products?.filter(p=>p.status==='Draft').length} color="#E3624A" icon={Clock} subValue="Draft or Pending" />
                     </div>
 
                     <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full">
@@ -212,7 +212,7 @@ export default function BOMManagementApp() {
                                             className={`filter-btn flex items-center gap-2 px-3 py-1.5 text-[11px] transition-all duration-200 ${statusFilter === s ? 'active' : 'hover:bg-slate-50'}`}>
                                             <span>{s}</span>
                                             <span className={`text-[10px] font-black ${statusFilter === s ? 'text-white/70' : 'text-slate-400'}`}>
-                                                {s === 'All' ? products.length : products.filter(p => p.status === s).length}
+                                                {s === 'All' ? products.length : products?.filter(p => p.status === s).length}
                                             </span>
                                         </button>
                                     ))}

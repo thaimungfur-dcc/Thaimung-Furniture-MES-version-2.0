@@ -80,7 +80,7 @@ export function CsvUploadModal({
 
   const processData = (parsedData: any[], fileHeaders: string[]) => {
     // Basic check: all expected headers should be present
-    const missingHeaders = expectedHeaders.filter(h => !fileHeaders.includes(h));
+    const missingHeaders = expectedHeaders?.filter(h => !fileHeaders.includes(h));
     
     if (missingHeaders.length > 0) {
       Swal.fire({

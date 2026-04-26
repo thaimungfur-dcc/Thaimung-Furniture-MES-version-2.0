@@ -118,10 +118,10 @@ export default function WarehouseBooking() {
     // --- Logic & Filtering ---
     const filteredBookings = useMemo(() => {
         let res = bookings;
-        if (statusFilter !== 'All') res = res.filter(b => b.status === statusFilter);
+        if (statusFilter !== 'All') res = res?.filter(b => b.status === statusFilter);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(b => b.bookingId.toLowerCase().includes(q) || b.soRef.toLowerCase().includes(q) || b.customer.toLowerCase().includes(q) || b.sku.toLowerCase().includes(q));
+            res = res?.filter(b => b.bookingId.toLowerCase().includes(q) || b.soRef.toLowerCase().includes(q) || b.customer.toLowerCase().includes(q) || b.sku.toLowerCase().includes(q));
         }
         return res;
     }, [bookings, statusFilter, searchQuery]);
@@ -132,10 +132,10 @@ export default function WarehouseBooking() {
     }, [filteredBookings, currentPage, itemsPerPage]);
 
     const stats = useMemo(() => ({
-        totalReserved: bookings.reduce((acc, b) => acc + b.qty, 0),
-        notStarted: bookings.filter(b => b.status === 'Not Started').length,
-        inProgress: bookings.filter(b => b.status === 'In Progress').length,
-        completed: bookings.filter(b => b.status === 'Completed').length
+        totalReserved: bookings?.reduce((acc, b) => acc + b.qty, 0),
+        notStarted: bookings?.filter(b => b.status === 'Not Started').length,
+        inProgress: bookings?.filter(b => b.status === 'In Progress').length,
+        completed: bookings?.filter(b => b.status === 'Completed').length
     }), [bookings]);
 
     // --- Handlers ---
@@ -189,7 +189,7 @@ export default function WarehouseBooking() {
         if (!reportDateRange.start || !reportDateRange.end) {
             return showToast('Warning', 'กรุณาระบุช่วงวันที่ให้ครบถ้วน', 'warning');
         }
-        const filtered = bookings.filter(b => b.date >= reportDateRange.start && b.date <= reportDateRange.end);
+        const filtered = bookings?.filter(b => b.date >= reportDateRange.start && b.date <= reportDateRange.end);
         setReportData(filtered);
     };
 

@@ -39,13 +39,13 @@ export default function MasterCodeApp() {
     note: ''
   });
 
-  const fgCount = (items || []).filter(i => i.groups && i.groups.includes('FG')).length;
-  const rmCount = (items || []).filter(i => i.groups && (i.groups.includes('RM') || i.groups.includes('HW') || i.groups.includes('FB'))).length;
-  const newCount = (items || []).filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
+  const fgCount = (items || [])?.filter(i => i.groups && i.groups.includes('FG')).length;
+  const rmCount = (items || [])?.filter(i => i.groups && (i.groups.includes('RM') || i.groups.includes('HW') || i.groups.includes('FB'))).length;
+  const newCount = (items || [])?.filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
 
   const generatedMastCode = ((form.catCode || '') + (form.subCatCode || '')).toUpperCase();
   
-  const isDuplicate = form.catCode && form.subCatCode ? (items || []).some(i => i.mastCode === generatedMastCode && i.id !== form.id) : false;
+  const isDuplicate = form.catCode && form.subCatCode ? (items || [])?.some(i => i.mastCode === generatedMastCode && i.id !== form.id) : false;
 
   const isValid = form.groups.length > 0 && form.category && form.catCode.length === 2 && form.subCategory && form.subCatCode.length === 2;
 
@@ -63,7 +63,7 @@ export default function MasterCodeApp() {
 
   const toggleGroupInForm = (g: string) => {
     setForm((prev: any) => {
-      if (prev.groups && prev.groups.includes(g)) return { ...prev, groups: prev.groups.filter((x: string) => x !== g) };
+      if (prev.groups && prev.groups.includes(g)) return { ...prev, groups: prev.groups?.filter((x: string) => x !== g) };
       return { ...prev, groups: [...(prev.groups || []), g] };
     });
   };
@@ -96,7 +96,7 @@ export default function MasterCodeApp() {
 
   const removeGroup = (g: string) => {
     if(window.confirm(`Delete group ${g}?`)) {
-      setGroups(prev => prev.filter(x => x !== g));
+      setGroups(prev => prev?.filter(x => x !== g));
     }
   };
 

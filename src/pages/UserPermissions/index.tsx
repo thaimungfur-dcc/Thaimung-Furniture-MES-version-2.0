@@ -29,16 +29,16 @@ export default function UserPermissions() {
   useEffect(() => {
     if (confData && confData.length > 0) {
       const map: Record<string, boolean> = {};
-      confData.forEach((item: any) => {
+      (confData || []).forEach((item: any) => {
         map[item.moduleId] = item.isConfidential === true || item.isConfidential === 'true';
       });
       setConfidentialityMap(map);
     } else {
       const initial: Record<string, boolean> = {};
-      SYSTEM_MODULES.forEach(mod => {
+      (SYSTEM_MODULES || []).forEach(mod => {
         initial[mod.id] = mod.isConfidential || false;
         if (mod.subItems) {
-          mod.subItems.forEach(sub => {
+          (mod?.subItems || []).forEach(sub => {
             initial[sub.id] = sub.isConfidential || mod.isConfidential || false;
           });
         }
@@ -52,7 +52,7 @@ export default function UserPermissions() {
   useEffect(() => {
     if (users && users.length > 0) {
       const initial: Record<string, Record<string, number[]>> = {};
-      users.forEach(user => {
+      (users || []).forEach(user => {
         if (user.permissions) {
           try {
             initial[user.id] = typeof user.permissions === 'string' ? JSON.parse(user.permissions) : user.permissions;
@@ -61,12 +61,12 @@ export default function UserPermissions() {
           }
         } else {
           initial[user.id] = {};
-          SYSTEM_MODULES.forEach(mod => {
+          (SYSTEM_MODULES || []).forEach(mod => {
             const isModConfidential = confidentialityMap[mod.id];
             const defaultLevels = user.isDev ? [1, 2, 3, 4] : (isModConfidential ? [] : [1]);
             initial[user.id][mod.id] = defaultLevels;
             if (mod.subItems) {
-              mod.subItems.forEach(sub => {
+              (mod?.subItems || []).forEach(sub => {
                 const isSubConfidential = confidentialityMap[sub.id] || isModConfidential;
                 initial[user.id][sub.id] = user.isDev ? [1, 2, 3, 4] : (isSubConfidential ? [] : [1]);
               });
@@ -117,11 +117,11 @@ export default function UserPermissions() {
     setSelectedUserId(null);
     
     const defaultPerms: Record<string, number[]> = {};
-    SYSTEM_MODULES.forEach(mod => {
+    (SYSTEM_MODULES || []).forEach(mod => {
       const isModConfidential = confidentialityMap[mod.id];
       defaultPerms[mod.id] = isModConfidential ? [] : [1];
       if (mod.subItems) {
-        mod.subItems.forEach(sub => {
+        (mod?.subItems || []).forEach(sub => {
           const isSubConfidential = confidentialityMap[sub.id];
           defaultPerms[sub.id] = isSubConfidential ? [] : [1];
         });
@@ -141,9 +141,9 @@ export default function UserPermissions() {
         newLevels = [];
       } else {
         if (currentLevels.includes(level)) {
-          newLevels = currentLevels.filter(l => l !== level);
+          newLevels = currentLevels?.filter(l => l !== level);
         } else {
-          newLevels = [...currentLevels, level].filter(l => l !== 0);
+          newLevels = [...currentLevels, level]?.filter(l => l !== 0);
         }
       }
       return { ...prev, [menuId]: newLevels };

@@ -51,7 +51,7 @@ export default function ItemModal({ showModal, closeModal, form, setForm, groups
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Item Type *</label>
                                             <select value={form.itemType} onChange={e => setForm({...form, itemType: e.target.value})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] focus:border-[#ab8a3b] focus:bg-white transition-all outline-none cursor-pointer">
-                                                {groups.filter(x => x !== 'All')?.map(g => <option key={g} value={g}>{g}</option>)}
+                                                {groups?.filter(x => x !== 'All')?.map(g => <option key={g} value={g}>{g}</option>)}
                                             </select>
                                         </div>
                                         <div className="space-y-2">

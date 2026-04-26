@@ -20,7 +20,7 @@ interface KanbanBoardProps {
 
 export default function KanbanBoard({ jobOrders, stages, onMoveOrder, onViewDetail }: KanbanBoardProps) {
   const getOrdersByStage = (stage: ProductionStage) => {
-    return jobOrders.filter(order => order.currentStage === stage);
+    return (jobOrders || []).filter(order => order.currentStage === stage);
   };
 
   const getPriorityColor = (priority: string) => {

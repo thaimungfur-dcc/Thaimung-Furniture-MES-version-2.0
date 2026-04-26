@@ -6,7 +6,7 @@ export default function WacdCalc({ invoices }: any) {
   const wacdMetrics = useMemo(() => {
     let totalWeight = 0;
     let totalPaidAmount = 0;
-    invoices.forEach((inv: any) => {
+    (invoices || []).forEach((inv: any) => {
       if (inv.balance === 0 && inv.payDate && inv.issueDate) {
         const days = calculateDaysDiff(inv.issueDate, inv.payDate);
         totalWeight += (days * inv.amount);
@@ -79,7 +79,7 @@ export default function WacdCalc({ invoices }: any) {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 bg-white">
-            {invoices.filter((i: any) => i.balance === 0 && i.payDate)?.map((row: any, i: number) => {
+            {invoices?.filter((i: any) => i.balance === 0 && i.payDate)?.map((row: any, i: number) => {
               const days = calculateDaysDiff(row.issueDate, row.payDate);
               const weight = days * row.amount;
               return (
@@ -94,7 +94,7 @@ export default function WacdCalc({ invoices }: any) {
                 </tr>
               );
             })}
-            {invoices.filter((i: any) => i.balance === 0 && i.payDate).length === 0 && (
+            {invoices?.filter((i: any) => i.balance === 0 && i.payDate).length === 0 && (
               <tr><td colSpan={7} className="text-center py-6 text-[#7693a6] font-bold">No paid invoices with payment dates available.</td></tr>
             )}
           </tbody>

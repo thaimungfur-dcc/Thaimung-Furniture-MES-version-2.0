@@ -99,8 +99,8 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
-                                  {filteredData.filter(item => item.type === 'sales').length > 0 ? (
-                                    filteredData.filter(item => item.type === 'sales')?.map((item, i) => (
+                                  {filteredData?.filter(item => item.type === 'sales').length > 0 ? (
+                                    filteredData?.filter(item => item.type === 'sales')?.map((item, i) => (
                                       <tr key={i}>
                                         <td className="px-2 py-1.5 font-medium">{formatDate(item.date)}</td>
                                         <td className="px-2 py-1.5 font-semibold text-[#111f42]">{item.invoice}</td>
@@ -117,9 +117,9 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                                 <tfoot className="bg-slate-50 font-bold border-t border-slate-200">
                                   <tr>
                                     <td colSpan={3} className="px-2 py-2 text-right uppercase text-[#E3624A]">Total Sales VAT:</td>
-                                    <td className="px-2 py-2 text-right">{filteredData.filter(i => i.type === 'sales').reduce((acc, item) => acc + item.amount, 0)?.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right">{filteredData?.filter(i => i.type === 'sales')?.reduce((acc, item) => acc + item.amount, 0)?.toLocaleString()}</td>
                                     <td className="px-2 py-2 text-right text-[#E3624A]">{totalSalesVat?.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-right">{filteredData.filter(i => i.type === 'sales').reduce((acc, item) => acc + item.total, 0)?.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right">{filteredData?.filter(i => i.type === 'sales')?.reduce((acc, item) => acc + item.total, 0)?.toLocaleString()}</td>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -145,8 +145,8 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
-                                  {filteredData.filter(item => item.type === 'purchase').length > 0 ? (
-                                    filteredData.filter(item => item.type === 'purchase')?.map((item, i) => (
+                                  {filteredData?.filter(item => item.type === 'purchase').length > 0 ? (
+                                    filteredData?.filter(item => item.type === 'purchase')?.map((item, i) => (
                                       <tr key={i}>
                                         <td className="px-2 py-1.5 font-medium">{formatDate(item.date)}</td>
                                         <td className="px-2 py-1.5 font-semibold text-[#111f42]">{item.invoice}</td>
@@ -163,9 +163,9 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                                 <tfoot className="bg-slate-50 font-bold border-t border-slate-200">
                                   <tr>
                                     <td colSpan={3} className="px-2 py-2 text-right uppercase text-[#6b7556]">Total Purchase VAT:</td>
-                                    <td className="px-2 py-2 text-right">{filteredData.filter(i => i.type === 'purchase').reduce((acc, item) => acc + item.amount, 0)?.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right">{filteredData?.filter(i => i.type === 'purchase')?.reduce((acc, item) => acc + item.amount, 0)?.toLocaleString()}</td>
                                     <td className="px-2 py-2 text-right text-[#6b7556]">{totalPurchaseVat?.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-right">{filteredData.filter(i => i.type === 'purchase').reduce((acc, item) => acc + item.total, 0)?.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right">{filteredData?.filter(i => i.type === 'purchase')?.reduce((acc, item) => acc + item.total, 0)?.toLocaleString()}</td>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -186,7 +186,7 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                             <span className="mr-3 font-bold opacity-70">-1</span> Total Sales (Output Tax)
                           </div>
                           <div className="col-span-2 border border-slate-300 px-3 py-2 text-right bg-white flex items-center justify-end font-bold rounded-sm">
-                             {filteredData.filter(i => i.type === 'sales').reduce((a,b)=>a+b.amount,0)?.toLocaleString()}
+                             {filteredData?.filter(i => i.type === 'sales')?.reduce((a,b)=>a+b.amount,0)?.toLocaleString()}
                           </div>
                           <div className="col-span-2 bg-[#c59c47] text-white px-3 py-2 text-right font-bold shadow-sm flex items-center justify-end rounded-sm">
                              {totalSalesVat?.toLocaleString()}
@@ -197,7 +197,7 @@ const VatPreviewModal: React.FC<VatPreviewModalProps> = ({
                             <span className="mr-3 font-bold opacity-50">-2</span> Total Purchases (Input Tax)
                           </div>
                           <div className="col-span-2 border border-slate-300 px-3 py-2 text-right bg-white flex items-center justify-end font-bold rounded-sm">
-                             {filteredData.filter(i => i.type === 'purchase').reduce((a,b)=>a+b.amount,0)?.toLocaleString()}
+                             {filteredData?.filter(i => i.type === 'purchase')?.reduce((a,b)=>a+b.amount,0)?.toLocaleString()}
                           </div>
                           <div className="col-span-2 border border-slate-300 px-3 py-2 text-right bg-white text-[#b22026] font-bold flex items-center justify-end rounded-sm">
                              {totalPurchaseVat?.toLocaleString()}

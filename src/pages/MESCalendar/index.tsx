@@ -123,7 +123,7 @@ export default function MESCalendar() {
 
   // Filtering Logic
   const filteredEvents = useMemo(() => {
-    return events.filter(ev => {
+    return events?.filter(ev => {
       const matchSearch = ev.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           ev.type.toLowerCase().includes(searchQuery.toLowerCase());
       const evMonth = ev.date.substring(0, 7);
@@ -197,7 +197,7 @@ export default function MESCalendar() {
 
   const handleDeleteEvent = (id: string) => {
     if (window.confirm('คุณต้องการลบรายการนี้ใช่หรือไม่?')) {
-      setEvents(events.filter(e => e.id !== id));
+      setEvents(events?.filter(e => e.id !== id));
     }
   };
 
@@ -290,7 +290,7 @@ export default function MESCalendar() {
               </div>
               <div className="calendar-grid">
                 {calendarDays?.map((d, idx) => {
-                  const dayEvents = events.filter(e => e.date === d.dateStr);
+                  const dayEvents = events?.filter(e => e.date === d.dateStr);
                   const isSunday = idx % 7 === 0;
                   const isSaturday = idx % 7 === 6;
 

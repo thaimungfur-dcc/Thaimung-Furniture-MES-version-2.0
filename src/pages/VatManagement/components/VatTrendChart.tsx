@@ -15,7 +15,7 @@ interface VatTrendChartProps {
 const VatTrendChart: React.FC<VatTrendChartProps> = ({ data }) => {
   const [hoveredTrend, setHoveredTrend] = useState<number | null>(null);
 
-  const maxTrendVat = Math.max(...data?.map(d => d.netVat)) * 1.2 || 4500;
+  const maxTrendVat = Math.max(...(data?.map(d => d.netVat) || [0])) * 1.2 || 4500;
   
   const generateLinePath = (data: TrendData[], key: keyof TrendData, height: number, width: number, maxValue: number) => {
     if (!data.length) return '';

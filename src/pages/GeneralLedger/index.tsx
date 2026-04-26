@@ -42,15 +42,15 @@ export default function GeneralLedger() {
     let result = glRecords;
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(e => e.jvNo.toLowerCase().includes(q) || e.accountName.toLowerCase().includes(q) || e.accountCode.toLowerCase().includes(q) || e.description.toLowerCase().includes(q));
+      result = result?.filter(e => e.jvNo.toLowerCase().includes(q) || e.accountName.toLowerCase().includes(q) || e.accountCode.toLowerCase().includes(q) || e.description.toLowerCase().includes(q));
     }
     return result;
   }, [glRecords, searchTerm]);
 
   useEffect(() => { setCurrentPage(1); }, [selectedMonth, searchTerm, itemsPerPage]);
 
-  const totalDebit = filteredData.reduce((s, i) => s + i.debit, 0);
-  const totalCredit = filteredData.reduce((s, i) => s + i.credit, 0);
+  const totalDebit = filteredData?.reduce((s, i) => s + i.debit, 0);
+  const totalCredit = filteredData?.reduce((s, i) => s + i.credit, 0);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

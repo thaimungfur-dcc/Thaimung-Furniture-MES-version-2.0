@@ -83,7 +83,7 @@ export const ReportPreviewModal = ({ showReportPreview, setShowReportPreview, re
                                                     <tbody>
                                                         <tr className="border-t-[3px] border-[#111f42] bg-white">
                                                             <td className="py-2.5 px-3 text-right text-[#111f42] font-black tracking-widest uppercase border-r border-slate-200">Total Received:</td>
-                                                            <td className="py-2.5 px-4 text-right font-black text-[#10b981] text-[16px]">{reportData.reduce((s: number, r: any) => s + r.qty, 0)?.toLocaleString()} UNITS</td>
+                                                            <td className="py-2.5 px-4 text-right font-black text-[#10b981] text-[16px]">{reportData?.reduce((s: number, r: any) => s + r.qty, 0)?.toLocaleString()} UNITS</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

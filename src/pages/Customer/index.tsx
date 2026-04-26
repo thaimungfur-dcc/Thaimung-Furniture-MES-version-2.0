@@ -95,7 +95,7 @@ export default function CustomerManagement() {
 
   // Filtering Logic
   const filteredCustomers = useMemo(() => {
-    return customers.filter(c => {
+    return customers?.filter(c => {
       const matchSearch = c.customerName.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           c.customerID.toLowerCase().includes(searchQuery.toLowerCase());
       const matchCat = catFilter === 'All' ? true : c.category === catFilter;
@@ -113,9 +113,9 @@ export default function CustomerManagement() {
 
   const stats = {
     total: customers.length,
-    active: customers.filter(c => c.status === 'Active').length,
-    wholesaleCat: customers.filter(c => c.category === 'Wholesale').length,
-    avgRating: (customers.reduce((acc, curr) => acc + (curr.rating || 0), 0) / customers.filter(c => c.rating > 0).length || 0).toFixed(1)
+    active: customers?.filter(c => c.status === 'Active').length,
+    wholesaleCat: customers?.filter(c => c.category === 'Wholesale').length,
+    avgRating: (customers?.reduce((acc, curr) => acc + (curr.rating || 0), 0) / customers?.filter(c => c.rating > 0).length || 0).toFixed(1)
   };
 
   useEffect(() => {
@@ -139,7 +139,7 @@ export default function CustomerManagement() {
         data: {
           labels: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'],
           datasets: [{
-            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted']?.map(status => customers.filter(c => c.status === status).length),
+            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted']?.map(status => customers?.filter(c => c.status === status).length),
             backgroundColor: ['#10b981', '#72A09E', '#ab8a3b', '#E3624A'],
             borderWidth: 0
           }]
@@ -158,7 +158,7 @@ export default function CustomerManagement() {
           labels: masterConfig.categories,
           datasets: [{
             label: 'Customers',
-            data: masterConfig.categories?.map(cat => customers.filter(c => c.category === cat).length),
+            data: masterConfig.categories?.map(cat => customers?.filter(c => c.category === cat).length),
             backgroundColor: '#111f42', borderRadius: 6
           }]
         },

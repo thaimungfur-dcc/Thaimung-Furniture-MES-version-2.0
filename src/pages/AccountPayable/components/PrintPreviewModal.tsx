@@ -112,9 +112,9 @@ export default function PrintPreviewModal({
                           <tfoot className="bg-[#f5f0e9] font-bold border-t border-slate-200" style={{ WebkitPrintColorAdjust: 'exact' }}>
                             <tr>
                               <td colSpan={6} className="px-2 py-2 text-right uppercase text-[#223149]">TOTAL FILTERED:</td>
-                              <td className="px-2 py-2 text-right font-mono">{filteredBills.reduce((a:any,b:any)=>a+b.amount,0)?.toLocaleString()}</td>
-                              <td className="px-2 py-2 text-right text-[#7fa85a] font-mono">{filteredBills.reduce((a:any,b:any)=>a+b.paid,0)?.toLocaleString()}</td>
-                              <td className="px-2 py-2 text-right text-[#223149] font-mono">{filteredBills.reduce((a:any,b:any)=>a+b.balance,0)?.toLocaleString()}</td>
+                              <td className="px-2 py-2 text-right font-mono">{filteredBills?.reduce((a:any,b:any)=>a+b.amount,0)?.toLocaleString()}</td>
+                              <td className="px-2 py-2 text-right text-[#7fa85a] font-mono">{filteredBills?.reduce((a:any,b:any)=>a+b.paid,0)?.toLocaleString()}</td>
+                              <td className="px-2 py-2 text-right text-[#223149] font-mono">{filteredBills?.reduce((a:any,b:any)=>a+b.balance,0)?.toLocaleString()}</td>
                               <td></td>
                             </tr>
                           </tfoot>

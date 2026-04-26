@@ -91,7 +91,7 @@ export default function PurchaseRequisition() {
 
   // Derived Data
   const filteredPRs = useMemo(() => {
-    return prs.filter(pr => {
+    return prs?.filter(pr => {
       const matchTime = listTimeFilter === 'all' || pr.date.startsWith(selectedMonth);
       const q = searchQuery.toLowerCase();
       const matchSearch = pr.id.toLowerCase().includes(q) || 
@@ -114,7 +114,7 @@ export default function PurchaseRequisition() {
 
   // --- Form Handlers ---
   const getNewPRId = () => {
-     const count = prs.filter(p => p.date.startsWith(selectedMonth)).length + 1;
+     const count = prs?.filter(p => p.date.startsWith(selectedMonth)).length + 1;
      return `PR-${selectedMonth.replace('-','').slice(2)}-${String(count).padStart(3, '0')}`;
   };
 
@@ -146,7 +146,7 @@ export default function PurchaseRequisition() {
     setFormData((prev: any) => {
        const newItems = [...prev.items];
        newItems.splice(index, 1);
-       const newTotal = newItems.reduce((sum, item) => sum + (Number(item.total) || 0), 0);
+       const newTotal = newItems?.reduce((sum, item) => sum + (Number(item.total) || 0), 0);
        return { ...prev, items: newItems, totalAmount: newTotal };
     });
   };
@@ -160,7 +160,7 @@ export default function PurchaseRequisition() {
           const p = Number(newItems[index].unitPrice) || 0;
           newItems[index].total = q * p;
        }
-       const newTotal = newItems.reduce((sum, item) => sum + (Number(item.total) || 0), 0);
+       const newTotal = newItems?.reduce((sum, item) => sum + (Number(item.total) || 0), 0);
        return { ...prev, items: newItems, totalAmount: newTotal };
     });
   };
@@ -168,7 +168,7 @@ export default function PurchaseRequisition() {
   const handleSave = () => {
     if (!formData.requester || !formData.department) return alert('กรุณากรอกข้อมูลผู้ขอซื้อและแผนก');
     if (formData.items.length === 0) return alert('ต้องมีรายการสินค้าอย่างน้อย 1 รายการ');
-    const hasEmptyDesc = formData.items.some((i: any) => !i.description.trim());
+    const hasEmptyDesc = formData.items?.some((i: any) => !i.description.trim());
     if (hasEmptyDesc) return alert('กรุณาระบุรายละเอียดสินค้าให้ครบถ้วน');
 
     const now = new Date();
@@ -252,28 +252,28 @@ export default function PurchaseRequisition() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
         <KpiCard 
           title="Pending Verify"
-          value={filteredPRs.filter(p => p.status === 'Pending Verify').length}
+          value={filteredPRs?.filter(p => p.status === 'Pending Verify').length}
           icon={Clock}
           color="#f59e0b"
           subValue="Waiting for Manager Check"
         />
         <KpiCard 
           title="Pending Approve"
-          value={filteredPRs.filter(p => p.status === 'Pending Approve').length}
+          value={filteredPRs?.filter(p => p.status === 'Pending Approve').length}
           icon={AlertCircle}
           color="#3d97bd"
           subValue="Waiting for Director Auth"
         />
         <KpiCard 
           title="Approved"
-          value={filteredPRs.filter(p => p.status === 'Approved').length}
+          value={filteredPRs?.filter(p => p.status === 'Approved').length}
           icon={CheckCircle}
           color="#10b981"
           subValue="Ready for PO Creation"
         />
         <KpiCard 
           title="Total Value"
-          value={formatCurrency(filteredPRs.reduce((acc, p) => acc + p.totalAmount, 0))}
+          value={formatCurrency(filteredPRs?.reduce((acc, p) => acc + p.totalAmount, 0))}
           icon={TrendingUp}
           color="#E3624A"
           subValue="Total Budget in View"

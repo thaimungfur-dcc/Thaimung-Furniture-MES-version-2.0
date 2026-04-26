@@ -37,7 +37,7 @@ const NcKanbanBoard: React.FC<NcKanbanBoardProps> = ({
     <div className="animate-in fade-in duration-500 w-full overflow-x-auto pb-4 kanban-scroll no-print">
       <div className="flex gap-6 min-w-max h-[620px] px-1">
         {statuses?.map(status => {
-          const allColItems = monthFilteredData.filter(d => d.status === status);
+          const allColItems = monthFilteredData?.filter(d => d.status === status);
           const isStacked = !stackExpanded[status] && allColItems.length > 1;
           
           return (

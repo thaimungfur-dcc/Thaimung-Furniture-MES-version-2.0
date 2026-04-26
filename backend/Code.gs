@@ -30,8 +30,8 @@ function setupDatabase() {
     const headers = sheetsConfig[name];
     sheet.getRange(1, 1, 1, headers.length).setValues([headers])
       .setFontWeight("bold")
-      .setBackground("#111f42")
-      .setFontColor("#white");
+      .setBackground("#e8ecef")
+      .setFontColor("black");
     
     // Freeze แถวแรก
     sheet.setFrozenRows(1);
@@ -95,10 +95,16 @@ function doPost(e) {
       sheet = ss.insertSheet(sheetName);
       if (data && Array.isArray(data) && data.length > 0) {
         const columns = Object.keys(data[0]);
-        sheet.getRange(1, 1, 1, columns.length).setValues([columns]).setFontWeight("bold");
-      } else if (data && typeof data === 'object') {
+        sheet.getRange(1, 1, 1, columns.length).setValues([columns])
+          .setFontWeight("bold")
+          .setBackground("#e8ecef")
+          .setFontColor("black");
+      } else if (data && typeof data === 'object' && Object.keys(data).length > 0) {
         const columns = Object.keys(data);
-        sheet.getRange(1, 1, 1, columns.length).setValues([columns]).setFontWeight("bold");
+        sheet.getRange(1, 1, 1, columns.length).setValues([columns])
+          .setFontWeight("bold")
+          .setBackground("#e8ecef")
+          .setFontColor("black");
       }
     }
     
@@ -175,8 +181,15 @@ function writeData(sheet, data, headersObj) {
   if (!Array.isArray(data)) data = [data];
   var sheetHeaders = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0];
   if (!sheetHeaders || sheetHeaders.length === 0 || sheetHeaders[0] === "") {
-    sheetHeaders = Object.keys(data[0]);
-    sheet.getRange(1, 1, 1, sheetHeaders.length).setValues([sheetHeaders]);
+    if (data.length > 0) {
+      sheetHeaders = Object.keys(data[0]);
+      sheet.getRange(1, 1, 1, sheetHeaders.length).setValues([sheetHeaders])
+        .setFontWeight("bold")
+        .setBackground("#e8ecef")
+        .setFontColor("black");
+    } else {
+      return createResponse("error", "No data to write and no headers exist", null, headersObj);
+    }
   }
   
   data.forEach(item => {

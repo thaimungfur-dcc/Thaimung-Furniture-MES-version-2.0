@@ -78,23 +78,23 @@ export default function CashFlow() {
     let result = transactions;
     if (subTab !== 'all') {
       if (subTab === 'Inflow' || subTab === 'Outflow') {
-        result = result.filter(tx => tx.type === subTab);
+        result = result?.filter(tx => tx.type === subTab);
       } else {
-        result = result.filter(tx => tx.status === subTab);
+        result = result?.filter(tx => tx.status === subTab);
       }
     }
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(tx => tx.refNo.toLowerCase().includes(q) || tx.description.toLowerCase().includes(q));
+      result = result?.filter(tx => tx.refNo.toLowerCase().includes(q) || tx.description.toLowerCase().includes(q));
     }
     return result;
   }, [transactions, subTab, searchTerm]);
 
   useEffect(() => { setCurrentPage(1); }, [subTab, selectedMonth, searchTerm, itemsPerPage, mainTab]);
 
-  const totalInflows = filteredData.filter(i => i.type === 'Inflow' && i.status === 'Cleared').reduce((s, i) => s + i.amount, 0);
-  const totalOutflows = filteredData.filter(i => i.type === 'Outflow' && i.status === 'Cleared').reduce((s, i) => s + i.amount, 0);
-  const netPending = filteredData.filter(i => i.status === 'Pending' || i.status === 'Forecasted').reduce((s, i) => i.type === 'Inflow' ? s + i.amount : s - i.amount, 0);
+  const totalInflows = filteredData?.filter(i => i.type === 'Inflow' && i.status === 'Cleared')?.reduce((s, i) => s + i.amount, 0);
+  const totalOutflows = filteredData?.filter(i => i.type === 'Outflow' && i.status === 'Cleared')?.reduce((s, i) => s + i.amount, 0);
+  const netPending = filteredData?.filter(i => i.status === 'Pending' || i.status === 'Forecasted')?.reduce((s, i) => i.type === 'Inflow' ? s + i.amount : s - i.amount, 0);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -211,7 +211,7 @@ export default function CashFlow() {
               { id: 'Delayed', title: 'ล่าช้า (Delayed)', color: 'bg-rose-400' },
               { id: 'Cancelled', title: 'ยกเลิก (Cancelled)', color: 'bg-fuchsia-400' },
             ]?.map(col => {
-              const colItems = transactions.filter(i => i.status === col.id);
+              const colItems = transactions?.filter(i => i.status === col.id);
               return (
                 <div key={col.id} className="w-[300px] flex-shrink-0 flex flex-col h-full bg-slate-50/50 rounded-2xl p-4 border border-slate-200 shadow-sm">
                   <div className="flex justify-between items-center mb-4">

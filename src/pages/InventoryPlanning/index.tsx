@@ -68,10 +68,10 @@ export default function InventoryPlanning() {
     // --- Computed Filtering & Pagination ---
     const filteredItems = useMemo(() => {
         let res = inventoryItems;
-        if (activeFilter !== 'All') res = res.filter(i => i.status === activeFilter);
+        if (activeFilter !== 'All') res = res?.filter(i => i.status === activeFilter);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(i => i.id.toLowerCase().includes(q) || i.name.toLowerCase().includes(q));
+            res = res?.filter(i => i.id.toLowerCase().includes(q) || i.name.toLowerCase().includes(q));
         }
         return res;
     }, [inventoryItems, activeFilter, searchQuery]);
@@ -85,10 +85,10 @@ export default function InventoryPlanning() {
 
     const stats = useMemo(() => {
         return {
-            totalOnhand: inventoryItems.reduce((s, i) => s + i.onhand, 0)?.toLocaleString(),
-            totalAvailable: inventoryItems.reduce((s, i) => s + i.available, 0)?.toLocaleString(),
-            planIn: inventoryItems.reduce((s, i) => s + i.planIn, 0)?.toLocaleString(),
-            lowStockCount: inventoryItems.filter(i => ['Low Stock', 'Critical', 'Out of Stock'].includes(i.status)).length
+            totalOnhand: inventoryItems?.reduce((s, i) => s + i.onhand, 0)?.toLocaleString(),
+            totalAvailable: inventoryItems?.reduce((s, i) => s + i.available, 0)?.toLocaleString(),
+            planIn: inventoryItems?.reduce((s, i) => s + i.planIn, 0)?.toLocaleString(),
+            lowStockCount: inventoryItems?.filter(i => ['Low Stock', 'Critical', 'Out of Stock'].includes(i.status)).length
         };
     }, [inventoryItems]);
 
@@ -104,7 +104,7 @@ export default function InventoryPlanning() {
 
     const getFilterCount = (f: string) => {
         if (f === 'All') return inventoryItems.length;
-        return inventoryItems.filter(i => i.status === f).length;
+        return inventoryItems?.filter(i => i.status === f).length;
     };
 
     return (

@@ -22,7 +22,7 @@ export default function SystemConfig() {
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState({ name: '', code: '' });
 
-    const currentSettings = settings.filter(s => s.category === activeCategory);
+    const currentSettings = settings?.filter(s => s.category === activeCategory);
     const categoryInfo = categories.find(c => c.id === activeCategory);
 
     const handleAdd = () => {

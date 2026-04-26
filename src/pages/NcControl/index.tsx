@@ -129,35 +129,35 @@ export default function NcControl() {
     }
   };
 
-  const monthFilteredData = useMemo(() => ncData.filter(item => item.date.startsWith(selectedMonth)), [ncData, selectedMonth]);
+  const monthFilteredData = useMemo(() => ncData?.filter(item => item.date.startsWith(selectedMonth)), [ncData, selectedMonth]);
   
   const logTableData = useMemo(() => {
     let result = monthFilteredData;
     if (filterStatus !== 'all') {
-      result = result.filter(item => item.status === filterStatus);
+      result = result?.filter(item => item.status === filterStatus);
     }
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      result = result.filter(item => item.id.toLowerCase().includes(q) || item.department.toLowerCase().includes(q));
+      result = result?.filter(item => item.id.toLowerCase().includes(q) || item.department.toLowerCase().includes(q));
     }
     return result;
   }, [monthFilteredData, searchQuery, filterStatus]);
 
   const stats = useMemo(() => ({
     total: monthFilteredData.length,
-    pending: monthFilteredData.filter(p => p.status === 'Submitted').length,
-    followup: monthFilteredData.filter(p => ['Responded', 'Follow up'].includes(p.status)).length,
-    closed: monthFilteredData.filter(p => p.status === 'Closed').length,
-    critical: monthFilteredData.filter(d => d.severity === 'Critical').length,
-    major: monthFilteredData.filter(d => d.severity === 'Major').length,
-    minor: monthFilteredData.filter(d => d.severity === 'Minor').length,
+    pending: monthFilteredData?.filter(p => p.status === 'Submitted').length,
+    followup: monthFilteredData?.filter(p => ['Responded', 'Follow up'].includes(p.status)).length,
+    closed: monthFilteredData?.filter(p => p.status === 'Closed').length,
+    critical: monthFilteredData?.filter(d => d.severity === 'Critical').length,
+    major: monthFilteredData?.filter(d => d.severity === 'Major').length,
+    minor: monthFilteredData?.filter(d => d.severity === 'Minor').length,
   }), [monthFilteredData]);
 
   const openModal = (mode: string, data: any = null) => {
     setModalMode(mode);
     setModalTab(mode === 'department' ? 'response' : 'general');
     if (mode === 'create') {
-      const newCount = ncData.filter(d => d.date.startsWith(selectedMonth)).length + 1;
+      const newCount = ncData?.filter(d => d.date.startsWith(selectedMonth)).length + 1;
       setFormData({ 
         id: `NC-${selectedMonth.slice(2, 4)}${selectedMonth.split('-')[1]}-${String(newCount).padStart(3, '0')}`, 
         date: new Date().toISOString().split('T')[0], department: '', item: '', problem: '', severity: 'Minor', status: 'Submitted',

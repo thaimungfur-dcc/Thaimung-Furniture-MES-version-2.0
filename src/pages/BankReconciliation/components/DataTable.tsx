@@ -25,11 +25,11 @@ export default function DataTable({
         </div>
         <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-[#496ca8]/5">
           <p className="text-[10px] font-bold text-[#496ca8] uppercase tracking-widest mb-1 flex items-center gap-1">Adjustment Needed</p>
-          <p className="text-xl font-black text-[#496ca8] font-mono">{records.filter((r: any) => r.status === 'Adjusting').length} Items</p>
+          <p className="text-xl font-black text-[#496ca8] font-mono">{records?.filter((r: any) => r.status === 'Adjusting').length} Items</p>
         </div>
         <div className="p-4 flex flex-col justify-center bg-[#0ea5e9]/10">
           <p className="text-[10px] font-bold text-[#0ea5e9] uppercase tracking-widest mb-1 flex items-center gap-1"><CheckCircle size={12}/> Reconciled OK</p>
-          <p className="text-xl font-black text-[#0ea5e9] font-mono">{records.filter((r: any) => r.status === 'Reconciled').length} Items</p>
+          <p className="text-xl font-black text-[#0ea5e9] font-mono">{records?.filter((r: any) => r.status === 'Reconciled').length} Items</p>
         </div>
       </div>
       <div className="p-3 flex items-center justify-between gap-4 bg-white/80 border-b border-slate-200">

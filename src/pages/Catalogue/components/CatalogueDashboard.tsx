@@ -19,7 +19,7 @@ const CatalogueDashboard: React.FC<CatalogueDashboardProps> = ({ products }) => 
 
     // 1. Category Chart
     const catData: Record<string, number> = {};
-    products.forEach(p => {
+    (products || []).forEach(p => {
       if (p.category) catData[p.category] = (catData[p.category] || 0) + 1;
     });
 
@@ -49,7 +49,7 @@ const CatalogueDashboard: React.FC<CatalogueDashboardProps> = ({ products }) => 
 
     // 2. Price Distribution Chart
     const priceBuckets: Record<string, number> = { '< 5,000': 0, '5,001 - 15,000': 0, '15,001 - 30,000': 0, '> 30,000': 0 };
-    products.forEach(p => {
+    (products || []).forEach(p => {
       const price = Number(p.price.toString().replace(/,/g, ''));
       if (price < 5000) priceBuckets['< 5,000']++;
       else if (price <= 15000) priceBuckets['5,001 - 15,000']++;
@@ -91,7 +91,7 @@ const CatalogueDashboard: React.FC<CatalogueDashboardProps> = ({ products }) => 
 
     // 3. Rating Chart
     const ratingData: Record<string, number> = { '5 Stars': 0, '4 Stars': 0, '3 Stars': 0, '1-2 Stars': 0 };
-    products.forEach(p => {
+    (products || []).forEach(p => {
       if (p.rating === 5) ratingData['5 Stars']++;
       else if (p.rating === 4) ratingData['4 Stars']++;
       else if (p.rating === 3) ratingData['3 Stars']++;

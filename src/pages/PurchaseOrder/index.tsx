@@ -106,7 +106,7 @@ export default function PurchaseOrder() {
   const [poItemsPerPage, setPoItemsPerPage] = useState(10);
 
   const filteredPendingPRs = useMemo(() => {
-    return pendingPRs.filter(p => {
+    return pendingPRs?.filter(p => {
       const matchSearch = p.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           p.requester.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           p.department.toLowerCase().includes(searchQuery.toLowerCase());
@@ -123,7 +123,7 @@ export default function PurchaseOrder() {
   const pendingTotalPages = Math.ceil(filteredPendingPRs.length / pendingItemsPerPage) || 1;
 
   const filteredPOList = useMemo(() => {
-    return poList.filter(p => {
+    return poList?.filter(p => {
       const matchSearch = p.poNumber.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           p.vendor.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           p.prRef.toLowerCase().includes(searchQuery.toLowerCase());
@@ -159,7 +159,7 @@ export default function PurchaseOrder() {
       });
     } else if (mode === 'generate' && data) {
       setSelectedItem(data); 
-      const sub = data.items.reduce((s: number, i: any) => s + (i.qty * i.price), 0);
+      const sub = data.items?.reduce((s: number, i: any) => s + (i.qty * i.price), 0);
       const vt = sub * 0.07;
       setPoForm({
         id: Date.now(), poNumber: getNewPONumber(), date: new Date().toISOString().split('T')[0], 
@@ -185,7 +185,7 @@ export default function PurchaseOrder() {
     setPoForm((prev: any) => {
        const newItems = [...prev.items];
        newItems.splice(index, 1);
-       const sub = newItems.reduce((s, i) => s + ((Number(i.qty)||0) * (Number(i.price)||0)), 0);
+       const sub = newItems?.reduce((s, i) => s + ((Number(i.qty)||0) * (Number(i.price)||0)), 0);
        const vt = sub * 0.07;
        return { ...prev, items: newItems, subTotal: sub, vat: vt, grandTotal: sub + vt };
     });
@@ -195,7 +195,7 @@ export default function PurchaseOrder() {
     setPoForm((prev: any) => {
        const newItems = [...prev.items];
        newItems[index][field] = value;
-       const sub = newItems.reduce((s, i) => s + ((Number(i.qty)||0) * (Number(i.price)||0)), 0);
+       const sub = newItems?.reduce((s, i) => s + ((Number(i.qty)||0) * (Number(i.price)||0)), 0);
        const vt = sub * 0.07;
        return { ...prev, items: newItems, subTotal: sub, vat: vt, grandTotal: sub + vt };
     });
@@ -210,7 +210,7 @@ export default function PurchaseOrder() {
       const newPO = { ...poForm, history: [{ date: formattedNow, user: 'Admin', action: 'Created PO', note: '' }] };
       setPoList([newPO, ...poList]);
       if (modalMode === 'generate' && selectedItem) {
-        setPendingPRs(pendingPRs.filter(p => p.id !== selectedItem.id));
+        setPendingPRs(pendingPRs?.filter(p => p.id !== selectedItem.id));
       }
     } else {
       const updatedPO = { ...poForm, history: [...(poForm.history || []), { date: formattedNow, user: 'Admin', action: `Updated PO`, note: '' }] };
@@ -308,21 +308,21 @@ export default function PurchaseOrder() {
         />
         <KpiCard 
           title="Open POs"
-          value={filteredPOList.filter(p=>p.status!=='Completed' && p.status!=='Rejected').length}
+          value={filteredPOList?.filter(p=>p.status!=='Completed' && p.status!=='Rejected').length}
           icon={Truck}
           color="#3d97bd"
           subValue="Active Delivery Tracking"
         />
         <KpiCard 
           title="Completed"
-          value={filteredPOList.filter(p=>p.status==='Completed').length}
+          value={filteredPOList?.filter(p=>p.status==='Completed').length}
           icon={CheckSquare}
           color="#849a28"
           subValue="Finished Procurement"
         />
         <KpiCard 
           title="Total Spend (Mo)"
-          value={formatCurrency(filteredPOList.reduce((acc, p) => acc + p.grandTotal, 0))}
+          value={formatCurrency(filteredPOList?.reduce((acc, p) => acc + p.grandTotal, 0))}
           icon={Coins}
           color="#E3624A"
           subValue="Total Monthly Expenditure"

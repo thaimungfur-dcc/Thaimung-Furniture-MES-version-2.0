@@ -1,0 +1,273 @@
+src/pages/InventoryPlanning/InventoryTable.tsx:108:                        {paginatedItems.length === 0 && (
+src/pages/InventoryPlanning/index.tsx:84:    const totalPages = Math.ceil(filteredItems.length / itemsPerPage) || 1;
+src/pages/InventoryPlanning/index.tsx:91:            lowStockCount: inventoryItems?.filter(i => ['Low Stock', 'Critical', 'Out of Stock'].includes(i.status)).length
+src/pages/InventoryPlanning/index.tsx:106:        if (f === 'All') return inventoryItems.length;
+src/pages/InventoryPlanning/index.tsx:107:        return inventoryItems?.filter(i => i.status === f).length;
+src/pages/InventoryPlanning/AnalysisCharts.tsx:11:        if (inventoryItems.length > 0) {
+src/pages/ProductionTracking/components/KanbanBoard.tsx:43:                {getOrdersByStage(stage).length}
+src/pages/ProductionTracking/components/KanbanBoard.tsx:105:                      if (currentIndex < stages.length - 1) {
+src/pages/ProductionTracking/components/KanbanBoard.tsx:118:            {getOrdersByStage(stage).length === 0 && (
+src/pages/ProductionTracking/index.tsx:87:      active: normalizedOrders?.filter(o => o.status !== 'Completed').length,
+src/pages/ProductionTracking/index.tsx:92:      }).length,
+src/pages/ProductionTracking/index.tsx:93:      qcPending: normalizedOrders?.filter(o => o.currentStage === 'QC').length,
+src/pages/ProductionTracking/index.tsx:94:      completedToday: normalizedOrders?.filter(o => o.status === 'Completed').length // simplified
+src/pages/Home/components/HomeKpiSection.tsx:19:      value: deliveryOrders?.filter((d: any) => d.status !== 'Completed').length || 0, 
+src/pages/Home/components/HomeKpiSection.tsx:26:      value: jobOrders?.filter((j: any) => j.status !== 'Completed').length || 0, 
+src/pages/Home/components/HomeKpiSection.tsx:33:      value: outLogs?.filter((l: any) => l.date?.startsWith(new Date().toISOString().split('T')[0])).length || 0, 
+src/pages/WarehouseIn/components/ReportPreviewModal.tsx:75:                                                {[...Array(Math.max(0, 10 - reportData.length))]?.map((_, i) => (
+src/pages/WarehouseIn/index.tsx:228:            pendingJobs: jobOrders?.filter(j => j.status === 'In Progress' || j.status === 'Not Started').length,
+src/pages/WarehouseIn/index.tsx:229:            pendingPOs: purchaseOrders?.filter(p => p.status === 'In Progress' || p.status === 'Not Started').length,
+src/pages/WarehouseIn/index.tsx:230:            completed: historyLogs.length
+src/pages/WarehouseIn/index.tsx:247:        showToast('Success', `พบข้อมูลรายงาน ${filtered.length} รายการ`, 'success');
+src/pages/WarehouseIn/index.tsx:304:                if (form.manualItems.length === 0 || !form.manualItems[0].sku) return showToast('Error', 'กรุณาระบุข้อมูลสินค้า', 'error');
+src/pages/WarehouseIn/index.tsx:305:                for (let i = 0; i < form.manualItems.length; i++) {
+src/pages/WarehouseIn/index.tsx:444:        if (parsedData.length === 0) return;
+src/pages/WarehouseIn/index.tsx:449:            for (let i = 0; i < parsedData.length; i++) {
+src/pages/WarehouseIn/index.tsx:473:            showToast('Success', `นำเข้าข้อมูลสำเร็จ ${parsedData.length} รายการ`, 'success');
+src/pages/WarehouseIn/index.tsx:595:                            {reportData.length > 0 && (
+src/pages/WarehouseIn/index.tsx:603:                            {reportData.length > 0 ? (
+src/pages/InspectionStandards/components/CategoryView.tsx:22:                    const itemCount = products?.filter(p => p.category === cat.id).length;
+src/pages/InspectionStandards/components/ProductListView.tsx:131:                    <span className="text-[11px] font-bold text-slate-400 ml-1">({filteredProducts.length})</span>
+src/pages/DataEntry/index.tsx:28:  if (hex.length === 4) {
+src/pages/DataEntry/index.tsx:32:  } else if (hex.length === 7) {
+src/pages/Catalogue/components/CatalogueActionModal.tsx:172:                            {form.history && form.history.length > 0 ? (
+src/pages/Catalogue/components/CatalogueActionModal.tsx:179:                                    {i !== form.history.length - 1 && <div className="w-px h-full bg-slate-200 my-1"></div>}
+src/pages/Catalogue/index.tsx:92:    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
+src/pages/Catalogue/index.tsx:188:                                    <option value="All">ALL CATEGORIES ({products.length})</option>
+src/pages/Catalogue/index.tsx:191:                                            {cat.toUpperCase()} ({products?.filter(p => p.category === cat).length})
+src/pages/RecipeBOM/index.tsx:200:                        <KpiCard title="Total Products" value={products.length} color="#111f42" icon={Box} subValue="FG with BOM Records" />
+src/pages/RecipeBOM/index.tsx:201:                        <KpiCard title="Active Formula" value={products?.filter(p=>p.status==='Active').length} color="#ab8a3b" icon={CheckCircle} subValue="Ready for Production" />
+src/pages/RecipeBOM/index.tsx:203:                        <KpiCard title="Pending Review" value={products?.filter(p=>p.status==='Draft').length} color="#E3624A" icon={Clock} subValue="Draft or Pending" />
+src/pages/RecipeBOM/index.tsx:215:                                                {s === 'All' ? products.length : products?.filter(p => p.status === s).length}
+src/pages/RecipeBOM/index.tsx:431:                        window.alert(`Simulating import of ${data.length} BOM records.`);
+src/pages/NcControl/components/NcKanbanBoard.tsx:38:          const isStacked = !stackExpanded[status] && allColItems.length > 1;
+src/pages/NcControl/components/NcKanbanBoard.tsx:44:                <span className="bg-white text-slate-500 text-[10px] px-2 py-0.5 rounded font-bold shadow-sm">{allColItems.length}</span>
+src/pages/NcControl/components/NcKanbanBoard.tsx:47:                {stackExpanded[status] && allColItems.length > 1 && (
+src/pages/NcControl/index.tsx:147:    total: monthFilteredData.length,
+src/pages/NcControl/index.tsx:148:    pending: monthFilteredData?.filter(p => p.status === 'Submitted').length,
+src/pages/NcControl/index.tsx:149:    followup: monthFilteredData?.filter(p => ['Responded', 'Follow up'].includes(p.status)).length,
+src/pages/NcControl/index.tsx:150:    closed: monthFilteredData?.filter(p => p.status === 'Closed').length,
+src/pages/NcControl/index.tsx:151:    critical: monthFilteredData?.filter(d => d.severity === 'Critical').length,
+src/pages/NcControl/index.tsx:152:    major: monthFilteredData?.filter(d => d.severity === 'Major').length,
+src/pages/NcControl/index.tsx:153:    minor: monthFilteredData?.filter(d => d.severity === 'Minor').length,
+src/pages/NcControl/index.tsx:160:      const newCount = ncData?.filter(d => d.date.startsWith(selectedMonth)).length + 1;
+src/pages/AccountPayable/index.tsx:130:  const totalPages = Math.ceil(filteredBills.length / itemsPerPage);
+src/pages/AccountPayable/components/PrintPreviewModal.tsx:89:                            {filteredBills.length > 0 ? (
+src/pages/AccountPayable/components/BillTable.tsx:106:              {currentItems.length > 0 ? currentItems?.map((bill: any) => (
+src/pages/AccountPayable/components/BillTable.tsx:216:            <p className="text-xs text-[#7693a6] font-semibold hidden sm:block">Showing <span className="font-bold text-[#223149]">{indexOfFirstItem + 1}</span> to <span className="font-bold text-[#223149]">{Math.min(indexOfLastItem, filteredBills.length)}</span> of <span className="font-bold text-[#223149]">{filteredBills.length}</span></p>
+src/pages/AccountPayable/components/KanbanBoard.tsx:27:                <span className="bg-white/80 text-[#223149] text-[10px] px-2 py-0.5 rounded-full font-bold border border-white shadow-sm">{colItems.length}</span>
+src/pages/AccountPayable/components/KanbanBoard.tsx:72:                {colItems.length === 0 && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:65:            <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{filteredPendingPRs.length}</span>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:82:                    <span className="bg-slate-100 text-slate-500 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">{pr.items.length} Items</span>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:87:            {(filteredPendingPRs.length > (kanbanLimits.pendingPR || 5) || (kanbanLimits.pendingPR > 5)) && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:92:                {filteredPendingPRs.length > (kanbanLimits.pendingPR || 5) && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:104:            <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{getBoardItems('Pending Approve').length}</span>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:127:            {(getBoardItems('Pending Approve').length > (kanbanLimits['Pending Approve'] || 5) || (kanbanLimits['Pending Approve'] > 5)) && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:132:                {getBoardItems('Pending Approve').length > (kanbanLimits['Pending Approve'] || 5) && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:144:            <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{getBoardItems('Approved').length}</span>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:166:            {(getBoardItems('Approved').length > (kanbanLimits['Approved'] || 5) || (kanbanLimits['Approved'] > 5)) && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:171:                {getBoardItems('Approved').length > (kanbanLimits['Approved'] || 5) && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:183:            <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{getBoardItems('Sent').length}</span>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:203:            {(getBoardItems('Sent').length > (kanbanLimits['Sent'] || 5) || (kanbanLimits['Sent'] > 5)) && (
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:208:                {getBoardItems('Sent').length > (kanbanLimits['Sent'] || 5) && (
+src/pages/PurchaseOrder/components/PoActionModal.tsx:190:                                      disabled={poForm.items.length === 1}
+src/pages/PurchaseOrder/components/PoActionModal.tsx:225:                        {poForm.history && poForm.history.length > 0 ? (
+src/pages/PurchaseOrder/components/PoActionModal.tsx:232:                                {i !== poForm.history.length - 1 && <div className="w-px h-full bg-slate-200 my-1"></div>}
+src/pages/PurchaseOrder/components/PoPrWaitingTable.tsx:61:                  <td className="px-6 py-4 text-center font-bold text-slate-600">{pr.items.length}</td>
+src/pages/PurchaseOrder/components/PoPrWaitingTable.tsx:70:              {paginatedPendingPRs.length === 0 && (
+src/pages/PurchaseOrder/components/PoPrWaitingTable.tsx:80:          <p>Showing <span className="font-bold text-[#111f42]">{filteredPendingPRs.length > 0 ? (pendingCurrentPage - 1) * pendingItemsPerPage + 1 : 0}</span> to <span className="font-bold text-[#111f42]">{Math.min(pendingCurrentPage * pendingItemsPerPage, filteredPendingPRs.length)}</span> of <span className="font-bold text-[#111f42]">{filteredPendingPRs.length}</span> entries</p>
+src/pages/PurchaseOrder/components/PoPreviewModal.tsx:113:                            {[...Array(Math.max(0, 6 - selectedItem.items.length))]?.map((_, i) => (
+src/pages/PurchaseOrder/components/PoTable.tsx:78:            {paginatedPOList.length === 0 && (
+src/pages/PurchaseOrder/components/PoTable.tsx:88:          <p>Showing <span className="font-bold text-[#111f42]">{filteredPOList.length > 0 ? (currentPage - 1) * poItemsPerPage + 1 : 0}</span> to <span className="font-bold text-[#111f42]">{Math.min(currentPage * poItemsPerPage, filteredPOList.length)}</span> of <span className="font-bold text-[#111f42]">{filteredPOList.length}</span> entries</p>
+src/pages/PurchaseOrder/index.tsx:123:  const pendingTotalPages = Math.ceil(filteredPendingPRs.length / pendingItemsPerPage) || 1;
+src/pages/PurchaseOrder/index.tsx:140:  const totalPages = Math.ceil(filteredPOList.length / poItemsPerPage) || 1;
+src/pages/PurchaseOrder/index.tsx:148:    return `PO-${selectedMonth.replace('-','').slice(2)}-${String(poList.length + 1).padStart(3, '0')}`;
+src/pages/PurchaseOrder/index.tsx:206:    if(poForm.items.length === 0) return alert('ต้องมีรายการสินค้าอย่างน้อย 1 รายการ');
+src/pages/PurchaseOrder/index.tsx:304:          value={filteredPendingPRs.length}
+src/pages/PurchaseOrder/index.tsx:311:          value={filteredPOList?.filter(p=>p.status!=='Completed' && p.status!=='Rejected').length}
+src/pages/PurchaseOrder/index.tsx:318:          value={filteredPOList?.filter(p=>p.status==='Completed').length}
+src/pages/PurchaseNC/components/NcCharts.tsx:32:         return scarData?.filter(d => d.date.startsWith(dateStr)).length;
+src/pages/PurchaseNC/components/NcKanbanBoard.tsx:41:          const isStacked = !stackExpanded[status] && allColItems.length > 1;
+src/pages/PurchaseNC/components/NcKanbanBoard.tsx:47:                <span className="bg-white text-slate-500 text-[10px] px-2 py-0.5 rounded font-bold shadow-sm">{allColItems.length}</span>
+src/pages/PurchaseNC/components/NcKanbanBoard.tsx:50:                {stackExpanded[status] && allColItems.length > 1 && (
+src/pages/PurchaseNC/components/NcLogTable.tsx:45:          {logTableData.length > 0 ? logTableData?.map(scar => (
+src/pages/PurchaseNC/index.tsx:157:    total: monthFilteredData.length,
+src/pages/PurchaseNC/index.tsx:158:    pending: monthFilteredData?.filter(p => p.status === 'Submitted').length,
+src/pages/PurchaseNC/index.tsx:159:    followup: monthFilteredData?.filter(p => ['Vendor Responded', 'Follow up'].includes(p.status)).length,
+src/pages/PurchaseNC/index.tsx:160:    closed: monthFilteredData?.filter(p => p.status === 'Closed').length,
+src/pages/PurchaseNC/index.tsx:161:    critical: monthFilteredData?.filter(d => d.severity === 'Critical').length,
+src/pages/PurchaseNC/index.tsx:162:    major: monthFilteredData?.filter(d => d.severity === 'Major').length,
+src/pages/PurchaseNC/index.tsx:163:    minor: monthFilteredData?.filter(d => d.severity === 'Minor').length,
+src/pages/PurchaseNC/index.tsx:170:      const newCount = scarData?.filter(d => d.date.startsWith(selectedMonth)).length + 1;
+src/pages/GeneralLedger/components/DataTable.tsx:23:          <p className="text-xl font-black text-[#223149] font-mono">{filteredData.length} Lines</p>
+src/pages/GeneralLedger/index.tsx:58:  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+src/pages/BankReconciliation/index.tsx:60:  const totalUnmatchedCount = records?.filter(r => r.status !== 'Reconciled').length;
+src/pages/BankReconciliation/index.tsx:66:  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+src/pages/BankReconciliation/components/KanbanBoard.tsx:24:                <span className="bg-white/80 text-[#223149] text-[10px] px-2 py-0.5 rounded-full font-bold border border-white shadow-sm">{colItems.length}</span>
+src/pages/BankReconciliation/components/DataTable.tsx:28:          <p className="text-xl font-black text-[#496ca8] font-mono">{records?.filter((r: any) => r.status === 'Adjusting').length} Items</p>
+src/pages/BankReconciliation/components/DataTable.tsx:32:          <p className="text-xl font-black text-[#0ea5e9] font-mono">{records?.filter((r: any) => r.status === 'Reconciled').length} Items</p>
+src/pages/VatManagement/components/VatTransactionTable.tsx:47:            {data.length > 0 ? data?.map((item) => (
+src/pages/VatManagement/components/KanbanBoard.tsx:24:                <span className="bg-white text-slate-500 text-[10px] px-2 py-0.5 rounded-full font-bold border border-slate-100">{colItems.length}</span>
+src/pages/VatManagement/components/VatPreviewModal.tsx:102:                                  {filteredData?.filter(item => item.type === 'sales').length > 0 ? (
+src/pages/VatManagement/components/VatPreviewModal.tsx:148:                                  {filteredData?.filter(item => item.type === 'purchase').length > 0 ? (
+src/pages/VatManagement/components/VatTrendChart.tsx:21:    if (!data.length) return '';
+src/pages/VatManagement/components/VatTrendChart.tsx:22:    const xStep = width / (data.length - 1 || 1);
+src/pages/VatManagement/components/VatTrendChart.tsx:65:            const cx = index * (1000 / (data.length - 1));
+src/pages/VatManagement/components/VatTrendChart.tsx:95:              left: `${(hoveredTrend / (data.length - 1)) * 100}%`, 
+src/pages/VatManagement/index.tsx:92:  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+src/pages/FabricDesign/components/FabricGrid.tsx:68:      {patterns.length === 0 && (
+src/pages/FabricDesign/components/FabricActionModal.tsx:228:                              {form.history && form.history.length > 0 ? (
+src/pages/FabricDesign/components/FabricActionModal.tsx:235:                                      {i !== form.history.length - 1 && <div className="w-px h-full bg-slate-200 my-1"></div>}
+src/pages/FabricDesign/index.tsx:55:        if(cat === 'All') return patterns.length;
+src/pages/FabricDesign/index.tsx:56:        return patterns?.filter(p => p.category === cat).length;
+src/pages/FabricDesign/index.tsx:108:            const newCode = `PTN-2026-${String(newPatterns.length + 1).padStart(3, '0')}`;
+src/pages/FabricDesign/index.tsx:201:                                    <option value="All">ALL CATEGORIES ({patterns.length})</option>
+src/pages/Supplier/components/SupplierTable.tsx:75:            {suppliers.length === 0 && (
+src/pages/Supplier/index.tsx:90:    const nextRunning = suppliers.length + 1;
+src/pages/Supplier/index.tsx:112:  const totalPages = Math.ceil(filteredSuppliers.length / itemsPerPage) || 1;
+src/pages/Supplier/index.tsx:115:    total: suppliers.length,
+src/pages/Supplier/index.tsx:116:    active: suppliers?.filter(s => s.status === 'Active').length,
+src/pages/Supplier/index.tsx:117:    supplierCat: suppliers?.filter(s => s.category === 'Supplier').length,
+src/pages/Supplier/index.tsx:118:    avgRating: (suppliers?.reduce((acc, curr) => acc + (curr.rating || 0), 0) / (suppliers?.filter(s => s.rating > 0).length || 1)).toFixed(1)
+src/pages/Supplier/index.tsx:138:            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted']?.map(status => suppliers?.filter(s => s.status === status).length),
+src/pages/Supplier/index.tsx:157:            data: masterConfig.categories?.map(c => suppliers?.filter(s => s.category === c).length),
+src/pages/MasterCode/components/Analytics.tsx:16:    if (activeTab === 'analytics' && items.length > 0) {
+src/pages/MasterCode/index.tsx:42:  const fgCount = (items || [])?.filter(i => i.groups && i.groups.includes('FG')).length;
+src/pages/MasterCode/index.tsx:43:  const rmCount = (items || [])?.filter(i => i.groups && (i.groups.includes('RM') || i.groups.includes('HW') || i.groups.includes('FB'))).length;
+src/pages/MasterCode/index.tsx:44:  const newCount = (items || [])?.filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
+src/pages/MasterCode/index.tsx:50:  const isValid = form.groups.length > 0 && form.category && form.catCode.length === 2 && form.subCategory && form.subCatCode.length === 2;
+src/pages/MasterCode/index.tsx:133:    if (!parsedData || parsedData.length === 0) return;
+src/pages/MasterCode/index.tsx:135:    for (let idx = 0; idx < parsedData.length; idx++) {
+src/pages/MasterCode/index.tsx:272:              <KpiCard title="Total Items" value={(items || []).length} color="#111f42" icon={Database} subValue="All Codes" />
+src/pages/WarehouseOut/components/OutboundModal.tsx:95:                                                 <span className="text-[10px] text-[#ab8a3b] font-mono font-black bg-[#ab8a3b]/5 px-3 py-1.5 border border-[#ab8a3b]/20 uppercase tracking-widest">Batch Size: {form.manualItems.length}</span>
+src/pages/WarehouseOut/components/OutboundModal.tsx:144:                                                                     {form.manualItems.length > 1 && (
+src/pages/WarehouseOut/index.tsx:105:    const totalPages = Math.ceil((currentData?.length || 0) / itemsPerPage) || 1;
+src/pages/WarehouseOut/index.tsx:120:            pendingDelivery: dOrders?.filter(o => o.status !== 'Completed').length,
+src/pages/WarehouseOut/index.tsx:121:            pendingMRP: mOrders?.filter(o => o.status !== 'Completed').length,
+src/pages/WarehouseOut/index.tsx:122:            completed: dOrders?.filter(o => o.status === 'Completed').length + mOrders?.filter(o => o.status === 'Completed').length
+src/pages/WarehouseOut/index.tsx:148:            if (status === 'All') return deliveryOrders.length;
+src/pages/WarehouseOut/index.tsx:149:            return deliveryOrders?.filter(o => o.status === status).length;
+src/pages/WarehouseOut/index.tsx:151:            if (status === 'All') return mrpOrders.length;
+src/pages/WarehouseOut/index.tsx:152:            return mrpOrders?.filter(o => o.status === status).length;
+src/pages/WarehouseOut/index.tsx:199:             if (parts.length === 2) count = parseInt(parts[1]) + 1;
+src/pages/WarehouseOut/index.tsx:207:                for (let i = 0; i < form.manualItems.length; i++) {
+src/pages/WarehouseOut/index.tsx:373:            for (let idx = 0; idx < parsedData.length; idx++) {
+src/pages/WarehouseOut/index.tsx:394:            window.alert(`Imported ${parsedData.length} records successfully.`);
+src/pages/StockCard/index.tsx:114:    const totalPages = Math.ceil(filteredMovements.length / viewState.rows) || 1;
+src/pages/StockCard/index.tsx:248:                                        {paginatedMovements.length === 0 && (
+src/pages/StockCard/components/StockCardToolbar.tsx:60:              {filteredItems.length === 0 && <div className="p-8 text-center text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] italic">No matching items found</div>}
+src/pages/SaleOrder/index.tsx:54:        const cIdx = i % MASTER_CUSTOMERS.length;
+src/pages/SaleOrder/index.tsx:55:        const sIdx = i % STATUS_LIST.length;
+src/pages/SaleOrder/index.tsx:62:          const pIdx = (i + j) % MASTER_PRODUCTS.length;
+src/pages/SaleOrder/index.tsx:114:    const seq = String(orders.length + 1).padStart(3, '0');
+src/pages/SaleOrder/index.tsx:116:  }, [idConfig.format, orders.length]);
+src/pages/SaleOrder/index.tsx:134:  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+src/pages/SaleOrder/index.tsx:183:    const nextRound = item.deliveries.length + 1;
+src/pages/SaleOrder/components/OrderModal.tsx:144:                                      if (newItems[idx].deliveries.length === 1) {
+src/pages/SaleOrder/components/OrderModal.tsx:162:                                  {orderModal.mode !== 'view' && orderModal.data.items.length > 1 && (
+src/pages/SaleOrder/components/OrderModal.tsx:240:                                        {orderModal.mode !== 'view' && item.deliveries.length > 1 && (
+src/pages/SaleOrder/components/OrdersTable.tsx:74:              const isMulti = so.items?.some(i => i.deliveries.length > 1);
+src/pages/SaleOrder/components/OrdersTable.tsx:82:                      <span className="font-bold text-slate-600">{so.items.length}</span>
+src/pages/SaleOrder/components/OrdersTable.tsx:104:            {currentItems.length === 0 && (
+src/pages/SaleOrder/components/PreviewModal.tsx:125:                                        {item.deliveries && item.deliveries.length > 0 && (
+src/pages/SaleOrder/components/KanbanBoard.tsx:30:          const hiddenCount = colItems.length - 5;
+src/pages/SaleOrder/components/KanbanBoard.tsx:48:                  {colItems.length}
+src/pages/SaleOrder/components/KanbanBoard.tsx:54:                   const totalItems = so.items.length;
+src/pages/SaleOrder/components/KanbanBoard.tsx:55:                   const isMultiDelivery = so.items?.some(i => i.deliveries.length > 1);
+src/pages/SaleOrder/components/KanbanBoard.tsx:99:                {isExpanded && colItems.length > 5 && (
+src/pages/SaleOrder/components/KanbanBoard.tsx:108:                {colItems.length === 0 && (
+src/pages/CashFlow/components/PreviewModal.tsx:117:                                  {completedItems?.filter(i => i.flowType === 'CFI').length === 0 && <tr><td colSpan={2} className="py-1.5 pl-3 text-slate-400 italic">No transactions</td></tr>}
+src/pages/CashFlow/components/PreviewModal.tsx:139:                                  {completedItems?.filter(i => i.flowType === 'CFF').length === 0 && <tr><td colSpan={2} className="py-1.5 pl-3 text-slate-400 italic">No transactions</td></tr>}
+src/pages/CashFlow/components/PreviewModal.tsx:182:                              {filteredData.length > 0 ? (
+src/pages/CashFlow/components/TrendChart.tsx:18:    if (!data.length) return '';
+src/pages/CashFlow/components/TrendChart.tsx:19:    const xStep = width / (data.length - 1 || 1);
+src/pages/CashFlow/components/TrendChart.tsx:61:            const cx = index * (1000 / (data.length - 1));
+src/pages/CashFlow/components/TrendChart.tsx:87:              left: `${(hoveredTrend / (data.length - 1)) * 100}%`, 
+src/pages/CashFlow/components/TransactionTable.tsx:45:          {data.length > 0 ? data?.map((item) => (
+src/pages/CashFlow/index.tsx:102:  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+src/pages/CashFlow/index.tsx:221:                    <span className="bg-white text-[#111f42] text-[10px] px-2 py-0.5 rounded-full font-bold border border-slate-200 shadow-sm">{colItems.length}</span>
+src/pages/CashFlow/index.tsx:337:              Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredData.length)} of {filteredData.length} records
+src/pages/AccountsReceivable/components/KanbanBoard.tsx:27:                <span className="bg-white/80 text-[#223149] text-[10px] px-2 py-0.5 rounded-full font-bold border border-white shadow-sm">{colItems.length}</span>
+src/pages/AccountsReceivable/components/KanbanBoard.tsx:72:                {colItems.length === 0 && (
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:93:              {currentItems.length > 0 ? currentItems?.map((inv: any) => (
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:249:                Showing <span className="font-bold text-[#223149]">{filteredInvoices.length === 0 ? 0 : indexOfFirstItem + 1}</span> to <span className="font-bold text-[#223149]">{Math.min(indexOfLastItem, filteredInvoices.length)}</span> of <span className="font-bold text-[#223149]">{filteredInvoices.length}</span> results
+src/pages/AccountsReceivable/components/PrintPreviewModal.tsx:89:                            {filteredInvoices.length > 0 ? (
+src/pages/AccountsReceivable/components/WacdCalc.tsx:97:            {invoices?.filter((i: any) => i.balance === 0 && i.payDate).length === 0 && (
+src/pages/AccountsReceivable/index.tsx:130:  const totalPages = Math.ceil(filteredInvoices.length / itemsPerPage);
+src/pages/ItemMaster/index.tsx:57:        if (activeTab === 'analytics' && items.length > 0) {
+src/pages/ItemMaster/index.tsx:80:    const fgCount = items?.filter(i => i.itemType === 'FG').length;
+src/pages/ItemMaster/index.tsx:81:    const rmCount = items?.filter(i => i.itemType === 'RM').length;
+src/pages/ItemMaster/index.tsx:82:    const newCount = items?.filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
+src/pages/ItemMaster/index.tsx:106:            const generatedCode = form.itemCode || `${form.itemType}-${String(items.length + 1).padStart(4, '0')}`;
+src/pages/ItemMaster/index.tsx:140:        alert(`Successfully imported ${parsedData.length} records into system.`);
+src/pages/ItemMaster/index.tsx:203:                        <KpiCard title="Total Master Records" value={items.length} color="#111f42" icon={Database} subValue="All Items Registered" />
+src/pages/MESCalendar/index.tsx:141:  const totalPages = Math.ceil(filteredEvents.length / itemsPerPage) || 1;
+src/pages/MESCalendar/index.tsx:153:        id: isHolidays ? `HL-${String(events.length + 1).padStart(3, '0')}` : `EV-${String(events.length + 1).padStart(3, '0')}`,
+src/pages/MESCalendar/index.tsx:379:                    {paginatedEvents.length === 0 && (
+src/pages/MESCalendar/index.tsx:389:                  <p>Showing <span className="font-bold text-[#111f42]">{filteredEvents.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</span> to <span className="font-bold text-[#111f42]">{Math.min(currentPage * itemsPerPage, filteredEvents.length)}</span> of <span className="font-bold text-[#111f42]">{filteredEvents.length}</span> entries</p>
+src/pages/UserPermissions/components/Step2Operational.tsx:95:                  const hasSub = module.subItems && module.subItems.length > 0;
+src/pages/UserPermissions/components/Step1Confidentiality.tsx:51:              <span className="font-black">{SYSTEM_MODULES.length}</span>
+src/pages/UserPermissions/components/Step1Confidentiality.tsx:55:              <span className="font-black text-[#E3624A]">{Object.values(confidentialityMap)?.filter(v => v).length}</span>
+src/pages/UserPermissions/components/Step1Confidentiality.tsx:59:              <span className="font-black text-emerald-400">{Object.values(confidentialityMap)?.filter(v => !v).length}</span>
+src/pages/UserPermissions/components/Step1Confidentiality.tsx:73:            const hasSub = module.subItems && module.subItems.length > 0;
+src/pages/UserPermissions/components/EditUserModal.tsx:135:                    const hasSub = module.subItems && module.subItems.length > 0;
+src/pages/UserPermissions/components/EditUserModal.tsx:157:                                ? currentLevels.length === 0 || (modalStep === 2 && !currentLevels?.some(l => l >= 2))
+src/pages/UserPermissions/components/EditUserModal.tsx:193:                                          ? subLevels.length === 0 || (modalStep === 2 && !subLevels?.some(l => l >= 2))
+src/pages/UserPermissions/index.tsx:30:    if (confData && confData.length > 0) {
+src/pages/UserPermissions/index.tsx:53:    if (users && users.length > 0) {
+src/pages/WarehouseBooking/components/ReportPreviewModal.tsx:82:                                                {[...Array(Math.max(0, 10 - reportData.length))]?.map((_, i) => (
+src/pages/WarehouseBooking/index.tsx:136:        notStarted: bookings?.filter(b => b.status === 'Not Started').length,
+src/pages/WarehouseBooking/index.tsx:137:        inProgress: bookings?.filter(b => b.status === 'In Progress').length,
+src/pages/WarehouseBooking/index.tsx:138:        completed: bookings?.filter(b => b.status === 'Completed').length
+src/pages/WarehouseBooking/index.tsx:361:                                        {paginatedData.length === 0 && <tr><td colSpan={7} className="text-center py-24 text-slate-300 italic font-bold">No records found</td></tr>}
+src/pages/WarehouseBooking/index.tsx:365:                            <PaginationControls totalItems={filteredBookings.length} page={currentPage} rows={itemsPerPage} setPage={setCurrentPage} />
+src/pages/WarehouseBooking/index.tsx:386:                            {reportData.length > 0 && (
+src/pages/WarehouseBooking/index.tsx:393:                            {reportData.length > 0 ? (
+src/pages/ProductCost/index.tsx:50:        const count = costItems.length;
+src/pages/ProductCost/index.tsx:79:        for (let i = 0; i < filteredItems.length; i += 5) result.push(filteredItems.slice(i, i + 5));
+src/pages/ProductCost/index.tsx:298:                                        {row.length < 5 && [...Array(5 - row.length)]?.map((_, i) => (<div key={`e-${i}`} className="hidden lg:block flex-1"></div>))}
+src/pages/Customer/components/CustomerTable.tsx:81:            {paginatedCustomers.length === 0 && (
+src/pages/Customer/index.tsx:91:    const nextRunning = customers.length + 1;
+src/pages/Customer/index.tsx:112:  const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage) || 1;
+src/pages/Customer/index.tsx:115:    total: customers.length,
+src/pages/Customer/index.tsx:116:    active: customers?.filter(c => c.status === 'Active').length,
+src/pages/Customer/index.tsx:117:    wholesaleCat: customers?.filter(c => c.category === 'Wholesale').length,
+src/pages/Customer/index.tsx:118:    avgRating: (customers?.reduce((acc, curr) => acc + (curr.rating || 0), 0) / customers?.filter(c => c.rating > 0).length || 0).toFixed(1)
+src/pages/Customer/index.tsx:142:            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted']?.map(status => customers?.filter(c => c.status === status).length),
+src/pages/Customer/index.tsx:161:            data: masterConfig.categories?.map(cat => customers?.filter(c => c.category === cat).length),
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:60:          const hasMore = allColItems.length > currentLimit;
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:69:                <span className="bg-white text-[#111f42] text-[11px] px-2.5 py-0.5 rounded font-bold shadow-sm">{allColItems.length}</span>
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:90:                      <span className="bg-slate-100 text-slate-500 text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">{item.items.length} Items</span>
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:117:                {allColItems.length === 0 && (
+src/pages/PurchaseRequisition/components/PrTable.tsx:56:              <td className="px-6 py-2.5 text-center font-bold text-slate-600">{item.items.length}</td>
+src/pages/PurchaseRequisition/components/PrTable.tsx:80:          {paginatedPRs.length === 0 && (
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:197:                                            disabled={formData.items.length === 1}
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:230:                              {formData.history && formData.history.length > 0 ? (
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:237:                                      {i !== formData.history.length - 1 && <div className="w-px h-full bg-slate-200 my-1"></div>}
+src/pages/PurchaseRequisition/components/PrPreviewModal.tsx:112:                            {[...Array(Math.max(0, 5 - selectedPR.items.length))]?.map((_, i) => (
+src/pages/PurchaseRequisition/index.tsx:111:  const totalPages = Math.ceil(filteredPRs.length / itemsPerPage) || 1;
+src/pages/PurchaseRequisition/index.tsx:117:     const count = prs?.filter(p => p.date.startsWith(selectedMonth)).length + 1;
+src/pages/PurchaseRequisition/index.tsx:170:    if (formData.items.length === 0) return alert('ต้องมีรายการสินค้าอย่างน้อย 1 รายการ');
+src/pages/PurchaseRequisition/index.tsx:255:          value={filteredPRs?.filter(p => p.status === 'Pending Verify').length}
+src/pages/PurchaseRequisition/index.tsx:262:          value={filteredPRs?.filter(p => p.status === 'Pending Approve').length}
+src/pages/PurchaseRequisition/index.tsx:269:          value={filteredPRs?.filter(p => p.status === 'Approved').length}
+src/pages/PurchaseRequisition/index.tsx:349:                <p>Showing <span className="font-bold text-[#111f42]">{filteredPRs.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}</span> to <span className="font-bold text-[#111f42]">{Math.min(currentPage * itemsPerPage, filteredPRs.length)}</span> of <span className="font-bold text-[#111f42]">{filteredPRs.length}</span> entries</p>
+src/pages/PettyCash/index.tsx:62:  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+src/pages/PettyCash/components/KanbanBoard.tsx:25:                <span className="bg-white/80 text-[#223149] text-[10px] px-2 py-0.5 rounded-full font-bold border border-white shadow-sm">{colItems.length}</span>
+src/pages/FixedAsset/components/KanbanBoard.tsx:23:                <span className="bg-white/80 text-[#223149] text-[10px] px-2 py-0.5 rounded-full font-bold border border-white shadow-sm">{colItems.length}</span>
+src/pages/FixedAsset/components/DataTable.tsx:23:        <div className="p-4 border-r border-slate-200 flex flex-col justify-center bg-slate-50/50"><p className="text-[10px] font-bold text-[#7693a6] uppercase tracking-widest mb-1">Total Assets</p><p className="text-xl font-black text-[#223149] font-mono">{filteredData.length} Items</p></div>
+src/pages/FixedAsset/index.tsx:62:  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+src/components/shared/CsvUploadModal.tsx:68:            const fileHeaders = jsonRows.length > 0 ? Object.keys(jsonRows[0] as any) : [];
+src/components/shared/CsvUploadModal.tsx:85:    if (missingHeaders.length > 0) {
+src/components/shared/CsvUploadModal.tsx:240:                        <div className="text-[#111f42] font-black text-xl font-mono mt-0.5">{data.length?.toLocaleString()} <span className="text-[10px] uppercase font-sans text-slate-400 tracking-widest">ROWS</span></div>
+src/components/shared/CsvUploadModal.tsx:278:                      <AlertCircle size={14} /> Showing 5 rows preview. Integration summary: {data.length} total records found in matrix.
+src/components/shared/FileAttachment.tsx:50:    if (rejectedFiles.length > 0) {
+src/components/shared/FileAttachment.tsx:55:    if (attachments.length + acceptedFiles.length > maxFiles) {
+src/components/shared/FileAttachment.tsx:133:        {attachments.length > 0 && (
+src/components/shared/DataTable.tsx:162:        {(filterColumns.length > 0 || dateFilterColumn) && (
+src/components/shared/DataTable.tsx:232:            {columnFilters.length > 0 && (
+src/components/shared/DataTable.tsx:271:              {table.getRowModel().rows.length > 0 ? (
+src/components/shared/DataTable.tsx:289:                  <td colSpan={columns.length} className="px-6 py-20 text-center text-slate-300 font-black uppercase tracking-[0.2em] text-[10px]">
+src/components/shared/DataTable.tsx:301:            Showing {table.getRowModel().rows.length} of {data.length} Entries
+src/services/googleSheets.ts:104:        data: { items: mockItems, totalCount: mockItems.length },
+src/utils/csvUtils.ts:9:  if (!data || data.length === 0) {

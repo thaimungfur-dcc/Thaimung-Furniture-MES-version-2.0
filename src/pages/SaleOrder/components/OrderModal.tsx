@@ -161,7 +161,7 @@ export default function OrderModal({
                                   </div>
                                   {orderModal.mode !== 'view' && orderModal.data.items.length > 1 && (
                                     <button type="button" onClick={() => {
-                                      const newItems = orderModal.data.items.filter((_, i) => i !== idx);
+                                      const newItems = orderModal.data.items?.filter((_, i) => i !== idx);
                                       setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
                                     }} className="text-slate-300 hover:text-red-500 pb-3 transition-colors px-2"><Trash2 size={20} /></button>
                                   )}
@@ -186,7 +186,7 @@ export default function OrderModal({
                                 </div>
                               );
 
-                              const allocatedQty = item.deliveries.reduce((sum, d) => sum + (Number(d.qty) || 0), 0);
+                              const allocatedQty = item.deliveries?.reduce((sum, d) => sum + (Number(d.qty) || 0), 0);
                               const requiredQty = item.qty || 0;
                               const isMatch = allocatedQty === requiredQty;
                               const isOver = allocatedQty > requiredQty;

@@ -185,7 +185,7 @@ export default function Layout() {
                 
                 {menuModules?.map((module, index) => {
                   const isExpanded = expandedModule === module.name;
-                  const isActive = location.pathname === module.path || module.subItems.some(sub => location.pathname === sub.path);
+                  const isActive = location.pathname === module.path || module.subItems?.some(sub => location.pathname === sub.path);
                   return (
                     <div key={index} className="flex flex-col mb-1 relative">
                       <button 

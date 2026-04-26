@@ -152,8 +152,8 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
         refreshData();
     }, [refreshData]);
 
-    const getItemsByType = (type: string) => items.filter(item => item.itemType === type);
-    const getSettingsByCategory = (category: string) => settings.filter(setting => setting.category === category);
+    const getItemsByType = (type: string) => items?.filter(item => item.itemType === type);
+    const getSettingsByCategory = (category: string) => settings?.filter(setting => setting.category === category);
 
     // Generic API helpers
     const postData = async (sheetName: string, data: any) => {
@@ -180,7 +180,7 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
         const storedData = localStorage.getItem(`erp_data_${sheetName}`);
         if (!storedData) return;
         const currentData = JSON.parse(storedData);
-        const newData = currentData.filter((row: any) => row.id !== id && row.rowId !== id);
+        const newData = currentData?.filter((row: any) => row.id !== id && row.rowId !== id);
         localStorage.setItem(`erp_data_${sheetName}`, JSON.stringify(newData));
         await refreshData();
     };

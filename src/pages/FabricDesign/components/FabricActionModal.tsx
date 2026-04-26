@@ -46,7 +46,7 @@ const FabricActionModal: React.FC<FabricActionModalProps> = ({
   };
 
   const addColor = () => setForm({ ...form, colors: [...form.colors, '#000000'] });
-  const removeColor = (idx: number) => setForm({ ...form, colors: form.colors.filter((_: any, i: number) => i !== idx) });
+  const removeColor = (idx: number) => setForm({ ...form, colors: form.colors?.filter((_: any, i: number) => i !== idx) });
 
   return (
     <div className="modal-overlay open" onClick={onClose}>

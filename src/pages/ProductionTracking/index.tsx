@@ -69,7 +69,7 @@ export default function ProductionTracking() {
   }, [jobOrders]);
 
   const filteredOrders = useMemo(() => {
-    return normalizedOrders.filter(order => {
+    return normalizedOrders?.filter(order => {
       const matchesSearch = 
         order.joNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
         order.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -84,14 +84,14 @@ export default function ProductionTracking() {
   // KPIs
   const stats = useMemo(() => {
     return {
-      active: normalizedOrders.filter(o => o.status !== 'Completed').length,
-      delayed: normalizedOrders.filter(o => {
+      active: normalizedOrders?.filter(o => o.status !== 'Completed').length,
+      delayed: normalizedOrders?.filter(o => {
         if (o.status === 'Completed') return false;
         const due = new Date(o.dueDate);
         return !isNaN(due.getTime()) && due < new Date();
       }).length,
-      qcPending: normalizedOrders.filter(o => o.currentStage === 'QC').length,
-      completedToday: normalizedOrders.filter(o => o.status === 'Completed').length // simplified
+      qcPending: normalizedOrders?.filter(o => o.currentStage === 'QC').length,
+      completedToday: normalizedOrders?.filter(o => o.status === 'Completed').length // simplified
     };
   }, [normalizedOrders]);
 

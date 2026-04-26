@@ -43,18 +43,18 @@ export default function PettyCash() {
   const filteredData = useMemo(() => {
     let result = vouchers;
     if (subTab !== 'all') {
-      result = result.filter(e => e.status === subTab);
+      result = result?.filter(e => e.status === subTab);
     }
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(e => e.pcvNo.toLowerCase().includes(q) || e.employee.toLowerCase().includes(q) || e.description.toLowerCase().includes(q));
+      result = result?.filter(e => e.pcvNo.toLowerCase().includes(q) || e.employee.toLowerCase().includes(q) || e.description.toLowerCase().includes(q));
     }
     return result;
   }, [vouchers, subTab, searchTerm]);
 
   useEffect(() => { setCurrentPage(1); }, [subTab, selectedMonth, searchTerm, itemsPerPage, mainTab]);
 
-  const totalAmount = filteredData.reduce((s, i) => s + i.amount, 0);
+  const totalAmount = filteredData?.reduce((s, i) => s + i.amount, 0);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

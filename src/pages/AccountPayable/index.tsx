@@ -79,12 +79,12 @@ export default function AccountPayable() {
   const filteredBills = useMemo(() => {
     let result = bills;
     if (subTab !== 'all') {
-      if (subTab === 'Disputed') result = result.filter(b => b.isDisputed);
-      else result = result.filter(b => b.status === subTab);
+      if (subTab === 'Disputed') result = result?.filter(b => b.isDisputed);
+      else result = result?.filter(b => b.status === subTab);
     }
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(b => b.billNo.toLowerCase().includes(q) || b.vendor.toLowerCase().includes(q) || b.poRef.toLowerCase().includes(q));
+      result = result?.filter(b => b.billNo.toLowerCase().includes(q) || b.vendor.toLowerCase().includes(q) || b.poRef.toLowerCase().includes(q));
     }
     return result;
   }, [bills, subTab, searchTerm]);
@@ -119,9 +119,9 @@ export default function AccountPayable() {
     }
   };
 
-  const totalPayable = bills.reduce((s, i) => (!i.isDisputed ? s + i.balance : s), 0);
-  const totalOverdueAmount = bills.reduce((s, i) => isOverdue(i) ? s + i.balance : s, 0);
-  const totalDisputedAmount = bills.reduce((s, i) => i.isDisputed ? s + i.balance : s, 0);
+  const totalPayable = bills?.reduce((s, i) => (!i.isDisputed ? s + i.balance : s), 0);
+  const totalOverdueAmount = bills?.reduce((s, i) => isOverdue(i) ? s + i.balance : s, 0);
+  const totalDisputedAmount = bills?.reduce((s, i) => i.isDisputed ? s + i.balance : s, 0);
 
   // Pagination Calculation
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -138,9 +138,9 @@ export default function AccountPayable() {
     const headers = ['Issue Date', 'Due Date', 'Bill No.', 'PO Ref', 'Vendor', 'Vendor Type', 'Credit Term (Days)', 'Risk Level', 'Exception', 'Amount', 'Disc. Available', 'Disc. Captured', 'Paid', 'Balance', 'Status', 'Is Disputed'];
     const csvRows = [
       headers.join(','),
-      ...filteredBills?.map(row => [
+      ...(filteredBills?.map(row => [
         row.issueDate, row.dueDate, row.billNo, row.poRef, `"${row.vendor}"`, row.vendorType, row.creditTerm, row.risk, `"${row.exceptionReason}"`, row.amount, row.discountAvailable, row.discountCaptured, row.paid, row.balance, row.status, row.isDisputed
-      ].join(','))
+      ].join(',')) || [])
     ].join('\n');
 
     const blob = new Blob(['\uFEFF' + csvRows], { type: 'text/csv;charset=utf-8;' });
@@ -246,7 +246,7 @@ export default function AccountPayable() {
         />
         <KpiCard 
           title="Payment Progress"
-          value={`${((bills.reduce((s,i)=>s+i.paid,0) / (bills.reduce((s,i)=>s+i.amount,0)||1)) * 100).toFixed(1)}%`}
+          value={`${((bills?.reduce((s,i)=>s+i.paid,0) / (bills?.reduce((s,i)=>s+i.amount,0)||1)) * 100).toFixed(1)}%`}
           icon={CheckCircle}
           color="#10b981"
           subValue="Completed settlement ratio"

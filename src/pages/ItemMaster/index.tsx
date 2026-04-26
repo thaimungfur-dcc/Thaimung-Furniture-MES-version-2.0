@@ -60,7 +60,7 @@ export default function ItemMasterApp() {
 
             if (typeChartRef.current) {
                 const counts: any = {};
-                items.forEach(i => counts[i.itemType] = (counts[i.itemType] || 0) + 1);
+                (items || []).forEach(i => counts[i.itemType] = (counts[i.itemType] || 0) + 1);
                 charts.current.type = new Chart(typeChartRef.current, {
                     type: 'doughnut',
                     data: {
@@ -77,9 +77,9 @@ export default function ItemMasterApp() {
         }
     }, [activeTab, items]);
 
-    const fgCount = items.filter(i => i.itemType === 'FG').length;
-    const rmCount = items.filter(i => i.itemType === 'RM').length;
-    const newCount = items.filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
+    const fgCount = items?.filter(i => i.itemType === 'FG').length;
+    const rmCount = items?.filter(i => i.itemType === 'RM').length;
+    const newCount = items?.filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
 
     const getTypeClass = (type: string) => {
         switch(type) {
@@ -119,7 +119,7 @@ export default function ItemMasterApp() {
     const confirmUpload = (parsedData: any[]) => {
         // Assume imported data is valid, iterate and add
         const now = new Date().toISOString().split('T')[0];
-        parsedData.forEach((row: any) => {
+        (parsedData || []).forEach((row: any) => {
              const newId = Date.now().toString() + Math.random().toString();
              addItem({
                  id: newId,

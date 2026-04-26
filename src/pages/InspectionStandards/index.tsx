@@ -65,17 +65,17 @@ export default function InspectionStandards() {
 
     const filteredProducts = useMemo(() => {
         let res = products;
-        if (selectedCategory) res = res.filter(p => p.category === selectedCategory.id);
+        if (selectedCategory) res = res?.filter(p => p.category === selectedCategory.id);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(p => p.name.toLowerCase().includes(q) || p.code.toLowerCase().includes(q));
+            res = res?.filter(p => p.name.toLowerCase().includes(q) || p.code.toLowerCase().includes(q));
         }
         return res;
     }, [products, selectedCategory, searchQuery]);
 
     const filteredStandards = useMemo(() => {
         if (!selectedProduct) return [];
-        return standards.filter(std => std.productId === selectedProduct.id && std.process === activeDetailTab);
+        return standards?.filter(std => std.productId === selectedProduct.id && std.process === activeDetailTab);
     }, [standards, selectedProduct, activeDetailTab]);
 
     const getProcessIcon = (proc: string) => {
@@ -221,8 +221,8 @@ export default function InspectionStandards() {
 
     const deleteProduct = (id: number) => {
         if (window.confirm('ยืนยันการลบสินค้าและมาตรฐานทั้งหมด?')) {
-            setProducts(prev => prev.filter(p => p.id !== id));
-            setStandards(prev => prev.filter(s => s.productId !== id));
+            setProducts(prev => prev?.filter(p => p.id !== id));
+            setStandards(prev => prev?.filter(s => s.productId !== id));
             setShowModal(false);
             if (appState === 'detail') setAppState('items');
         }
@@ -230,7 +230,7 @@ export default function InspectionStandards() {
 
     const deleteStandard = (id: number) => {
         if (window.confirm('ยืนยันการลบจุดตรวจสอบนี้?')) {
-            setStandards(prev => prev.filter(s => s.id !== id));
+            setStandards(prev => prev?.filter(s => s.id !== id));
         }
     };
 
@@ -239,7 +239,7 @@ export default function InspectionStandards() {
         if (window.confirm(`คัดลอกมาตรฐานของ "${product.name}"?`)) {
             const newId = Date.now();
             const newProduct = { ...product, id: newId, name: product.name + ' (Copy)', code: product.code + '-CP', status: 'In Development' };
-            const newStandards = standards.filter(s => s.productId === product.id)?.map(s => ({ ...s, id: Date.now() + Math.random(), productId: newId }));
+            const newStandards = standards?.filter(s => s.productId === product.id)?.map(s => ({ ...s, id: Date.now() + Math.random(), productId: newId }));
             setProducts([newProduct, ...products]);
             setStandards([...standards, ...newStandards]);
         }
@@ -254,7 +254,7 @@ export default function InspectionStandards() {
 
     const removeProcess = (proc: string) => {
         if (window.confirm(`ลบขั้นตอน ${proc}?`)) {
-            setCategorySteps(prev => ({ ...prev, [configCategory]: prev[configCategory].filter(p => p !== proc) }));
+            setCategorySteps(prev => ({ ...prev, [configCategory]: prev[configCategory]?.filter(p => p !== proc) }));
             if (activeDetailTab === proc) setActiveDetailTab('dimensions');
         }
     };

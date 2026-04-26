@@ -48,9 +48,9 @@ export default function ProductCost() {
 
     const kpis = useMemo(() => {
         const count = costItems.length;
-        const avgCost = count > 0 ? costItems.reduce((s, i) => s + (i.totalCost || 0), 0) / count : 0;
-        const totalVal = costItems.reduce((s, i) => s + ((i.totalCost || 0) * (i.batchSize || 1)), 0);
-        const avgMargin = count > 0 ? costItems.reduce((s, i) => s + (i.targetMargin || 0), 0) / count : 0;
+        const avgCost = count > 0 ? costItems?.reduce((s, i) => s + (i.totalCost || 0), 0) / count : 0;
+        const totalVal = costItems?.reduce((s, i) => s + ((i.totalCost || 0) * (i.batchSize || 1)), 0);
+        const avgMargin = count > 0 ? costItems?.reduce((s, i) => s + (i.targetMargin || 0), 0) / count : 0;
         return { count, avgCost, totalVal, avgMargin };
     }, [costItems]);
 
@@ -71,7 +71,7 @@ export default function ProductCost() {
 
         if (!searchQuery) return costItems;
         const q = searchQuery.toLowerCase();
-        return costItems.filter(p => (p.item + p.itemName).toLowerCase().includes(q));
+        return costItems?.filter(p => (p.item + p.itemName).toLowerCase().includes(q));
     }, [costItems, searchQuery]);
 
     const productRows = useMemo(() => {
@@ -81,7 +81,7 @@ export default function ProductCost() {
     }, [filteredItems]);
 
     // --- Calculation Engine ---
-    const sumSection = (arr: any[]) => (arr || []).reduce((s, i) => s + (Number(i.cost) || 0), 0);
+    const sumSection = (arr: any[]) => (arr || [])?.reduce((s, i) => s + (Number(i.cost) || 0), 0);
     const totals = useMemo(() => {
         const c_dm = sumSection(form.dm), c_dl = sumSection(form.dl);
         const c_foh = sumSection(form.factory_oh), c_ooh = sumSection(form.office_oh);
@@ -365,7 +365,7 @@ export default function ProductCost() {
                                                                         className="input-table font-mono w-full"
                                                                     >
                                                                         <option value="">Select Item...</option>
-                                                                        {items.filter(i => i.itemType === 'FG')?.map(item => (
+                                                                        {items?.filter(i => i.itemType === 'FG')?.map(item => (
                                                                             <option key={item.id} value={item.itemCode}>{item.itemCode} - {item.itemName}</option>
                                                                         ))}
                                                                     </select>

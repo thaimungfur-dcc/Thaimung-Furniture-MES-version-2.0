@@ -42,19 +42,19 @@ export default function FixedAsset() {
   const filteredData = useMemo(() => {
     let result = assets;
     if (subTab !== 'all') {
-      result = result.filter(e => e.status === subTab);
+      result = result?.filter(e => e.status === subTab);
     }
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(e => e.assetCode.toLowerCase().includes(q) || e.name.toLowerCase().includes(q) || e.category.toLowerCase().includes(q));
+      result = result?.filter(e => e.assetCode.toLowerCase().includes(q) || e.name.toLowerCase().includes(q) || e.category.toLowerCase().includes(q));
     }
     return result;
   }, [assets, subTab, searchTerm]);
 
   useEffect(() => { setCurrentPage(1); }, [subTab, selectedMonth, searchTerm, itemsPerPage, mainTab]);
 
-  const totalCost = filteredData.reduce((s, i) => s + i.cost, 0);
-  const totalNBV = filteredData.reduce((s, i) => s + i.nbv, 0);
+  const totalCost = filteredData?.reduce((s, i) => s + i.cost, 0);
+  const totalNBV = filteredData?.reduce((s, i) => s + i.nbv, 0);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

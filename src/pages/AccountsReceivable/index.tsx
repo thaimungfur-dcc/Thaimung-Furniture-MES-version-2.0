@@ -79,12 +79,12 @@ export default function AccountsReceivable() {
   const filteredInvoices = useMemo(() => {
     let result = invoices;
     if (subTab !== 'all') {
-      if (subTab === 'BadDebt') result = result.filter(inv => inv.isBadDebt);
-      else result = result.filter(inv => inv.status === subTab);
+      if (subTab === 'BadDebt') result = result?.filter(inv => inv.isBadDebt);
+      else result = result?.filter(inv => inv.status === subTab);
     }
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(inv => inv.invoiceNo.toLowerCase().includes(q) || inv.customer.toLowerCase().includes(q) || inv.soRef.toLowerCase().includes(q));
+      result = result?.filter(inv => inv.invoiceNo.toLowerCase().includes(q) || inv.customer.toLowerCase().includes(q) || inv.soRef.toLowerCase().includes(q));
     }
     return result;
   }, [invoices, subTab, searchTerm]);
@@ -119,9 +119,9 @@ export default function AccountsReceivable() {
     }
   };
 
-  const totalOutstanding = invoices.reduce((s, i) => (!i.isBadDebt ? s + i.balance : s), 0);
-  const totalOverdueAmount = invoices.reduce((s, i) => isOverdue(i) ? s + i.balance : s, 0);
-  const totalBadDebtAmount = invoices.reduce((s, i) => i.isBadDebt ? s + i.balance : s, 0);
+  const totalOutstanding = invoices?.reduce((s, i) => (!i.isBadDebt ? s + i.balance : s), 0);
+  const totalOverdueAmount = invoices?.reduce((s, i) => isOverdue(i) ? s + i.balance : s, 0);
+  const totalBadDebtAmount = invoices?.reduce((s, i) => i.isBadDebt ? s + i.balance : s, 0);
 
   // Pagination Calculation
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -138,9 +138,9 @@ export default function AccountsReceivable() {
     const headers = ['Issue Date', 'Due Date', 'Inv No.', 'SO Ref', 'Customer', 'Industry', 'Credit Term', 'Risk', 'Amount', 'Paid', 'Balance', 'Status', 'Is Bad Debt'];
     const csvRows = [
       headers.join(','),
-      ...filteredInvoices?.map(row => [
+      ...(filteredInvoices?.map(row => [
         row.issueDate, row.dueDate, row.invoiceNo, row.soRef, `"${row.customer}"`, row.industry, row.creditTerm, row.risk, row.amount, row.paid, row.balance, row.status, row.isBadDebt
-      ].join(','))
+      ].join(',')) || [])
     ].join('\n');
 
     const blob = new Blob(['\uFEFF' + csvRows], { type: 'text/csv;charset=utf-8;' });
@@ -231,28 +231,28 @@ export default function AccountsReceivable() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 no-print animate-in fade-in duration-500">
         <KpiCard 
           title="Total Receivable"
-          value={`฿${(invoices.reduce((s, i) => s + i.balance, 0))?.toLocaleString()}`}
+          value={`฿${(invoices?.reduce((s, i) => s + i.balance, 0))?.toLocaleString()}`}
           icon={TrendingUp}
           color="#111f42"
           subValue="Current outstanding AR"
         />
         <KpiCard 
           title="Total Overdue"
-          value={`฿${(invoices.reduce((s, i) => isOverdue(i) ? s + i.balance : s, 0))?.toLocaleString()}`}
+          value={`฿${(invoices?.reduce((s, i) => isOverdue(i) ? s + i.balance : s, 0))?.toLocaleString()}`}
           icon={AlertCircle}
           color="#ce5a43"
           subValue="Past due invoice amount"
         />
         <KpiCard 
           title="Bad Debt Reserve"
-          value={`฿${(invoices.reduce((s, i) => i.isBadDebt ? s + i.balance : s, 0))?.toLocaleString()}`}
+          value={`฿${(invoices?.reduce((s, i) => i.isBadDebt ? s + i.balance : s, 0))?.toLocaleString()}`}
           icon={AlertCircle}
           color="#933b5b"
           subValue="High risk/uncollectible"
         />
         <KpiCard 
           title="Collection Rate"
-          value={`${((invoices.reduce((s,i)=>s+i.paid,0) / (invoices.reduce((s,i)=>s+i.amount,0)||1)) * 100).toFixed(1)}%`}
+          value={`${((invoices?.reduce((s,i)=>s+i.paid,0) / (invoices?.reduce((s,i)=>s+i.amount,0)||1)) * 100).toFixed(1)}%`}
           icon={CheckCircle}
           color="#10b981"
           subValue="Cash inflow efficiency"

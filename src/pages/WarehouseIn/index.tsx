@@ -186,30 +186,30 @@ export default function WarehouseInApp() {
     // --- Logic & Filtering ---
     const filteredLogs = useMemo(() => {
         let res = historyLogs;
-        if (activeWhTab !== 'All') res = res.filter(l => l.warehouseName === activeWhTab);
+        if (activeWhTab !== 'All') res = res?.filter(l => l.warehouseName === activeWhTab);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(l => String(l.transId).toLowerCase().includes(q) || String(l.sku).toLowerCase().includes(q) || String(l.itemName).toLowerCase().includes(q));
+            res = res?.filter(l => String(l.transId).toLowerCase().includes(q) || String(l.sku).toLowerCase().includes(q) || String(l.itemName).toLowerCase().includes(q));
         }
         return res;
     }, [historyLogs, activeWhTab, searchQuery]);
 
     const filteredJOs = useMemo(() => {
         let res = jobOrders;
-        if (statusFilter !== 'All') res = res.filter(j => j.status === statusFilter);
+        if (statusFilter !== 'All') res = res?.filter(j => j.status === statusFilter);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(j => String(j.joNo).toLowerCase().includes(q) || String(j.productName).toLowerCase().includes(q));
+            res = res?.filter(j => String(j.joNo).toLowerCase().includes(q) || String(j.productName).toLowerCase().includes(q));
         }
         return res;
     }, [jobOrders, statusFilter, searchQuery]);
 
     const filteredPOs = useMemo(() => {
         let res = purchaseOrders;
-        if (statusFilter !== 'All') res = res.filter(p => p.status === statusFilter);
+        if (statusFilter !== 'All') res = res?.filter(p => p.status === statusFilter);
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            res = res.filter(p => String(p.poNo).toLowerCase().includes(q) || String(p.itemName).toLowerCase().includes(q));
+            res = res?.filter(p => String(p.poNo).toLowerCase().includes(q) || String(p.itemName).toLowerCase().includes(q));
         }
         return res;
     }, [purchaseOrders, statusFilter, searchQuery]);
@@ -224,9 +224,9 @@ export default function WarehouseInApp() {
     const stats = useMemo(() => {
         const today = new Date().toISOString().slice(0, 10);
         return {
-            todayIn: historyLogs.filter(l => String(l.date).includes(today)).reduce((acc, l) => acc + (Number(l.qty) || 0), 0),
-            pendingJobs: jobOrders.filter(j => j.status === 'In Progress' || j.status === 'Not Started').length,
-            pendingPOs: purchaseOrders.filter(p => p.status === 'In Progress' || p.status === 'Not Started').length,
+            todayIn: historyLogs?.filter(l => String(l.date).includes(today))?.reduce((acc, l) => acc + (Number(l.qty) || 0), 0),
+            pendingJobs: jobOrders?.filter(j => j.status === 'In Progress' || j.status === 'Not Started').length,
+            pendingPOs: purchaseOrders?.filter(p => p.status === 'In Progress' || p.status === 'Not Started').length,
             completed: historyLogs.length
         };
     }, [historyLogs, jobOrders, purchaseOrders]);
@@ -239,7 +239,7 @@ export default function WarehouseInApp() {
             showToast('Warning', 'กรุณาระบุช่วงวันที่ให้ครบถ้วน', 'warning');
             return;
         }
-        const filtered = historyLogs.filter(log => {
+        const filtered = historyLogs?.filter(log => {
             const logDate = String(log.date).split(' ')[0];
             return logDate >= reportDateRange.start && logDate <= reportDateRange.end;
         });

@@ -15,7 +15,7 @@ export default function AnalysisCharts({ inventoryItems }: { inventoryItems: any
 
                 if (statusChartRef.current) {
                     const counts: any = {};
-                    inventoryItems.forEach(i => counts[i.status] = (counts[i.status] || 0) + 1);
+                    (inventoryItems || []).forEach(i => counts[i.status] = (counts[i.status] || 0) + 1);
                     chartInstances.current.status = new Chart(statusChartRef.current, {
                         type: 'doughnut',
                         data: {
@@ -31,7 +31,7 @@ export default function AnalysisCharts({ inventoryItems }: { inventoryItems: any
                 }
 
                 if (lowStockChartRef.current) {
-                    const lowItems = inventoryItems.filter(i => ['Low Stock', 'Critical', 'Out of Stock'].includes(i.status)).slice(0, 5);
+                    const lowItems = inventoryItems?.filter(i => ['Low Stock', 'Critical', 'Out of Stock'].includes(i.status)).slice(0, 5);
                     chartInstances.current.lowStock = new Chart(lowStockChartRef.current, {
                         type: 'bar',
                         data: {

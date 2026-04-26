@@ -1,0 +1,504 @@
+src/pages/InventoryPlanning/components/InventoryListTable.tsx:84:  return <DataTable data={data} columns={columns} searchPlaceholder="Search ID or Name..." fileName="Inventory_Planning" />;
+src/pages/InventoryPlanning/InventoryTable.tsx:44:                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search ID or Name..." className="input-primary pl-9 pr-4 py-2 text-[11px] outline-none focus:border-[#111f42] font-bold h-[40px] w-full" />
+src/pages/InventoryPlanning/InventoryTable.tsx:121:                        {[...Array(totalPages)]?.map((_, i) => (
+src/pages/InventoryPlanning/index.tsx:61:                return { ...item, onhand, booking, available, planIn, planOut, estQty, minPoint, status };
+src/pages/InventoryPlanning/index.tsx:221:                    <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[9px] animate-pulse font-mono">Syncing Planning Data...</p>
+src/pages/ProductionTracking/components/JobOrderModal.tsx:67:                onChange={(e) => setFormData({ ...formData, joNo: e.target.value })}
+src/pages/ProductionTracking/components/JobOrderModal.tsx:79:                onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+src/pages/ProductionTracking/components/JobOrderModal.tsx:94:              onChange={(e) => setFormData({ ...formData, productName: e.target.value })}
+src/pages/ProductionTracking/components/JobOrderModal.tsx:109:                onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
+src/pages/ProductionTracking/components/JobOrderModal.tsx:121:                onChange={(e) => setFormData({ ...formData, qty: Number(e.target.value) })}
+src/pages/ProductionTracking/components/JobOrderModal.tsx:132:                onChange={(e) => setFormData({ ...formData, priority: e.target.value as any })}
+src/pages/ProductionTracking/components/JobOrderModal.tsx:150:                onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
+src/pages/ProductionTracking/components/JobOrderModal.tsx:160:                onChange={(e) => setFormData({ ...formData, currentStage: e.target.value as ProductionStage })}
+src/pages/ProductionTracking/index.tsx:60:      ...jo,
+src/pages/ProductionTracking/index.tsx:179:        await addJO({ ...data, status: data.status || 'Not Started', currentStage: data.currentStage || 'Pending' });
+src/pages/ProductionTracking/index.tsx:275:              placeholder="Search by JO#, Product, or SKU..." 
+src/pages/ProductionTracking/index.tsx:324:            <p className="font-black text-[#111f42] uppercase tracking-[0.4em] text-[10px] animate-pulse font-mono">Synchronizing Work Orders...</p>
+src/pages/WarehouseIn/components/InboundToolbar.tsx:55:            placeholder="Search SKU / Item / Ref..." 
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:38:                                            <input type="number" value={activeTransaction.qty} onChange={e=>setActiveTransaction({...activeTransaction, qty: e.target.value})} className="input-primary font-black font-mono text-[#111f42] h-10" />
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:42:                                            <select value={activeTransaction.warehouseName} onChange={e=>setActiveTransaction({...activeTransaction, warehouseName: e.target.value})} className="input-primary font-bold h-10">
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:48:                                            <input type="text" value={activeTransaction.location} onChange={e=>setActiveTransaction({...activeTransaction, location: e.target.value})} className="input-primary font-mono h-10" />
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:52:                                            <input type="text" value={activeTransaction.lotNo} onChange={e=>setActiveTransaction({...activeTransaction, lotNo: e.target.value})} className="input-primary font-mono h-10" />
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:56:                                            <input type="date" value={activeTransaction.mfgDate} onChange={e=>setActiveTransaction({...activeTransaction, mfgDate: e.target.value})} className="input-primary font-mono h-10" />
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:60:                                            <input type="date" value={activeTransaction.expDate || ''} onChange={e=>setActiveTransaction({...activeTransaction, expDate: e.target.value})} className="input-primary font-mono h-10" />
+src/pages/WarehouseIn/components/TransactionDetailModal.tsx:64:                                            <input type="text" value={activeTransaction.remark || ''} onChange={e=>setActiveTransaction({...activeTransaction, remark: e.target.value})} className="input-primary font-medium" />
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:29:                                            <input type="datetime-local" value={form.date} onChange={e => setForm({...form, date: e.target.value})} className="input-primary w-full text-[12px] font-mono font-black border-2 focus:border-[#ab8a3b] rounded-none" />
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:33:                                            <select value={form.receiveType} onChange={e => setForm({...form, receiveType: e.target.value})} className="input-primary w-full cursor-pointer font-black border-2 border-slate-200 bg-slate-50 uppercase tracking-widest text-[11px] rounded-none focus:border-[#ab8a3b]" disabled={modalType !== 'MANUAL'}>
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:55:                                                    <input type="number" value={form.qty} onChange={e => setForm({...form, qty: e.target.value})} className="input-primary text-right font-black text-3xl border-2 border-[#ab8a3b]/50 h-12 font-mono rounded-none focus:border-[#ab8a3b] text-[#111f42]" />
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:59:                                                    <input type="text" value={form.lotNo} onChange={e => setForm({...form, lotNo: e.target.value})} className="input-primary h-12 font-mono font-black border-2 border-slate-200 rounded-none focus:border-[#ab8a3b] uppercase tracking-widest text-lg" placeholder="LOT-ID" />
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:65:                                                    <select value={form.warehouseName} onChange={e => setForm({...form, warehouseName: e.target.value})} className="input-primary font-black border-2 border-slate-200 rounded-none focus:border-[#ab8a3b] h-10 uppercase tracking-widest">
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:71:                                                    <input type="text" value={form.location} onChange={e => setForm({...form, location: e.target.value})} className="input-primary font-mono font-black border-2 border-slate-200 rounded-none focus:border-[#ab8a3b] h-10 uppercase tracking-widest text-center" placeholder="LOC" />
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:75:                                                    <input type="date" value={form.mfgDate} onChange={e => setForm({...form, mfgDate: e.target.value})} className="input-primary font-mono font-black border-2 border-slate-200 rounded-none focus:border-[#ab8a3b] h-10" />
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:80:                                                <input type="text" value={form.remark} onChange={e => setForm({...form, remark: e.target.value})} className="input-primary font-black border-2 border-slate-200 rounded-none focus:border-[#ab8a3b] h-10 placeholder:opacity-30" placeholder="Optional logistics notes..." />
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:87:                                                <button onClick={() => setForm({...form, manualItems: [...form.manualItems, { sku: '', itemName: '', qty: 0, warehouseName: 'FG', location: '', lotNo: '', mfgDate: new Date().toISOString().slice(0, 10), remark: '', expDate: '' }]})} className="text-[10px] bg-[#111f42] text-[#ab8a3b] px-6 py-2.5 rounded-none font-black uppercase tracking-[0.2em] shadow-xl hover:bg-[#0a1229] transition-all flex items-center gap-2 border-b-2 border-[#ab8a3b]">Add New Line Item</button>
+src/pages/WarehouseIn/components/ReceiveFormModal.tsx:117:                                                        <button onClick={() => {const n = [...form.manualItems]; n.splice(idx,1); setForm({...form, manualItems:n})}} className="p-2 text-slate-300 hover:text-white hover:bg-rose-500 rounded-none transition-all shadow-sm border border-transparent hover:border-rose-600"><Trash2 size={16}/></button>
+src/pages/WarehouseIn/components/PendingPOTable.tsx:97:  return <DataTable data={data} columns={columns} searchPlaceholder="Search Pending PO..." fileName="Pending_PO" />;
+src/pages/WarehouseIn/components/ReportPreviewModal.tsx:75:                                                {[...Array(Math.max(0, 10 - reportData.length))]?.map((_, i) => (
+src/pages/WarehouseIn/components/InboundLogTable.tsx:94:  return <DataTable data={data} columns={columns} searchPlaceholder="Search Inbound Logs..." fileName="Inbound_Logs" />;
+src/pages/WarehouseIn/components/PendingJOTable.tsx:97:  return <DataTable data={data} columns={columns} searchPlaceholder="Search Pending JO..." fileName="Pending_JO" />;
+src/pages/WarehouseIn/components/PrintTagModal.tsx:71:                                                    {[...Array(10)]?.map((_, i) => (
+src/pages/WarehouseIn/components/PrintTagModal.tsx:134:                                                        {[...Array(10)]?.map((_, i) => (
+src/pages/WarehouseIn/components/PrintDocModal.tsx:98:                                                {[...Array(6)]?.map((_, i) => (
+src/pages/WarehouseIn/index.tsx:294:        const newItems = [...form.manualItems];
+src/pages/WarehouseIn/index.tsx:296:        setForm({ ...form, manualItems: newItems });
+src/pages/WarehouseIn/index.tsx:349:        setActiveTransaction({...trx});
+src/pages/WarehouseIn/index.tsx:419:        setViewOrderData({ ...item, type });
+src/pages/WarehouseIn/index.tsx:428:                    await updateJO(item.id, { ...item, status: 'Completed' });
+src/pages/WarehouseIn/index.tsx:430:                    await updatePO(item.id, { ...item, status: 'Completed' });
+src/pages/WarehouseIn/index.tsx:586:                                    <input type="date" value={reportDateRange.start} onChange={(e) => setReportDateRange({...reportDateRange, start: e.target.value})} className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-[11px] font-black text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 uppercase" />
+src/pages/WarehouseIn/index.tsx:590:                                    <input type="date" value={reportDateRange.end} onChange={(e) => setReportDateRange({...reportDateRange, end: e.target.value})} className="bg-white border border-slate-200 rounded-xl px-3 py-2 text-[11px] font-black text-[#111f42] outline-none focus:border-[#ab8a3b] transition-all h-9 uppercase" />
+src/pages/WarehouseIn/index.tsx:726:                        <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[10px] animate-pulse font-mono">Syncing Ledger...</p>
+src/pages/WarehouseIn/index.tsx:731:            <NotificationModal {...notif} onClose={() => setNotif({ ...notif, isOpen: false })} />
+src/pages/InspectionStandards/components/ActionModal.tsx:135:                                                placeholder="ระบุรายละเอียด..."
+src/pages/InspectionStandards/components/ProductListView.tsx:143:                                placeholder="Search product..." 
+src/pages/InspectionStandards/components/ProductListView.tsx:202:                           searchPlaceholder="Search Product Code, Name..."
+src/pages/InspectionStandards/index.tsx:128:            setStandardForm({ ...std }); 
+src/pages/InspectionStandards/index.tsx:151:            setProductForm({ ...product }); 
+src/pages/InspectionStandards/index.tsx:170:        if (item) setProductForm(prev => ({ ...prev, code: item.itemCode, name: item.itemName, category: item.category }));
+src/pages/InspectionStandards/index.tsx:178:                if (modalMode === 'product') setProductForm(prev => ({ ...prev, image: reader.result as string }));
+src/pages/InspectionStandards/index.tsx:179:                else setStandardForm(prev => ({ ...prev, image: reader.result as string }));
+src/pages/InspectionStandards/index.tsx:190:                const updatedProducts = products?.map(p => p.id === selectedProduct?.id ? { ...p, dimensionImage: reader.result as string } : p);
+src/pages/InspectionStandards/index.tsx:193:                    setSelectedProduct({ ...selectedProduct, dimensionImage: reader.result as string });
+src/pages/InspectionStandards/index.tsx:209:                setProducts(prev => [{...productForm, id: Date.now()}, ...prev]);
+src/pages/InspectionStandards/index.tsx:216:                setStandards(prev => [{...standardForm, id: Date.now()}, ...prev]);
+src/pages/InspectionStandards/index.tsx:241:            const newProduct = { ...product, id: newId, name: product.name + ' (Copy)', code: product.code + '-CP', status: 'In Development' };
+src/pages/InspectionStandards/index.tsx:242:            const newStandards = standards?.filter(s => s.productId === product.id)?.map(s => ({ ...s, id: Date.now() + Math.random(), productId: newId }));
+src/pages/InspectionStandards/index.tsx:243:            setProducts([newProduct, ...products]);
+src/pages/InspectionStandards/index.tsx:244:            setStandards([...standards, ...newStandards]);
+src/pages/InspectionStandards/index.tsx:250:            setCategorySteps(prev => ({ ...prev, [configCategory]: [...prev[configCategory], newProcessName] }));
+src/pages/InspectionStandards/index.tsx:257:            setCategorySteps(prev => ({ ...prev, [configCategory]: prev[configCategory]?.filter(p => p !== proc) }));
+src/pages/InspectionStandards/index.tsx:372:                    onProductFormChange={(f, v) => setProductForm(prev => ({ ...prev, [f]: v }))}
+src/pages/InspectionStandards/index.tsx:373:                    onStandardFormChange={(f, v) => setStandardForm(prev => ({ ...prev, [f]: v }))}
+src/pages/InspectionStandards/index.tsx:416:                                                                    placeholder="Step name..." 
+src/pages/DataEntry/index.tsx:62:      ...prev,
+src/pages/DataEntry/index.tsx:72:    setFormData(prev => ({ ...prev, [name]: value }));
+src/pages/DataEntry/index.tsx:120:          setFormData(prev => ({ ...prev, docNo: '', entity: '', amount: '' })); // Clear some fields
+src/pages/DataEntry/index.tsx:301:                        type="text" name="entity" required placeholder="Type name..."
+src/pages/DataEntry/index.tsx:422:                      {isSubmitting ? 'Processing...' : 'Save & Broadcast Data'}
+src/pages/Catalogue/components/CatalogueTable.tsx:83:        searchPlaceholder="Search Product Name, SKU, Category..."
+src/pages/Catalogue/components/CatalogueActionModal.tsx:31:        setForm({ ...form, image: reader.result });
+src/pages/Catalogue/components/CatalogueActionModal.tsx:42:        ...form,
+src/pages/Catalogue/components/CatalogueActionModal.tsx:49:      setForm({ ...form, sku: '', name: '' });
+src/pages/Catalogue/components/CatalogueActionModal.tsx:126:                              <input type="number" value={String(form.price).replace(/,/g, '')} onChange={e => setForm({ ...form, price: e.target.value })} className="input-primary text-right font-mono font-bold text-[#E3624A]" placeholder="0" />
+src/pages/Catalogue/components/CatalogueActionModal.tsx:130:                              <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="input-primary bg-white cursor-pointer font-bold">
+src/pages/Catalogue/components/CatalogueActionModal.tsx:141:                            <textarea className="input-area h-32 resize-none" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Detailed product description..."></textarea>
+src/pages/Catalogue/components/CatalogueActionModal.tsx:145:                            <textarea className="input-area h-24 resize-none" value={form.care_instructions} onChange={e => setForm({ ...form, care_instructions: e.target.value })} placeholder="How to clean and maintain..."></textarea>
+src/pages/Catalogue/components/CatalogueActionModal.tsx:153:                            <input value={form.dimensions} onChange={e => setForm({ ...form, dimensions: e.target.value })} className="input-primary font-mono text-[12px]" placeholder="W x D x H cm" />
+src/pages/Catalogue/components/CatalogueActionModal.tsx:157:                            <input value={form.spec_weight} onChange={e => setForm({ ...form, spec_weight: e.target.value })} className="input-primary font-mono text-[12px]" placeholder="e.g. 45 kg" />
+src/pages/Catalogue/components/CatalogueActionModal.tsx:161:                            <input value={form.materialDetail} onChange={e => setForm({ ...form, materialDetail: e.target.value })} className="input-primary" placeholder="Specific materials used..." />
+src/pages/Catalogue/index.tsx:70:                description: 'ปรับความสูงได้หลายระดับ...', 
+src/pages/Catalogue/index.tsx:106:            setForm({ ...product }); 
+src/pages/Catalogue/index.tsx:128:            const newProduct = { ...form, id: Date.now() };
+src/pages/Catalogue/index.tsx:129:            setProducts(prev => [...prev, newProduct]);
+src/pages/Catalogue/index.tsx:204:                                <input type="text" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }} placeholder="Search Catalogue..." className="input-primary pl-9 pr-4 py-2.5 text-[12px] bg-white transition-colors border-slate-200" />
+src/pages/RecipeBOM/components/BomListTable.tsx:79:            searchPlaceholder="Search Products..."
+src/pages/RecipeBOM/index.tsx:88:            setBomItems(JSON.parse(JSON.stringify(product.items || []))?.map((i: any) => ({...i})));
+src/pages/RecipeBOM/index.tsx:101:            setSelectedProduct({ ...selectedProduct, id: item.itemCode, name: item.itemName, category: item.category, stdPrice: item.stdPrice || 0 });
+src/pages/RecipeBOM/index.tsx:108:            setNewItem({ ...newItem, code: mat.code, name: mat.name, type: mat.type, unit: mat.unit, cost: mat.cost });
+src/pages/RecipeBOM/index.tsx:116:        setBomItems([...bomItems, { ...newItem }]);
+src/pages/RecipeBOM/index.tsx:121:        const newItems = [...bomItems];
+src/pages/RecipeBOM/index.tsx:128:        const updatedProducts = [...products];
+src/pages/RecipeBOM/index.tsx:130:        const dataToSave = { ...selectedProduct, items: bomItems, cost: totalBomCost };
+src/pages/RecipeBOM/index.tsx:223:                                    <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search Product..." className="input-primary pl-9 pr-4 py-2 text-[12px]" />
+src/pages/RecipeBOM/index.tsx:288:                                                                <input type="number" disabled={!isEditing} value={selectedProduct.stdPrice || 0} onChange={e=>setSelectedProduct({...selectedProduct, stdPrice: Number(e.target.value)})} className="input-primary py-1.5 font-black border-[#ab8a3b]/30 h-9" />
+src/pages/RecipeBOM/index.tsx:334:                                                                                            const ni = [...bomItems];
+src/pages/RecipeBOM/index.tsx:335:                                                                                            ni[idx] = { ...ni[idx], qty: Number(e.target.value) || 0 };
+src/pages/RecipeBOM/index.tsx:346:                                                                                            const ni = [...bomItems];
+src/pages/RecipeBOM/index.tsx:347:                                                                                            ni[idx] = { ...ni[idx], cost: Number(e.target.value) || 0 };
+src/pages/RecipeBOM/index.tsx:357:                                                                                            const ni = [...bomItems];
+src/pages/RecipeBOM/index.tsx:358:                                                                                            ni[idx] = { ...ni[idx], scrap: Number(e.target.value) || 0 };
+src/pages/RecipeBOM/index.tsx:388:                                                                            <td className="minimal-td"><input type="number" value={newItem.qty} onChange={e=>setNewItem({...newItem, qty: Number(e.target.value)})} className="input-primary text-right font-black h-10 border-[#ab8a3b]/40" placeholder="0" /></td>
+src/pages/RecipeBOM/index.tsx:390:                                                                            <td className="minimal-td"><input type="number" value={newItem.cost} onChange={e=>setNewItem({...newItem, cost: Number(e.target.value)})} className="input-primary text-right font-bold text-emerald-600 h-10 border-[#ab8a3b]/40" placeholder="0.00" /></td>
+src/pages/RecipeBOM/index.tsx:391:                                                                            <td className="minimal-td"><input type="number" value={newItem.scrap} onChange={e=>setNewItem({...newItem, scrap: Number(e.target.value)})} className="input-primary text-center font-bold text-amber-500 h-10 border-[#ab8a3b]/40" placeholder="0" /></td>
+src/pages/NcControl/components/NcActionModal.tsx:76:                            onChange={e => setFormData({ ...formData, department: e.target.value })} 
+src/pages/NcControl/components/NcActionModal.tsx:85:                            onChange={e => setFormData({ ...formData, item: e.target.value })} 
+src/pages/NcControl/components/NcActionModal.tsx:94:                            onChange={e => setFormData({ ...formData, severity: e.target.value })} 
+src/pages/NcControl/components/NcActionModal.tsx:108:                            onChange={e => setFormData({ ...formData, problem: e.target.value })} 
+src/pages/NcControl/components/NcActionModal.tsx:126:                            onChange={e => setFormData({ ...formData, response: { ...formData.response, rootCause: e.target.value } })} 
+src/pages/NcControl/components/NcActionModal.tsx:137:                              onChange={e => setFormData({ ...formData, response: { ...formData.response, corrective: e.target.value } })} 
+src/pages/NcControl/components/NcActionModal.tsx:147:                              onChange={e => setFormData({ ...formData, response: { ...formData.response, preventive: e.target.value } })} 
+src/pages/NcControl/components/NcActionModal.tsx:168:                              onChange={e => setFormData({ ...formData, followUp: { ...formData.followUp, status: e.target.value } })} 
+src/pages/NcControl/components/NcActionModal.tsx:182:                              onChange={e => setFormData({ ...formData, followUp: { ...formData.followUp, checker: e.target.value } })} 
+src/pages/NcControl/components/NcActionModal.tsx:192:                            onChange={e => setFormData({ ...formData, followUp: { ...formData.followUp, results: e.target.value } })} 
+src/pages/NcControl/components/NcKanbanBoard.tsx:49:                    onClick={() => setStackExpanded(prev => ({ ...prev, [status]: false }))} 
+src/pages/NcControl/components/NcKanbanBoard.tsx:67:                        if (isStacked) setStackExpanded(prev => ({ ...prev, [status]: true })); 
+src/pages/NcControl/components/NcLogTable.tsx:114:        searchPlaceholder="Search NC Data..."
+src/pages/NcControl/index.tsx:168:      setFormData({ ...data });
+src/pages/NcControl/index.tsx:175:    let finalData = { ...formData };
+src/pages/NcControl/index.tsx:180:    if(modalMode === 'create') setNcData([finalData, ...ncData]);
+src/pages/NcControl/index.tsx:336:                    placeholder="Search NC NO / Department..." 
+src/pages/AccountPayable/index.tsx:95:    setBills(prev => prev?.map(b => b.id === id ? { ...b, status: newStatus } : b));
+src/pages/AccountPayable/index.tsx:99:    setBills(prev => prev?.map(b => b.id === id ? { ...b, isDisputed: !b.isDisputed } : b));
+src/pages/AccountPayable/index.tsx:110:            ...b,
+src/pages/AccountPayable/index.tsx:141:      ...(filteredBills?.map(row => [
+src/pages/AccountPayable/components/BillTable.tsx:55:              placeholder="Search bill or vendor..." 
+src/pages/AccountPayable/components/BillTable.tsx:91:          <div className="p-8 text-center font-bold text-[#7693a6]">Loading data...</div>
+src/pages/AccountPayable/components/PaymentModal.tsx:41:                            value={paymentForm.amount} onChange={(e: any) => setPaymentForm({...paymentForm, amount: e.target.value})} 
+src/pages/AccountPayable/components/PaymentModal.tsx:57:                            value={paymentForm.discountCaptured} onChange={(e: any) => setPaymentForm({...paymentForm, discountCaptured: e.target.value})} 
+src/pages/AccountPayable/components/PaymentModal.tsx:67:                          <input type="date" required value={paymentForm.date} onChange={(e: any) => setPaymentForm({...paymentForm, date: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#496ca8] font-bold text-xs text-[#223149]" />
+src/pages/AccountPayable/components/PaymentModal.tsx:71:                          <select value={paymentForm.method} onChange={(e: any) => setPaymentForm({...paymentForm, method: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#496ca8] font-bold text-xs text-[#223149]">
+src/pages/AccountPayable/components/PaymentModal.tsx:80:                        <input type="text" value={paymentForm.ref} onChange={(e: any) => setPaymentForm({...paymentForm, ref: e.target.value})} placeholder="Slip No. or Note" className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#496ca8] font-bold text-xs text-[#223149]" />
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:90:                  <button onClick={() => setKanbanLimits({...kanbanLimits, pendingPR: 5})} className="flex-1 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-1"><ChevronUp size={12} /> ย่อลง</button>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:93:                  <button onClick={() => setKanbanLimits({...kanbanLimits, pendingPR: (kanbanLimits.pendingPR || 5) + 5})} className="flex-1 bg-white border border-slate-200 text-[#111f42] text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-1"><ChevronDown size={12} /> โหลดเพิ่ม</button>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:130:                  <button onClick={() => setKanbanLimits({...kanbanLimits, 'Pending Approve': 5})} className="flex-1 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-1"><ChevronUp size={12} /> ย่อลง</button>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:133:                  <button onClick={() => setKanbanLimits({...kanbanLimits, 'Pending Approve': (kanbanLimits['Pending Approve'] || 5) + 5})} className="flex-1 bg-white border border-slate-200 text-[#111f42] text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-1"><ChevronDown size={12} /> โหลดเพิ่ม</button>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:169:                  <button onClick={() => setKanbanLimits({...kanbanLimits, 'Approved': 5})} className="flex-1 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-1"><ChevronUp size={12} /> ย่อลง</button>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:172:                  <button onClick={() => setKanbanLimits({...kanbanLimits, 'Approved': (kanbanLimits['Approved'] || 5) + 5})} className="flex-1 bg-white border border-slate-200 text-[#111f42] text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-1"><ChevronDown size={12} /> โหลดเพิ่ม</button>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:206:                  <button onClick={() => setKanbanLimits({...kanbanLimits, 'Sent': 5})} className="flex-1 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-1"><ChevronUp size={12} /> ย่อลง</button>
+src/pages/PurchaseOrder/components/PoKanbanBoard.tsx:209:                  <button onClick={() => setKanbanLimits({...kanbanLimits, 'Sent': (kanbanLimits['Sent'] || 5) + 5})} className="flex-1 bg-white border border-slate-200 text-[#111f42] text-[10px] font-bold px-2 py-2 rounded-full shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-1"><ChevronDown size={12} /> โหลดเพิ่ม</button>
+src/pages/PurchaseOrder/components/PoActionModal.tsx:64:                          <input type="date" disabled={modalMode==='view'} value={poForm.date} onChange={e=>setPoForm({...poForm, date: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] font-mono" />
+src/pages/PurchaseOrder/components/PoActionModal.tsx:68:                          <select disabled={modalMode==='view' || modalMode==='approve'} value={poForm.status} onChange={e=>setPoForm({...poForm, status: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] font-bold cursor-pointer">
+src/pages/PurchaseOrder/components/PoActionModal.tsx:77:                          <input disabled value={poForm.prRef} className="w-full px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 outline-none text-[12px]" placeholder="PR Ref..." />
+src/pages/PurchaseOrder/components/PoActionModal.tsx:86:                            <input disabled={modalMode==='view'} value={poForm.vendor} onChange={e=>setPoForm({...poForm, vendor: e.target.value})} className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] font-bold" placeholder="ระบุชื่อผู้ขาย..." />
+src/pages/PurchaseOrder/components/PoActionModal.tsx:93:                            <select disabled={modalMode==='view'} value={poForm.paymentTerm} onChange={e=>setPoForm({...poForm, paymentTerm: e.target.value})} className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px]">
+src/pages/PurchaseOrder/components/PoActionModal.tsx:105:                            <textarea disabled={modalMode==='view'} rows={2} value={poForm.vendorAddress} onChange={e=>setPoForm({...poForm, vendorAddress: e.target.value})} className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] resize-none" placeholder="ที่อยู่ผู้จำหน่าย..." />
+src/pages/PurchaseOrder/components/PoActionModal.tsx:113:                          <input type="date" disabled={modalMode==='view'} value={poForm.deliveryDate} onChange={e=>setPoForm({...poForm, deliveryDate: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] font-mono text-[#b22026]" />
+src/pages/PurchaseOrder/components/PoActionModal.tsx:117:                          <input disabled={modalMode==='view'} value={poForm.remarks} onChange={e=>setPoForm({...poForm, remarks: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px]" placeholder="ระบุหมายเหตุเพิ่มเติม (ถ้ามี)" />
+src/pages/PurchaseOrder/components/PoActionModal.tsx:156:                                    placeholder="Code..." 
+src/pages/PurchaseOrder/components/PoActionModal.tsx:164:                                    placeholder="ชื่อสินค้า/รายละเอียด..." 
+src/pages/PurchaseOrder/components/PoPrWaitingTable.tsx:88:            {[...Array(pendingTotalPages)]?.map((_, i) => (
+src/pages/PurchaseOrder/components/PoPreviewModal.tsx:113:                            {[...Array(Math.max(0, 6 - selectedItem.items.length))]?.map((_, i) => (
+src/pages/PurchaseOrder/components/PoTable.tsx:96:            {[...Array(totalPages)]?.map((_, i) => (
+src/pages/PurchaseOrder/index.tsx:168:        items: data.items?.map((i: any) => ({ ...i })), history: []
+src/pages/PurchaseOrder/index.tsx:179:       ...prev,
+src/pages/PurchaseOrder/index.tsx:180:       items: [...prev.items, { code: '', name: '', qty: '', price: 0 }]
+src/pages/PurchaseOrder/index.tsx:186:       const newItems = [...prev.items];
+src/pages/PurchaseOrder/index.tsx:190:       return { ...prev, items: newItems, subTotal: sub, vat: vt, grandTotal: sub + vt };
+src/pages/PurchaseOrder/index.tsx:196:       const newItems = [...prev.items];
+src/pages/PurchaseOrder/index.tsx:200:       return { ...prev, items: newItems, subTotal: sub, vat: vt, grandTotal: sub + vt };
+src/pages/PurchaseOrder/index.tsx:210:      const newPO = { ...poForm, history: [{ date: formattedNow, user: 'Admin', action: 'Created PO', note: '' }] };
+src/pages/PurchaseOrder/index.tsx:211:      setPoList([newPO, ...poList]);
+src/pages/PurchaseOrder/index.tsx:216:      const updatedPO = { ...poForm, history: [...(poForm.history || []), { date: formattedNow, user: 'Admin', action: `Updated PO`, note: '' }] };
+src/pages/PurchaseOrder/index.tsx:229:        return { ...p, status, history: [...(p.history || []), { date: formattedNow, user: 'Admin', action: `Status changed to ${status}`, note: '' }] };
+src/pages/PurchaseNC/components/NcKanbanBoard.tsx:52:                    onClick={() => setStackExpanded(prev => ({ ...prev, [status]: false }))} 
+src/pages/PurchaseNC/components/NcKanbanBoard.tsx:70:                        if (isStacked) setStackExpanded(prev => ({ ...prev, [status]: true })); 
+src/pages/PurchaseNC/components/NcActionModal.tsx:76:                            onChange={e => setFormData({ ...formData, vendor: e.target.value })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:86:                            onChange={e => setFormData({ ...formData, email: e.target.value })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:95:                            onChange={e => setFormData({ ...formData, item: e.target.value })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:104:                            onChange={e => setFormData({ ...formData, severity: e.target.value })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:118:                            onChange={e => setFormData({ ...formData, problem: e.target.value })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:136:                            onChange={e => setFormData({ ...formData, vendorResponse: { ...formData.vendorResponse, rootCause: e.target.value } })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:147:                              onChange={e => setFormData({ ...formData, vendorResponse: { ...formData.vendorResponse, corrective: e.target.value } })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:157:                              onChange={e => setFormData({ ...formData, vendorResponse: { ...formData.vendorResponse, preventive: e.target.value } })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:178:                              onChange={e => setFormData({ ...formData, followUp: { ...formData.followUp, status: e.target.value } })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:192:                              onChange={e => setFormData({ ...formData, followUp: { ...formData.followUp, checker: e.target.value } })} 
+src/pages/PurchaseNC/components/NcActionModal.tsx:202:                            onChange={e => setFormData({ ...formData, followUp: { ...formData.followUp, results: e.target.value } })} 
+src/pages/PurchaseNC/index.tsx:178:      setFormData({ ...data });
+src/pages/PurchaseNC/index.tsx:185:    let finalData = { ...formData };
+src/pages/PurchaseNC/index.tsx:190:    if(modalMode === 'create') setScarData([finalData, ...scarData]);
+src/pages/PurchaseNC/index.tsx:350:                    placeholder="Search SCAR NO / Vendor..." 
+src/pages/PrAnalysis/components/ChartsSection.tsx:54:          ...commonOptions,
+src/pages/PrAnalysis/components/ChartsSection.tsx:56:            ...commonOptions.plugins,
+src/pages/PrAnalysis/components/ChartsSection.tsx:78:          ...commonOptions,
+src/pages/PrAnalysis/components/ChartsSection.tsx:79:          plugins: { ...commonOptions.plugins, legend: { display: false } },
+src/pages/PrAnalysis/components/ChartsSection.tsx:117:          ...commonOptions,
+src/pages/PrAnalysis/components/ChartsSection.tsx:118:          plugins: { ...commonOptions.plugins, legend: { display: false } },
+src/pages/GeneralLedger/components/DataTable.tsx:41:              placeholder="Search Account, JV No, or Desc..." 
+src/pages/BankReconciliation/index.tsx:39:        return { ...rec, diff: Math.abs(bank - book) };
+src/pages/BankReconciliation/components/DataTable.tsx:47:            <input type="text" placeholder="Search Ref or Desc..." className="w-full bg-transparent border-none outline-none ml-2 text-[#223149] font-medium placeholder-[#7693a6] text-[12px]" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+src/pages/Login.tsx:244:                  <span className="font-mono font-black text-[#111f42]">U001 / ...123</span>
+src/pages/VatManagement/components/VatTransactionTable.tsx:31:        <div className="p-8 text-center font-medium text-slate-500">Loading data...</div>
+src/pages/VatManagement/components/DataTable.tsx:42:              type="text" placeholder="Search Document or Entity..." 
+src/pages/VatManagement/components/VatEntryModal.tsx:41:                        <input type="date" required value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-slate-400 font-medium" />
+src/pages/VatManagement/components/VatEntryModal.tsx:45:                        <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-slate-400 font-medium">
+src/pages/VatManagement/components/VatEntryModal.tsx:52:                        <input type="text" required value={formData.invoice} onChange={e => setFormData({...formData, invoice: e.target.value})} placeholder="INV-..." className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-slate-400 font-medium" />
+src/pages/VatManagement/components/VatEntryModal.tsx:56:                        <input type="text" required value={formData.customer} onChange={e => setFormData({...formData, customer: e.target.value})} placeholder="Company Name" className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-slate-400 font-medium" />
+src/pages/VatManagement/components/VatEntryModal.tsx:60:                        <input type="number" step="0.01" required value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} placeholder="0.00" className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-slate-400 font-medium" />
+src/pages/VatManagement/components/VatTrendChart.tsx:18:  const maxTrendVat = Math.max(...(data?.map(d => d.netVat) || [0])) * 1.2 || 4500;
+src/pages/VatManagement/index.tsx:64:        return { ...rec, baseAmount: base, vatAmount: vat, totalAmount: total };
+src/pages/FabricDesign/components/FabricTable.tsx:105:      searchPlaceholder="Search Fabrics..."
+src/pages/FabricDesign/components/FabricActionModal.tsx:37:      reader.onloadend = () => setForm({ ...form, image: reader.result });
+src/pages/FabricDesign/components/FabricActionModal.tsx:43:    const newColors = [...form.colors];
+src/pages/FabricDesign/components/FabricActionModal.tsx:45:    setForm({ ...form, colors: newColors });
+src/pages/FabricDesign/components/FabricActionModal.tsx:48:  const addColor = () => setForm({ ...form, colors: [...form.colors, '#000000'] });
+src/pages/FabricDesign/components/FabricActionModal.tsx:49:  const removeColor = (idx: number) => setForm({ ...form, colors: form.colors?.filter((_: any, i: number) => i !== idx) });
+src/pages/FabricDesign/components/FabricActionModal.tsx:94:                            placeholder="New category name..." 
+src/pages/FabricDesign/components/FabricActionModal.tsx:163:                                <input value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="input-primary w-full font-bold text-[13px]" placeholder="Enter pattern name..." />
+src/pages/FabricDesign/components/FabricActionModal.tsx:167:                                <select value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="input-primary w-full cursor-pointer font-bold text-[12px] bg-white">
+src/pages/FabricDesign/components/FabricActionModal.tsx:173:                                <input value={form.composition} onChange={e => setForm({...form, composition: e.target.value})} className="input-primary w-full text-[12px]" placeholder="e.g. 100% Cotton" />
+src/pages/FabricDesign/components/FabricActionModal.tsx:177:                                <input value={form.application} onChange={e => setForm({...form, application: e.target.value})} className="input-primary w-full text-[12px] font-bold text-[#ab8a3b]" placeholder="e.g. Ironing Board Cover, Sofa..." />
+src/pages/FabricDesign/components/FabricActionModal.tsx:181:                                <select value={form.status} onChange={e => setForm({...form, status: e.target.value})} className="input-primary w-full cursor-pointer text-[12px] font-bold bg-white">
+src/pages/FabricDesign/components/FabricActionModal.tsx:195:                              <textarea className="input-primary h-32 resize-none" value={form.description || ''} onChange={e => setForm({...form, description: e.target.value})} placeholder="Detailed product description..."></textarea>
+src/pages/FabricDesign/components/FabricActionModal.tsx:199:                              <textarea className="input-primary h-24 resize-none" value={form.care_instructions || ''} onChange={e => setForm({...form, care_instructions: e.target.value})} placeholder="How to clean and maintain..."></textarea>
+src/pages/FabricDesign/components/FabricActionModal.tsx:208:                              <input value={form.width} onChange={e => setForm({...form, width: e.target.value})} className="input-primary font-mono text-[12px]" placeholder="e.g. 58&quot;" />
+src/pages/FabricDesign/components/FabricActionModal.tsx:212:                              <input value={form.weight} onChange={e => setForm({...form, weight: e.target.value})} className="input-primary font-mono text-[12px]" placeholder="e.g. 250 gsm" />
+src/pages/FabricDesign/components/FabricActionModal.tsx:216:                              <input value={form.tags} onChange={e => setForm({...form, tags: e.target.value})} className="input-primary text-[12px]" placeholder="Spring, Floral, 2026..." />
+src/pages/FabricDesign/index.tsx:34:    // ... Mock data population ...
+src/pages/FabricDesign/index.tsx:65:            setForm({ ...pattern });
+src/pages/FabricDesign/index.tsx:95:        const newPatterns = [...patterns];
+src/pages/FabricDesign/index.tsx:102:                    ...form,
+src/pages/FabricDesign/index.tsx:103:                    history: [...(form.history || []), { date: timestamp, action: 'Updated Design', user: 'Admin' }]
+src/pages/FabricDesign/index.tsx:110:                ...form, 
+src/pages/FabricDesign/index.tsx:130:            setFabricCategories(prev => [...prev, newCategoryInput]);
+src/pages/FabricDesign/index.tsx:217:                                <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search Design..." className="input-primary pl-9 pr-4 py-2.5 text-xs bg-white transition-colors" />
+src/pages/Supplier/components/SupplierActionModal.tsx:100:                              <input disabled value={form.supplierID || ''} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none font-bold bg-slate-50 text-slate-500 text-[13px] font-mono" placeholder="Auto Generated..." />
+src/pages/Supplier/components/SupplierActionModal.tsx:104:                              <input disabled={modalMode==='view'} value={form.supplierName || ''} onChange={e=>setForm({...form, supplierName: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none font-bold bg-white disabled:bg-slate-50/50 disabled:text-slate-500 text-[13px]" placeholder="ชื่อบริษัท..." />
+src/pages/Supplier/components/SupplierActionModal.tsx:111:                                  ...form, 
+src/pages/Supplier/components/SupplierActionModal.tsx:122:                              <select disabled={modalMode==='view'} value={form.subCategory || ''} onChange={e=>setForm({...form, subCategory: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] bg-white cursor-pointer font-bold text-[13px] disabled:bg-slate-50/50 disabled:text-slate-500">
+src/pages/Supplier/components/SupplierActionModal.tsx:128:                              <input disabled={modalMode==='view'} value={form.taxID || ''} onChange={e=>setForm({...form, taxID: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:border-[#ab8a3b] outline-none text-[13px] font-mono disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="0000000000000" />
+src/pages/Supplier/components/SupplierActionModal.tsx:140:                              <input type="number" disabled={modalMode==='view'} value={form.creditTerm || 0} onChange={e=>setForm({...form, creditTerm: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:border-[#ab8a3b] outline-none text-[13px] font-mono font-bold disabled:bg-slate-50/50 disabled:text-slate-500" />
+src/pages/Supplier/components/SupplierActionModal.tsx:144:                              <select disabled={modalMode==='view'} value={form.status || 'Prospect'} onChange={e=>setForm({...form, status: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg bg-white cursor-pointer focus:border-[#ab8a3b] outline-none text-[13px] font-bold disabled:bg-slate-50/50 disabled:text-slate-500">
+src/pages/Supplier/components/SupplierActionModal.tsx:158:                              <textarea disabled={modalMode==='view'} rows={4} value={form.vendorAddress || ''} onChange={e=>setForm({...form, vendorAddress: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] resize-none bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="ที่อยู่บริษัท..." />
+src/pages/Supplier/components/SupplierActionModal.tsx:170:                              <input disabled={modalMode==='view'} value={form.contactName || ''} onChange={e=>setForm({...form, contactName: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] font-bold bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="ชื่อผู้ติดต่อ..." />
+src/pages/Supplier/components/SupplierActionModal.tsx:174:                              <input disabled={modalMode==='view'} value={form.phone || ''} onChange={e=>setForm({...form, phone: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] font-mono bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="เบอร์โทร..." />
+src/pages/Supplier/components/SupplierActionModal.tsx:178:                              <input type="email" disabled={modalMode==='view'} value={form.email || ''} onChange={e=>setForm({...form, email: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="อีเมล..." />
+src/pages/Supplier/components/SupplierIdConfigModal.tsx:40:                      <input value={idConfig.prefixes['Supplier']} onChange={e=>setIdConfig({...idConfig, prefixes: {...idConfig.prefixes, 'Supplier': e.target.value.toUpperCase()}})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px]" />
+src/pages/Supplier/components/SupplierIdConfigModal.tsx:44:                      <input value={idConfig.prefixes['Service']} onChange={e=>setIdConfig({...idConfig, prefixes: {...idConfig.prefixes, 'Service': e.target.value.toUpperCase()}})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px]" />
+src/pages/Supplier/components/SupplierIdConfigModal.tsx:48:                      <input value={idConfig.prefixes['OEM']} onChange={e=>setIdConfig({...idConfig, prefixes: {...idConfig.prefixes, 'OEM': e.target.value.toUpperCase()}})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px]" />
+src/pages/Supplier/components/SupplierIdConfigModal.tsx:52:                      <select value={idConfig.dateFormat} onChange={e=>setIdConfig({...idConfig, dateFormat: e.target.value})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px] bg-white">
+src/pages/Supplier/components/SupplierIdConfigModal.tsx:61:                      <input type="number" min="2" max="6" value={idConfig.runningLength} onChange={e=>setIdConfig({...idConfig, runningLength: Number(e.target.value)})} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px]" />
+src/pages/Supplier/components/SupplierIdConfigModal.tsx:69:                    <button onClick={() => { setIdConfigModalOpen(false); setForm({...form, supplierID: generateSupplierID(currentCategory || 'Supplier')}); }} className="bg-[#ab8a3b] text-[#111f42] px-6 py-2 rounded-lg font-black text-[10px] uppercase tracking-widest hover:brightness-95 transition-all">Apply Generator</button>
+src/pages/Supplier/index.tsx:75:  const filterCategories = ['All', ...masterConfig.categories];
+src/pages/Supplier/index.tsx:144:          ...commonOptions,
+src/pages/Supplier/index.tsx:161:        options: { ...commonOptions, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } } }
+src/pages/Supplier/index.tsx:194:      addSupplier({...form, id: Date.now().toString()});
+src/pages/Supplier/index.tsx:327:                      placeholder="Search Supplier Name / ID..." 
+src/pages/MasterCode/components/MasterList.tsx:96:        searchPlaceholder="Search Master Code, Category..."
+src/pages/MasterCode/components/MasterModal.tsx:68:                          <input type="text" value={form.category} onChange={e => setForm({...form, category: e.target.value})} placeholder="e.g. Sofa, Wood, Hardware..." 
+src/pages/MasterCode/components/MasterModal.tsx:74:                        <input type="text" maxLength={2} value={form.catCode} onChange={e => setForm({...form, catCode: e.target.value.toUpperCase()})}
+src/pages/MasterCode/components/MasterModal.tsx:83:                        <input type="text" value={form.subCategory} onChange={e => setForm({...form, subCategory: e.target.value})} placeholder="e.g. Leather, Teak, Hinge..." 
+src/pages/MasterCode/components/MasterModal.tsx:88:                        <input type="text" maxLength={2} value={form.subCatCode} onChange={e => setForm({...form, subCatCode: e.target.value.toUpperCase()})} placeholder="XX"
+src/pages/MasterCode/components/MasterModal.tsx:107:                        <textarea rows={2} value={form.note} onChange={e => setForm({...form, note: e.target.value})} placeholder="Additional details..." className="w-full px-4 py-3 text-[13px] font-medium bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-[#ab8a3b] focus:ring-2 focus:ring-[#ab8a3b]/20 shadow-sm"></textarea>
+src/pages/MasterCode/index.tsx:54:      setForm({ ...item, groups: item.groups || [] });
+src/pages/MasterCode/index.tsx:66:      if (prev.groups && prev.groups.includes(g)) return { ...prev, groups: prev.groups?.filter((x: string) => x !== g) };
+src/pages/MasterCode/index.tsx:67:      return { ...prev, groups: [...(prev.groups || []), g] };
+src/pages/MasterCode/index.tsx:77:      await updateItem(form.id, { ...form, mastCode: code, updatedAt: now });
+src/pages/MasterCode/index.tsx:79:      await addItem({ ...form, mastCode: code, updatedAt: now, updatedBy: 'Admin' });
+src/pages/MasterCode/index.tsx:92:      setGroups(prev => [...prev, newGroup.toUpperCase()]);
+src/pages/WarehouseOut/components/MrpTable.tsx:119:            searchPlaceholder="Search MO No, Product, Material..."
+src/pages/WarehouseOut/components/OutboundModal.tsx:122:                                                                         placeholder="Search Product..."
+src/pages/WarehouseOut/components/OutboundModal.tsx:141:                                                                     <input type="text" value={item.remark} onChange={e => onManualItemChange(index, 'remark', e.target.value)} className="input-primary w-full text-[10px] font-black border-2 border-slate-100 bg-slate-50 focus:bg-white focus:border-[#ab8a3b] shadow-none rounded-none uppercase tracking-widest" placeholder="NOTE..." />
+src/pages/WarehouseOut/components/OutboundModal.tsx:184:                                                     <input type="text" value={form.remark} onChange={e => onFormChange('remark', e.target.value)} className="input-primary w-full text-[13px] h-[46px]" placeholder="Optional note..." />
+src/pages/WarehouseOut/components/OutboundToolbar.tsx:86:              placeholder="Search SKU / Item / Trx..." 
+src/pages/WarehouseOut/components/OutboundTable.tsx:108:            searchPlaceholder="Search TRX ID, Sku, Lot number..."
+src/pages/WarehouseOut/components/DeliveryTable.tsx:125:            searchPlaceholder="Search SO No, Customer, Product..."
+src/pages/WarehouseOut/index.tsx:163:        let newForm = { ...form, date: now };
+src/pages/WarehouseOut/index.tsx:285:            ...form,
+src/pages/WarehouseOut/index.tsx:323:            const newItems = [...prev.manualItems];
+src/pages/WarehouseOut/index.tsx:325:            return { ...prev, manualItems: newItems };
+src/pages/WarehouseOut/index.tsx:335:            ...prev,
+src/pages/WarehouseOut/index.tsx:347:            setDropdownState(prev => ({ ...prev, items: productMaster }));
+src/pages/WarehouseOut/index.tsx:351:                ...prev, 
+src/pages/WarehouseOut/index.tsx:360:                const newItems = [...prev.manualItems];
+src/pages/WarehouseOut/index.tsx:365:                return { ...prev, manualItems: newItems };
+src/pages/WarehouseOut/index.tsx:368:        setDropdownState(prev => ({ ...prev, show: false }));
+src/pages/WarehouseOut/index.tsx:471:                    onFormChange={(f, v) => setForm(prev => ({ ...prev, [f]: v }))}
+src/pages/WarehouseOut/index.tsx:473:                    onAddManualItem={() => setForm(prev => ({ ...prev, manualItems: [...prev.manualItems, { productSearch: '', sku: '', itemName: '', qty: 0, warehouseName: '', location: '', lotNo: '', remark: '' }] }))}
+src/pages/WarehouseOut/index.tsx:474:                    onRemoveManualItem={(idx) => setForm(prev => ({ ...prev, manualItems: prev.manualItems?.filter((_, i) => i !== idx) }))}
+src/pages/PoAnalysis/components/ChartsSection.tsx:52:          ...commonOptions,
+src/pages/PoAnalysis/components/ChartsSection.tsx:54:            ...commonOptions.plugins,
+src/pages/PoAnalysis/components/ChartsSection.tsx:76:          ...commonOptions,
+src/pages/PoAnalysis/components/ChartsSection.tsx:78:          plugins: { ...commonOptions.plugins, legend: { display: false } },
+src/pages/PoAnalysis/components/ChartsSection.tsx:115:          ...commonOptions,
+src/pages/PoAnalysis/components/ChartsSection.tsx:116:          plugins: { ...commonOptions.plugins, legend: { display: false } },
+src/pages/StockCard/index.tsx:67:        const combined = [...inMoves, ...outMoves]
+src/pages/StockCard/index.tsx:76:            return { ...m, balance };
+src/pages/StockCard/index.tsx:118:        setViewState({ ...viewState, itemId: item.id, page: 1, lotId: '' });
+src/pages/StockCard/index.tsx:125:        setViewState({ ...viewState, itemId: '', page: 1 });
+src/pages/StockCard/index.tsx:269:                                            onChange={(e) => setViewState({...viewState, rows: Number(e.target.value), page: 1})}
+src/pages/StockCard/index.tsx:278:                                        <button onClick={() => setViewState(p => ({...p, page: Math.max(1, p.page - 1)}))} disabled={viewState.page === 1} className="p-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"><ChevronLeft size={14}/></button>
+src/pages/StockCard/index.tsx:280:                                        <button onClick={() => setViewState(p => ({...p, page: Math.min(totalPages, p.page + 1)}))} disabled={viewState.page === totalPages} className="p-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 transition-all shadow-sm"><ChevronRight size={14}/></button>
+src/pages/StockCard/index.tsx:303:                        <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[9px] animate-pulse font-mono">Syncing Master Ledger...</p>
+src/pages/StockCard/index.tsx:308:                <AlertModal {...alert} onClose={() => setAlert({ ...alert, isOpen: false })} />
+src/pages/StockCard/components/StockCardToolbar.tsx:45:              placeholder="Search SKU or Name..." 
+src/pages/StockCard/components/StockCardToolbar.tsx:70:              onChange={(e) => setViewState({...viewState, lotId: e.target.value, page: 1})}
+src/pages/SaleOrder/index.tsx:104:        return { ...order, total: totals.grandTotal };
+src/pages/SaleOrder/index.tsx:143:    setExpandedCols(prev => ({ ...prev, [status]: !prev[status] }));
+src/pages/SaleOrder/index.tsx:168:    const orderToSave = { ...orderModal.data, total: totals.grandTotal, id: orderModal.mode === 'create' ? Date.now() : orderModal.data.id };
+src/pages/SaleOrder/index.tsx:169:    if (orderModal.mode === 'create') setOrders([orderToSave, ...orders]);
+src/pages/SaleOrder/index.tsx:175:    setOrders(orders?.map(o => o.id === id ? { ...o, status: newStatus } : o));
+src/pages/SaleOrder/index.tsx:181:    const newItems = [...orderModal.data.items];
+src/pages/SaleOrder/index.tsx:185:    setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/index.tsx:190:    const newItems = [...orderModal.data.items];
+src/pages/SaleOrder/index.tsx:191:    newItems[itemIdx].deliveries[deliveryIdx] = { ...newItems[itemIdx].deliveries[deliveryIdx], [field]: value };
+src/pages/SaleOrder/index.tsx:192:    setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/index.tsx:197:    const newItems = [...orderModal.data.items];
+src/pages/SaleOrder/index.tsx:200:    setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/components/OrderModal.tsx:79:                                <select required value={orderModal.data.customer} onChange={e => setOrderModal({...orderModal, data:{...orderModal.data, customer: e.target.value}})} disabled={orderModal.mode === 'view'} className="w-full bg-slate-50 border-2 border-slate-100 p-3.5 rounded-2xl text-sm font-medium focus:border-[#ab8a3b] outline-none">
+src/pages/SaleOrder/components/OrderModal.tsx:80:                                  <option value="" disabled>Select Customer...</option>
+src/pages/SaleOrder/components/OrderModal.tsx:86:                                <input type="date" required value={orderModal.data.date} onChange={e => setOrderModal({...orderModal, data:{...orderModal.data, date: e.target.value}})} disabled={orderModal.mode === 'view'} className="w-full bg-slate-50 border-2 border-slate-100 p-3.5 rounded-2xl text-sm font-medium focus:border-[#ab8a3b] outline-none" />
+src/pages/SaleOrder/components/OrderModal.tsx:90:                                <input type="text" required value={orderModal.data.salesPerson} onChange={e => setOrderModal({...orderModal, data:{...orderModal.data, salesPerson: e.target.value}})} disabled={orderModal.mode === 'view'} className="w-full bg-slate-50 border-2 border-slate-100 p-3.5 rounded-2xl text-sm font-medium focus:border-[#ab8a3b] outline-none" />
+src/pages/SaleOrder/components/OrderModal.tsx:94:                                <select value={orderModal.data.vatType} onChange={e => setOrderModal({...orderModal, data:{...orderModal.data, vatType: e.target.value}})} disabled={orderModal.mode === 'view'} className="w-full bg-slate-50 border-2 border-slate-100 p-3.5 rounded-2xl text-sm font-medium focus:border-[#ab8a3b] outline-none">
+src/pages/SaleOrder/components/OrderModal.tsx:109:                                <button type="button" onClick={() => setOrderModal({...orderModal, data:{...orderModal.data, items:[...orderModal.data.items, {sku:'',name:'',qty:1,price:0,discount:0,deliveries:[{ round: 1, date: orderModal.data.date, qty: 1 }]}]}})} className="px-4 py-2 bg-[#ab8a3b]/10 text-[#ab8a3b] rounded-xl font-normal text-[10px] uppercase tracking-widest flex items-center gap-2 hover:bg-[#ab8a3b] hover:text-white transition-all"><Plus size={14} /> Add Item</button>
+src/pages/SaleOrder/components/OrderModal.tsx:121:                                        const newItems = [...orderModal.data.items];
+src/pages/SaleOrder/components/OrderModal.tsx:122:                                        newItems[idx] = { ...newItems[idx], sku: p.sku, name: p.name, price: p.price, discount: 0 };
+src/pages/SaleOrder/components/OrderModal.tsx:123:                                        setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/components/OrderModal.tsx:126:                                      <option value="" disabled>Select product...</option>
+src/pages/SaleOrder/components/OrderModal.tsx:133:                                      const newItems = [...orderModal.data.items];
+src/pages/SaleOrder/components/OrderModal.tsx:135:                                      setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/components/OrderModal.tsx:141:                                      const newItems = [...orderModal.data.items];
+src/pages/SaleOrder/components/OrderModal.tsx:147:                                      setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/components/OrderModal.tsx:153:                                      const newItems = [...orderModal.data.items];
+src/pages/SaleOrder/components/OrderModal.tsx:155:                                      setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/components/OrderModal.tsx:165:                                      setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
+src/pages/SaleOrder/components/OrderModal.tsx:280:                              <textarea rows={5} value={orderModal.data.note || ''} onChange={e => setOrderModal({...orderModal, data: {...orderModal.data, note: e.target.value}})} disabled={orderModal.mode === 'view'} placeholder="Add remarks..." className="w-full bg-white border-2 border-slate-100 rounded-3xl p-5 text-sm font-bold shadow-sm focus:border-[#ab8a3b] outline-none resize-none transition-all" />
+src/pages/SaleOrder/components/OrderModal.tsx:309:                      <button type="button" onClick={() => setOrderModal({...orderModal, mode: 'edit'})} className="px-5 py-3 rounded-2xl bg-[#ab8a3b] text-white font-normal text-[10px] uppercase tracking-widest shadow-lg shadow-gold/20 hover:opacity-90 transition-all">Edit Order</button>
+src/pages/SaleOrder/components/ConfigModal.tsx:35:                      <input type="text" value={idConfig.format} onChange={e=>setIdConfig({...idConfig, format: e.target.value})} className="w-full border-2 border-slate-100 p-4 rounded-2xl font-mono text-sm font-bold focus:border-[#ab8a3b] outline-none bg-slate-50 transition-all"/>
+src/pages/SaleOrder/components/OrdersTable.tsx:49:            <input type="text" placeholder="Search SO or customer..." className="w-full bg-transparent border-none outline-none ml-2 text-slate-700 font-normal" value={searchTerm} onChange={e => {setSearchTerm(e.target.value); setCurrentPage(1);}} />
+src/pages/CashFlow/components/NewEntryModal.tsx:34:                        <input type="date" required value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-medium" />
+src/pages/CashFlow/components/NewEntryModal.tsx:38:                        <input type="text" value={formData.ref} onChange={e => setFormData({...formData, ref: e.target.value})} placeholder="Leave blank for Auto" className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-medium" />
+src/pages/CashFlow/components/NewEntryModal.tsx:42:                        <input type="text" required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="e.g. Marketing Expense" className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-medium" />
+src/pages/CashFlow/components/NewEntryModal.tsx:46:                        <select value={formData.flowType} onChange={e => setFormData({...formData, flowType: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-medium">
+src/pages/CashFlow/components/NewEntryModal.tsx:54:                        <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-medium">
+src/pages/CashFlow/components/NewEntryModal.tsx:61:                        <input type="number" step="0.01" required value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} placeholder="0.00" className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-medium text-lg" />
+src/pages/CashFlow/components/NewEntryModal.tsx:67:                            <input type="radio" value="Draft" checked={formData.status === 'Draft'} onChange={e => setFormData({...formData, status: e.target.value})} className="accent-[#ab8a3b]" />
+src/pages/CashFlow/components/NewEntryModal.tsx:71:                            <input type="radio" value="Completed" checked={formData.status === 'Completed'} onChange={e => setFormData({...formData, status: e.target.value})} className="accent-[#ab8a3b]" />
+src/pages/CashFlow/components/TrendChart.tsx:15:  const maxTrend = Math.max(...(data?.map(d => d.balance) || [0])) * 1.1 || 500000;
+src/pages/CashFlow/index.tsx:270:                  placeholder="Search ref or description..." 
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:51:              placeholder="Search invoice or customer..." 
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:79:          <div className="p-8 text-center font-bold text-[#7693a6]">Loading data...</div>
+src/pages/AccountsReceivable/components/InvoiceTable.tsx:255:                {[...Array(totalPages)]?.map((_, i) => (
+src/pages/AccountsReceivable/components/PaymentModal.tsx:41:                            value={paymentForm.amount} onChange={(e: any) => setPaymentForm({...paymentForm, amount: e.target.value})} 
+src/pages/AccountsReceivable/components/PaymentModal.tsx:51:                          <input type="date" required value={paymentForm.date} onChange={(e: any) => setPaymentForm({...paymentForm, date: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#496ca8] font-bold text-xs text-[#223149]" />
+src/pages/AccountsReceivable/components/PaymentModal.tsx:55:                          <select value={paymentForm.method} onChange={(e: any) => setPaymentForm({...paymentForm, method: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#496ca8] font-bold text-xs text-[#223149]">
+src/pages/AccountsReceivable/components/PaymentModal.tsx:64:                        <input type="text" value={paymentForm.ref} onChange={(e: any) => setPaymentForm({...paymentForm, ref: e.target.value})} placeholder="Slip No. or Note" className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#496ca8] font-bold text-xs text-[#223149]" />
+src/pages/AccountsReceivable/index.tsx:95:    setInvoices(prev => prev?.map(inv => inv.id === id ? { ...inv, status: newStatus } : inv));
+src/pages/AccountsReceivable/index.tsx:99:    setInvoices(prev => prev?.map(inv => inv.id === id ? { ...inv, isBadDebt: !inv.isBadDebt } : inv));
+src/pages/AccountsReceivable/index.tsx:110:            ...inv,
+src/pages/AccountsReceivable/index.tsx:141:      ...(filteredInvoices?.map(row => [
+src/pages/ItemMaster/components/ItemTable.tsx:85:                searchPlaceholder="Search Item Code, Name, Category..."
+src/pages/ItemMaster/components/ItemModal.tsx:49:                                            <input value={form.itemName} onChange={e => setForm({...form, itemName: e.target.value})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" placeholder="Full Item Description" />
+src/pages/ItemMaster/components/ItemModal.tsx:53:                                            <select value={form.itemType} onChange={e => setForm({...form, itemType: e.target.value})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] focus:border-[#ab8a3b] focus:bg-white transition-all outline-none cursor-pointer">
+src/pages/ItemMaster/components/ItemModal.tsx:59:                                            <input value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" placeholder="e.g. Laundry / Bedroom" />
+src/pages/ItemMaster/components/ItemModal.tsx:63:                                            <input value={form.subCategory} onChange={e => setForm({...form, subCategory: e.target.value})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" placeholder="e.g. Steel / Wood" />
+src/pages/ItemMaster/components/ItemModal.tsx:67:                                            <input value={form.itemCode} onChange={e => setForm({...form, itemCode: e.target.value.toUpperCase()})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-mono font-black uppercase tracking-widest text-[#ab8a3b] focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" placeholder="Leave empty for AUTO" />
+src/pages/ItemMaster/components/ItemModal.tsx:81:                                            <input value={form.baseUnit} onChange={e => setForm({...form, baseUnit: e.target.value})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] text-center focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" placeholder="PCS" />
+src/pages/ItemMaster/components/ItemModal.tsx:85:                                            <input type="number" value={form.stdCost} onChange={e => setForm({...form, stdCost: Number(e.target.value)})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-emerald-600 text-right focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" />
+src/pages/ItemMaster/components/ItemModal.tsx:89:                                            <input type="number" value={form.stdPrice} onChange={e => setForm({...form, stdPrice: Number(e.target.value)})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] text-right focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" />
+src/pages/ItemMaster/components/ItemModal.tsx:93:                                            <select value={form.status} onChange={e => setForm({...form, status: e.target.value})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black uppercase tracking-widest text-[#111f42] focus:border-[#ab8a3b] focus:bg-white transition-all outline-none cursor-pointer">
+src/pages/ItemMaster/components/ItemModal.tsx:101:                                            <input type="number" value={form.leadTime} onChange={e => setForm({...form, leadTime: Number(e.target.value)})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black text-center focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" />
+src/pages/ItemMaster/components/ItemModal.tsx:105:                                            <input type="number" value={form.moq} onChange={e => setForm({...form, moq: Number(e.target.value)})} className="w-full bg-[#f8fafc] border-2 border-slate-200 rounded-none px-4 py-3 text-[13px] font-black text-center focus:border-[#ab8a3b] focus:bg-white transition-all outline-none" />
+src/pages/ItemMaster/components/NameRuleModal.tsx:47:                                        <input value={nameRules[selectedRuleType] || ''} onChange={e => setNameRules({...nameRules, [selectedRuleType]: e.target.value})} className="input-primary pl-10 font-mono text-[13px] border-[#ab8a3b]/30" />
+src/pages/ItemMaster/index.tsx:103:            updateItem(form.id, { ...form, updatedAt: now });
+src/pages/ItemMaster/index.tsx:107:            addItem({ ...form, id: newId, itemCode: generatedCode, updatedAt: now });
+src/pages/MESCalendar/components/EventModal.tsx:47:                          onChange={e=>setEventForm({...eventForm, title: e.target.value})} 
+src/pages/MESCalendar/components/EventModal.tsx:49:                          placeholder={eventForm.isHoliday ? "*ระบุชื่อวันสำคัญ..." : "ระบุชื่อกิจกรรม..."} 
+src/pages/MESCalendar/components/EventModal.tsx:62:                              onChange={e=>setEventForm({...eventForm, date: e.target.value})} 
+src/pages/MESCalendar/components/EventModal.tsx:73:                              <input type="date" disabled={mode==='view'} value={eventForm.date} onChange={e=>setEventForm({...eventForm, date: e.target.value})} className="w-full px-4 py-2.5 border rounded-none bg-white outline-none focus:border-[#111f42] font-mono font-black text-[12px] uppercase tracking-widest" />
+src/pages/MESCalendar/components/EventModal.tsx:79:                                <input type="time" disabled={mode==='view'} value={eventForm.time} onChange={e=>setEventForm({...eventForm, time: e.target.value})} className="w-full pl-9 pr-3 py-2.5 border rounded-none bg-white outline-none focus:border-[#111f42] font-mono font-black text-[12px]" />
+src/pages/MESCalendar/components/EventModal.tsx:87:                              <select disabled={mode==='view'} value={eventForm.type} onChange={e=>setEventForm({...eventForm, type: e.target.value})} className="w-full px-3 py-2 border rounded-none bg-white outline-none focus:border-[#111f42] cursor-pointer font-black text-[11px] uppercase tracking-widest">
+src/pages/MESCalendar/components/EventModal.tsx:93:                              <select disabled={mode==='view'} value={eventForm.priority} onChange={e=>setEventForm({...eventForm, priority: e.target.value})} className="w-full px-3 py-2 border rounded-none bg-white outline-none focus:border-[#111f42] cursor-pointer font-black text-[11px] uppercase tracking-widest">
+src/pages/MESCalendar/components/EventModal.tsx:99:                              <select disabled={mode==='view'} value={eventForm.status} onChange={e=>setEventForm({...eventForm, status: e.target.value})} className="w-full px-3 py-2 border rounded-none bg-white outline-none focus:border-[#111f42] font-black cursor-pointer text-[11px] uppercase tracking-widest">
+src/pages/MESCalendar/index.tsx:163:      setEventForm({ ...data });
+src/pages/MESCalendar/index.tsx:187:        ...eventForm, 
+src/pages/MESCalendar/index.tsx:191:      setEvents([...events, newEntry]);
+src/pages/MESCalendar/index.tsx:193:      setEvents(events?.map(e => e.id === eventForm.id ? { ...eventForm, title: processedTitle, color: typeColors[eventForm.type] || e.color } : e));
+src/pages/MESCalendar/index.tsx:259:                  placeholder="Search Events..." 
+src/pages/MESCalendar/index.tsx:407:                      {[...Array(totalPages)]?.map((_, i) => {
+src/pages/UserPermissions/index.tsx:85:    setConfidentialityMap(prev => ({ ...prev, [id]: newVal }));
+src/pages/UserPermissions/index.tsx:98:    setFormData(prev => ({ ...prev, [name]: value }));
+src/pages/UserPermissions/index.tsx:146:          newLevels = [...currentLevels, level]?.filter(l => l !== 0);
+src/pages/UserPermissions/index.tsx:149:      return { ...prev, [menuId]: newLevels };
+src/pages/UserPermissions/index.tsx:154:    setExpandedModules(prev => ({ ...prev, [moduleId]: !prev[moduleId] }));
+src/pages/UserPermissions/index.tsx:164:      ...formData,
+src/pages/WarehouseBooking/components/TagPrintModal.tsx:47:                    {barcodeUrl ? <img src={barcodeUrl} alt="barcode" className="h-full object-contain" /> : <div className="h-full flex items-center justify-center text-slate-300 font-mono text-[8px]">BARCODE LOADING...</div>}
+src/pages/WarehouseBooking/components/TagPrintModal.tsx:66:                        {[...Array(10)]?.map((_, i) => (
+src/pages/WarehouseBooking/components/AllocationModal.tsx:50:                                            <input type="number" value={form.qty} onChange={e => setForm({...form, qty: e.target.value})} className="input-primary text-right font-black text-2xl h-10 font-mono border-[#ab8a3b]/40 focus:border-[#ab8a3b]" />
+src/pages/WarehouseBooking/components/AllocationModal.tsx:54:                                            <input type="text" value={form.location} onChange={e => setForm({...form, location: e.target.value})} className="input-primary h-10 font-mono uppercase font-bold" placeholder="WH-X-00" />
+src/pages/WarehouseBooking/components/ReportPreviewModal.tsx:82:                                                {[...Array(Math.max(0, 10 - reportData.length))]?.map((_, i) => (
+src/pages/WarehouseBooking/index.tsx:172:                setBookings(prev => prev?.map(b => b.id === item.id ? { ...b, status: 'Completed' } : b));
+src/pages/WarehouseBooking/index.tsx:173:                setNotif(prev => ({...prev, isOpen: false}));
+src/pages/WarehouseBooking/index.tsx:183:        setBookings(prev => prev?.map(b => b.id === selectedItem.id ? { ...b, booked: newBooked, status: newStatus } : b));
+src/pages/WarehouseBooking/index.tsx:304:                                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search Booking, SKU or SO..." className="w-full h-full bg-white border border-slate-200 rounded-xl pl-9 text-[12px] outline-none font-bold focus:border-[#111f42] h-[40px]" />
+src/pages/WarehouseBooking/index.tsx:378:                                    <input type="date" value={reportDateRange.start} onChange={(e) => setReportDateRange({...reportDateRange, start: e.target.value})} className="input-primary w-40 h-9 py-0 font-bold" />
+src/pages/WarehouseBooking/index.tsx:382:                                    <input type="date" value={reportDateRange.end} onChange={(e) => setReportDateRange({...reportDateRange, end: e.target.value})} className="input-primary w-40 h-9 py-0 font-bold" />
+src/pages/WarehouseBooking/index.tsx:470:            <NotificationModal {...notif} onClose={() => setNotif({ ...notif, isOpen: false })} />
+src/pages/WarehouseBooking/index.tsx:479:                    <p className="font-black text-[#111f42] uppercase tracking-[0.3em] text-[10px] animate-pulse">Syncing Inventory...</p>
+src/pages/ProductCost/index.tsx:116:            ...JSON.parse(JSON.stringify(p)),
+src/pages/ProductCost/index.tsx:136:        const newForm = { ...form };
+src/pages/ProductCost/index.tsx:149:        const newForm = { ...form };
+src/pages/ProductCost/index.tsx:157:        const newForm = { ...form };
+src/pages/ProductCost/index.tsx:164:            ...form, 
+src/pages/ProductCost/index.tsx:177:                await addCost({ ...updatedItem, id: String(Date.now()) });
+src/pages/ProductCost/index.tsx:248:                            <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search catalogue..." className="w-full pl-10 pr-4 py-2.5 text-[11px] font-bold rounded-xl border border-black/5 focus:outline-none focus:border-[#ab8a3b] bg-white shadow-sm" />
+src/pages/ProductCost/index.tsx:298:                                        {row.length < 5 && [...Array(5 - row.length)]?.map((_, i) => (<div key={`e-${i}`} className="hidden lg:block flex-1"></div>))}
+src/pages/ProductCost/index.tsx:350:                                                                <input type="number" value={form.batchSize} onChange={e=>setForm({...form, batchSize: e.target.value})} className="w-24 text-right font-black text-[#111f42] outline-none" />
+src/pages/ProductCost/index.tsx:356:                                                                <div className="col-span-2"><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Product Name</label><input value={form.itemName} onChange={e=>setForm({...form, itemName: e.target.value})} className="input-table text-base font-bold" placeholder="Product Title" /></div>
+src/pages/ProductCost/index.tsx:363:                                                                            setForm({...form, item: e.target.value, itemName: selectedItem?.itemName || '', category: selectedItem?.category || ''});
+src/pages/ProductCost/index.tsx:367:                                                                        <option value="">Select Item...</option>
+src/pages/ProductCost/index.tsx:373:                                                                <div><label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Category</label><input value={form.category} onChange={e=>setForm({...form, category: e.target.value})} className="input-table" placeholder="Category" readOnly /></div>
+src/pages/ProductCost/index.tsx:511:                                                                <input type="number" value={form.targetMargin} onChange={e=>setForm({...form, targetMargin: Number(e.target.value)})} className="bg-transparent font-black text-2xl outline-none w-full text-right"/>
+src/pages/ProductCost/components/ProductCostTable.tsx:59:      searchPlaceholder="Search Product Costs..."
+src/pages/Customer/components/CustomerActionModal.tsx:100:                              <input disabled value={form.customerID || ''} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none font-bold bg-slate-50 text-slate-500 text-[13px] font-mono" placeholder="Auto Generated..." />
+src/pages/Customer/components/CustomerActionModal.tsx:104:                              <input disabled={modalMode === 'view'} value={form.customerName || ''} onChange={e => setForm({ ...form, customerName: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none font-bold bg-white disabled:bg-slate-50/50 disabled:text-slate-500 text-[13px]" placeholder="ชื่อลูกค้า / บริษัท..." />
+src/pages/Customer/components/CustomerActionModal.tsx:110:                                setForm({ ...form, category: newCat, subCategory: masterConfig.subCategories[newCat]?.[0] || '' });
+src/pages/Customer/components/CustomerActionModal.tsx:117:                              <select disabled={modalMode === 'view'} value={form.subCategory || ''} onChange={e => setForm({ ...form, subCategory: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] bg-white cursor-pointer font-bold text-[13px] disabled:bg-slate-50/50 disabled:text-slate-500">
+src/pages/Customer/components/CustomerActionModal.tsx:123:                              <input disabled={modalMode === 'view'} value={form.taxID || ''} onChange={e => setForm({ ...form, taxID: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:border-[#ab8a3b] outline-none text-[13px] font-mono disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="0000000000000" />
+src/pages/Customer/components/CustomerActionModal.tsx:135:                              <input type="number" disabled={modalMode === 'view'} value={form.creditTerm || 0} onChange={e => setForm({ ...form, creditTerm: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:border-[#ab8a3b] outline-none text-[13px] font-mono font-bold disabled:bg-slate-50/50 disabled:text-slate-500" />
+src/pages/Customer/components/CustomerActionModal.tsx:139:                              <select disabled={modalMode === 'view'} value={form.status || 'Prospect'} onChange={e => setForm({ ...form, status: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg bg-white cursor-pointer focus:border-[#ab8a3b] outline-none text-[13px] font-bold disabled:bg-slate-50/50 disabled:text-slate-500">
+src/pages/Customer/components/CustomerActionModal.tsx:153:                              <textarea disabled={modalMode === 'view'} rows={4} value={form.billingAddress || ''} onChange={e => setForm({ ...form, billingAddress: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] resize-none bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="ที่อยู่ออกใบกำกับภาษี..." />
+src/pages/Customer/components/CustomerActionModal.tsx:157:                              <textarea disabled={modalMode === 'view'} rows={4} value={form.shippingAddress || ''} onChange={e => setForm({ ...form, shippingAddress: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] resize-none bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="ที่อยู่สำหรับจัดส่งสินค้า..." />
+src/pages/Customer/components/CustomerActionModal.tsx:159:                                <button disabled={modalMode === 'view'} onClick={() => setForm({ ...form, shippingAddress: form.billingAddress })} className="text-[9px] text-[#ab8a3b] font-bold hover:underline">Copy from Billing Address</button>
+src/pages/Customer/components/CustomerActionModal.tsx:172:                              <input disabled={modalMode === 'view'} value={form.contactName || ''} onChange={e => setForm({ ...form, contactName: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] font-bold bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="ชื่อผู้ติดต่อ..." />
+src/pages/Customer/components/CustomerActionModal.tsx:176:                              <input disabled={modalMode === 'view'} value={form.phone || ''} onChange={e => setForm({ ...form, phone: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] font-mono bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="เบอร์โทร..." />
+src/pages/Customer/components/CustomerActionModal.tsx:180:                              <input type="email" disabled={modalMode === 'view'} value={form.email || ''} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg focus:border-[#ab8a3b] outline-none text-[13px] bg-white disabled:bg-slate-50/50 disabled:text-slate-500" placeholder="อีเมล..." />
+src/pages/Customer/components/CustomerIdConfigModal.tsx:38:                      <input value={idConfig.prefix} onChange={e => setIdConfig({ ...idConfig, prefix: e.target.value.toUpperCase() })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px]" />
+src/pages/Customer/components/CustomerIdConfigModal.tsx:42:                      <select value={idConfig.dateFormat} onChange={e => setIdConfig({ ...idConfig, dateFormat: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px] bg-white">
+src/pages/Customer/components/CustomerIdConfigModal.tsx:51:                      <input type="number" min="2" max="6" value={idConfig.runningLength} onChange={e => setIdConfig({ ...idConfig, runningLength: Number(e.target.value) })} className="w-full px-3 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-[#ab8a3b] font-mono font-bold text-[13px]" />
+src/pages/Customer/components/CustomerIdConfigModal.tsx:59:                    <button onClick={() => { setIdConfigModalOpen(false); setForm({ ...form, customerID: generateCustomerID() }); }} className="bg-[#ab8a3b] text-[#111f42] px-6 py-2 rounded-lg font-black text-[10px] uppercase tracking-widest hover:brightness-95 transition-all">Apply Generator</button>
+src/pages/Customer/index.tsx:77:  const filterCategories = ['All', ...masterConfig.categories];
+src/pages/Customer/index.tsx:148:          ...commonOptions,
+src/pages/Customer/index.tsx:165:        options: { ...commonOptions, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } } }
+src/pages/Customer/index.tsx:199:      addCustomer({...form, id: Date.now().toString()});
+src/pages/Customer/index.tsx:302:                    placeholder="Search Customer Name / ID..." 
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:100:                        onClick={() => setKanbanLimits({...kanbanLimits, [col.id]: 5})}
+src/pages/PurchaseRequisition/components/PrKanbanBoard.tsx:108:                        onClick={() => setKanbanLimits({...kanbanLimits, [col.id]: currentLimit + 5})}
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:84:                              <input type="date" disabled={modalMode==='view'} value={formData.date} onChange={e=>setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] font-mono" />
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:88:                              <select disabled={modalMode==='view'} value={formData.status} onChange={e=>setFormData({...formData, status: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] font-bold cursor-pointer">
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:100:                                <input disabled={modalMode==='view'} value={formData.requester} onChange={e=>setFormData({...formData, requester: e.target.value})} className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px]" placeholder="ชื่อผู้ขอซื้อ..." />
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:107:                                <input disabled={modalMode==='view'} value={formData.department} onChange={e=>setFormData({...formData, department: e.target.value})} className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px]" placeholder="แผนก..." />
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:112:                              <textarea disabled={modalMode==='view'} rows={3} value={formData.objective} onChange={e=>setFormData({...formData, objective: e.target.value})} className="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-[#111f42] text-[12px] resize-none" placeholder="ระบุเหตุผลหรือวัตถุประสงค์ในการขอซื้อ..." />
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:155:                                          placeholder="ชื่อสินค้า/รายละเอียด..." 
+src/pages/PurchaseRequisition/components/PrActionModal.tsx:190:                                          placeholder="หมายเหตุ..." 
+src/pages/PurchaseRequisition/components/PrPreviewModal.tsx:112:                            {[...Array(Math.max(0, 5 - selectedPR.items.length))]?.map((_, i) => (
+src/pages/PurchaseRequisition/index.tsx:140:       ...prev,
+src/pages/PurchaseRequisition/index.tsx:141:       items: [...prev.items, { id: `item_${Date.now()}`, description: '', qty: '', unit: '', unitPrice: '', total: 0, note: '' }]
+src/pages/PurchaseRequisition/index.tsx:147:       const newItems = [...prev.items];
+src/pages/PurchaseRequisition/index.tsx:150:       return { ...prev, items: newItems, totalAmount: newTotal };
+src/pages/PurchaseRequisition/index.tsx:156:       const newItems = [...prev.items];
+src/pages/PurchaseRequisition/index.tsx:164:       return { ...prev, items: newItems, totalAmount: newTotal };
+src/pages/PurchaseRequisition/index.tsx:179:        ...formData,
+src/pages/PurchaseRequisition/index.tsx:182:      setPrs([newPR, ...prs]);
+src/pages/PurchaseRequisition/index.tsx:185:        ...formData,
+src/pages/PurchaseRequisition/index.tsx:186:        history: [...(formData.history || []), { date: formattedNow, user: 'System', action: `Updated PR Status to ${formData.status}`, note: '' }]
+src/pages/PurchaseRequisition/index.tsx:322:                    placeholder="Search PR No / Requester..." 
+src/pages/PurchaseRequisition/index.tsx:354:                  {[...Array(totalPages)]?.map((_, i) => (
+src/pages/PettyCash/components/DataTable.tsx:34:            <input type="text" placeholder="Search PCV or Employee..." className="w-full bg-transparent border-none outline-none ml-2 text-[#223149] font-medium placeholder-[#7693a6] text-[12px]" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+src/pages/FixedAsset/components/DataTable.tsx:40:            <input type="text" placeholder="Search Asset Code or Name..." className="w-full bg-transparent border-none outline-none ml-2 text-[#223149] font-medium placeholder-[#7693a6] text-[12px]" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+src/pages/SystemConfig/index.tsx:49:            await updateSetting(editingId, { ...formData });
+src/pages/SystemConfig/index.tsx:51:            await addSetting({ id: Date.now().toString(), category: activeCategory, ...formData });
+src/pages/SystemConfig/index.tsx:146:                           searchPlaceholder={`Search ${categoryInfo?.label}...`}
+src/pages/SystemConfig/index.tsx:167:                            onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+src/pages/SystemConfig/index.tsx:178:                            onChange={e => setFormData(prev => ({ ...prev, code: e.target.value }))}
+src/pages/QcReport/index.tsx:199:             <span className="text-slate-400 font-bold uppercase tracking-widest text-sm">Loading Data...</span>
+src/pages/QcReport/index.tsx:206:            searchPlaceholder="Search QC No., Product, Batch..."
+src/components/shared/CsvUploadModal.tsx:199:                    {...getRootProps()} 
+src/components/shared/CsvUploadModal.tsx:205:                    <input {...getInputProps()} />
+src/components/shared/CsvUploadModal.tsx:221:                        <p className="text-[10px] font-black text-[#111f42] uppercase tracking-[0.3em]">Parsing Matrix...</p>
+src/components/shared/LoadingOverlay.tsx:13:  message = "Processing Matrix...", 
+src/components/shared/Button.tsx:6:function cn(...inputs: ClassValue[]) {
+src/components/shared/Button.tsx:19:  ({ className, variant = 'primary', size = 'md', isLoading, leftIcon: LeftIcon, rightIcon: RightIcon, children, disabled, ...props }, ref) => {
+src/components/shared/Button.tsx:49:        {...props}
+src/components/shared/FileAttachment.tsx:69:    const updated = [...attachments, ...newAttachments];
+src/components/shared/FileAttachment.tsx:102:        {...getRootProps()} 
+src/components/shared/FileAttachment.tsx:108:        <input {...getInputProps()} />
+src/components/shared/DataTable.tsx:41:  searchPlaceholder = "Search all columns...",
+src/components/shared/DataTable.tsx:209:                          return [...existing, { id: colId, value: val }];
+src/components/shared/Scanner.tsx:117:                    <p className="text-[10px] font-black tracking-widest uppercase opacity-60">Initializing Camera...</p>
+src/components/Sidebar.tsx:124:      prev.includes(title) ? prev?.filter(t => t !== title) : [...prev, title]
+src/components/Layout.tsx:89:// ... (existing imports)
+src/components/Layout.tsx:145:          {/* ... (sidebar content remained largely the same, I already updated menu items) ... */}
+src/context/MasterDataContext.tsx:162:        const newData = [...currentData, data];
+src/context/MasterDataContext.tsx:173:            currentData[index] = { ...currentData[index], ...data };
+src/context/MasterDataContext.tsx:191:        if (item) putData('Items', id, { ...item, ...updatedFields });
+src/context/MasterDataContext.tsx:199:        if (supplier) putData('Suppliers', id, { ...supplier, ...updatedFields });
+src/context/MasterDataContext.tsx:207:        if (customer) putData('Customers', id, { ...customer, ...updatedFields });
+src/context/MasterDataContext.tsx:215:        if (setting) putData('Settings', id, { ...setting, ...updatedFields });
+src/context/MasterDataContext.tsx:223:        if (invoice) putData('Invoices', id, { ...invoice, ...updatedFields });
+src/services/googleSheets.ts:63:        console.warn(`[Retry] Lock collision detected. Retrying in ${delay}ms...`);
+src/services/googleSheets.ts:71:        console.warn(`[Retry] Network error. Retrying in ${delay}ms...`);
+src/hooks/useGoogleSheets.ts:38:      const rowData = { ...item, id: (item as any).id || Date.now().toString() };
+src/hooks/useGoogleSheets.ts:71:        data: [{ id, ...item }]
+src/App.tsx:57:          <p className="font-mono text-sm uppercase tracking-[0.2em] font-black">Decrypting Auth Stream...</p>
+src/lib/notifications.ts:75:  loading: (title: string = 'PROCESSING...') => {

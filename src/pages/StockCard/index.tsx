@@ -39,7 +39,7 @@ export default function StockCardApp() {
     
     // Combine logs into movements
     const movementsRaw = useMemo(() => {
-        const inMoves = historyLogs.filter(l => l.sku === viewState.itemId)?.map(l => ({
+        const inMoves = historyLogs?.filter(l => l.sku === viewState.itemId)?.map(l => ({
             date: l.date,
             type: 'IN',
             docId: l.transId,
@@ -51,7 +51,7 @@ export default function StockCardApp() {
             sku: l.sku
         }));
 
-        const outMoves = warehouseOutLogs.filter(l => l.sku === viewState.itemId)?.map(l => ({
+        const outMoves = warehouseOutLogs?.filter(l => l.sku === viewState.itemId)?.map(l => ({
             date: l.date,
             type: 'OUT',
             docId: l.transId,
@@ -100,7 +100,7 @@ export default function StockCardApp() {
     const filteredItems = useMemo(() => {
         if (!itemSearchText) return itemsMaster;
         const q = itemSearchText.toLowerCase();
-        return itemsMaster.filter(i => i.id.toLowerCase().includes(q) || i.name.toLowerCase().includes(q));
+        return itemsMaster?.filter(i => i.id.toLowerCase().includes(q) || i.name.toLowerCase().includes(q));
     }, [itemSearchText, itemsMaster]);
 
     const selectedItemDetails = useMemo(() => 
@@ -109,7 +109,7 @@ export default function StockCardApp() {
 
     const currentBalance = useMemo(() => movements[0]?.balance || 0, [movements]);
     const availableLots = useMemo(() => Array.from(new Set(movements?.map(m => m.lot))).sort(), [movements]);
-    const filteredMovements = useMemo(() => viewState.lotId ? movements.filter(m => m.lot === viewState.lotId) : movements, [movements, viewState.lotId]);
+    const filteredMovements = useMemo(() => viewState.lotId ? movements?.filter(m => m.lot === viewState.lotId) : movements, [movements, viewState.lotId]);
     const paginatedMovements = useMemo(() => filteredMovements.slice((viewState.page - 1) * viewState.rows, viewState.page * viewState.rows), [filteredMovements, viewState.page, viewState.rows]);
     const totalPages = Math.ceil(filteredMovements.length / viewState.rows) || 1;
 

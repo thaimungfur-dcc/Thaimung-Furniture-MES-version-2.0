@@ -121,7 +121,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
 
   const toggleSection = (title: string) => {
     setExpandedSections(prev => 
-      prev.includes(title) ? prev.filter(t => t !== title) : [...prev, title]
+      prev.includes(title) ? prev?.filter(t => t !== title) : [...prev, title]
     );
   };
 

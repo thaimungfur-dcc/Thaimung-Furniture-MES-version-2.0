@@ -95,7 +95,7 @@ export default function SupplierManagement() {
 
   // Filtering Logic
   const filteredSuppliers = useMemo(() => {
-    return suppliers.filter(s => {
+    return suppliers?.filter(s => {
       const matchSearch = s.supplierName.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           s.supplierID.toLowerCase().includes(searchQuery.toLowerCase());
       const matchCat = catFilter === 'All' ? true : s.category === catFilter;
@@ -113,9 +113,9 @@ export default function SupplierManagement() {
 
   const stats = {
     total: suppliers.length,
-    active: suppliers.filter(s => s.status === 'Active').length,
-    supplierCat: suppliers.filter(s => s.category === 'Supplier').length,
-    avgRating: (suppliers.reduce((acc, curr) => acc + (curr.rating || 0), 0) / (suppliers.filter(s => s.rating > 0).length || 1)).toFixed(1)
+    active: suppliers?.filter(s => s.status === 'Active').length,
+    supplierCat: suppliers?.filter(s => s.category === 'Supplier').length,
+    avgRating: (suppliers?.reduce((acc, curr) => acc + (curr.rating || 0), 0) / (suppliers?.filter(s => s.rating > 0).length || 1)).toFixed(1)
   };
 
   useEffect(() => {
@@ -135,7 +135,7 @@ export default function SupplierManagement() {
         data: {
           labels: ['Active', 'Prospect', 'On-Hold', 'Blacklisted'],
           datasets: [{
-            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted']?.map(status => suppliers.filter(s => s.status === status).length),
+            data: ['Active', 'Prospect', 'On-Hold', 'Blacklisted']?.map(status => suppliers?.filter(s => s.status === status).length),
             backgroundColor: ['#10b981', '#72A09E', '#1c213f', '#E3624A'],
             borderWidth: 0
           }]
@@ -154,7 +154,7 @@ export default function SupplierManagement() {
           labels: masterConfig.categories,
           datasets: [{
             label: 'Suppliers',
-            data: masterConfig.categories?.map(c => suppliers.filter(s => s.category === c).length),
+            data: masterConfig.categories?.map(c => suppliers?.filter(s => s.category === c).length),
             backgroundColor: '#111f42', borderRadius: 6
           }]
         },

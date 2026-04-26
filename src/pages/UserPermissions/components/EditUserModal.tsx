@@ -118,7 +118,7 @@ export default function EditUserModal({
                     </p>
                   </div>
                   <div className="flex gap-1.5">
-                    {PERMISSION_LEVELS.filter(p => {
+                    {PERMISSION_LEVELS?.filter(p => {
                       if (modalStep === 1) return p.level <= 1;
                       return p.level === 0 || p.level >= 2;
                     })?.map(p => (
@@ -149,12 +149,12 @@ export default function EditUserModal({
                             </span>
                           </div>
                           <div className="flex bg-white rounded-lg p-0.5 border border-gray-200 shadow-sm gap-0.5">
-                            {PERMISSION_LEVELS.filter(p => {
+                            {PERMISSION_LEVELS?.filter(p => {
                               if (modalStep === 1) return p.level <= 1;
                               return p.level === 0 || p.level >= 2;
                             })?.map((p) => {
                               const isActive = p.level === 0 
-                                ? currentLevels.length === 0 || (modalStep === 2 && !currentLevels.some(l => l >= 2))
+                                ? currentLevels.length === 0 || (modalStep === 2 && !currentLevels?.some(l => l >= 2))
                                 : currentLevels.includes(p.level);
 
                               return (
@@ -185,12 +185,12 @@ export default function EditUserModal({
                                       {sub.isConfidential && <Lock size={8} className="text-red-500" />}
                                     </span>
                                     <div className="flex gap-0.5">
-                                      {PERMISSION_LEVELS.filter(p => {
+                                      {PERMISSION_LEVELS?.filter(p => {
                                         if (modalStep === 1) return p.level <= 1;
                                         return p.level === 0 || p.level >= 2;
                                       })?.map((p) => {
                                         const isActive = p.level === 0 
-                                          ? subLevels.length === 0 || (modalStep === 2 && !subLevels.some(l => l >= 2))
+                                          ? subLevels.length === 0 || (modalStep === 2 && !subLevels?.some(l => l >= 2))
                                           : subLevels.includes(p.level);
 
                                         return (

@@ -48,13 +48,13 @@ export default function Home() {
     const producedData = last7Days?.map(d => {
       const dateStr = d.toISOString().split('T')[0];
       return historyLogs?.filter(log => log.date?.startsWith(dateStr))
-        .reduce((sum, log) => sum + (Number(log.qty) || 0), 0) || 0;
+        ?.reduce((sum, log) => sum + (Number(log.qty) || 0), 0) || 0;
     });
 
     const shippedData = last7Days?.map(d => {
       const dateStr = d.toISOString().split('T')[0];
       return outLogs?.filter(log => log.date?.startsWith(dateStr))
-        .reduce((sum, log) => sum + (Number(log.qty) || 0), 0) || 0;
+        ?.reduce((sum, log) => sum + (Number(log.qty) || 0), 0) || 0;
     });
 
     return { labels, producedData, shippedData };

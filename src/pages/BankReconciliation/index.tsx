@@ -46,19 +46,19 @@ export default function BankReconciliation() {
   const filteredData = useMemo(() => {
     let result = records;
     if (subTab !== 'all') {
-      result = result.filter(r => r.status === subTab);
+      result = result?.filter(r => r.status === subTab);
     }
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(r => r.refNo.toLowerCase().includes(q) || r.description.toLowerCase().includes(q) || r.bankAccount.toLowerCase().includes(q));
+      result = result?.filter(r => r.refNo.toLowerCase().includes(q) || r.description.toLowerCase().includes(q) || r.bankAccount.toLowerCase().includes(q));
     }
     return result;
   }, [records, subTab, searchTerm]);
 
   useEffect(() => { setCurrentPage(1); }, [subTab, selectedMonth, searchTerm, itemsPerPage, mainTab]);
 
-  const totalUnmatchedCount = records.filter(r => r.status !== 'Reconciled').length;
-  const totalDiffAmount = records.filter(r => r.status !== 'Reconciled').reduce((s, i) => s + i.diff, 0);
+  const totalUnmatchedCount = records?.filter(r => r.status !== 'Reconciled').length;
+  const totalDiffAmount = records?.filter(r => r.status !== 'Reconciled')?.reduce((s, i) => s + i.diff, 0);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

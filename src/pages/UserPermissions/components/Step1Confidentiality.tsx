@@ -52,11 +52,11 @@ export default function Step1Confidentiality({
             </div>
             <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
               <span className="text-white/40">Confidential</span>
-              <span className="font-black text-[#E3624A]">{Object.values(confidentialityMap).filter(v => v).length}</span>
+              <span className="font-black text-[#E3624A]">{Object.values(confidentialityMap)?.filter(v => v).length}</span>
             </div>
             <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
               <span className="text-white/40">Public</span>
-              <span className="font-black text-emerald-400">{Object.values(confidentialityMap).filter(v => !v).length}</span>
+              <span className="font-black text-emerald-400">{Object.values(confidentialityMap)?.filter(v => !v).length}</span>
             </div>
           </div>
         </div>

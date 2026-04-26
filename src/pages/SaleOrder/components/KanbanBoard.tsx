@@ -24,7 +24,7 @@ export default function KanbanBoard({
       <div className="flex gap-4 h-full min-w-max items-stretch px-1">
         {STATUS_LIST?.map(status => {
           const style = getStatusStyle(status);
-          const colItems = filteredOrders.filter(o => o.status === status);
+          const colItems = filteredOrders?.filter(o => o.status === status);
           const isExpanded = expandedCols[status];
           const displayItems = isExpanded ? colItems : colItems.slice(0, 5);
           const hiddenCount = colItems.length - 5;
@@ -52,7 +52,7 @@ export default function KanbanBoard({
               <div className="flex-1 overflow-y-auto kanban-scroll p-3 space-y-2.5">
                 {displayItems?.map(so => {
                    const totalItems = so.items.length;
-                   const isMultiDelivery = so.items.some(i => i.deliveries.length > 1);
+                   const isMultiDelivery = so.items?.some(i => i.deliveries.length > 1);
                    return (
                     <div key={so.id} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm hover:shadow-md cursor-pointer transition-all hover:-translate-y-0.5 flex flex-col gap-2 relative overflow-hidden" onClick={() => openModal('view', so)}>
                        <div className={`absolute top-0 left-0 w-1 h-full ${style.headerBg.split('/')[0]} border-l ${style.border}`}></div>

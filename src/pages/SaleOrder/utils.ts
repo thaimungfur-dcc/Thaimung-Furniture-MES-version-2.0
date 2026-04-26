@@ -8,8 +8,8 @@ export const formatDate = (dateString?: string) => {
 
 export const calculateTotals = (orderData: Partial<Order>) => {
   const items = orderData.items || [];
-  const subtotal = items.reduce((acc, i) => acc + ((i.qty || 0) * (i.price || 0)), 0);
-  const totalDiscount = items.reduce((acc, i) => acc + (i.discount || 0), 0);
+  const subtotal = items?.reduce((acc, i) => acc + ((i.qty || 0) * (i.price || 0)), 0);
+  const totalDiscount = items?.reduce((acc, i) => acc + (i.discount || 0), 0);
   const afterDiscount = subtotal - totalDiscount;
   
   let vatAmount = 0;

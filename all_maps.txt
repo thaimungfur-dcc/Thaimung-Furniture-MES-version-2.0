@@ -66,7 +66,7 @@ src/pages/NcControl/index.tsx:322:                  {['all', 'Submitted', 'Respo
 src/pages/AccountPayable/index.tsx:95:    setBills(prev => prev?.map(b => b.id === id ? { ...b, status: newStatus } : b));
 src/pages/AccountPayable/index.tsx:99:    setBills(prev => prev?.map(b => b.id === id ? { ...b, isDisputed: !b.isDisputed } : b));
 src/pages/AccountPayable/index.tsx:106:      setBills(prev => prev?.map(b => {
-src/pages/AccountPayable/index.tsx:141:      ...filteredBills?.map(row => [
+src/pages/AccountPayable/index.tsx:141:      ...(filteredBills?.map(row => [
 src/pages/AccountPayable/components/PrintPreviewModal.tsx:90:                              filteredBills?.map((bill: any, i: number) => (
 src/pages/AccountPayable/components/BillTable.tsx:106:              {currentItems.length > 0 ? currentItems?.map((bill: any) => (
 src/pages/AccountPayable/components/KanbanBoard.tsx:18:        {columns?.map(col => {
@@ -107,7 +107,7 @@ src/pages/VatManagement/components/KanbanBoard.tsx:15:        {columns?.map(col 
 src/pages/VatManagement/components/KanbanBoard.tsx:28:                {colItems?.map((rec: any) => (
 src/pages/VatManagement/components/VatPreviewModal.tsx:103:                                    filteredData?.filter(item => item.type === 'sales')?.map((item, i) => (
 src/pages/VatManagement/components/VatPreviewModal.tsx:149:                                    filteredData?.filter(item => item.type === 'purchase')?.map((item, i) => (
-src/pages/VatManagement/components/VatTrendChart.tsx:18:  const maxTrendVat = Math.max(...data?.map(d => d.netVat)) * 1.2 || 4500;
+src/pages/VatManagement/components/VatTrendChart.tsx:18:  const maxTrendVat = Math.max(...(data?.map(d => d.netVat) || [0])) * 1.2 || 4500;
 src/pages/VatManagement/components/VatTrendChart.tsx:23:    return data?.map((point, index) => {
 src/pages/VatManagement/components/VatTrendChart.tsx:64:          {data?.map((point, index) => {
 src/pages/VatManagement/components/VatTrendChart.tsx:107:          {data?.map((d, i) => (
@@ -175,7 +175,7 @@ src/pages/CashFlow/components/PreviewModal.tsx:90:                              
 src/pages/CashFlow/components/PreviewModal.tsx:111:                                  {completedItems?.filter(i => i.flowType === 'CFI')?.map(item => (
 src/pages/CashFlow/components/PreviewModal.tsx:133:                                  {completedItems?.filter(i => i.flowType === 'CFF')?.map(item => (
 src/pages/CashFlow/components/PreviewModal.tsx:183:                                filteredData?.map((item, i) => (
-src/pages/CashFlow/components/TrendChart.tsx:15:  const maxTrend = Math.max(...data?.map(d => d.balance)) * 1.1 || 500000;
+src/pages/CashFlow/components/TrendChart.tsx:15:  const maxTrend = Math.max(...(data?.map(d => d.balance) || [0])) * 1.1 || 500000;
 src/pages/CashFlow/components/TrendChart.tsx:20:    return data?.map((point, index) => {
 src/pages/CashFlow/components/TrendChart.tsx:60:          {data?.map((point, index) => {
 src/pages/CashFlow/components/TrendChart.tsx:99:          {data?.map((d, i) => (
@@ -194,7 +194,7 @@ src/pages/AccountsReceivable/components/WacdCalc.tsx:82:            {invoices?.f
 src/pages/AccountsReceivable/index.tsx:95:    setInvoices(prev => prev?.map(inv => inv.id === id ? { ...inv, status: newStatus } : inv));
 src/pages/AccountsReceivable/index.tsx:99:    setInvoices(prev => prev?.map(inv => inv.id === id ? { ...inv, isBadDebt: !inv.isBadDebt } : inv));
 src/pages/AccountsReceivable/index.tsx:106:      setInvoices(prev => prev?.map(inv => {
-src/pages/AccountsReceivable/index.tsx:141:      ...filteredInvoices?.map(row => [
+src/pages/AccountsReceivable/index.tsx:141:      ...(filteredInvoices?.map(row => [
 src/pages/ItemMaster/components/ItemModal.tsx:54:                                                {groups?.filter(x => x !== 'All')?.map(g => <option key={g} value={g}>{g}</option>)}
 src/pages/ItemMaster/components/NameRuleModal.tsx:33:                                            {groups?.filter(x => x !== 'All')?.map(g => <option key={g} value={g}>{g}</option>)}
 src/pages/MESCalendar/index.tsx:193:      setEvents(events?.map(e => e.id === eventForm.id ? { ...eventForm, title: processedTitle, color: typeColors[eventForm.type] || e.color } : e));

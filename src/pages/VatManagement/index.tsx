@@ -72,19 +72,19 @@ export default function VatManagement() {
   const filteredData = useMemo(() => {
     let result = taxRecords;
     if (subTab !== 'all') {
-      result = result.filter(r => r.status === subTab || r.type === subTab || r.taxMethod === subTab);
+      result = result?.filter(r => r.status === subTab || r.type === subTab || r.taxMethod === subTab);
     }
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(r => r.docNo.toLowerCase().includes(q) || r.entityName.toLowerCase().includes(q));
+      result = result?.filter(r => r.docNo.toLowerCase().includes(q) || r.entityName.toLowerCase().includes(q));
     }
     return result;
   }, [taxRecords, subTab, searchTerm]);
 
   useEffect(() => { setCurrentPage(1); }, [subTab, searchTerm]);
 
-  const totalBase = filteredData.reduce((s, i) => s + i.baseAmount, 0);
-  const totalVat = filteredData.reduce((s, i) => s + i.vatAmount, 0);
+  const totalBase = filteredData?.reduce((s, i) => s + i.baseAmount, 0);
+  const totalVat = filteredData?.reduce((s, i) => s + i.vatAmount, 0);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -155,14 +155,14 @@ export default function VatManagement() {
         />
         <KpiCard 
           title="Output VAT (Sales)"
-          value={`฿${(filteredData.filter((i: any)=>i.type==='Sales').reduce((s: number,i: any)=>s+i.vatAmount,0))?.toLocaleString()}`}
+          value={`฿${(filteredData?.filter((i: any)=>i.type==='Sales')?.reduce((s: number,i: any)=>s+i.vatAmount,0))?.toLocaleString()}`}
           icon={ArrowUpCircle}
           color="#ce5a43"
           subValue="Tax on sales collection"
         />
         <KpiCard 
           title="Input VAT (Purchase)"
-          value={`฿${(filteredData.filter((i: any)=>i.type==='Purchase').reduce((s: number,i: any)=>s+i.vatAmount,0))?.toLocaleString()}`}
+          value={`฿${(filteredData?.filter((i: any)=>i.type==='Purchase')?.reduce((s: number,i: any)=>s+i.vatAmount,0))?.toLocaleString()}`}
           icon={ArrowDownCircle}
           color="#496ca8"
           subValue="Tax from procurement"

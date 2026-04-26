@@ -1,6 +1,6 @@
 import React, { ReactNode, useRef } from 'react';
 import Draggable from 'react-draggable';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface DraggableModalProps {
   isOpen: boolean;

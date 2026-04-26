@@ -67,30 +67,30 @@ export default function WarehouseOut() {
     // --- Computed / Memoized Values ---
     const filteredLogs = useMemo(() => {
         let res = historyLogs;
-        if (activeWhTab !== 'All') res = res.filter(l => l.warehouseName === activeWhTab);
+        if (activeWhTab !== 'All') res = res?.filter(l => l.warehouseName === activeWhTab);
         if (searchQuery && activeTab === 'all') {
             const q = searchQuery.toLowerCase();
-            res = res.filter(l => l.transId.toLowerCase().includes(q) || l.sku.toLowerCase().includes(q));
+            res = res?.filter(l => l.transId.toLowerCase().includes(q) || l.sku.toLowerCase().includes(q));
         }
         return res;
     }, [historyLogs, activeWhTab, searchQuery, activeTab]);
 
     const filteredDeliveryOrders = useMemo(() => {
         let res = deliveryOrders || [];
-        if (statusFilter !== 'All') res = res.filter(o => o.status === statusFilter);
+        if (statusFilter !== 'All') res = res?.filter(o => o.status === statusFilter);
         if (searchQuery && activeTab === 'delivery') {
             const q = searchQuery.toLowerCase();
-            res = res.filter(o => o.soNo.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q) || o.sku.toLowerCase().includes(q));
+            res = res?.filter(o => o.soNo.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q) || o.sku.toLowerCase().includes(q));
         }
         return res;
     }, [deliveryOrders, statusFilter, searchQuery, activeTab]);
 
     const filteredMRPOrders = useMemo(() => {
         let res = mrpOrders || [];
-        if (statusFilter !== 'All') res = res.filter(o => o.status === statusFilter);
+        if (statusFilter !== 'All') res = res?.filter(o => o.status === statusFilter);
         if (searchQuery && activeTab === 'mrp') {
             const q = searchQuery.toLowerCase();
-            res = res.filter(o => o.moNo.toLowerCase().includes(q) || o.rmSku.toLowerCase().includes(q) || o.fgSku.toLowerCase().includes(q));
+            res = res?.filter(o => o.moNo.toLowerCase().includes(q) || o.rmSku.toLowerCase().includes(q) || o.fgSku.toLowerCase().includes(q));
         }
         return res;
     }, [mrpOrders, statusFilter, searchQuery, activeTab]);
@@ -117,9 +117,9 @@ export default function WarehouseOut() {
         const mOrders = mrpOrders || [];
         return {
             todayOut: 50,
-            pendingDelivery: dOrders.filter(o => o.status !== 'Completed').length,
-            pendingMRP: mOrders.filter(o => o.status !== 'Completed').length,
-            completed: dOrders.filter(o => o.status === 'Completed').length + mOrders.filter(o => o.status === 'Completed').length
+            pendingDelivery: dOrders?.filter(o => o.status !== 'Completed').length,
+            pendingMRP: mOrders?.filter(o => o.status !== 'Completed').length,
+            completed: dOrders?.filter(o => o.status === 'Completed').length + mOrders?.filter(o => o.status === 'Completed').length
         };
     }, [deliveryOrders, mrpOrders]);
 
@@ -146,10 +146,10 @@ export default function WarehouseOut() {
     const getStatusCount = (status: string) => {
         if (activeTab === 'delivery') {
             if (status === 'All') return deliveryOrders.length;
-            return deliveryOrders.filter(o => o.status === status).length;
+            return deliveryOrders?.filter(o => o.status === status).length;
         } else if (activeTab === 'mrp') {
             if (status === 'All') return mrpOrders.length;
-            return mrpOrders.filter(o => o.status === status).length;
+            return mrpOrders?.filter(o => o.status === status).length;
         }
         return 0;
     };
@@ -349,7 +349,7 @@ export default function WarehouseOut() {
             const q = query.toLowerCase();
             setDropdownState(prev => ({ 
                 ...prev, 
-                items: productMaster.filter(p => p.sku.toLowerCase().includes(q) || p.name.toLowerCase().includes(q)) 
+                items: productMaster?.filter(p => p.sku.toLowerCase().includes(q) || p.name.toLowerCase().includes(q)) 
             }));
         }
     };
@@ -471,7 +471,7 @@ export default function WarehouseOut() {
                     onFormChange={(f, v) => setForm(prev => ({ ...prev, [f]: v }))}
                     onManualItemChange={handleManualItemChange}
                     onAddManualItem={() => setForm(prev => ({ ...prev, manualItems: [...prev.manualItems, { productSearch: '', sku: '', itemName: '', qty: 0, warehouseName: '', location: '', lotNo: '', remark: '' }] }))}
-                    onRemoveManualItem={(idx) => setForm(prev => ({ ...prev, manualItems: prev.manualItems.filter((_, i) => i !== idx) }))}
+                    onRemoveManualItem={(idx) => setForm(prev => ({ ...prev, manualItems: prev.manualItems?.filter((_, i) => i !== idx) }))}
                     onSubmit={submitOutbound}
                     onOpenDropdown={openDropdown}
                 />

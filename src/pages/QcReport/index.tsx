@@ -47,11 +47,11 @@ export default function QcReport() {
     }, 500);
   }, []);
 
-  const filteredData = reportData.filter(item => item.date.startsWith(selectedMonth));
+  const filteredData = reportData?.filter(item => item.date.startsWith(selectedMonth));
 
-  const totalInspected = filteredData.reduce((acc, curr) => acc + curr.totalQty, 0);
-  const totalPassed = filteredData.reduce((acc, curr) => acc + curr.passQty, 0);
-  const totalFailed = filteredData.reduce((acc, curr) => acc + curr.failQty, 0);
+  const totalInspected = filteredData?.reduce((acc, curr) => acc + curr.totalQty, 0);
+  const totalPassed = filteredData?.reduce((acc, curr) => acc + curr.passQty, 0);
+  const totalFailed = filteredData?.reduce((acc, curr) => acc + curr.failQty, 0);
   const passRate = totalInspected > 0 ? ((totalPassed / totalInspected) * 100).toFixed(1) : '0.0';
 
   const columns: ColumnDef<QcItem>[] = [

@@ -29,7 +29,7 @@ const NcCharts: React.FC<NcChartsProps> = ({ stats, scarData, theme }) => {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const trendData = months?.map((m, i) => {
          const dateStr = `2026-${String(i+1).padStart(2, '0')}`;
-         return scarData.filter(d => d.date.startsWith(dateStr)).length;
+         return scarData?.filter(d => d.date.startsWith(dateStr)).length;
       });
 
       if (chartMainLineRef.current) {

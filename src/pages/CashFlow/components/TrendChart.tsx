@@ -12,7 +12,7 @@ interface TrendChartProps {
 
 export default function TrendChart({ data }: TrendChartProps) {
   const [hoveredTrend, setHoveredTrend] = useState<number | null>(null);
-  const maxTrend = Math.max(...data?.map(d => d.balance)) * 1.1 || 500000;
+  const maxTrend = Math.max(...(data?.map(d => d.balance) || [0])) * 1.1 || 500000;
 
   const generateLinePath = (data: TrendData[], key: keyof TrendData, height: number, width: number, maxValue: number) => {
     if (!data.length) return '';

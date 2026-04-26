@@ -71,7 +71,7 @@ export default function OrdersTable({
           <tbody className="divide-y divide-slate-100">
             {currentItems?.map(so => {
               const style = getStatusStyle(so.status);
-              const isMulti = so.items.some(i => i.deliveries.length > 1);
+              const isMulti = so.items?.some(i => i.deliveries.length > 1);
               return (
                 <tr key={so.id} className="transition-colors hover:bg-slate-50 cursor-pointer" onClick={() => openModal('view', so)}>
                   <td className="px-6 py-4 font-normal text-slate-500">{formatDate(so.date)}</td>

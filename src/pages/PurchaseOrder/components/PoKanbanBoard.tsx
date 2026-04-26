@@ -49,7 +49,7 @@ const PoKanbanBoard: React.FC<PoKanbanBoardProps> = ({
   formatDate,
   formatCurrency
 }) => {
-  const getBoardItems = (status: string) => poList.filter(p => {
+  const getBoardItems = (status: string) => poList?.filter(p => {
     if (dateFilter === 'all') return p.status === status;
     return p.status === status && p.date.startsWith(selectedMonth);
   });

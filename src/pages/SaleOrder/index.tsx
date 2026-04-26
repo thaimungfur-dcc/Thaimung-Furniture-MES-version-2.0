@@ -118,11 +118,11 @@ export default function SaleOrder() {
   // Filtered Orders
   const filteredOrders = useMemo(() => {
     let result = orders;
-    if (subTab !== 'all') result = result.filter(o => o.status === subTab);
-    if (selectedMonth) result = result.filter(o => o.date.startsWith(selectedMonth));
+    if (subTab !== 'all') result = result?.filter(o => o.status === subTab);
+    if (selectedMonth) result = result?.filter(o => o.date.startsWith(selectedMonth));
     if (searchTerm) {
       const q = searchTerm.toLowerCase();
-      result = result.filter(o => (o.soNumber||'').toLowerCase().includes(q) || (o.customer||'').toLowerCase().includes(q));
+      result = result?.filter(o => (o.soNumber||'').toLowerCase().includes(q) || (o.customer||'').toLowerCase().includes(q));
     }
     return result;
   }, [orders, subTab, searchTerm, selectedMonth]);
@@ -195,7 +195,7 @@ export default function SaleOrder() {
   const removeDeliveryRound = (itemIdx: number, deliveryIdx: number) => {
     if (!orderModal || orderModal.mode === 'view') return;
     const newItems = [...orderModal.data.items];
-    newItems[itemIdx].deliveries = newItems[itemIdx].deliveries.filter((_, i) => i !== deliveryIdx);
+    newItems[itemIdx].deliveries = newItems[itemIdx].deliveries?.filter((_, i) => i !== deliveryIdx);
     newItems[itemIdx].deliveries.forEach((del, i) => del.round = i + 1);
     setOrderModal({...orderModal, data: {...orderModal.data, items: newItems}});
   };
