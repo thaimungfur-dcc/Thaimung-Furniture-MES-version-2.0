@@ -3,6 +3,7 @@ import {
   QrCode, List, BarChart2, Database, Package, Leaf, PlusCircle, 
   UploadCloud, Plus, HelpCircle
 } from 'lucide-react';
+import Swal from 'sweetalert2';
 import { MasterItem } from './types';
 import { KpiCard } from '../../components/shared/KpiCard';
 import { PageHeader } from '../../components/shared/PageHeader';
@@ -15,7 +16,7 @@ import GuideDrawer from './components/GuideDrawer';
 import { useGoogleSheets } from '../../hooks/useGoogleSheets';
 
 export default function MasterCodeApp() {
-  const { data: items, addRow: addItem, updateRow: updateItem, deleteRow: deleteItem, loading: isLoading } = useGoogleSheets<MasterItem>('MasterCodes');
+  const { data: items, addRow: addItem, addMultipleRows, updateRow: updateItem, deleteRow: deleteItem, loading: isLoading } = useGoogleSheets<MasterItem>('MasterCodes');
   const [activeTab, setActiveTab] = useState('list');
   const [showModal, setShowModal] = useState(false);
   const [showGroupModal, setShowGroupModal] = useState(false);
@@ -132,29 +133,63 @@ export default function MasterCodeApp() {
   const processUploadData = async (parsedData: any[]) => {
     if (!parsedData || parsedData.length === 0) return;
     
+    const newItems = [];
     for (let idx = 0; idx < parsedData.length; idx++) {
       const row = parsedData[idx];
-      const catCode = (row.CatCode || row.Code || '').toString().toUpperCase().substring(0,2);
-      const subCatCode = (row.SubCode || row.SubCatCode || '').toString().toUpperCase().substring(0,2);
+      const getVal = (r: any, keys: string[]) => {
+        for (const k of Object.keys(r)) {
+          if (keys.includes(k.toLowerCase())) return r[k] == null ? '' : r[k];
+        }
+        return '';
+      };
+      const catCodeStr = getVal(row, ['catcode', 'code', 'categorycode']);
+      const subCatCodeStr = getVal(row, ['subcode', 'subcatcode', 'subcategorycode']);
+      const catCode = catCodeStr.toString().toUpperCase().substring(0,2);
+      const subCatCode = subCatCodeStr.toString().toUpperCase().substring(0,2);
+      
       const mastCode = catCode + subCatCode;
-      const group = row.Group ? row.Group.toString().toUpperCase() : 'Uncategorized';
+      const groupStr = getVal(row, ['group', 'mastergroup']);
+      const group = groupStr ? groupStr.toString().toUpperCase() : 'Uncategorized';
 
       if (!catCode || !subCatCode) continue;
 
-      const newItem: any = {
+      newItems.push({
         id: Date.now().toString() + idx,
         mastCode: mastCode,
         groups: [group],
-        category: row.Category || 'Unknown',
+        category: getVal(row, ['category', 'catname']) || 'Unknown',
         catCode: catCode,
-        subCategory: row.SubCategory || 'Unknown',
+        subCategory: getVal(row, ['subcategory', 'subcatname']) || 'Unknown',
         subCatCode: subCatCode,
-        note: row.Note || row.Description || '',
+        note: getVal(row, ['note', 'description', 'remark']) || '',
         updatedAt: new Date().toISOString().split('T')[0],
         updatedBy: 'import@furniture.com'
-      };
+      });
+    }
 
-      await addItem(newItem);
+    if (newItems.length > 0) {
+      try {
+        await addMultipleRows(newItems);
+        Swal.fire({
+          icon: 'success',
+          title: 'Upload Successful',
+          text: `Successfully created ${newItems.length} Master Code records.`,
+          timer: 2000,
+          showConfirmButton: false
+        });
+      } catch (error: any) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Upload Failed',
+          text: error.message || 'An error occurred during data ingestion.'
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No Data Found',
+        text: 'The CSV file is empty or does not match the required columns.'
+      });
     }
 
     setShowUploadModal(false);

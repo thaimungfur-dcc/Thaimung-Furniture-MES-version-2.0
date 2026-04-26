@@ -62,11 +62,12 @@ export default function MasterList({ items, openModal, deleteItem }: MasterListP
       header: 'UPDATED',
       cell: ({ row }) => {
         const dateStr = row.getValue('updatedAt') as string;
-        const by = row.original.updatedBy || '';
+        const rawBy = row.original.updatedBy;
+        const by = rawBy ? String(rawBy) : '';
         return (
           <div className="text-center text-[12px] text-slate-400">
             <div className="font-bold text-[#111f42]">{new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
-            <div className="text-[10px] opacity-70 mt-0.5">{by.split('@')[0]}</div>
+            <div className="text-[10px] opacity-70 mt-0.5">{by ? by.split('@')[0] : '-'}</div>
           </div>
         );
       }
