@@ -1,0 +1,9 @@
+src/pages/MasterCode/components/MasterList.tsx:69:            <div className="text-[10px] opacity-70 mt-0.5">{by.split('@')[0]}</div>
+src/pages/WarehouseOut/index.tsx:198:             const parts = lastLog.transId.split('-');
+src/pages/SaleOrder/components/KanbanBoard.tsx:58:                       <div className={`absolute top-0 left-0 w-1 h-full ${style.headerBg.split('/')[0]} border-l ${style.border}`}></div>
+src/pages/NcControl/index.tsx:162:        id: `NC-${selectedMonth.slice(2, 4)}${selectedMonth.split('-')[1]}-${String(newCount).padStart(3, '0')}`, 
+src/pages/UserPermissions/components/Step2Operational.tsx:86:                        <span className="text-[10px] font-bold text-[#0F172A] whitespace-nowrap group-hover:text-[#ab8a3b]">{user.name?.split(' ')[0] || 'Unknown'}</span>
+src/pages/WarehouseIn/components/PrintDocModal.tsx:55:                                                <div className="flex gap-3"><span className="font-bold text-slate-500 w-16 text-right">DATE:</span> <span className="font-bold text-[#111f42] w-24 text-left">{formatDateSafe(activeTransaction.date?.split(' ')[0] || '')}</span></div>
+src/pages/WarehouseIn/index.tsx:243:            const logDate = String(log.date).split(' ')[0];
+src/pages/PurchaseNC/index.tsx:172:        id: `SCAR-${selectedMonth.slice(2, 4)}${selectedMonth.split('-')[1]}-${String(newCount).padStart(3, '0')}`, 
+src/components/shared/CsvUploadModal.tsx:46:    const fileExtension = file.name.split('.').pop()?.toLowerCase();

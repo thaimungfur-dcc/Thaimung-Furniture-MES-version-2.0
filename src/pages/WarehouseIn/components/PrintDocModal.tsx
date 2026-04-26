@@ -52,7 +52,7 @@ export const PrintDocModal = ({ showPrintDocModal, activeTransaction, setShowPri
                                         <div className="flex justify-end">
                                             <div className="text-[11px] font-mono flex flex-col items-end gap-1 bg-slate-50 p-2 rounded border border-slate-100">
                                                 <div className="flex gap-3"><span className="font-bold text-slate-500 w-16 text-right">DOC NO:</span> <span className="font-black text-[#111f42] w-24 text-left">{String(activeTransaction.transId)}</span></div>
-                                                <div className="flex gap-3"><span className="font-bold text-slate-500 w-16 text-right">DATE:</span> <span className="font-bold text-[#111f42] w-24 text-left">{formatDateSafe(activeTransaction.date.split(' ')[0])}</span></div>
+                                                <div className="flex gap-3"><span className="font-bold text-slate-500 w-16 text-right">DATE:</span> <span className="font-bold text-[#111f42] w-24 text-left">{formatDateSafe(activeTransaction.date?.split(' ')[0] || '')}</span></div>
                                             </div>
                                         </div>
                                     </div>
