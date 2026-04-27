@@ -119,8 +119,20 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
             const response = await googleSheetsService.readSheet(sheetName, false);
             if (response.status === 'success') {
                 return response.data || [];
+            } else {
+                if (googleSheetsService.isLive) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Sync Error',
+                        text: `Cannot sync ${sheetName}: ${response.message}`,
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 5000
+                    });
+                }
+                return [];
             }
-            return [];
         } catch (error) {
             console.warn(`Error fetching ${sheetName}:`, error);
             return [];

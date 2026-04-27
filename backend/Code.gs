@@ -203,9 +203,18 @@ function readData(sheet, params, headersObj) {
     sheetHeaders.forEach((_, i) => {
       const key = headerMap[i];
       let val = row[i];
-      // Special handling for JSON-like strings in 'groups' or 'history'
-      if ((key === 'groups' || key === 'history' || key === 'permissions' || key === 'items') && typeof val === 'string' && val.trim().startsWith('[')) {
-        try { val = JSON.parse(val); } catch(e) {}
+      // Special handling for JSON-like strings or garbage array strings
+      if ((key === 'groups' || key === 'history' || key === 'permissions' || key === 'items') && typeof val === 'string') {
+        const trimmed = val.trim();
+        if (trimmed.startsWith('[')) {
+          try { val = JSON.parse(trimmed); } catch(e) { val = []; }
+        } else if (trimmed.includes('java.lang.Object')) {
+          val = []; // Handle garbage data
+        } else if (trimmed !== '') {
+          val = trimmed.split(',').map(s => s.trim()).filter(Boolean); // Fallback for comma-sep
+        } else {
+          val = [];
+        }
       }
       obj[key] = val;
     });
@@ -244,7 +253,11 @@ function writeData(sheet, data, headersObj) {
   
   // Transform data into a 2D array for bulk setValues
   const rows = data.map(item => {
-    return sheetHeaders.map(h => item[h] != null ? item[h] : "");
+    return sheetHeaders.map(h => {
+      var val = item[h];
+      if (Array.isArray(val)) return JSON.stringify(val);
+      return val != null ? val : "";
+    });
   });
   
   // Write all rows at once at the bottom
@@ -283,7 +296,9 @@ function updateData(sheet, data, headersObj) {
       const updateItem = updatesMap[rowId];
       headers.forEach((header, colIdx) => {
         if (updateItem.hasOwnProperty(header)) {
-          values[i][colIdx] = updateItem[header] != null ? updateItem[header] : "";
+          var val = updateItem[header];
+          if (Array.isArray(val)) val = JSON.stringify(val);
+          values[i][colIdx] = val != null ? val : "";
         }
       });
       updatedCount++;

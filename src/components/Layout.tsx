@@ -135,18 +135,25 @@ export default function Layout() {
       
       {/* Demo Mode Banner */}
       {isDemoMode && (
-        <div className="bg-[#111f42] text-white py-2 px-6 flex items-center justify-between z-[100] relative shadow-lg no-print">
-          <div className="flex items-center gap-3">
-            <AlertTriangle size={18} className="animate-pulse" />
-            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em]">
-              Running in Demo Mode (Mock Data). Connect your Google Sheet via <code className="bg-white/20 px-2 py-0.5 rounded-lg">DEPLOYMENT.md</code> to enable real storage.
-            </span>
+        <div className="bg-red-600 text-white py-3 px-6 flex items-center justify-between z-[100] relative shadow-lg no-print animate-in slide-in-from-top duration-500">
+          <div className="flex items-center gap-4">
+            <div className="bg-white/20 p-2 rounded-full ring-4 ring-white/10">
+              <AlertTriangle size={20} className="animate-bounce" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[11px] md:text-[13px] font-black uppercase tracking-[0.05em] leading-tight">
+                Backend Connection Unavailable: App is running in Demo Mode (Mock Data)
+              </span>
+              <span className="text-[10px] opacity-80 font-medium">
+                Data shown here is NOT saved to Google Sheets. Set <code className="bg-black/20 px-1.5 py-0.5 rounded">VITE_APPS_SCRIPT_URL</code> to connect.
+              </span>
+            </div>
           </div>
           <button 
             onClick={() => navigate('/system-config')}
-            className="px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all bg-white/20 hover:bg-white/30 text-white border border-white/40"
+            className="px-5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all bg-white text-red-600 hover:bg-gray-100 shadow-sm whitespace-nowrap"
           >
-            Configure Now
+            Setup Backend
           </button>
         </div>
       )}

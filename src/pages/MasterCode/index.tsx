@@ -76,8 +76,19 @@ export default function MasterCodeApp() {
   };
 
   const saveItem = async () => {
-    if (!isValid || isDuplicate) return;
-    const now = new Date().toISOString().split('T')[0];
+    if (!isValid) return;
+    
+    if (isDuplicate) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'รหัสซ้ำซ้อน (Duplicate Code)',
+        text: `รหัส "${generatedMastCode}" มีอยู่ในระบบแล้ว กรุณาตรวจสอบข้อมูลอีกครั้ง`,
+        confirmButtonColor: '#111f42'
+      });
+      return;
+    }
+
+    const now = new Date().toISOString();
     const code = generatedMastCode;
     
     try {
@@ -205,7 +216,7 @@ export default function MasterCodeApp() {
         subCategory: getVal(row, ['subcategory', 'subcatname', 'subcategoryname']) || 'Unknown',
         subCatCode: subCatCode,
         note: getVal(row, ['note', 'description', 'remark', 'desc']) || '',
-        updatedAt: new Date().toISOString().split('T')[0],
+        updatedAt: new Date().toISOString(),
         updatedBy: 'import@furniture.com'
       });
       
