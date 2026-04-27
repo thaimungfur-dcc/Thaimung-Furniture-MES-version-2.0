@@ -371,32 +371,29 @@ export default function MasterCodeApp() {
               <KpiCard title="New This Month" value={newCount} color="#E3624A" icon={PlusCircle} subValue="Created Recently" />
             </div>
 
-            <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col overflow-hidden min-h-[600px]">
-              
-              {activeTab === 'list' && (
-                <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4 bg-slate-50/50">
-                  <div className="flex-1"></div>
-                  <div className="flex gap-3 shrink-0 flex-nowrap items-center ml-auto">
-                    <button onClick={() => setShowUploadModal(true)} className="px-5 py-2.5 rounded-xl text-[12px] font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-[#111f42] transition-all flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
-                      <UploadCloud size={16} /> Upload
-                    </button>
-                    <button onClick={() => openModal()} className="px-5 py-2.5 rounded-xl text-[12px] font-bold bg-[#111f42] text-white hover:bg-[#1e346b] shadow-md transition-all flex items-center gap-2 uppercase tracking-wide whitespace-nowrap">
-                      <Plus size={16} className="text-[#ab8a3b]" /> NEW CODE
-                    </button>
-                  </div>
-                </div>
-              )}
-
+            <div className="w-full">
               {activeTab === 'list' && (
                 <MasterList 
                   items={items || []}
                   openModal={openModal}
                   deleteItem={handleDeleteItem}
+                  actionButtons={
+                    <>
+                      <button onClick={() => setShowUploadModal(true)} className="px-5 py-2 rounded-xl text-[10px] font-black bg-white border border-slate-200 text-slate-600 shadow-sm hover:bg-slate-50 hover:text-[#111f42] transition-all flex items-center gap-2 uppercase tracking-widest whitespace-nowrap h-10">
+                        <UploadCloud size={14} /> Upload
+                      </button>
+                      <button onClick={() => openModal()} className="px-5 py-2 rounded-xl text-[10px] font-black bg-[#111f42] text-white hover:bg-[#1e346b] shadow-md transition-all flex items-center gap-2 uppercase tracking-widest whitespace-nowrap h-10">
+                        <Plus size={14} className="text-[#ab8a3b]" /> NEW CODE
+                      </button>
+                    </>
+                  }
                 />
               )}
 
               {activeTab === 'analytics' && (
-                <Analytics items={items || []} activeTab={activeTab} />
+                <div className="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden min-h-[600px]">
+                  <Analytics items={items || []} activeTab={activeTab} />
+                </div>
               )}
             </div>
           </div>

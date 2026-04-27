@@ -207,30 +207,27 @@ export default function ItemMasterApp() {
                     </div>
 
                     {/* Table Section */}
-                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full rounded-2xl overflow-hidden shadow-sm">
+                    <div className="w-full">
                         {activeTab === 'list' && (
-                            <>
-                                <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-4 bg-slate-50/50">
-                                    <div className="flex-1"></div>
-                                    <div className="flex gap-2 shrink-0 ml-auto items-center">
-                                        <button onClick={() => setShowUploadModal(true)} className="px-5 py-2.5 rounded-xl text-[12px] font-black bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-2 uppercase tracking-widest transition-all">
-                                            <UploadCloud size={16} /> Upload
+                            <ItemTable 
+                                items={items}
+                                getTypeClass={getTypeClass}
+                                openModal={openModal}
+                                deleteItem={deleteItem}
+                                actionButtons={
+                                    <>
+                                        <button onClick={() => setShowUploadModal(true)} className="px-5 py-2 rounded-xl text-[10px] font-black bg-white border border-slate-200 text-slate-600 shadow-sm hover:bg-slate-50 hover:text-[#111f42] flex items-center gap-2 uppercase tracking-widest transition-all h-10 whitespace-nowrap">
+                                            <UploadCloud size={14} /> Upload
                                         </button>
-                                        <button onClick={() => openModal()} className="px-5 py-2.5 rounded-xl text-[12px] font-black bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-[0.15em] transition-all hover:bg-[#1e346b]">
-                                            <Plus size={16} className="text-[#ab8a3b]" /> NEW RECORD
+                                        <button onClick={() => openModal()} className="px-5 py-2 rounded-xl text-[10px] font-black bg-[#111f42] text-white shadow-md flex items-center gap-2 uppercase tracking-widest transition-all hover:bg-[#1e346b] h-10 whitespace-nowrap">
+                                            <Plus size={14} className="text-[#ab8a3b]" /> NEW RECORD
                                         </button>
-                                    </div>
-                                </div>
-                                <ItemTable 
-                                    items={items}
-                                    getTypeClass={getTypeClass}
-                                    openModal={openModal}
-                                    deleteItem={deleteItem}
-                                />
-                            </>
+                                    </>
+                                }
+                            />
                         )}
                         {activeTab === 'analytics' && (
-                            <div className="p-6 flex-1 flex flex-col items-center justify-center min-h-[400px]">
+                            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm p-6 flex flex-col items-center justify-center min-h-[400px]">
                                 <h3 className="text-sm font-black text-[#111f42] uppercase tracking-widest mb-6">Item Distribution by Type</h3>
                                 <div className="w-full max-w-md h-64 relative">
                                     <canvas ref={typeChartRef}></canvas>

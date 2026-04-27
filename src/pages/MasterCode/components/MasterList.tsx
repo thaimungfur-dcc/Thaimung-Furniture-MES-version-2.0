@@ -6,11 +6,12 @@ import { DataTable } from '../../../components/shared/DataTable';
 
 interface MasterListProps {
   items: MasterItem[];
-  openModal: (item: MasterItem) => void;
+  openModal: (item: MasterItem | null) => void;
   deleteItem: (id: string) => void;
+  actionButtons?: React.ReactNode;
 }
 
-export default function MasterList({ items, openModal, deleteItem }: MasterListProps) {
+export default function MasterList({ items, openModal, deleteItem, actionButtons }: MasterListProps) {
   const columns: ColumnDef<MasterItem>[] = [
     {
       accessorKey: 'mastCode',
@@ -113,6 +114,8 @@ export default function MasterList({ items, openModal, deleteItem }: MasterListP
         fileName="Master_Code_List"
         searchPlaceholder="Search Master Code, Category..."
         itemsPerPage={15}
+        filterColumns={['groups', 'category']}
+        actionButtons={actionButtons}
       />
     </div>
   );

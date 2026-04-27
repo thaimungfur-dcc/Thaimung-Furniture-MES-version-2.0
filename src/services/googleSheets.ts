@@ -62,6 +62,13 @@ export class GoogleSheetsService {
       return this.handleMockRequest(payload);
     }
 
+    // Auto-fix /edit to /exec
+    if (SCRIPT_URL.endsWith('/edit')) {
+      SCRIPT_URL = SCRIPT_URL.replace(/\/edit$/, '/exec');
+    } else if (SCRIPT_URL.includes('/edit?')) {
+      SCRIPT_URL = SCRIPT_URL.split('/edit?')[0] + '/exec';
+    }
+
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000); 
@@ -83,7 +90,7 @@ export class GoogleSheetsService {
       } catch (e) {
         console.error('Failed to parse response as JSON. Raw text:', text);
         if (text.includes("script.google.com") || text.includes("<html")) {
-             throw new Error('Google Apps Script returned an HTML page instead of JSON. Ensure the deployment is set to "Anyone" and you are using the Web App URL.');
+             throw new Error('Google Apps Script ถูกตั้งค่า Permission ผิด! (Returned HTML). กรุณา Deploy ใหม่และตั้งค่า: "Execute as: Me" และ "Who has access: Anyone"');
         }
         throw new Error('Backend returned non-JSON response');
       }
@@ -106,7 +113,7 @@ export class GoogleSheetsService {
 
       return result;
     } catch (error) {
-      if (retries > 0 && !(error instanceof Error && error.message.includes('Google Apps Script returned'))) {
+      if (retries > 0 && !(error instanceof Error && error.message.includes('Google Apps Script'))) {
         console.warn(`[Retry] Network error. Retrying in ${delay}ms...`);
         await new Promise(res => setTimeout(res, delay));
         return this.request<T>(payload, retries - 1, delay * 2);
@@ -114,7 +121,10 @@ export class GoogleSheetsService {
       console.warn(`Error executing Google Sheets action [${payload.action}]:`, error);
       
       this.lastMode = 'demo';
-      const errMsg = error instanceof Error ? error.message : String(error);
+      let errMsg = error instanceof Error ? error.message : String(error);
+      if (errMsg === 'Failed to fetch' || errMsg.includes('NetworkError') || errMsg.includes('Load failed')) {
+         errMsg = `Failed to fetch (CORS/Network)\nสาเหตุ: ไม่ได้ตั้งค่า \n1) Execute as: Me\n2) Who has access: Anyone \n\nใน Apps Script ครับ!`;
+      }
       throw new Error(`[URL: ${SCRIPT_URL.substring(0, 30)}...] Backend Error: ${errMsg}`);
     }
   }

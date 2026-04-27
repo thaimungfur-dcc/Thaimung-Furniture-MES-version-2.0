@@ -535,35 +535,28 @@ export default function WarehouseInApp() {
                         <InboundKpiSection stats={stats} />
 
                         <div className="flex flex-col relative mt-2 gap-4 min-h-[500px]">
-                            {/* Toolbar */}
-                            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden z-20">
-                                <InboundToolbar 
-                                    activeTab={activeTab}
-                                    activeWhTab={activeWhTab}
-                                    setActiveWhTab={setActiveWhTab}
-                                    statusFilter={statusFilter}
-                                    setStatusFilter={setStatusFilter}
-                                    searchQuery={searchQuery}
-                                    setSearchQuery={setSearchQuery}
-                                    onImportClick={() => setShowImportModal(true)}
-                                    onManualClick={() => openReceiveModal(null, 'MANUAL')}
-                                    warehouses={warehouses}
-                                    statuses={statuses}
-                                />
-                            </div>
-
                             {/* Table View */}
                             <div className="w-full relative flex-1">
                                 {activeTab === 'all' ? (
                                     <DataTable 
-                                        data={filteredLogs}
+                                        data={historyLogs || []}
                                         columns={historyColumns}
                                         title="System Inbound Ledger"
-                                        filterColumns={['warehouseName', 'location']}
+                                        filterColumns={['warehouseName']}
+                                        actionButtons={
+                                            <>
+                                                <button onClick={() => setShowImportModal(true)} className="px-5 py-2 rounded-xl text-[10px] font-black bg-white border border-slate-200 text-slate-600 shadow-sm hover:bg-slate-50 hover:text-[#111f42] flex items-center gap-2 uppercase tracking-widest transition-all h-10 whitespace-nowrap">
+                                                    <UploadCloud size={14} /> UPLOAD CSV
+                                                </button>
+                                                <button onClick={() => openReceiveModal(null, 'MANUAL')} className="px-5 py-2 rounded-xl text-[10px] font-black bg-[#E3624A] text-white shadow-sm hover:bg-red-500 shadow-red-500/20 flex items-center gap-2 uppercase tracking-widest transition-all h-10 whitespace-nowrap">
+                                                    <PlusCircle size={14} /> DIRECT RECEIVE
+                                                </button>
+                                            </>
+                                        }
                                     />
                                 ) : activeTab === 'pending_jo' ? (
                                     <PendingJOTable 
-                                        data={currentData}
+                                        data={jobOrders || []}
                                         getProgressColor={getProgressColor}
                                         getStatusClass={getStatusClass}
                                         onOpenOrderView={openOrderView}
@@ -572,7 +565,7 @@ export default function WarehouseInApp() {
                                     />
                                 ) : (
                                     <PendingPOTable 
-                                        data={currentData}
+                                        data={purchaseOrders || []}
                                         getProgressColor={getProgressColor}
                                         getStatusClass={getStatusClass}
                                         onOpenOrderView={openOrderView}

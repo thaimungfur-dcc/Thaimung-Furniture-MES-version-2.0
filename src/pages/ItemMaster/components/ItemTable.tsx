@@ -8,9 +8,10 @@ interface ItemTableProps {
     getTypeClass: (type: string) => string;
     openModal: (item: any) => void;
     deleteItem: (id: string) => void;
+    actionButtons?: React.ReactNode;
 }
 
-export default function ItemTable({ items, getTypeClass, openModal, deleteItem }: ItemTableProps) {
+export default function ItemTable({ items, getTypeClass, openModal, deleteItem, actionButtons }: ItemTableProps) {
     const columns: ColumnDef<any>[] = [
         {
             accessorKey: 'itemCode',
@@ -84,6 +85,8 @@ export default function ItemTable({ items, getTypeClass, openModal, deleteItem }
                 fileName="Item_Master_Records"
                 searchPlaceholder="Search Item Code, Name, Category..."
                 itemsPerPage={15}
+                filterColumns={['itemType', 'category', 'status']}
+                actionButtons={actionButtons}
             />
         </div>
     );

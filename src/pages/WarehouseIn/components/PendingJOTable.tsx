@@ -94,5 +94,11 @@ export default function PendingJOTable({
     }
   ];
 
-  return <DataTable data={data} columns={columns} searchPlaceholder="Search Pending JO..." fileName="Pending_JO" />;
+  return <DataTable 
+    data={data} 
+    columns={columns} 
+    searchPlaceholder="Search Pending JO..." 
+    fileName="Pending_JO" 
+    filterColumns={['status']}
+  />;
 }

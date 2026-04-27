@@ -94,5 +94,13 @@ export default function PendingPOTable({
     }
   ];
 
-  return <DataTable data={data} columns={columns} searchPlaceholder="Search Pending PO..." fileName="Pending_PO" />;
+  return (
+    <DataTable 
+      data={data} 
+      columns={columns} 
+      searchPlaceholder="Search Pending PO..." 
+      fileName="Pending_PO" 
+      filterColumns={['status']}
+    />
+  );
 }
