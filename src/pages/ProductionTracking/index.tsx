@@ -349,6 +349,7 @@ export default function ProductionTracking() {
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveOrder}
         editingOrder={editingOrder}
+        isLoading={loading}
       />
 
       {/* Guide Drawer Placeholder */}

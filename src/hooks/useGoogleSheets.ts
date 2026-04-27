@@ -71,6 +71,28 @@ export function useGoogleSheets<T>(sheetName: string) {
     }
   };
 
+  const updateMultipleRows = async (items: { id: string | number; [key: string]: any }[]) => {
+    setLoading(true);
+    try {
+      const response = await googleSheetsService.request({
+        action: 'update' as any,
+        sheet: sheetName,
+        data: items
+      } as any);
+
+      if (response.status === 'success') {
+        await fetchData(false);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const updateRow = async (id: string | number, item: Partial<T>) => {
     setLoading(true);
     try {
@@ -127,5 +149,5 @@ export function useGoogleSheets<T>(sheetName: string) {
     }
   };
 
-  return { data, loading, error, fetchData, addRow, addMultipleRows, updateRow, deleteRow, refetch: () => fetchData(false) };
+  return { data, loading, error, fetchData, addRow, addMultipleRows, updateRow, updateMultipleRows, deleteRow, refetch: () => fetchData(false) };
 }

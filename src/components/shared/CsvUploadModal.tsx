@@ -23,6 +23,7 @@ interface CsvUploadModalProps {
   title: string;
   expectedHeaders: string[];
   instructions?: string;
+  isSubmitting?: boolean;
 }
 
 export function CsvUploadModal({ 
@@ -31,7 +32,8 @@ export function CsvUploadModal({
   onConfirm, 
   title, 
   expectedHeaders,
-  instructions
+  instructions,
+  isSubmitting = false
 }: CsvUploadModalProps) {
   const [data, setData] = useState<any[]>([]);
   const [headers, setHeaders] = useState<string[]>([]);
@@ -293,10 +295,20 @@ export function CsvUploadModal({
               {step === 'preview' && (
                 <button 
                   onClick={() => onConfirm(data)}
-                  className="px-6 py-2.5 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group"
+                  disabled={isSubmitting}
+                  className={`px-6 py-2.5 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
-                  Confirm Ingestion
-                  <ChevronRight size={18} className="text-white group-hover:translate-x-1 transition-transform" />
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Ingesting...
+                    </>
+                  ) : (
+                    <>
+                      Confirm Ingestion
+                      <ChevronRight size={18} className="text-white group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </button>
               )}
             </div>

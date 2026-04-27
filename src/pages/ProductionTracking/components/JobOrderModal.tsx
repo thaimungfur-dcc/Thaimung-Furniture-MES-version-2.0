@@ -8,9 +8,10 @@ interface JobOrderModalProps {
   onClose: () => void;
   onSave: (data: Partial<JobOrder>) => void;
   editingOrder?: JobOrder;
+  isLoading?: boolean;
 }
 
-export default function JobOrderModal({ isOpen, onClose, onSave, editingOrder }: JobOrderModalProps) {
+export default function JobOrderModal({ isOpen, onClose, onSave, editingOrder, isLoading = false }: JobOrderModalProps) {
   const [formData, setFormData] = useState<Partial<JobOrder>>(
     editingOrder || {
       joNo: `JO${new Date().getFullYear()}${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`,
@@ -181,11 +182,16 @@ export default function JobOrderModal({ isOpen, onClose, onSave, editingOrder }:
           </button>
           <button 
             type="submit"
+            disabled={isLoading}
             onClick={(e) => { e.preventDefault(); onSave(formData); }}
-            className="px-6 py-3 bg-[#111f42] text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-blue-900/10 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+            className={`px-6 py-3 bg-[#111f42] text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-blue-900/10 transition-all flex items-center gap-2 ${isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:brightness-110 active:scale-95'}`}
           >
-            <Save size={16} className="text-[#ab8a3b]" />
-            Save Job Order
+            {isLoading ? (
+              <Loader2 className="animate-spin text-[#ab8a3b]" size={16} />
+            ) : (
+              <Save size={16} className="text-[#ab8a3b]" />
+            )}
+            {isLoading ? 'Saving...' : 'Save Job Order'}
           </button>
         </div>
       </div>

@@ -44,7 +44,7 @@ export default function WarehouseOut() {
     const productMaster = useMemo(() => (items || [])?.map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
     const { data: deliveryOrders, updateRow: updateDO, loading: doLoading } = useGoogleSheets<DeliveryOrder>('DeliveryOrders');
     const { data: mrpOrders, updateRow: updateMRP, loading: mrpLoading } = useGoogleSheets<MrpOrder>('MrpOrders');
-    const { data: historyLogs, addRow: addLog, updateRow: updateLog, loading: logLoading } = useGoogleSheets<HistoryLog>('WarehouseOutLogs');
+    const { data: historyLogs, addRow: addLog, addMultipleRows: addLogsBatch, updateRow: updateLog, loading: logLoading } = useGoogleSheets<HistoryLog>('WarehouseOutLogs');
 
     const loading = doLoading || mrpLoading || logLoading;
 
@@ -204,24 +204,22 @@ export default function WarehouseOut() {
     const submitOutbound = async (completeJob = false) => {
         try {
             if (modalType === 'MANUAL') {
-                for (let i = 0; i < form.manualItems.length; i++) {
-                    const item = form.manualItems[i];
-                    await addLog({
-                        id: Number(Date.now() + i),
-                        transId: generateTrxId(),
-                        date: form.date.replace('T', ' '),
-                        outType: form.outType,
-                        refNo: form.refNo,
-                        sku: item.sku,
-                        itemName: item.itemName,
-                        qty: Number(item.qty),
-                        location: item.location,
-                        warehouseName: item.warehouseName,
-                        lotNo: item.lotNo,
-                        status: 'Pending',
-                        by: 'Admin'
-                    });
-                }
+                const logsToBatch = form.manualItems?.map((item, i) => ({
+                    id: Number(Date.now() + i),
+                    transId: generateTrxId(),
+                    date: form.date.replace('T', ' '),
+                    outType: form.outType,
+                    refNo: form.refNo,
+                    sku: item.sku,
+                    itemName: item.itemName,
+                    qty: Number(item.qty),
+                    location: item.location,
+                    warehouseName: item.warehouseName,
+                    lotNo: item.lotNo,
+                    status: 'Pending',
+                    by: 'Admin'
+                }));
+                await addLogsBatch(logsToBatch);
             } else {
                 if (selectedItem) {
                     if (modalType === 'SO') {
@@ -370,26 +368,24 @@ export default function WarehouseOut() {
 
     const confirmUpload = async (parsedData: any[]) => {
         try {
-            for (let idx = 0; idx < parsedData.length; idx++) {
-                const row = parsedData[idx];
-                const newLog = {
-                    id: Number(Date.now().toString() + idx),
-                    transId: generateTrxId(),
-                    date: new Date().toISOString().slice(0, 16).replace('T', ' '),
-                    outType: row.outType || 'Adjustment',
-                    refNo: 'CSV Import',
-                    sku: row.sku || '',
-                    itemName: row.itemName || 'Unknown',
-                    qty: parseFloat(row.qty) || 0,
-                    location: row.location || '',
-                    warehouseName: row.warehouseName || 'Main WH',
-                    lotNo: row.lotNo || '',
-                    remark: row.remark || '',
-                    status: 'Confirmed', 
-                    by: 'Admin (CSV)'
-                };
-                await addLog(newLog);
-            }
+            const batchToImport = parsedData?.map((row, idx) => ({
+                id: Number(Date.now().toString() + idx),
+                transId: generateTrxId(),
+                date: new Date().toISOString().slice(0, 16).replace('T', ' '),
+                outType: row.outType || 'Adjustment',
+                refNo: 'CSV Import',
+                sku: row.sku || '',
+                itemName: row.itemName || 'Unknown',
+                qty: parseFloat(row.qty) || 0,
+                location: row.location || '',
+                warehouseName: row.warehouseName || 'Main WH',
+                lotNo: row.lotNo || '',
+                remark: row.remark || '',
+                status: 'Confirmed', 
+                by: 'Admin (CSV)'
+            }));
+
+            await addLogsBatch(batchToImport);
             setShowUploadModal(false);
             window.alert(`Imported ${parsedData.length} records successfully.`);
         } catch (error) {
@@ -482,6 +478,7 @@ export default function WarehouseOut() {
                     onConfirm={confirmUpload} 
                     expectedHeaders={['outType', 'sku', 'itemName', 'qty', 'warehouseName', 'location', 'lotNo', 'remark']}
                     title="Upload Outbound Logs"
+                    isSubmitting={loading}
                 />
 
                 {dropdownState.show && (

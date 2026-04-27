@@ -16,7 +16,7 @@ import GuideDrawer from './components/GuideDrawer';
 import { useGoogleSheets } from '../../hooks/useGoogleSheets';
 
 export default function MasterCodeApp() {
-  const { data: items, addRow: addItem, addMultipleRows, updateRow: updateItem, deleteRow: deleteItem, loading: isLoading } = useGoogleSheets<MasterItem>('MasterCodes');
+  const { data: items, addRow: addItem, addMultipleRows, updateRow: updateItem, updateMultipleRows, deleteRow: deleteItem, loading: isLoading } = useGoogleSheets<MasterItem>('MasterCodes');
   const [activeTab, setActiveTab] = useState('list');
   const [showModal, setShowModal] = useState(false);
   const [showGroupModal, setShowGroupModal] = useState(false);
@@ -74,12 +74,18 @@ export default function MasterCodeApp() {
     const now = new Date().toISOString().split('T')[0];
     const code = generatedMastCode;
     
-    if (form.id) {
-      await updateItem(form.id, { ...form, mastCode: code, updatedAt: now });
-    } else {
-      await addItem({ ...form, mastCode: code, updatedAt: now, updatedBy: 'Admin' });
+    try {
+      if (form.id) {
+        await updateItem(form.id, { ...form, mastCode: code, updatedAt: now });
+        Swal.fire({ icon: 'success', title: 'Updated Successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 });
+      } else {
+        await addItem({ ...form, mastCode: code, updatedAt: now, updatedBy: 'Admin User' });
+        Swal.fire({ icon: 'success', title: 'Created Successfully', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 });
+      }
+      closeModal();
+    } catch (error: any) {
+      Swal.fire({ icon: 'error', title: 'Save Failed', text: error.message });
     }
-    closeModal();
   };
 
   const handleDeleteItem = async (id: string) => {
@@ -111,17 +117,35 @@ export default function MasterCodeApp() {
     setEditGroupText('');
   };
 
-  const saveEditGroup = () => {
+  const saveEditGroup = async () => {
     if (editGroupText && !groups.includes(editGroupText.toUpperCase())) {
       const oldGroup = editingGroup;
       const newName = editGroupText.toUpperCase();
       
       setGroups(prev => prev?.map(g => g === oldGroup ? newName : g));
-      (items || []).forEach(item => {
-        if (item.groups && item.groups.includes(oldGroup!)) {
-          updateItem(item.id, { groups: item.groups?.map((g: string) => g === oldGroup ? newName : g) });
+      
+      const itemsToUpdate = (items || [])
+        .filter(item => item.groups && item.groups.includes(oldGroup!))
+        .map(item => ({
+          id: item.id,
+          groups: item.groups?.map((g: string) => g === oldGroup ? newName : g) || []
+        }));
+
+      if (itemsToUpdate.length > 0) {
+        try {
+          await updateMultipleRows(itemsToUpdate);
+          Swal.fire({ 
+            icon: 'success', 
+            title: 'Master Data Sync', 
+            text: `Successfully updated ${itemsToUpdate.length} items in Google Sheets.`,
+            timer: 2000, 
+            showConfirmButton: false 
+          });
+        } catch (error: any) {
+          Swal.fire({ icon: 'error', title: 'Sync Error', text: error.message });
         }
-      });
+      }
+      
       cancelEditGroup();
     } else if (editGroupText === editingGroup) {
       cancelEditGroup();
@@ -352,6 +376,7 @@ export default function MasterCodeApp() {
             generatedMastCode={generatedMastCode}
             saveItem={saveItem}
             isValid={isValid}
+            isLoading={isLoading}
           />
 
           <CsvUploadModal 
@@ -361,6 +386,7 @@ export default function MasterCodeApp() {
             expectedHeaders={['Group', 'Category', 'CatCode', 'SubCategory', 'SubCode', 'Note']}
             onConfirm={processUploadData}
             instructions="อัปโหลด Master Code ด้วยไฟล์ .csv (คอลัมน์: Group, Category, CatCode, SubCategory, SubCode, Note)"
+            isSubmitting={isLoading}
           />
 
           <GroupModal 

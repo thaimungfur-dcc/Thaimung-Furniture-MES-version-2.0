@@ -47,7 +47,7 @@ export class GoogleSheetsService {
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // Increased to 30s
       const response = await fetch(SCRIPT_URL, {
         signal: controller.signal,
         method: 'POST',

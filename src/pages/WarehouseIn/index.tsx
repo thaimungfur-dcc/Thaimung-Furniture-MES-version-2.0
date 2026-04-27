@@ -65,7 +65,7 @@ export default function WarehouseInApp() {
     const { items } = useMasterData();
     const { data: jobOrders, addRow: addJO, updateRow: updateJO, loading: joLoading } = useGoogleSheets<any>('JobOrders');
     const { data: purchaseOrders, addRow: addPO, updateRow: updatePO, loading: poLoading } = useGoogleSheets<any>('PurchaseOrders');
-    const { data: historyLogs, addRow: addLog, updateRow: updateLog, loading: logLoading } = useGoogleSheets<any>('HistoryLogs');
+    const { data: historyLogs, addRow: addLog, addMultipleRows: addLogsBatch, updateRow: updateLog, loading: logLoading } = useGoogleSheets<any>('HistoryLogs');
     const [selectedItem, setSelectedItem] = useState<any>(null);
 
     const loading = joLoading || poLoading || logLoading;
@@ -302,16 +302,27 @@ export default function WarehouseInApp() {
             setIsSubmitting(true);
             if (modalType === 'MANUAL') {
                 if (form.manualItems.length === 0 || !form.manualItems[0].sku) return showToast('Error', 'กรุณาระบุข้อมูลสินค้า', 'error');
-                for (let i = 0; i < form.manualItems.length; i++) {
-                    const item = form.manualItems[i];
-                    await addLog({
-                        id: String(Date.now() + i), transId: `GR${Date.now().toString().slice(-6)}-${i}`,
-                        receiveFrom: form.receiveType, refNo: form.refNo, date: timestamp, sku: item.sku,
-                        itemName: item.itemName, qty: Number(item.qty), location: item.location,
-                        warehouseName: item.warehouseName, lotNo: item.lotNo, mfgDate: item.mfgDate, expDate: '', remark: item.remark,
-                        status: 'Confirmed', by: 'Admin'
-                    });
-                }
+                
+                const logsToBatch = form.manualItems?.map((item, i) => ({
+                    id: String(Date.now() + i), 
+                    transId: `GR${Date.now().toString().slice(-6)}-${i}`,
+                    receiveFrom: form.receiveType, 
+                    refNo: form.refNo, 
+                    date: timestamp, 
+                    sku: item.sku,
+                    itemName: item.itemName, 
+                    qty: Number(item.qty), 
+                    location: item.location,
+                    warehouseName: item.warehouseName, 
+                    lotNo: item.lotNo, 
+                    mfgDate: item.mfgDate, 
+                    expDate: '', 
+                    remark: item.remark,
+                    status: 'Confirmed', 
+                    by: 'Admin'
+                }));
+                
+                await addLogsBatch(logsToBatch);
             } else {
                 if (!selectedItem) throw new Error("No item selected for receiving");
                 if (form.qty <= 0) return showToast('Error', 'กรุณาระบุจำนวนที่รับเข้า', 'error');
@@ -446,28 +457,26 @@ export default function WarehouseInApp() {
         
         try {
             const timestamp = new Date()?.toLocaleString('en-GB').replace(',', '');
-            for (let i = 0; i < parsedData.length; i++) {
-                const item = parsedData[i];
-                const newLog = {
-                    id: Date.now().toString() + i, 
-                    transId: `GR${Date.now().toString().slice(-6)}-${i}`,
-                    receiveFrom: item.receiveFrom || 'Import', 
-                    refNo: item.refNo || 'CSV', 
-                    date: timestamp, 
-                    sku: item.sku,
-                    itemName: item.itemName || 'Imported Item', 
-                    qty: Number(item.qty), 
-                    location: item.location || '',
-                    warehouseName: item.warehouseName || 'FG', 
-                    lotNo: item.lotNo || '', 
-                    mfgDate: item.mfgDate || new Date().toISOString().slice(0, 10), 
-                    expDate: '', 
-                    remark: item.remark || 'Batch Upload',
-                    status: 'Confirmed', 
-                    by: 'Admin (CSV)'
-                };
-                await addLog(newLog);
-            }
+            const batchToImport = parsedData?.map((item, i) => ({
+                id: Date.now().toString() + i, 
+                transId: `GR${Date.now().toString().slice(-6)}-${i}`,
+                receiveFrom: item.receiveFrom || 'Import', 
+                refNo: item.refNo || 'CSV', 
+                date: timestamp, 
+                sku: item.sku,
+                itemName: item.itemName || 'Imported Item', 
+                qty: Number(item.qty), 
+                location: item.location || '',
+                warehouseName: item.warehouseName || 'FG', 
+                lotNo: item.lotNo || '', 
+                mfgDate: item.mfgDate || new Date().toISOString().slice(0, 10), 
+                expDate: '', 
+                remark: item.remark || 'Batch Upload',
+                status: 'Confirmed', 
+                by: 'Admin (CSV)'
+            }));
+
+            await addLogsBatch(batchToImport);
 
             setShowImportModal(false);
             showToast('Success', `นำเข้าข้อมูลสำเร็จ ${parsedData.length} รายการ`, 'success');
@@ -694,6 +703,7 @@ export default function WarehouseInApp() {
                 title="Batch Inbound Upload"
                 expectedHeaders={['sku', 'qty', 'warehouseName', 'location', 'lotNo', 'receiveFrom', 'refNo', 'remark']}
                 onConfirm={confirmImport}
+                isSubmitting={isSubmitting}
             />
 
             <PrintDocModal 

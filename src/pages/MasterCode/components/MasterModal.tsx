@@ -14,11 +14,12 @@ interface MasterModalProps {
   generatedMastCode: string;
   saveItem: () => void;
   isValid: boolean;
+  isLoading?: boolean;
 }
 
 export default function MasterModal({
   showModal, closeModal, form, setForm, groups, openGroupManager, toggleGroupInForm,
-  isDuplicate, generatedMastCode, saveItem, isValid
+  isDuplicate, generatedMastCode, saveItem, isValid, isLoading = false
 }: MasterModalProps) {
   if (!showModal) return null;
 
@@ -124,9 +125,18 @@ export default function MasterModal({
                     </button>
                     <div className="flex gap-3">
                       <button onClick={closeModal} className="px-6 py-3 text-slate-500 hover:text-[#111f42] text-[11px] font-black uppercase tracking-widest hover:bg-slate-100 rounded-xl transition font-mono border border-transparent hover:border-slate-200">Cancel</button>
-                      <button onClick={saveItem} disabled={!isValid || isDuplicate} 
-                        className={`px-5 py-3 text-[11px] font-black rounded-xl flex items-center gap-2 tracking-widest uppercase transition-all font-mono ${(!isValid || isDuplicate) ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-[#ab8a3b] text-white hover:bg-[#917532] shadow-md shadow-[#ab8a3b]/30'}`}>
-                        <CheckCircle2 size={16} /> Save Data
+                      <button onClick={saveItem} disabled={!isValid || isDuplicate || isLoading} 
+                        className={`px-5 py-3 text-[11px] font-black rounded-xl flex items-center gap-2 tracking-widest uppercase transition-all font-mono ${(!isValid || isDuplicate || isLoading) ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-[#ab8a3b] text-white hover:bg-[#917532] shadow-md shadow-[#ab8a3b]/30'}`}>
+                        {isLoading ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            Saving...
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle2 size={16} /> Save Data
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>
