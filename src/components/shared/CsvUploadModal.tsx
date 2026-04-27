@@ -24,6 +24,7 @@ interface CsvUploadModalProps {
   expectedHeaders: string[];
   instructions?: string;
   isSubmitting?: boolean;
+  progress?: number;
 }
 
 export function CsvUploadModal({ 
@@ -33,7 +34,8 @@ export function CsvUploadModal({
   title, 
   expectedHeaders,
   instructions,
-  isSubmitting = false
+  isSubmitting = false,
+  progress = 0
 }: CsvUploadModalProps) {
   const [data, setData] = useState<any[]>([]);
   const [headers, setHeaders] = useState<string[]>([]);
@@ -293,23 +295,34 @@ export function CsvUploadModal({
                 Cancel Process
               </button>
               {step === 'preview' && (
-                <button 
-                  onClick={() => onConfirm(data)}
-                  disabled={isSubmitting}
-                  className={`px-6 py-2.5 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Ingesting...
-                    </>
-                  ) : (
-                    <>
-                      Confirm Ingestion
-                      <ChevronRight size={18} className="text-white group-hover:translate-x-1 transition-transform" />
-                    </>
+                <div className="flex flex-col items-end gap-2">
+                  {isSubmitting && (
+                    <div className="w-64 h-1.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        className="h-full bg-emerald-500"
+                      />
+                    </div>
                   )}
-                </button>
+                  <button 
+                    onClick={() => onConfirm(data)}
+                    disabled={isSubmitting}
+                    className={`px-6 py-2.5 bg-[#111f42] text-white rounded-[20px] shadow-xl shadow-blue-900/20 font-black text-xs uppercase tracking-[0.3em] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all group ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Ingesting ({progress}%)
+                      </>
+                    ) : (
+                      <>
+                        Confirm Ingestion
+                        <ChevronRight size={18} className="text-white group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                  </button>
+                </div>
               )}
             </div>
           </motion.div>

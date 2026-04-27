@@ -65,7 +65,7 @@ export default function WarehouseInApp() {
     const { items } = useMasterData();
     const { data: jobOrders, addRow: addJO, updateRow: updateJO, loading: joLoading } = useGoogleSheets<any>('JobOrders');
     const { data: purchaseOrders, addRow: addPO, updateRow: updatePO, loading: poLoading } = useGoogleSheets<any>('PurchaseOrders');
-    const { data: historyLogs, addRow: addLog, addMultipleRows: addLogsBatch, updateRow: updateLog, loading: logLoading } = useGoogleSheets<any>('HistoryLogs');
+    const { data: historyLogs, addRow: addLog, addMultipleRows: addLogsBatch, updateRow: updateLog, loading: logLoading, progress: uploadProgress } = useGoogleSheets<any>('HistoryLogs');
     const [selectedItem, setSelectedItem] = useState<any>(null);
 
     const loading = joLoading || poLoading || logLoading;
@@ -703,7 +703,8 @@ export default function WarehouseInApp() {
                 title="Batch Inbound Upload"
                 expectedHeaders={['sku', 'qty', 'warehouseName', 'location', 'lotNo', 'receiveFrom', 'refNo', 'remark']}
                 onConfirm={confirmImport}
-                isSubmitting={isSubmitting}
+                isSubmitting={isSubmitting || logLoading}
+                progress={uploadProgress}
             />
 
             <PrintDocModal 

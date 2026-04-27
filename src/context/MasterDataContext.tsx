@@ -114,18 +114,18 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(false);
 
     const fetchData = useCallback(async (sheetName: string) => {
+        if (!isAuthenticated) return [];
         try {
-            await new Promise(resolve => setTimeout(resolve, 100));
-            const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-            if (storedData) {
-                return JSON.parse(storedData);
+            const response = await googleSheetsService.readSheet(sheetName, false);
+            if (response.status === 'success') {
+                return response.data || [];
             }
             return [];
         } catch (error) {
             console.warn(`Error fetching ${sheetName}:`, error);
             return [];
         }
-    }, []);
+    }, [isAuthenticated]);
 
     const refreshData = useCallback(async () => {
         if (!isAuthenticated) return;
@@ -149,80 +149,68 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
     }, [isAuthenticated, fetchData]);
 
     useEffect(() => {
-        refreshData();
-    }, [refreshData]);
+        if (isAuthenticated) {
+            refreshData();
+        }
+    }, [isAuthenticated, refreshData]);
 
     const getItemsByType = (type: string) => items?.filter(item => item.itemType === type);
     const getSettingsByCategory = (category: string) => settings?.filter(setting => setting.category === category);
 
-    // Generic API helpers
-    const postData = async (sheetName: string, data: any) => {
-        const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-        const currentData = storedData ? JSON.parse(storedData) : [];
-        const newData = [...currentData, data];
-        localStorage.setItem(`erp_data_${sheetName}`, JSON.stringify(newData));
-        await refreshData();
+    // Generic API helpers using Google Sheets Service
+    const posData = async (sheetName: string, data: any) => {
+        const response = await googleSheetsService.writeData(sheetName, [data]);
+        if (response.status === 'success') {
+            await refreshData();
+        } else {
+            throw new Error(response.message);
+        }
     };
 
     const putData = async (sheetName: string, id: string, data: any) => {
-        const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-        if (!storedData) return;
-        const currentData = JSON.parse(storedData);
-        const index = currentData.findIndex((row: any) => row.id === id || row.rowId === id);
-        if (index !== -1) {
-            currentData[index] = { ...currentData[index], ...data };
-            localStorage.setItem(`erp_data_${sheetName}`, JSON.stringify(currentData));
+        const response = await googleSheetsService.request({
+            action: 'update' as any,
+            sheet: sheetName,
+            data: [{ id, ...data }]
+        } as any);
+        if (response.status === 'success') {
             await refreshData();
+        } else {
+            throw new Error(response.message);
         }
     };
 
     const delData = async (sheetName: string, id: string) => {
-        const storedData = localStorage.getItem(`erp_data_${sheetName}`);
-        if (!storedData) return;
-        const currentData = JSON.parse(storedData);
-        const newData = currentData?.filter((row: any) => row.id !== id && row.rowId !== id);
-        localStorage.setItem(`erp_data_${sheetName}`, JSON.stringify(newData));
-        await refreshData();
+        const response = await googleSheetsService.request({
+            action: 'delete' as any,
+            sheet: sheetName,
+            data: [{ id }]
+        } as any);
+        if (response.status === 'success') {
+            await refreshData();
+        } else {
+            throw new Error(response.message);
+        }
     };
 
-    const addItem = (item: Item) => postData('Items', item);
-    const updateItem = (id: string, updatedFields: Partial<Item>) => {
-        const item = items.find(i => i.id === id);
-        if (item) putData('Items', id, { ...item, ...updatedFields });
-        return Promise.resolve();
-    };
+    const addItem = (item: Item) => posData('Items', item);
+    const updateItem = (id: string, updatedFields: Partial<Item>) => putData('Items', id, updatedFields);
     const deleteItem = (id: string) => delData('Items', id);
 
-    const addSupplier = (supplier: Supplier) => postData('Suppliers', supplier);
-    const updateSupplier = (id: string, updatedFields: Partial<Supplier>) => {
-        const supplier = suppliers.find(s => s.id === id);
-        if (supplier) putData('Suppliers', id, { ...supplier, ...updatedFields });
-        return Promise.resolve();
-    };
+    const addSupplier = (supplier: Supplier) => posData('Suppliers', supplier);
+    const updateSupplier = (id: string, updatedFields: Partial<Supplier>) => putData('Suppliers', id, updatedFields);
     const deleteSupplier = (id: string) => delData('Suppliers', id);
 
-    const addCustomer = (customer: Customer) => postData('Customers', customer);
-    const updateCustomer = (id: string, updatedFields: Partial<Customer>) => {
-        const customer = customers.find(c => c.id === id);
-        if (customer) putData('Customers', id, { ...customer, ...updatedFields });
-        return Promise.resolve();
-    };
+    const addCustomer = (customer: Customer) => posData('Customers', customer);
+    const updateCustomer = (id: string, updatedFields: Partial<Customer>) => putData('Customers', id, updatedFields);
     const deleteCustomer = (id: string) => delData('Customers', id);
 
-    const addSetting = (setting: ConfigSetting) => postData('Settings', setting);
-    const updateSetting = (id: string, updatedFields: Partial<ConfigSetting>) => {
-        const setting = settings.find(s => s.id === id);
-        if (setting) putData('Settings', id, { ...setting, ...updatedFields });
-        return Promise.resolve();
-    };
+    const addSetting = (setting: ConfigSetting) => posData('Settings', setting);
+    const updateSetting = (id: string, updatedFields: Partial<ConfigSetting>) => putData('Settings', id, updatedFields);
     const deleteSetting = (id: string) => delData('Settings', id);
 
-    const addInvoice = (invoice: Invoice) => postData('Invoices', invoice);
-    const updateInvoice = (id: string, updatedFields: Partial<Invoice>) => {
-        const invoice = invoices.find(i => i.id === id);
-        if (invoice) putData('Invoices', id, { ...invoice, ...updatedFields });
-        return Promise.resolve();
-    };
+    const addInvoice = (invoice: Invoice) => posData('Invoices', invoice);
+    const updateInvoice = (id: string, updatedFields: Partial<Invoice>) => putData('Invoices', id, updatedFields);
     const deleteInvoice = (id: string) => delData('Invoices', id);
 
     return (

@@ -21,7 +21,11 @@ export default function MasterList({ items, openModal, deleteItem }: MasterListP
       accessorKey: 'groups',
       header: 'GROUP',
       cell: ({ row }) => {
-        const groups = row.getValue('groups') as string[];
+        const rawGroups = row.getValue('groups');
+        const groups = Array.isArray(rawGroups) 
+          ? rawGroups 
+          : (typeof rawGroups === 'string' ? rawGroups.split(',').map(s => s.trim()).filter(Boolean) : []);
+        
         return (
           <div className="flex gap-1 flex-wrap">
             {groups?.map(g => <span key={g} className={`badge ${getTypeClass(g)}`}>{g}</span>)}
@@ -64,9 +68,22 @@ export default function MasterList({ items, openModal, deleteItem }: MasterListP
         const dateStr = row.getValue('updatedAt') as string;
         const rawBy = row.original.updatedBy;
         const by = rawBy ? String(rawBy) : '';
+        
+        // Safe date parsing
+        let displayDate = '-';
+        if (dateStr) {
+          const d = new Date(dateStr);
+          if (!isNaN(d.getTime())) {
+            displayDate = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+          } else {
+            // Fallback for non-iso strings if needed, or just show the string
+            displayDate = dateStr.toString().split('T')[0] || '-';
+          }
+        }
+
         return (
           <div className="text-center text-[12px] text-slate-400">
-            <div className="font-bold text-[#111f42]">{new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
+            <div className="font-bold text-[#111f42]">{displayDate}</div>
             <div className="text-[10px] opacity-70 mt-0.5">{by ? by.split('@')[0] : '-'}</div>
           </div>
         );

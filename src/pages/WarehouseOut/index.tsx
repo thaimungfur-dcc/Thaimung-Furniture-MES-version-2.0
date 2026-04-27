@@ -44,7 +44,7 @@ export default function WarehouseOut() {
     const productMaster = useMemo(() => (items || [])?.map(item => ({ sku: item.itemCode, name: item.itemName })), [items]);
     const { data: deliveryOrders, updateRow: updateDO, loading: doLoading } = useGoogleSheets<DeliveryOrder>('DeliveryOrders');
     const { data: mrpOrders, updateRow: updateMRP, loading: mrpLoading } = useGoogleSheets<MrpOrder>('MrpOrders');
-    const { data: historyLogs, addRow: addLog, addMultipleRows: addLogsBatch, updateRow: updateLog, loading: logLoading } = useGoogleSheets<HistoryLog>('WarehouseOutLogs');
+    const { data: historyLogs, addRow: addLog, addMultipleRows: addLogsBatch, updateRow: updateLog, loading: logLoading, progress: uploadProgress } = useGoogleSheets<HistoryLog>('WarehouseOutLogs');
 
     const loading = doLoading || mrpLoading || logLoading;
 
@@ -479,6 +479,7 @@ export default function WarehouseOut() {
                     expectedHeaders={['outType', 'sku', 'itemName', 'qty', 'warehouseName', 'location', 'lotNo', 'remark']}
                     title="Upload Outbound Logs"
                     isSubmitting={loading}
+                    progress={uploadProgress}
                 />
 
                 {dropdownState.show && (

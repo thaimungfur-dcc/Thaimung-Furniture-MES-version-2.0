@@ -15,14 +15,14 @@ const GLOBAL_SHEETS_CONFIG = {
     'MasterCodes': ['id', 'mastCode', 'groups', 'category', 'catCode', 'subCategory', 'subCatCode', 'note', 'updatedAt', 'updatedBy'],
     'JobOrders': ['id', 'joNo', 'productName', 'sku', 'qty', 'received', 'status', 'currentStage', 'startDate', 'dueDate', 'priority', 'customerName', 'soRef', 'history'],
     'ProductionLogs': ['id', 'joId', 'joNo', 'stage', 'action', 'operator', 'timestamp', 'qtyCompleted', 'notes'],
-    'WarehouseIn Logs': ['id', 'transId', 'date', 'joNo', 'sku', 'productName', 'qty', 'status', 'warehouseName', 'location', 'operator'],
-    'WarehouseOutLogs': ['id', 'transId', 'date', 'outType', 'sku', 'productName', 'qty', 'operator', 'warehouseName', 'location', 'notes'],
+    'WarehouseIn Logs': ['id', 'transId', 'date', 'refNo', 'sku', 'itemName', 'qty', 'status', 'warehouseName', 'location', 'by', 'mfgDate', 'remark'],
+    'WarehouseOutLogs': ['id', 'transId', 'date', 'outType', 'refNo', 'sku', 'itemName', 'qty', 'by', 'warehouseName', 'location', 'remark', 'lotNo', 'status'],
     'Users': ['id', 'employeeId', 'idCard', 'name', 'role', 'avatar'],
     'AppUsers': ['id', 'employeeId', 'name', 'role', 'permissions', 'position', 'email', 'avatar', 'isDev'],
     'ConfidentialityMap': ['id', 'moduleId', 'isConfidential'],
     'DeliveryOrders': ['id', 'soNo', 'refId', 'customer', 'sku', 'productName', 'qty', 'shipped', 'date', 'status', 'location'],
     'MrpOrders': ['id', 'moNo', 'date', 'fgSku', 'fgName', 'rmSku', 'rmName', 'qty', 'issued', 'status'],
-    'HistoryLogs': ['id', 'transId', 'date', 'type', 'sku', 'productName', 'qty', 'operator', 'location', 'notes'],
+    'HistoryLogs': ['id', 'transId', 'date', 'receiveFrom', 'refNo', 'sku', 'itemName', 'qty', 'by', 'location', 'warehouseName', 'lotNo', 'mfgDate', 'expDate', 'remark', 'status'],
     'PurchaseOrders': ['id', 'poNo', 'supplierId', 'date', 'status', 'totalAmount', 'expectedDate', 'items', 'priority'],
     'ProductCost': ['id', 'itemId', 'item', 'itemName', 'category', 'targetMargin', 'batchSize', 'dm', 'dl', 'factory_oh', 'office_oh', 'utilities', 'depreciation', 'selling', 'admin', 'others', 'history', 'productCost', 'periodCost', 'totalCost', 'suggestedPrice', 'status'],
     'Items': ['id', 'itemCode', 'itemName', 'itemType', 'category', 'subCategory', 'baseUnit', 'stdCost', 'stdPrice', 'leadTime', 'moq', 'status'],
@@ -171,10 +171,39 @@ function readData(sheet, params, headersObj) {
     return createResponse("success", "Data retrieved", { items: [], totalCount: 0, limit: params.limit || null, offset: params.offset || 0 }, headersObj);
   }
 
-  const columns = values[0];
+  const sheetName = params.sheet;
+  const sheetHeaders = values[0];
+  const canonicalHeaders = GLOBAL_SHEETS_CONFIG[sheetName] || [];
+
+  // Create a mapping from sheet header to canonical key
+  // We want to return the keys the APP expects (e.g., 'itemCode' instead of 'ItemCode')
+  const headerMap = {};
+  sheetHeaders.forEach((h, i) => {
+    const rawH = String(h).trim();
+    const cleanHeader = rawH.toLowerCase().replace(/\s/g, '');
+    let mapped = rawH; // Default to raw header
+    
+    // Try to find matching canonical header regardless of case/space
+    for (const canon of canonicalHeaders) {
+      if (canon.toLowerCase().replace(/\s/g, '') === cleanHeader) {
+        mapped = canon;
+        break;
+      }
+    }
+    headerMap[i] = mapped;
+  });
+
   let data = values.slice(1).map(row => {
     const obj = {};
-    columns.forEach((h, i) => obj[h] = row[i]);
+    sheetHeaders.forEach((_, i) => {
+      const key = headerMap[i];
+      let val = row[i];
+      // Special handling for JSON-like strings in 'groups' or 'history'
+      if ((key === 'groups' || key === 'history' || key === 'permissions' || key === 'items') && typeof val === 'string' && val.trim().startsWith('[')) {
+        try { val = JSON.parse(val); } catch(e) {}
+      }
+      obj[key] = val;
+    });
     return obj;
   });
 
@@ -197,59 +226,68 @@ function readData(sheet, params, headersObj) {
 
 function writeData(sheet, data, headersObj) {
   if (!Array.isArray(data)) data = [data];
+  if (data.length === 0) return createResponse("success", "No data to write", null, headersObj);
+
   var sheetHeaders = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0];
   if (!sheetHeaders || sheetHeaders.length === 0 || sheetHeaders[0] === "") {
-    if (data.length > 0) {
-      sheetHeaders = Object.keys(data[0]);
-      sheet.getRange(1, 1, 1, sheetHeaders.length).setValues([sheetHeaders])
-        .setFontWeight("bold")
-        .setBackground("#e8ecef")
-        .setFontColor("black");
-    } else {
-      return createResponse("error", "No data to write and no headers exist", null, headersObj);
-    }
+    sheetHeaders = Object.keys(data[0]);
+    sheet.getRange(1, 1, 1, sheetHeaders.length).setValues([sheetHeaders])
+      .setFontWeight("bold")
+      .setBackground("#e8ecef")
+      .setFontColor("black");
   }
   
-  data.forEach(item => {
-    const row = sheetHeaders.map(h => item[h] || "");
-    sheet.appendRow(row);
+  // Transform data into a 2D array for bulk setValues
+  const rows = data.map(item => {
+    return sheetHeaders.map(h => item[h] != null ? item[h] : "");
   });
   
-  // Auto-Cleanup: Remove empty rows to keep the sheet lean and fast
+  // Write all rows at once at the bottom
   const lastRow = sheet.getLastRow();
+  sheet.getRange(lastRow + 1, 1, rows.length, sheetHeaders.length).setValues(rows);
+  
+  // Clean up excessive blank rows
   const maxRows = sheet.getMaxRows();
-  if (maxRows > lastRow + 1) {
-    sheet.deleteRows(lastRow + 1, maxRows - lastRow - 1);
+  const currentTotalRows = lastRow + rows.length;
+  if (maxRows > currentTotalRows + 1) {
+    sheet.deleteRows(currentTotalRows + 1, maxRows - currentTotalRows - 1);
   }
   
-  return createResponse("success", "Data saved successfully", null, headersObj);
+  return createResponse("success", "Data saved successfully (" + rows.length + " rows)", null, headersObj);
 }
 
 function updateData(sheet, data, headersObj) {
   if (!Array.isArray(data)) data = [data];
   if (data.length === 0) return createResponse("error", "No data provided for update", null, headersObj);
 
-  const values = sheet.getDataRange().getValues();
+  const range = sheet.getDataRange();
+  const values = range.getValues();
   const headers = values[0];
   const idIndex = headers.indexOf('id');
   if (idIndex === -1) return createResponse("error", "'id' column not found for update", null, headersObj);
 
   let updatedCount = 0;
-  data.forEach(updateItem => {
-    const targetId = String(updateItem.id);
-    for (let i = 1; i < values.length; i++) {
-      if (String(values[i][idIndex]) === targetId) {
-        // Update cells in this row
-        headers.forEach((header, colIdx) => {
-          if (updateItem.hasOwnProperty(header)) {
-            sheet.getRange(i + 1, colIdx + 1).setValue(updateItem[header]);
-          }
-        });
-        updatedCount++;
-        break;
-      }
-    }
+  const updatesMap = {};
+  data.forEach(item => {
+    if (item.id != null) updatesMap[String(item.id)] = item;
   });
+
+  for (let i = 1; i < values.length; i++) {
+    const rowId = String(values[i][idIndex]);
+    if (updatesMap[rowId]) {
+      const updateItem = updatesMap[rowId];
+      headers.forEach((header, colIdx) => {
+        if (updateItem.hasOwnProperty(header)) {
+          values[i][colIdx] = updateItem[header] != null ? updateItem[header] : "";
+        }
+      });
+      updatedCount++;
+    }
+  }
+
+  if (updatedCount > 0) {
+    range.setValues(values);
+  }
 
   return createResponse("success", `Updated ${updatedCount} rows`, null, headersObj);
 }
@@ -258,20 +296,27 @@ function deleteData(sheet, data, headersObj) {
   if (!Array.isArray(data)) data = [data];
   if (data.length === 0) return createResponse("error", "No data provided for delete", null, headersObj);
 
-  const values = sheet.getDataRange().getValues();
+  const range = sheet.getDataRange();
+  const values = range.getValues();
   const headers = values[0];
   const idIndex = headers.indexOf('id');
   if (idIndex === -1) return createResponse("error", "'id' column not found for delete", null, headersObj);
 
-  const idsToDelete = data.map(item => String(item.id));
+  const idsToDelete = new Set(data.map(item => String(item.id)));
+  const newValues = [headers];
   let deletedCount = 0;
 
-  // Iterate backwards to avoid index shifting problems
-  for (let i = values.length - 1; i >= 1; i--) {
-    if (idsToDelete.includes(String(values[i][idIndex]))) {
-      sheet.deleteRow(i + 1);
+  for (let i = 1; i < values.length; i++) {
+    if (!idsToDelete.has(String(values[i][idIndex]))) {
+      newValues.push(values[i]);
+    } else {
       deletedCount++;
     }
+  }
+
+  if (deletedCount > 0) {
+    sheet.clearContents();
+    sheet.getRange(1, 1, newValues.length, headers.length).setValues(newValues);
   }
 
   return createResponse("success", `Deleted ${deletedCount} rows`, null, headersObj);

@@ -16,7 +16,7 @@ import GuideDrawer from './components/GuideDrawer';
 import { useGoogleSheets } from '../../hooks/useGoogleSheets';
 
 export default function MasterCodeApp() {
-  const { data: items, addRow: addItem, addMultipleRows, updateRow: updateItem, updateMultipleRows, deleteRow: deleteItem, loading: isLoading } = useGoogleSheets<MasterItem>('MasterCodes');
+  const { data: items, addRow: addItem, addMultipleRows, updateRow: updateItem, updateMultipleRows, deleteRow: deleteItem, loading: isLoading, progress: uploadProgress } = useGoogleSheets<MasterItem>('MasterCodes');
   const [activeTab, setActiveTab] = useState('list');
   const [showModal, setShowModal] = useState(false);
   const [showGroupModal, setShowGroupModal] = useState(false);
@@ -40,9 +40,15 @@ export default function MasterCodeApp() {
     note: ''
   });
 
-  const fgCount = (items || [])?.filter(i => i.groups && i.groups.includes('FG')).length;
-  const rmCount = (items || [])?.filter(i => i.groups && (i.groups.includes('RM') || i.groups.includes('HW') || i.groups.includes('FB'))).length;
-  const newCount = (items || [])?.filter(i => new Date(i.updatedAt).getMonth() === new Date().getMonth()).length;
+  const totalCount = items?.length || 0;
+  const fgCount = (items || [])?.filter(i => i.groups && i.groups.some(g => g?.toUpperCase() === 'FG')).length;
+  const rmCount = (items || [])?.filter(i => i.groups && i.groups.some(g => ['RM', 'HW', 'FB'].includes(g?.toUpperCase()))).length;
+  
+  const newCount = (items || [])?.filter(i => {
+    if (!i.updatedAt) return false;
+    const d = new Date(i.updatedAt);
+    return !isNaN(d.getTime()) && d.getMonth() === new Date().getMonth() && d.getFullYear() === new Date().getFullYear();
+  }).length;
 
   const generatedMastCode = ((form.catCode || '') + (form.subCatCode || '')).toUpperCase();
   
@@ -158,37 +164,52 @@ export default function MasterCodeApp() {
     if (!parsedData || parsedData.length === 0) return;
     
     const newItems = [];
+    let duplicateCount = 0;
+    const existingCodes = new Set((items || []).map(i => i.mastCode.toUpperCase()));
+
     for (let idx = 0; idx < parsedData.length; idx++) {
       const row = parsedData[idx];
       const getVal = (r: any, keys: string[]) => {
         for (const k of Object.keys(r)) {
-          if (keys.includes(k.toLowerCase())) return r[k] == null ? '' : r[k];
+          const cleanK = k.toLowerCase().replace(/\s/g, '');
+          if (keys.includes(cleanK)) return r[k] == null ? '' : r[k];
         }
         return '';
       };
-      const catCodeStr = getVal(row, ['catcode', 'code', 'categorycode']);
-      const subCatCodeStr = getVal(row, ['subcode', 'subcatcode', 'subcategorycode']);
-      const catCode = catCodeStr.toString().toUpperCase().substring(0,2);
-      const subCatCode = subCatCodeStr.toString().toUpperCase().substring(0,2);
       
-      const mastCode = catCode + subCatCode;
-      const groupStr = getVal(row, ['group', 'mastergroup']);
-      const group = groupStr ? groupStr.toString().toUpperCase() : 'Uncategorized';
-
+      const catCodeStr = getVal(row, ['catcode', 'code', 'categorycode', 'cat']);
+      const subCatCodeStr = getVal(row, ['subcode', 'subcatcode', 'subcategorycode', 'sub']);
+      
+      const catCode = catCodeStr.toString().trim().toUpperCase().substring(0,2);
+      const subCatCode = subCatCodeStr.toString().trim().toUpperCase().substring(0,2);
+      
       if (!catCode || !subCatCode) continue;
 
+      const mastCode = (catCode + subCatCode).toUpperCase();
+      
+      // Check for duplicates in existing data or within the current batch
+      if (existingCodes.has(mastCode)) {
+        duplicateCount++;
+        continue;
+      }
+
+      const groupStr = getVal(row, ['group', 'mastergroup', 'grp']);
+      const group = groupStr ? groupStr.toString().trim().toUpperCase() : 'Uncategorized';
+
       newItems.push({
-        id: Date.now().toString() + idx,
+        id: (Date.now() + idx).toString(),
         mastCode: mastCode,
         groups: [group],
-        category: getVal(row, ['category', 'catname']) || 'Unknown',
+        category: getVal(row, ['category', 'catname', 'categoryname']) || 'Unknown',
         catCode: catCode,
-        subCategory: getVal(row, ['subcategory', 'subcatname']) || 'Unknown',
+        subCategory: getVal(row, ['subcategory', 'subcatname', 'subcategoryname']) || 'Unknown',
         subCatCode: subCatCode,
-        note: getVal(row, ['note', 'description', 'remark']) || '',
+        note: getVal(row, ['note', 'description', 'remark', 'desc']) || '',
         updatedAt: new Date().toISOString().split('T')[0],
         updatedBy: 'import@furniture.com'
       });
+      
+      existingCodes.add(mastCode);
     }
 
     if (newItems.length > 0) {
@@ -196,10 +217,9 @@ export default function MasterCodeApp() {
         await addMultipleRows(newItems);
         Swal.fire({
           icon: 'success',
-          title: 'Upload Successful',
-          text: `Successfully created ${newItems.length} Master Code records.`,
-          timer: 2000,
-          showConfirmButton: false
+          title: 'Upload Summary',
+          text: `Imported: ${newItems.length} records. Skipped Duplicates: ${duplicateCount}.`,
+          confirmButtonText: 'Great'
         });
       } catch (error: any) {
         Swal.fire({
@@ -208,11 +228,17 @@ export default function MasterCodeApp() {
           text: error.message || 'An error occurred during data ingestion.'
         });
       }
+    } else if (duplicateCount > 0) {
+      Swal.fire({
+        icon: 'info',
+        title: 'All Items Skipped',
+        text: `All ${duplicateCount} records in the file already exist in the system.`
+      });
     } else {
       Swal.fire({
         icon: 'warning',
-        title: 'No Data Found',
-        text: 'The CSV file is empty or does not match the required columns.'
+        title: 'No Valid Data',
+        text: 'The CSV file does not contain valid category or subcategory codes.'
       });
     }
 
@@ -387,6 +413,7 @@ export default function MasterCodeApp() {
             onConfirm={processUploadData}
             instructions="อัปโหลด Master Code ด้วยไฟล์ .csv (คอลัมน์: Group, Category, CatCode, SubCategory, SubCode, Note)"
             isSubmitting={isLoading}
+            progress={uploadProgress}
           />
 
           <GroupModal 

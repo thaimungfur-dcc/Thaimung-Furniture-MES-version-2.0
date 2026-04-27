@@ -6,11 +6,13 @@ export function useGoogleSheets<T>(sheetName: string) {
   const { isAuthenticated } = useGoogleAuth();
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0); // Progress percentage (0-100)
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(async (useCache = true) => {
     if (!isAuthenticated) return;
     setLoading(true);
+    setProgress(0);
     setError(null);
     try {
       const response = await googleSheetsService.readSheet<T>(sheetName, useCache);
@@ -33,12 +35,13 @@ export function useGoogleSheets<T>(sheetName: string) {
 
   const addRow = async (item: Partial<T>) => {
     setLoading(true);
+    setProgress(0);
     try {
-      // Ensure we have an ID if one isn't provided
       const rowData = { ...item, id: (item as any).id || Date.now().toString() };
       const response = await googleSheetsService.writeData(sheetName, [rowData]);
+      setProgress(100);
       if (response.status === 'success') {
-        await fetchData(false); // Force refresh
+        await fetchData(false);
       } else {
         throw new Error(response.message);
       }
@@ -51,18 +54,33 @@ export function useGoogleSheets<T>(sheetName: string) {
   };
 
   const addMultipleRows = async (items: Partial<T>[]) => {
+    if (items.length === 0) return;
     setLoading(true);
+    setProgress(0);
     try {
       const rowsData = items.map((item, idx) => ({
         ...item,
         id: (item as any).id || (Date.now() + idx).toString()
       }));
-      const response = await googleSheetsService.writeData(sheetName, rowsData);
-      if (response.status === 'success') {
-        await fetchData(false);
-      } else {
-        throw new Error(response.message);
+
+      // Chunk size optimization (500-1000 items per request)
+      const chunkSize = 500;
+      const totalChunks = Math.ceil(rowsData.length / chunkSize);
+
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * chunkSize;
+        const end = Math.min(start + chunkSize, rowsData.length);
+        const chunk = rowsData.slice(start, end);
+
+        const response = await googleSheetsService.writeData(sheetName, chunk);
+        if (response.status !== 'success') {
+          throw new Error(`Chunk ${i+1}/${totalChunks} failed: ${response.message}`);
+        }
+        
+        setProgress(Math.round(((i + 1) / totalChunks) * 100));
       }
+
+      await fetchData(false);
     } catch (err: any) {
       setError(err.message);
       throw err;
@@ -72,19 +90,32 @@ export function useGoogleSheets<T>(sheetName: string) {
   };
 
   const updateMultipleRows = async (items: { id: string | number; [key: string]: any }[]) => {
+    if (items.length === 0) return;
     setLoading(true);
+    setProgress(0);
     try {
-      const response = await googleSheetsService.request({
-        action: 'update' as any,
-        sheet: sheetName,
-        data: items
-      } as any);
+      const chunkSize = 500;
+      const totalChunks = Math.ceil(items.length / chunkSize);
 
-      if (response.status === 'success') {
-        await fetchData(false);
-      } else {
-        throw new Error(response.message);
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * chunkSize;
+        const end = Math.min(start + chunkSize, items.length);
+        const chunk = items.slice(start, end);
+
+        const response = await googleSheetsService.request({
+          action: 'update' as any,
+          sheet: sheetName,
+          data: chunk
+        } as any);
+
+        if (response.status !== 'success') {
+          throw new Error(`Update Chunk ${i+1}/${totalChunks} failed: ${response.message}`);
+        }
+
+        setProgress(Math.round(((i + 1) / totalChunks) * 100));
       }
+
+      await fetchData(false);
     } catch (err: any) {
       setError(err.message);
       throw err;
@@ -149,5 +180,5 @@ export function useGoogleSheets<T>(sheetName: string) {
     }
   };
 
-  return { data, loading, error, fetchData, addRow, addMultipleRows, updateRow, updateMultipleRows, deleteRow, refetch: () => fetchData(false) };
+  return { data, loading, progress, error, fetchData, addRow, addMultipleRows, updateRow, updateMultipleRows, deleteRow, refetch: () => fetchData(false) };
 }
