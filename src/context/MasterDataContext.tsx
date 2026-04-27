@@ -157,8 +157,7 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
     const getItemsByType = (type: string) => items?.filter(item => item.itemType === type);
     const getSettingsByCategory = (category: string) => settings?.filter(setting => setting.category === category);
 
-    // Generic API helpers using Google Sheets Service
-    const posData = async (sheetName: string, data: any) => {
+    const postData = async (sheetName: string, data: any) => {
         const response = await googleSheetsService.writeData(sheetName, [data]);
         if (response.status === 'success') {
             await refreshData();
@@ -193,23 +192,23 @@ export const MasterDataProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    const addItem = (item: Item) => posData('Items', item);
+    const addItem = (item: Item) => postData('Items', item);
     const updateItem = (id: string, updatedFields: Partial<Item>) => putData('Items', id, updatedFields);
     const deleteItem = (id: string) => delData('Items', id);
-
-    const addSupplier = (supplier: Supplier) => posData('Suppliers', supplier);
+    
+    const addSupplier = (supplier: Supplier) => postData('Suppliers', supplier);
     const updateSupplier = (id: string, updatedFields: Partial<Supplier>) => putData('Suppliers', id, updatedFields);
     const deleteSupplier = (id: string) => delData('Suppliers', id);
-
-    const addCustomer = (customer: Customer) => posData('Customers', customer);
+    
+    const addCustomer = (customer: Customer) => postData('Customers', customer);
     const updateCustomer = (id: string, updatedFields: Partial<Customer>) => putData('Customers', id, updatedFields);
     const deleteCustomer = (id: string) => delData('Customers', id);
-
-    const addSetting = (setting: ConfigSetting) => posData('Settings', setting);
+    
+    const addSetting = (setting: ConfigSetting) => postData('Settings', setting);
     const updateSetting = (id: string, updatedFields: Partial<ConfigSetting>) => putData('Settings', id, updatedFields);
     const deleteSetting = (id: string) => delData('Settings', id);
-
-    const addInvoice = (invoice: Invoice) => posData('Invoices', invoice);
+    
+    const addInvoice = (invoice: Invoice) => postData('Invoices', invoice);
     const updateInvoice = (id: string, updatedFields: Partial<Invoice>) => putData('Invoices', id, updatedFields);
     const deleteInvoice = (id: string) => delData('Invoices', id);
 

@@ -100,5 +100,16 @@ export const MOCK_DELIVERY_ORDERS = [
 ];
 
 export const MOCK_MASTER_CODES = [
-  { Group: 'FURNITURE', Category: 'Living Room', CatCode: 'LR', SubCategory: 'Sofa', SubCode: 'SF', Note: 'Standard Sofa' }
+  { 
+    id: 'mc-1',
+    mastCode: 'MF-LR-SF-01',
+    groups: ['FURNITURE'], 
+    category: 'Living Room', 
+    catCode: 'LR', 
+    subCategory: 'Sofa', 
+    subCatCode: 'SF', 
+    note: 'Standard Sofa',
+    updatedAt: new Date().toISOString(),
+    updatedBy: 'system@erp.local'
+  }
 ];

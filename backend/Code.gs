@@ -11,11 +11,11 @@
  */
 
 const GLOBAL_SHEETS_CONFIG = {
-    'ItemMaster': ['ItemCode', 'ItemName', 'Type', 'Category', 'SubCategory', 'Unit', 'Cost', 'Price'],
+    'Items': ['id', 'itemCode', 'itemName', 'itemType', 'category', 'subCategory', 'baseUnit', 'stdCost', 'stdPrice', 'leadTime', 'moq', 'status'],
     'MasterCodes': ['id', 'mastCode', 'groups', 'category', 'catCode', 'subCategory', 'subCatCode', 'note', 'updatedAt', 'updatedBy'],
     'JobOrders': ['id', 'joNo', 'productName', 'sku', 'qty', 'received', 'status', 'currentStage', 'startDate', 'dueDate', 'priority', 'customerName', 'soRef', 'history'],
     'ProductionLogs': ['id', 'joId', 'joNo', 'stage', 'action', 'operator', 'timestamp', 'qtyCompleted', 'notes'],
-    'WarehouseIn Logs': ['id', 'transId', 'date', 'refNo', 'sku', 'itemName', 'qty', 'status', 'warehouseName', 'location', 'by', 'mfgDate', 'remark'],
+    'WarehouseInConfigs': ['id', 'transId', 'date', 'refNo', 'sku', 'itemName', 'qty', 'status', 'warehouseName', 'location', 'by', 'mfgDate', 'remark'],
     'WarehouseOutLogs': ['id', 'transId', 'date', 'outType', 'refNo', 'sku', 'itemName', 'qty', 'by', 'warehouseName', 'location', 'remark', 'lotNo', 'status'],
     'Users': ['id', 'employeeId', 'idCard', 'name', 'role', 'avatar'],
     'AppUsers': ['id', 'employeeId', 'name', 'role', 'permissions', 'position', 'email', 'avatar', 'isDev'],
@@ -25,7 +25,6 @@ const GLOBAL_SHEETS_CONFIG = {
     'HistoryLogs': ['id', 'transId', 'date', 'receiveFrom', 'refNo', 'sku', 'itemName', 'qty', 'by', 'location', 'warehouseName', 'lotNo', 'mfgDate', 'expDate', 'remark', 'status'],
     'PurchaseOrders': ['id', 'poNo', 'supplierId', 'date', 'status', 'totalAmount', 'expectedDate', 'items', 'priority'],
     'ProductCost': ['id', 'itemId', 'item', 'itemName', 'category', 'targetMargin', 'batchSize', 'dm', 'dl', 'factory_oh', 'office_oh', 'utilities', 'depreciation', 'selling', 'admin', 'others', 'history', 'productCost', 'periodCost', 'totalCost', 'suggestedPrice', 'status'],
-    'Items': ['id', 'itemCode', 'itemName', 'itemType', 'category', 'subCategory', 'baseUnit', 'stdCost', 'stdPrice', 'leadTime', 'moq', 'status'],
     'Suppliers': ['id', 'code', 'name', 'contactName', 'phone', 'email', 'address', 'paymentTerms', 'status'],
     'Customers': ['id', 'code', 'name', 'contactName', 'phone', 'email', 'address', 'creditLimit', 'status'],
     'Settings': ['id', 'key', 'value', 'description', 'updatedAt'],
@@ -102,10 +101,16 @@ function doPost(e) {
       // return createResponse("error", "Unauthorized: Invalid API Key", null, headers);
     }
     
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = getSpreadsheet();
+    
+    if (!ss) {
+      return createResponse("error", "Spreadsheet connection failed. Please ensure SPREADSHEET_ID is set in Script Properties or the script is bound to a Spreadsheet.", null, headers);
+    }
     
     // Auto-Provisioning: Create sheet and headers if they don't exist
-    let sheet = ss.getSheetByName(sheetName);
+    // Try to find sheet by name (case-insensitive)
+    let sheet = findSheetCaseInsensitive(ss, sheetName);
+    
     if (!sheet && sheetName) {
       sheet = ss.insertSheet(sheetName);
       let columns = GLOBAL_SHEETS_CONFIG[sheetName];
@@ -434,4 +439,44 @@ function createResponse(status, message, data, headers) {
   return ContentService.createTextOutput(JSON.stringify(result))
     .setMimeType(ContentService.MimeType.JSON)
     .setHeaders(headers || {});
+}
+
+/**
+ * Robustly gets the spreadsheet instance.
+ * Priority: ScriptProperty 'SPREADSHEET_ID' > Bound Spreadsheet
+ */
+function getSpreadsheet() {
+  try {
+    const props = PropertiesService.getScriptProperties();
+    const sid = props.getProperty('SPREADSHEET_ID');
+    if (sid) {
+      return SpreadsheetApp.openById(sid);
+    }
+  } catch(e) {
+    Logger.log("Error reading SPREADSHEET_ID: " + e.toString());
+  }
+  
+  try {
+    return SpreadsheetApp.getActiveSpreadsheet();
+  } catch(e) {
+    Logger.log("Error getting active spreadsheet: " + e.toString());
+    return null;
+  }
+}
+
+/**
+ * Finds a sheet by name case-insensitively.
+ */
+function findSheetCaseInsensitive(ss, name) {
+  if (!name) return null;
+  const sheets = ss.getSheets();
+  const lowerName = name.toLowerCase().replace(/\s/g, '');
+  
+  for (let i = 0; i < sheets.length; i++) {
+    const sheetName = sheets[i].getName();
+    if (sheetName.toLowerCase().replace(/\s/g, '') === lowerName) {
+      return sheets[i];
+    }
+  }
+  return null;
 }

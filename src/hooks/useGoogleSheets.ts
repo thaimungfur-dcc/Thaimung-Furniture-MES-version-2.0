@@ -1,12 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useGoogleAuth } from '../context/GoogleAuthContext';
 import { googleSheetsService } from '../services/googleSheets';
+import Swal from 'sweetalert2';
 
 export function useGoogleSheets<T>(sheetName: string) {
   const { isAuthenticated } = useGoogleAuth();
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0); // Progress percentage (0-100)
+  const [progress, setProgress] = useState(0); 
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(async (useCache = true) => {
@@ -24,6 +25,18 @@ export function useGoogleSheets<T>(sheetName: string) {
     } catch (err: any) {
       setError(err.message);
       console.warn(`Error fetching ${sheetName}:`, err);
+      // ONLY show alert if it's NOT a common demo mode warning
+      if (!err.message?.includes('demo') && !err.message?.includes('Mock')) {
+        Swal.fire({
+          icon: 'error',
+          title: `Failed to load ${sheetName}`,
+          text: err.message,
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 5000
+        });
+      }
     } finally {
       setLoading(false);
     }

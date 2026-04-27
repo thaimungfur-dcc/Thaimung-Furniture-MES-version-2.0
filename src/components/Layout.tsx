@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useGoogleAuth } from '../context/GoogleAuthContext';
+import { googleSheetsService } from '../services/googleSheets';
 import SecurityGuard from './SecurityGuard';
 import Watermark from './Watermark';
 import { 
@@ -115,7 +116,18 @@ export default function Layout() {
     lightBg: '#F9F7F6'      // Neutral Bg
   };
 
-  const isDemoMode = !import.meta.env.VITE_APPS_SCRIPT_URL;
+  const [connectionMode, setConnectionMode] = useState<'live' | 'demo' | null>(googleSheetsService.currentMode);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (googleSheetsService.currentMode !== connectionMode) {
+        setConnectionMode(googleSheetsService.currentMode);
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [connectionMode]);
+
+  const isDemoMode = connectionMode === 'demo' || !import.meta.env.VITE_APPS_SCRIPT_URL;
 
   return (
     <SecurityGuard>

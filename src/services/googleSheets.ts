@@ -33,6 +33,12 @@ const cache = new Map<string, { data: any; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 นาที
 
 export class GoogleSheetsService {
+  private lastMode: 'live' | 'demo' | null = null;
+
+  get isLive() { return this.lastMode === 'live'; }
+  get isDemo() { return this.lastMode === 'demo'; }
+  get currentMode() { return this.lastMode; }
+
   /**
    * ส่ง Request พร้อมระบบ Retry อัตโนมัติ (Exponential Backoff) กรณีเกิด Concurrent สูง
    */
@@ -41,13 +47,16 @@ export class GoogleSheetsService {
     const SCRIPT_URL = typeof rawUrl === 'string' ? rawUrl.trim() : '';
 
     if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
-      console.warn('VITE_APPS_SCRIPT_URL is not set or uses a placeholder. Switching to Demo Mode (Mock Data).');
+      if (this.lastMode !== 'demo') {
+        console.warn('VITE_APPS_SCRIPT_URL is not set or uses a placeholder. Switching to Demo Mode (Mock Data).');
+        this.lastMode = 'demo';
+      }
       return this.handleMockRequest(payload);
     }
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // Increased to 30s
+      const timeoutId = setTimeout(() => controller.abort(), 30000); 
       const response = await fetch(SCRIPT_URL, {
         signal: controller.signal,
         method: 'POST',
@@ -56,7 +65,20 @@ export class GoogleSheetsService {
       });
 
       clearTimeout(timeoutId);
-      const result = await response.json();
+      
+      const text = await response.text();
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (e) {
+        console.error('Failed to parse response as JSON. Raw text:', text);
+        throw new Error('Backend returned non-JSON response');
+      }
+
+      if (this.lastMode !== 'live') {
+        console.log('Successfully connected to Google Sheets Backend.');
+        this.lastMode = 'live';
+      }
 
       // ถ้า LockService ใน Backend เต็ม มันจะโยน Error กลับมา เราสามารถให้ Frontend รอแล้วยิงซ้ำได้
       if (result.status === 'error' && result.message && result.message.includes('Lock') && retries > 0) {
