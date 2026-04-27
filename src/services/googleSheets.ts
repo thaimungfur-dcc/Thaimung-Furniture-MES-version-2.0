@@ -44,7 +44,15 @@ export class GoogleSheetsService {
    */
   async request<T = any>(payload: SheetRequest, retries = 1, delay = 1000): Promise<SheetResponse<T>> {
     const rawUrl = import.meta.env.VITE_APPS_SCRIPT_URL;
-    const SCRIPT_URL = typeof rawUrl === 'string' ? rawUrl.trim() : '';
+    let SCRIPT_URL = typeof rawUrl === 'string' ? rawUrl.trim() : '';
+    
+    // Remove accidental quotes from environment variables if present
+    if (SCRIPT_URL.startsWith('"') && SCRIPT_URL.endsWith('"')) {
+      SCRIPT_URL = SCRIPT_URL.slice(1, -1);
+    }
+    if (SCRIPT_URL.startsWith("'") && SCRIPT_URL.endsWith("'")) {
+      SCRIPT_URL = SCRIPT_URL.slice(1, -1);
+    }
 
     if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
       if (this.lastMode !== 'demo') {
@@ -60,7 +68,9 @@ export class GoogleSheetsService {
       const response = await fetch(SCRIPT_URL, {
         signal: controller.signal,
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
         body: JSON.stringify(payload),
       });
 
@@ -72,33 +82,40 @@ export class GoogleSheetsService {
         result = JSON.parse(text);
       } catch (e) {
         console.error('Failed to parse response as JSON. Raw text:', text);
+        if (text.includes("script.google.com") || text.includes("<html")) {
+             throw new Error('Google Apps Script returned an HTML page instead of JSON. Ensure the deployment is set to "Anyone" and you are using the Web App URL.');
+        }
         throw new Error('Backend returned non-JSON response');
       }
 
       if (this.lastMode !== 'live') {
         console.log('Successfully connected to Google Sheets Backend.');
+        cache.clear();
         this.lastMode = 'live';
       }
 
-      // ถ้า LockService ใน Backend เต็ม มันจะโยน Error กลับมา เราสามารถให้ Frontend รอแล้วยิงซ้ำได้
-      if (result.status === 'error' && result.message && result.message.includes('Lock') && retries > 0) {
-        console.warn(`[Retry] Lock collision detected. Retrying in ${delay}ms...`);
-        await new Promise(res => setTimeout(res, delay));
-        return this.request<T>(payload, retries - 1, delay * 2);
+      if (result.status === 'error') {
+         if (result.message && result.message.includes('Lock') && retries > 0) {
+           console.warn(`[Retry] Lock collision detected. Retrying in ${delay}ms...`);
+           await new Promise(res => setTimeout(res, delay));
+           return this.request<T>(payload, retries - 1, delay * 2);
+         }
+         // Propagate backend error message directly to the frontend
+         throw new Error(result.message);
       }
 
       return result;
     } catch (error) {
-      if (retries > 0) {
+      if (retries > 0 && !(error instanceof Error && error.message.includes('Google Apps Script returned'))) {
         console.warn(`[Retry] Network error. Retrying in ${delay}ms...`);
         await new Promise(res => setTimeout(res, delay));
         return this.request<T>(payload, retries - 1, delay * 2);
       }
       console.warn(`Error executing Google Sheets action [${payload.action}]:`, error);
       
-      // Fallback to Demo Mode on network error to prevent app crash
-      console.warn('Failed to fetch from the provided URL. Falling back to Demo Mode (Mock Data).');
-      return this.handleMockRequest(payload);
+      this.lastMode = 'demo';
+      const errMsg = error instanceof Error ? error.message : String(error);
+      throw new Error(`[URL: ${SCRIPT_URL.substring(0, 30)}...] Backend Error: ${errMsg}`);
     }
   }
 
@@ -176,7 +193,7 @@ export class GoogleSheetsService {
       offset: resultData?.offset,
     };
 
-    if (useCache && normalizedResult.status === 'success') {
+    if (useCache && normalizedResult.status === 'success' && !result.isMockData) {
       cache.set(cacheKey, { data: normalizedResult, timestamp: Date.now() });
     }
 

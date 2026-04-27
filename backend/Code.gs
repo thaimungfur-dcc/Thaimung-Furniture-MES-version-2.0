@@ -64,12 +64,7 @@ function setupDatabase() {
 }
 
 function doOptions(e) {
-  var headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
-  };
-  return ContentService.createTextOutput('').setHeaders(headers);
+  return ContentService.createTextOutput('');
 }
 
 function doPost(e) {
@@ -79,14 +74,7 @@ function doPost(e) {
     'Access-Control-Allow-Headers': 'Content-Type'
   };
 
-  const lock = LockService.getScriptLock();
   try {
-    // Wait for up to 30 seconds for other processes to finish
-    // This is crucial for handling multiple users hitting the endpoint simultaneously
-    if (!lock.tryLock(30000)) {
-      throw new Error("Lock timeout: Server is busy, please try again.");
-    }
-    
     const params = JSON.parse(e.postData.contents);
     const action = params.action;
     const sheetName = params.sheet;
@@ -135,27 +123,38 @@ function doPost(e) {
       return createResponse("error", "Sheet not found and could not be created: " + sheetName, null, headers);
     }
 
+    let result;
     switch (action) {
       case 'read':
-        return readData(sheet, params, headers);
-      case 'write':
-        return writeData(sheet, data, headers);
+        result = readData(sheet, params, headers);
+        break;
       case 'lookup':
-        return lookupData(sheet, params, headers); // Pass full params for search type customization
-      case 'update':
-        return updateData(sheet, data, headers);
-      case 'delete':
-        return deleteData(sheet, data, headers);
+        result = lookupData(sheet, params, headers); // Pass full params for search type customization
+        break;
       case 'login':
-        return handleLogin(ss, data, headers);
+        result = handleLogin(ss, data, headers);
+        break;
+      case 'write':
+      case 'update':
+      case 'delete':
+        const lock = LockService.getScriptLock();
+        if (!lock.tryLock(30000)) {
+          return createResponse("error", "Lock timeout: Server is busy, please try again.", null, headers);
+        }
+        try {
+          if (action === 'write') result = writeData(sheet, data, headers);
+          else if (action === 'update') result = updateData(sheet, data, headers);
+          else if (action === 'delete') result = deleteData(sheet, data, headers);
+        } finally {
+          lock.releaseLock();
+        }
+        break;
       default:
-        return createResponse("error", "Unknown action: " + action, null, headers);
+        result = createResponse("error", "Unknown action: " + action, null, headers);
     }
+    return result;
   } catch (err) {
     return createResponse("error", err.toString(), null, headers);
-  } finally {
-    // Always release the lock
-    lock.releaseLock();
   }
 }
 
@@ -209,7 +208,7 @@ function readData(sheet, params, headersObj) {
         if (trimmed.startsWith('[')) {
           try { val = JSON.parse(trimmed); } catch(e) { val = []; }
         } else if (trimmed.includes('java.lang.Object')) {
-          val = []; // Handle garbage data
+          val = ["Format Error"]; // Indicate to user they need to fix it
         } else if (trimmed !== '') {
           val = trimmed.split(',').map(s => s.trim()).filter(Boolean); // Fallback for comma-sep
         } else {
@@ -449,11 +448,10 @@ function handleLogin(ss, credentials, headersObj) {
 
 // --- Helpers ---
 
-function createResponse(status, message, data, headers) {
+function createResponse(status, message, data) {
   const result = { status: status, message: message, data: data };
   return ContentService.createTextOutput(JSON.stringify(result))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeaders(headers || {});
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /**
