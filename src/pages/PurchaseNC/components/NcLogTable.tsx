@@ -1,18 +1,10 @@
 import React from 'react';
 import { Eye, Pencil, Printer } from 'lucide-react';
 
-interface ScarItem {
-  id: string;
-  date: string;
-  vendor: string;
-  severity: string;
-  status: string;
-}
-
 interface NcLogTableProps {
-  logTableData: ScarItem[];
-  openModal: (mode: string, data: ScarItem) => void;
-  setSelectedItem: (item: ScarItem) => void;
+  logTableData: any[];
+  openModal: (mode: string, data: any) => void;
+  setSelectedItem: (item: any) => void;
   setPreviewModal: (mode: string) => void;
   getSeverityClass: (severity: string) => string;
   getStatusClass: (status: string) => string;

@@ -97,10 +97,10 @@ export default function Layout() {
   const navigate = useNavigate();
 
   const userProfile = {
-    name: user?.displayName || 'T-DCC Developer',
+    name: user?.name || 'T-DCC Developer',
     email: user?.email || 'tallintelligence.dcc@gmail.com',
     position: 'System Administrator',
-    avatar: user?.photoURL || 'https://drive.google.com/thumbnail?id=1Z_fRbN9S4aA7OkHb3mlim_t60wIT4huY&sz=w400'
+    avatar: user?.picture || 'https://drive.google.com/thumbnail?id=1Z_fRbN9S4aA7OkHb3mlim_t60wIT4huY&sz=w400'
   };
 
   const palette = {

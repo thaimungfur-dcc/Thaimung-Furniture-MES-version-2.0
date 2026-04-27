@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Save, Hash, Package, User, Calendar, AlertCircle, Activity } from 'lucide-react';
+import { X, Save, Hash, Package, User, Calendar, AlertCircle, Activity, Loader2 } from 'lucide-react';
 import { JobOrder, ProductionStage } from '../types';
 import { DraggableWrapper } from "../../../components/shared/DraggableWrapper";
 

@@ -163,7 +163,7 @@ export default function Home() {
       
       <PageHeader
         Icon={LayoutGrid}
-        title={`WELCOME BACK, ${user?.displayName || 'OPERATOR'}`}
+        title={`WELCOME BACK, ${(user?.name || 'OPERATOR').toUpperCase()}`}
         subtitle="Furniture Manufacturing Hub • System Overview"
       />
 

@@ -102,7 +102,7 @@ const CustomerTable: React.FC<CustomerTableProps> = ({
         </div>
         <div className="flex items-center gap-2">
           <button 
-            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} 
+            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))} 
             disabled={currentPage === 1}
             className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-50 transition-all"
           >
@@ -110,7 +110,7 @@ const CustomerTable: React.FC<CustomerTableProps> = ({
           </button>
           <span className="text-[11px] font-bold text-[#111f42] px-4 bg-white border border-slate-200 py-2.5 rounded-lg shadow-sm">Page {currentPage} of {totalPages}</span>
           <button 
-            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))} 
+            onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))} 
             disabled={currentPage === totalPages}
             className="p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-50 transition-all"
           >

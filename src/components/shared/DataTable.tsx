@@ -44,7 +44,8 @@ export function DataTable<T>({
   itemsPerPage,
   fileName,
   filterColumns = [],
-  dateFilterColumn
+  dateFilterColumn,
+  actionButtons
 }: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');

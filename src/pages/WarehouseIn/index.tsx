@@ -3,7 +3,7 @@ import {
     Truck, 
     Calendar, FileBarChart, 
     Eye, Tag, Printer, ArrowDownToLine, HelpCircle, Loader2,
-    LayoutGrid
+    LayoutGrid, UploadCloud, PlusCircle
 } from 'lucide-react';
 
 import { useMasterData } from '../../context/MasterDataContext';

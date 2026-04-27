@@ -3,18 +3,10 @@ import { Eye, Pencil, Printer } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTable } from '../../../components/shared/DataTable';
 
-interface NcItem {
-  id: string;
-  date: string;
-  department: string;
-  severity: string;
-  status: string;
-}
-
 interface NcLogTableProps {
-  logTableData: NcItem[];
-  openModal: (mode: string, data: NcItem) => void;
-  setSelectedItem: (item: NcItem) => void;
+  logTableData: any[];
+  openModal: (mode: string, data: any) => void;
+  setSelectedItem: (item: any) => void;
   setPreviewModal: (mode: string) => void;
   getSeverityClass: (severity: string) => string;
   getStatusClass: (status: string) => string;
@@ -30,7 +22,7 @@ const NcLogTable: React.FC<NcLogTableProps> = ({
   getStatusClass,
   formatDate
 }) => {
-  const columns: ColumnDef<NcItem>[] = [
+  const columns: ColumnDef<any>[] = [
     {
       accessorKey: 'id',
       header: 'NC NO.',
