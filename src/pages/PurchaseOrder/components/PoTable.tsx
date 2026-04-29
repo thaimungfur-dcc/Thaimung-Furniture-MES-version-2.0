@@ -43,7 +43,7 @@ const PoTable: React.FC<PoTableProps> = ({
   getStatusBadgeClass
 }) => {
   return (
-    <div className="bg-white border border-slate-100 shadow-sm overflow-hidden rounded-none animate-in fade-in duration-500 no-print">
+    <div className="bg-white border border-slate-100 shadow-sm overflow-hidden rounded-2xl animate-in fade-in duration-500 no-print">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse whitespace-nowrap">
           <thead className="bg-[#2C3F70] text-white">

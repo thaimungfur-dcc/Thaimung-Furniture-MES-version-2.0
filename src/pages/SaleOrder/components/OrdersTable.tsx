@@ -35,7 +35,7 @@ export default function OrdersTable({
   totalPages
 }: OrdersTableProps) {
   return (
-    <div className="bg-white border border-slate-200 shadow-sm overflow-hidden rounded-none flex-1 flex flex-col min-h-0 no-print">
+    <div className="bg-white border border-slate-200 shadow-sm overflow-hidden rounded-2xl flex-1 flex flex-col min-h-[400px] no-print">
       <div className="p-4 flex items-center justify-between gap-4 bg-white border-b border-slate-100 overflow-x-auto flex-shrink-0">
         <div className="flex items-center gap-4">
           <div className="flex bg-slate-50 p-1 border border-slate-200 rounded-xl">

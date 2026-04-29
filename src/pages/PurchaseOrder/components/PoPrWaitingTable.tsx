@@ -36,7 +36,7 @@ const PoPrWaitingTable: React.FC<PoPrWaitingTableProps> = ({
   formatCurrency
 }) => {
   return (
-    <div className="bg-white border border-slate-100 shadow-sm overflow-hidden rounded-none animate-in fade-in duration-500 no-print">
+    <div className="bg-white border border-slate-100 shadow-sm overflow-hidden rounded-2xl animate-in fade-in duration-500 no-print">
       <div className="overflow-x-auto">
          <table className="w-full text-left border-collapse whitespace-nowrap data-table">
             <thead className="bg-slate-50 text-slate-600 border-b border-slate-200">

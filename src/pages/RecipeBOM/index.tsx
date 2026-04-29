@@ -203,7 +203,7 @@ export default function BOMManagementApp() {
                         <KpiCard title="Pending Review" value={products?.filter(p=>p.status==='Draft').length} color="#E3624A" icon={Clock} subValue="Draft or Pending" />
                     </div>
 
-                    <div className="bg-white border border-slate-200 flex flex-col min-h-[600px] w-full">
+                    <div className="bg-white border rounded-2xl border-slate-200 outline-none shadow-sm flex flex-col min-h-[600px] w-full overflow-hidden">
                         <div className="px-6 py-4 border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">
                             <div className="flex flex-1 items-center gap-3 w-full lg:w-auto overflow-x-auto no-scrollbar">
                                 <div className="flex items-center gap-1 p-1 bg-white rounded-lg border border-slate-200 shadow-sm shrink-0">

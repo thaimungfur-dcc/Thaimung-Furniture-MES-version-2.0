@@ -223,13 +223,13 @@ export default function MasterDataEntry() {
                 })}
 
                 {/* Data Routing Information Box */}
-                <div className="mt-6 bg-white/60 backdrop-blur-md border border-white p-5 rounded-none animate-fade shadow-sm">
+                <div className="mt-6 bg-white/60 backdrop-blur-md border border-white p-5 rounded-xl animate-fade shadow-sm">
                   <h4 className="text-[10px] font-black text-[#223f59] uppercase tracking-widest mb-3 flex items-center gap-2">
                     <RefreshCw size={14} className="text-[#496ca8]" /> Auto-Routing Flow:
                   </h4>
                   <div className="flex flex-wrap gap-2 text-white">
                     {getRoutingTags()?.map((tag, i) => (
-                      <span key={i} className={`px-2 py-1 rounded-none text-[9px] font-black uppercase tracking-[0.2em] border brightness-90 ${tag.style}`}>
+                      <span key={i} className={`px-2 py-1 rounded-lg text-[9px] font-black uppercase tracking-[0.2em] border brightness-90 ${tag.style}`}>
                         {tag.label}
                       </span>
                     ))}
@@ -276,7 +276,7 @@ export default function MasterDataEntry() {
                       <input 
                         type="date" name="date" required
                         value={formData.date} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm font-mono uppercase tracking-widest"
+                        className="w-full bg-white/80 border border-white rounded-xl py-3 px-4 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm font-mono uppercase tracking-widest"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -286,7 +286,7 @@ export default function MasterDataEntry() {
                       <input 
                         type="text" name="docNo" required placeholder="Auto-generated if left blank"
                         value={formData.docNo} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest font-mono"
+                        className="w-full bg-white/80 border border-white rounded-xl py-3 px-4 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest font-mono"
                       />
                     </div>
                   </div>
@@ -300,7 +300,7 @@ export default function MasterDataEntry() {
                       <input 
                         type="text" name="entity" required placeholder="Type name..."
                         value={formData.entity} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest"
+                        className="w-full bg-white/80 border border-white rounded-xl py-3 px-4 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm placeholder:text-slate-400 placeholder:font-black uppercase tracking-widest"
                       />
                     </div>
                   )}
@@ -314,7 +314,7 @@ export default function MasterDataEntry() {
                       <select 
                         name="category" required
                         value={formData.category} onChange={handleInputChange}
-                        className="w-full bg-white/80 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm uppercase tracking-widest"
+                        className="w-full bg-white/80 border border-white rounded-xl py-3 px-4 text-sm font-black text-[#223f59] focus:border-[#496ca8] focus:bg-white outline-none transition-colors shadow-sm uppercase tracking-widest cursor-pointer"
                       >
                         {entryType === 'expense' && (
                           <>
@@ -345,7 +345,7 @@ export default function MasterDataEntry() {
                   )}
 
                   {/* Finance / Amounts Section */}
-                  <div className="bg-white/40 p-5 rounded-none border border-white shadow-sm">
+                  <div className="bg-white/40 p-5 rounded-2xl border border-white shadow-sm">
                     <h3 className="text-[10px] font-black text-[#223f59] uppercase tracking-widest mb-4 flex items-center gap-2">
                       <Calculator size={14} className="text-[#ce5a43]" /> Financial Details
                     </h3>
@@ -358,7 +358,7 @@ export default function MasterDataEntry() {
                           <input 
                             type="number" name="amount" required step="0.01" placeholder="0.00"
                             value={formData.amount} onChange={handleInputChange}
-                            className="w-full bg-white border border-white rounded-none py-3 pl-10 text-lg font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-tighter"
+                            className="w-full bg-white border border-white rounded-xl py-3 pl-10 text-lg font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-tighter"
                           />
                         </div>
                       </div>
@@ -369,7 +369,7 @@ export default function MasterDataEntry() {
                           <select 
                             name="taxType"
                             value={formData.taxType} onChange={handleInputChange}
-                            className="w-full bg-white/90 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm uppercase tracking-widest"
+                            className="w-full bg-white/90 border border-white rounded-xl py-3 px-4 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm uppercase tracking-widest cursor-pointer"
                           >
                             <option value="Vat Exclude">VAT Exclude (+7% On top)</option>
                             <option value="Vat Include">VAT Include (Included in amount)</option>
@@ -384,7 +384,7 @@ export default function MasterDataEntry() {
                           <input 
                             type="number" name="creditTerm" required
                             value={formData.creditTerm} onChange={handleInputChange}
-                            className="w-full md:w-1/2 bg-white/90 border border-white rounded-none py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-widest"
+                            className="w-full md:w-1/2 bg-white/90 border border-white rounded-xl px-4 py-3 text-sm font-black text-[#223f59] focus:border-[#496ca8] outline-none transition-colors shadow-sm font-mono tracking-widest"
                           />
                         </div>
                       )}
@@ -392,7 +392,7 @@ export default function MasterDataEntry() {
 
                     {/* Auto Breakdown Preview (Sales & Expense) */}
                     {(entryType === 'sales' || entryType === 'expense') && formData.amount && (
-                      <div className="mt-5 p-4 bg-white border border-white rounded-none flex items-center justify-between animate-fade shadow-sm">
+                      <div className="mt-5 p-4 bg-white border border-white rounded-2xl flex items-center justify-between animate-fade shadow-sm">
                         <div>
                           <p className="text-[9px] font-black text-[#7693a6] uppercase tracking-[0.2em]">Base Amount</p>
                           <p className="font-mono font-black text-[#223f59] text-sm">฿{taxData.base?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
@@ -416,7 +416,7 @@ export default function MasterDataEntry() {
                     <button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="w-full sm:w-auto py-3.5 bg-[#223f59] hover:bg-[#1a3045] text-white rounded-none font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-2 shadow-lg transition-all disabled:opacity-50"
+                      className="w-full sm:w-auto py-3.5 px-6 bg-[#223f59] hover:bg-[#1a3045] text-white rounded-xl font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-2 shadow-lg transition-all disabled:opacity-50"
                     >
                       {isSubmitting ? <RefreshCw size={16} className="animate-spin" /> : <Save size={16} />}
                       {isSubmitting ? 'Processing...' : 'Save & Broadcast Data'}
@@ -438,12 +438,12 @@ export default function MasterDataEntry() {
                             <div className="absolute inset-0 bg-[#223149]/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsGuideOpen(false)}></div>
                           </DraggableWrapper>
 
-            <div className="relative w-full max-w-lg h-full bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 border-l border-white/20 rounded-none">
-              <div className="py-5 flex justify-between items-center bg-[#223149] text-white shrink-0 shadow-md">
+            <div className="relative w-full max-w-lg h-full bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300 border-l border-white/20 rounded-l-2xl">
+              <div className="py-5 px-6 flex justify-between items-center bg-[#223149] text-white shrink-0 shadow-md rounded-tl-2xl">
                 <h2 className="text-base font-black uppercase tracking-[0.2em] flex items-center gap-2">
                   <HelpCircle size={20} className="text-[#df8a5d]" /> MASTER GUIDE
                 </h2>
-                <button onClick={() => setIsGuideOpen(false)} className="hover:bg-white/20 p-1.5 rounded-none transition-colors border border-transparent hover:border-white/10"><X size={20} /></button>
+                <button onClick={() => setIsGuideOpen(false)} className="hover:bg-white/20 p-1.5 rounded-lg transition-colors border border-transparent hover:border-white/10"><X size={20} /></button>
               </div>
               
               <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#f5f0e9] text-[13px] text-[#223149] space-y-6">
@@ -458,21 +458,21 @@ export default function MasterDataEntry() {
                   </p>
                 </div>
 
-                <div className="bg-white/80 p-4 rounded-none border border-white shadow-sm">
+                <div className="bg-white/80 p-4 rounded-xl border border-white shadow-sm">
                   <h3 className="text-[12px] font-black text-[#223149] mb-3 uppercase flex items-center gap-2 tracking-widest">
                     <Zap size={14} className="text-[#d9b343]"/> Broadcasting
                   </h3>
                   <ul className="space-y-3 text-[10px] font-black text-slate-600 uppercase tracking-widest">
                     <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 rounded-none bg-blue-500 mt-1.5 shrink-0"></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0"></div>
                       <span><strong>Sales:</strong> วิ่งไปที่ AR Database, TAX (Output), และ Cash Flow Forecast (Inflow)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 rounded-none bg-rose-500 mt-1.5 shrink-0"></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0"></div>
                       <span><strong>Expense:</strong> วิ่งไปที่ AP Database, TAX (Input), Cash Flow (Outflow) และ ACA/CMP ตามหมวดหมู่</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 rounded-none bg-amber-500 mt-1.5 shrink-0"></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></div>
                       <span><strong>Petty Cash:</strong> วิ่งไปที่ Petty Cash Database และ ACA (Admin Cost)</span>
                     </li>
                   </ul>
@@ -488,13 +488,13 @@ export default function MasterDataEntry() {
                   </p>
                 </div>
 
-                <div className="bg-emerald-50 p-4 rounded-none border border-emerald-100 text-emerald-800 text-[10px] font-black italic leading-relaxed uppercase tracking-widest">
+                <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100 text-emerald-800 text-[10px] font-black italic leading-relaxed uppercase tracking-widest">
                   * หมายเหตุ: หากต้องการแก้ไขรายการที่บันทึกไปแล้ว ให้ใช้เมนู Search ในหน้านี้เพื่อค้นหา Ref No. และทำการแก้ไขที่นี่ที่เดียว ระบบจะอัปเดตโมดูลอื่นๆ ให้ทั้งหมด
                 </div>
               </div>
 
               <div className="p-5 bg-white border-t border-slate-100 flex justify-end shrink-0 shadow-inner">
-                <button onClick={() => setIsGuideOpen(false)} className="py-2.5 rounded-none font-black bg-[#223149] text-white hover:opacity-90 transition-all uppercase tracking-widest">
+                <button onClick={() => setIsGuideOpen(false)} className="py-2.5 px-6 rounded-xl font-black bg-[#223149] text-white hover:opacity-90 transition-all uppercase tracking-widest">
                   รับทราบ (Close)
                 </button>
               </div>

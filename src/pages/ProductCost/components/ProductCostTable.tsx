@@ -14,9 +14,10 @@ interface ProductCostData {
 interface ProductCostTableProps {
   data: ProductCostData[];
   onOpenBOM: (product: ProductCostData, e: React.MouseEvent) => void;
+  actionButtons?: React.ReactNode;
 }
 
-export default function ProductCostTable({ data, onOpenBOM }: ProductCostTableProps) {
+export default function ProductCostTable({ data, onOpenBOM, actionButtons }: ProductCostTableProps) {
   const columns: ColumnDef<ProductCostData>[] = [
     {
       accessorKey: 'item',
@@ -58,6 +59,7 @@ export default function ProductCostTable({ data, onOpenBOM }: ProductCostTablePr
       columns={columns}
       searchPlaceholder="Search Product Costs..."
       fileName="Product_Costs"
+      actionButtons={actionButtons}
     />
   );
 }

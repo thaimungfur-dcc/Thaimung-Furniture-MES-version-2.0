@@ -18,7 +18,7 @@ export default function DataTable({
   setItemsPerPage
 }: any) {
   return (
-    <div className="bg-white border border-slate-200 shadow-sm overflow-hidden rounded-xl flex-1 flex flex-col transition-all">
+    <div className="bg-white border border-slate-200 shadow-sm overflow-hidden rounded-2xl flex-1 flex flex-col transition-all">
       
       {/* Table Toolbar */}
       <div className="p-4 flex items-center justify-between gap-4 border-b border-slate-100 bg-white">

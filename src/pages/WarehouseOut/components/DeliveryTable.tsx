@@ -125,6 +125,7 @@ export default function DeliveryTable({ data, onShip, onComplete, getProgressCol
             searchPlaceholder="Search SO No, Customer, Product..."
             itemsPerPage={10}
             fileName="Delivery_Orders"
+            variant="seamless"
         />
     );
 }

@@ -108,6 +108,7 @@ export default function OutboundTable({ data, onEdit, onConfirm, onCancel }: Out
             searchPlaceholder="Search TRX ID, Sku, Lot number..."
             itemsPerPage={10}
             fileName="Outbound_Transactions"
+            variant="seamless"
         />
     );
 }

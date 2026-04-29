@@ -119,6 +119,7 @@ export default function MrpTable({ data, onIssue, onComplete, getProgressColor, 
             searchPlaceholder="Search MO No, Product, Material..."
             itemsPerPage={10}
             fileName="MRP_Issuance"
+            variant="seamless"
         />
     );
 }

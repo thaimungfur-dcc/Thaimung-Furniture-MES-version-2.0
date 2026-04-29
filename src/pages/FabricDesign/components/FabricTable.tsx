@@ -104,6 +104,7 @@ const FabricTable: React.FC<FabricTableProps> = ({ patterns, onEdit }) => {
       columns={columns} 
       searchPlaceholder="Search Fabrics..."
       fileName="Fabric_Designs"
+      variant="seamless"
     />
   );
 };

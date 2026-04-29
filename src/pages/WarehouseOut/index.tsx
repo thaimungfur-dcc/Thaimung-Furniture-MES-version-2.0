@@ -405,8 +405,8 @@ export default function WarehouseOut() {
             <main className="flex-1 relative z-10 pt-4 flex flex-col gap-6 no-print">
                 <OutboundKpiSection stats={stats} />
 
-                <div className="flex flex-col relative gap-4 min-h-[500px]">
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden z-20">
+                <div className="flex flex-col relative gap-0 min-h-[500px] bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex-1">
+                    <div className="z-20">
                         <OutboundToolbar 
                             activeTab={activeTab}
                             setActiveTab={setActiveTab}
@@ -424,7 +424,7 @@ export default function WarehouseOut() {
                         />
                     </div>
 
-                    <div className="flex-1 overflow-hidden">
+                    <div className="flex-1 overflow-hidden h-full flex flex-col">
                         {activeTab === 'all' && (
                             <OutboundTable 
                                 data={currentData as HistoryLog[]} 

@@ -79,6 +79,7 @@ export default function BomListTable({ data, onManageBom, getStatusClass }: BomL
             searchPlaceholder="Search Products..."
             itemsPerPage={10}
             fileName="BOM_Products"
+            variant="seamless"
         />
     );
 }

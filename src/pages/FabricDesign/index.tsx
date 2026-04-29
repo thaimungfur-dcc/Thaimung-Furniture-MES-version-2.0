@@ -186,7 +186,7 @@ export default function FabricDesignApp() {
 
             {/* Main Area */}
             <div className="w-full flex-1 flex flex-col h-full overflow-hidden px-0 z-10 relative gap-4">
-                <div className="bg-white rounded-none shadow-sm border border-slate-200 flex flex-col flex-1">
+                <div className="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col flex-1">
                     
                     {/* Toolbar Filter */}
                     <div className="border-b border-slate-100 flex flex-col lg:flex-row items-center justify-between gap-4 bg-slate-50/50">

@@ -33,6 +33,7 @@ interface DataTableProps<T> {
   filterColumns?: string[]; // Columns to show as dropdown filters
   dateFilterColumn?: string; // Column ID for Month/Year filtering
   actionButtons?: React.ReactNode; // Custom buttons (e.g. UPLOAD, NEW)
+  variant?: 'card' | 'seamless';
 }
 
 export function DataTable<T>({ 
@@ -45,7 +46,8 @@ export function DataTable<T>({
   fileName,
   filterColumns = [],
   dateFilterColumn,
-  actionButtons
+  actionButtons,
+  variant = 'card'
 }: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
@@ -131,9 +133,9 @@ export function DataTable<T>({
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className={`${variant === 'card' ? 'bg-white rounded-2xl border border-slate-200 shadow-sm min-h-[400px]' : 'bg-transparent border-t border-slate-100 min-h-[300px]'} overflow-hidden flex flex-col flex-1`}>
       {/* Table Toolbar */}
-      <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4 px-1">
+      <div className={`flex flex-col md:flex-row justify-between items-end md:items-center gap-4 py-4 px-2 ${variant === 'card' ? 'p-4 border-b border-slate-100 bg-slate-50/30' : 'border-b border-slate-100'}`}>
         
         {/* LEFT SIDE: Filters & Search */}
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto flex-1">
@@ -249,7 +251,7 @@ export function DataTable<T>({
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-xl border-t border-b sm:border border-slate-200 shadow-sm sm:rounded-2xl overflow-hidden min-h-[400px] flex flex-col">
+      <div className="bg-transparent overflow-hidden flex flex-col flex-1">
         <div className="flex-1 overflow-x-auto master-custom-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
